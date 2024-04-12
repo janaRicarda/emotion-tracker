@@ -2,6 +2,7 @@ import styled from "styled-components";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
 import Link from "next/link";
+import { date } from "@/utils/date-constructor";
 
 const StyledForm = styled.form`
   display: flex;
@@ -65,12 +66,12 @@ export default function HomePage() {
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const date = new Date();
 
+    // variable date imported from util/date-constructor.js
     setTensionEntry(
       tensionEntry.length === 0
-        ? [{ ...data, id: uid(), date: date.toUTCString() }]
-        : [...tensionEntry, { ...data, id: uid(), date: date.toUTCString() }]
+        ? [{ ...data, id: uid(), date: date }]
+        : [...tensionEntry, { ...data, id: uid(), date: date }]
     );
   }
 
