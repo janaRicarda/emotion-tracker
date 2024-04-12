@@ -1,7 +1,7 @@
-import { emotionData } from "@/lib/Data";
+import { emotionData } from "@/lib/data";
 import styled from "styled-components";
 
-const StyledUl = styled.ul`
+const StyledList = styled.ul`
   list-style: none;
   padding-left: 0;
   display: flex;
@@ -12,7 +12,7 @@ const StyledUl = styled.ul`
   gap: 0.5rem;
   margin: 1rem;
 `;
-const StyledLi = styled.li`
+const StyledListItem = styled.li`
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -26,13 +26,13 @@ export default function EmotionList() {
     <h1>Sorry, an error has occured. Please try again later!</h1>;
 
   return (
-    <StyledUl>
+    <StyledList>
       <h1>The seven basic emotions</h1>
       {emotionData.map(({ slug, name, color }) => (
-        <StyledLi key={slug} $color={color}>
+        <StyledListItem key={slug} $color={color}>
           {name}
-        </StyledLi>
+        </StyledListItem>
       ))}
-    </StyledUl>
+    </StyledList>
   );
 }
