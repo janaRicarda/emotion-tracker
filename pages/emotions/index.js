@@ -1,6 +1,6 @@
 import EmotionList from "@/components/EmotionList";
 
-export default function HomePage() {
+export default function Emotions() {
   return (
     <>
       <EmotionList />
