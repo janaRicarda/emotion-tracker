@@ -1,22 +1,62 @@
+import styled from "styled-components";
+
+const StyledArticle = styled.article`
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 2rem;
+  background-color: ${({ $color }) => $color};
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  margin: 1.5rem;
+  font-size: 2rem;
+`;
+
+const SubTitle = styled.h2`
+  text-align: center;
+  margin: 1rem;
+`;
+
+const StyledList = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+`;
+
+const StyledListItem = styled.li`
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 5px;
+`;
+
 export default function EmotionDetails({
   name,
   description,
   emotionfunction,
   indications,
   subemotions,
+  color,
 }) {
   return (
     <>
-      <article>
-        <h1>{name}</h1>
+      <StyledArticle $color={color}>
+        <Title>{name}</Title>
         <p>{description}</p>
-        <h2>The function of {name}</h2>
+        <SubTitle>The function of {name}</SubTitle>
         <p>{emotionfunction}</p>
-        <h2>Physical indications</h2>
+        <SubTitle>Physical indications</SubTitle>
         <p>{indications}</p>
-        <h2>Subemotions</h2>
-        <ul></ul>
-      </article>
+        <SubTitle>Subemotions</SubTitle>
+        <StyledList>
+          {subemotions.map((sub) => (
+            <StyledListItem key={sub}>{sub}</StyledListItem>
+          ))}
+        </StyledList>
+      </StyledArticle>
     </>
   );
 }
