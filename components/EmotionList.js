@@ -1,4 +1,4 @@
-import { emotionData } from "@/lib/Data";
+import { emotionData } from "@/lib/data";
 import styled from "styled-components";
 
 const StyledUl = styled.ul`
