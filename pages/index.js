@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
+import Link from "next/link";
 
 const StyledForm = styled.form`
   display: flex;
@@ -35,6 +35,26 @@ const StyledButton = styled.button`
   width: 3rem;
 `;
 
+const StyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 2rem auto;
+  text-align: left;
+`;
+
+const StyledListItem = styled.li`
+  margin: 1.2rem auto;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  padding: 1rem;
+  background-color: lightgray;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+`;
+
 export default function HomePage() {
   const [tensionEntry, setTensionEntry] = useLocalStorageState("tensionEntry", {
     defaultValue: [],
@@ -58,7 +78,7 @@ export default function HomePage() {
     <>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="tension-level">
-          On a scale from 0 to 100, how tense do you feel right in this moment?
+          On a scale from 0 to 100, how tense do you feel in this moment?
         </StyledLabel>
         <StyledInput
           id="tension-level"
@@ -72,7 +92,20 @@ export default function HomePage() {
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
         <StyledButton>Save</StyledButton>
+        <StyledList>
+          {tensionEntry.map((entry) => {
+            const { id, date, tensionLevel } = entry;
+            return (
+              <StyledListItem key={id}>
+                {date} - Tension Level: {tensionLevel}%
+              </StyledListItem>
+            );
+          })}
+        </StyledList>
+        <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
       </StyledForm>
     </>
   );
 }
+
+export { StyledLink };

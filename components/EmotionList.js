@@ -10,7 +10,7 @@ const StyledList = styled.ul`
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  margin: 1rem;
+  margin: 3rem;
 `;
 const StyledListItem = styled.li`
   border: 1px solid black;
