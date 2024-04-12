@@ -1,5 +1,6 @@
 import { emotionData } from "@/lib/data";
 import styled from "styled-components";
+import Link from "next/link";
 
 const StyledUl = styled.ul`
   list-style: none;
@@ -30,7 +31,7 @@ export default function EmotionList() {
       <h1>The seven basic emotions</h1>
       {emotionData.map(({ slug, name, color }) => (
         <StyledLi key={slug} $color={color}>
-          {name}
+          <Link href={`emotions/${slug}`}>{name}</Link>
         </StyledLi>
       ))}
     </StyledUl>
