@@ -34,7 +34,7 @@ export default function EmotionDetailsPage() {
         subemotions={emotion.subemotions}
         color={emotion.color}
       />
-      <StyledLink $color={emotion.color} href="/emotions">
+      <StyledLink $color={emotion.color} href="/">
         ← back to list{" "}
       </StyledLink>
     </>

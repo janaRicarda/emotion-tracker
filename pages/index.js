@@ -1,8 +1,8 @@
-import Link from "next/link";
+import EmotionList from "@/components/EmotionList";
 export default function HomePage() {
   return (
     <>
-      <Link href="/emotions">Emotionlist</Link>
+      <EmotionList />
     </>
   );
 }
