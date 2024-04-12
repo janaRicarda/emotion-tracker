@@ -22,6 +22,11 @@ const StyledLi = styled.li`
   font-weight: 600;
   font-size: 1.3rem;
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
 export default function EmotionList() {
   if (!emotionData)
     <h1>Sorry, an error has occured. Please try again later!</h1>;
@@ -31,7 +36,7 @@ export default function EmotionList() {
       <h1>The seven basic emotions</h1>
       {emotionData.map(({ slug, name, color }) => (
         <StyledLi key={slug} $color={color}>
-          <Link href={`emotions/${slug}`}>{name}</Link>
+          <StyledLink href={`emotions/${slug}`}>{name}</StyledLink>
         </StyledLi>
       ))}
     </StyledUl>
