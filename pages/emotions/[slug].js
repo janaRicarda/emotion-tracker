@@ -21,7 +21,7 @@ export default function EmotionDetailsPage() {
     return null;
   }
   const { slug } = router.query;
-  const emotion = emotionData.find((emotion) => emotion.slug === slug);
+  const emotion = emotionData?.find((emotion) => emotion.slug === slug);
 
   return (
     <>
