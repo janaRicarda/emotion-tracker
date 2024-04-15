@@ -1,4 +1,4 @@
-import { emotionData } from "@/lib/data";
+import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 
 const StyledH1 = styled.h1`
