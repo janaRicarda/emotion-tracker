@@ -88,7 +88,7 @@ export default function HomePage() {
         type="range"
         defaultValue={0}
         max={100}
-      ></StyledInput>
+      />
       <StyledWrapper>
         <StyledSpan>0</StyledSpan>
         <StyledSpan>100</StyledSpan>
