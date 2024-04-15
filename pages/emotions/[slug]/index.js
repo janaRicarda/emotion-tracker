@@ -1,4 +1,4 @@
-import { emotionData } from "@/lib/data";
+import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 import Link from "next/link";
