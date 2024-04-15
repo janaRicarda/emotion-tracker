@@ -1,4 +1,4 @@
-import { emotionData } from "../lib/data.js";
+import { emotionData } from "@/lib/data";
 import styled from "styled-components";
 import Link from "next/link";
 
