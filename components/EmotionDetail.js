@@ -42,21 +42,19 @@ export default function EmotionDetails({
   color,
 }) {
   return (
-    <>
-      <StyledArticle $color={color}>
-        <Title>{name}</Title>
-        <p>{description}</p>
-        <SubTitle>The function of {name}</SubTitle>
-        <p>{emotionfunction}</p>
-        <SubTitle>Physical indications</SubTitle>
-        <p>{indications}</p>
-        <SubTitle>Subemotions</SubTitle>
-        <StyledList>
-          {subemotions.map((sub) => (
-            <StyledListItem key={sub}>{sub}</StyledListItem>
-          ))}
-        </StyledList>
-      </StyledArticle>
-    </>
+    <StyledArticle $color={color}>
+      <Title>{name}</Title>
+      <p>{description}</p>
+      <SubTitle>The function of {name}</SubTitle>
+      <p>{emotionfunction}</p>
+      <SubTitle>Physical indications</SubTitle>
+      <p>{indications}</p>
+      <SubTitle>Subemotions</SubTitle>
+      <StyledList>
+        {subemotions.map((sub) => (
+          <StyledListItem key={sub}>{sub}</StyledListItem>
+        ))}
+      </StyledList>
+    </StyledArticle>
   );
 }

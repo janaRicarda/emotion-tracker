@@ -1,4 +1,4 @@
-import { emotionData } from "@/lib/data";
+import { emotionData } from "@/lib/data.js";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 import Link from "next/link";
@@ -16,7 +16,6 @@ const StyledLink = styled(Link)`
 `;
 
 export default function EmotionDetailsPage() {
-  console.log(emotionData);
   const router = useRouter();
   if (!router.query) {
     return null;
