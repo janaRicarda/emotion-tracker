@@ -21,9 +21,11 @@ const StyledListItem = styled.li`
   font-weight: 600;
   font-size: 1.3rem;
 `;
+
 export default function EmotionList() {
-  if (!emotionData)
-    <h1>Sorry, an error has occured. Please try again later!</h1>;
+  if (!emotionData) {
+    return <h1>Sorry, an error has occured. Please try again later!</h1>;
+  }
 
   return (
     <StyledList>

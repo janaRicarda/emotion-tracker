@@ -2,7 +2,7 @@ import styled from "styled-components";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
 import Link from "next/link";
-import { date } from "@/utils/date-constructor";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const StyledForm = styled.form`
   display: flex;
@@ -66,8 +66,7 @@ export default function HomePage() {
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-
-    // variable date imported from util/date-constructor.js
+    const date = getCurrentTimeAndDate();
     setTensionEntry(
       tensionEntry.length === 0
         ? [{ ...data, id: uid(), date: date }]
@@ -76,36 +75,34 @@ export default function HomePage() {
   }
 
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel htmlFor="tension-level">
-          On a scale from 0 to 100, how tense do you feel in this moment?
-        </StyledLabel>
-        <StyledInput
-          id="tension-level"
-          name="tensionLevel"
-          type="range"
-          defaultValue={0}
-          max={100}
-        ></StyledInput>
-        <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </StyledWrapper>
-        <StyledButton>Save</StyledButton>
-        <StyledList>
-          {tensionEntry.map((entry) => {
-            const { id, date, tensionLevel } = entry;
-            return (
-              <StyledListItem key={id}>
-                {date} - Tension Level: {tensionLevel}%
-              </StyledListItem>
-            );
-          })}
-        </StyledList>
-        <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
-      </StyledForm>
-    </>
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledLabel htmlFor="tension-level">
+        On a scale from 0 to 100, how tense do you feel in this moment?
+      </StyledLabel>
+      <StyledInput
+        id="tension-level"
+        name="tensionLevel"
+        type="range"
+        defaultValue={0}
+        max={100}
+      ></StyledInput>
+      <StyledWrapper>
+        <StyledSpan>0</StyledSpan>
+        <StyledSpan>100</StyledSpan>
+      </StyledWrapper>
+      <StyledButton>Save</StyledButton>
+      <StyledList>
+        {tensionEntry.map((entry) => {
+          const { id, date, tensionLevel } = entry;
+          return (
+            <StyledListItem key={id}>
+              {date} - Tension Level: {tensionLevel}%
+            </StyledListItem>
+          );
+        })}
+      </StyledList>
+      <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
+    </StyledForm>
   );
 }
 
