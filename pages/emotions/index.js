@@ -1,6 +1,6 @@
 import EmotionList from "@/components/EmotionList";
 import styled from "styled-components";
-import { StyledLink } from "..";
+import { StyledLink } from "../index.js";
 
 const StyledWrapper = styled.div`
   display: flex;

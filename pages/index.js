@@ -61,17 +61,20 @@ export default function HomePage() {
     defaultValue: [],
   });
 
+  function handleAddTensionEntry(data) {
+    const timeStamp = getCurrentTimeAndDate();
+    const newEntry = { ...data, id: uid(), date: timeStamp };
+    setTensionEntry(
+      tensionEntry.length === 0 ? [newEntry] : [...tensionEntry, newEntry]
+    );
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const date = getCurrentTimeAndDate();
-    setTensionEntry(
-      tensionEntry.length === 0
-        ? [{ ...data, id: uid(), date: date }]
-        : [...tensionEntry, { ...data, id: uid(), date: date }]
-    );
+    handleAddTensionEntry(data);
   }
 
   return (
@@ -90,7 +93,7 @@ export default function HomePage() {
         <StyledSpan>0</StyledSpan>
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
-      <StyledButton>Save</StyledButton>
+      <StyledButton type="submit">Save</StyledButton>
       <StyledList>
         {tensionEntry.map((entry) => {
           const { id, date, tensionLevel } = entry;

@@ -1,6 +1,12 @@
 import { emotionData } from "@/lib/data";
 import styled from "styled-components";
 
+const StyledH1 = styled.h1`
+  text-align: center;
+  line-height: 2.2rem;
+  margin: 1rem auto 0;
+`;
+
 const StyledList = styled.ul`
   list-style: none;
   padding-left: 0;
@@ -28,13 +34,15 @@ export default function EmotionList() {
   }
 
   return (
-    <StyledList>
-      <h1>The seven basic emotions</h1>
-      {emotionData.map(({ slug, name, color }) => (
-        <StyledListItem key={slug} $color={color}>
-          {name}
-        </StyledListItem>
-      ))}
-    </StyledList>
+    <>
+      <StyledH1>The seven basic emotions</StyledH1>
+      <StyledList>
+        {emotionData.map(({ slug, name, color }) => (
+          <StyledListItem key={slug} $color={color}>
+            {name}
+          </StyledListItem>
+        ))}
+      </StyledList>
+    </>
   );
 }
