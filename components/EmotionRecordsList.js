@@ -36,22 +36,20 @@ export default function EmotionRecordsList({ tensionEntry }) {
   }
 
   return (
-    <>
-      <StyledList>
-        {tensionEntry.map((entry, index) => {
-          const { id, date, tensionLevel } = entry;
-          return (
-            <>
-              <StyledListItem key={id} onClick={() => handleShow(index)}>
-                {date}
-              </StyledListItem>
-              <StyledDetails $show={show[index]}>
-                - Tension Level: {tensionLevel}%
-              </StyledDetails>
-            </>
-          );
-        })}
-      </StyledList>
-    </>
+    <StyledList>
+      {tensionEntry.map((entry, index) => {
+        const { id, date, tensionLevel } = entry;
+        return (
+          <>
+            <StyledListItem key={id} onClick={() => handleShow(index)}>
+              {date}
+            </StyledListItem>
+            <StyledDetails $show={show[index]}>
+              - Tension Level: {tensionLevel}%
+            </StyledDetails>
+          </>
+        );
+      })}
+    </StyledList>
   );
 }
