@@ -1,5 +1,6 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
+import Link from "next/link";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -28,6 +29,12 @@ const StyledListItem = styled.li`
   font-size: 1.3rem;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
+
 export default function EmotionList() {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
@@ -39,10 +46,11 @@ export default function EmotionList() {
       <StyledList>
         {emotionData.map(({ slug, name, color }) => (
           <StyledListItem key={slug} $color={color}>
-            {name}
+          <StyledLink href={`/emotions/${slug}`}>{name}</StyledLink>
           </StyledListItem>
         ))}
       </StyledList>
     </>
+
   );
 }

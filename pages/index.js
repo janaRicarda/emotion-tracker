@@ -1,3 +1,4 @@
+
 import styled from "styled-components";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
@@ -55,6 +56,9 @@ const StyledLink = styled(Link)`
   border-radius: 5px;
   color: black;
 `;
+
+
+import EmotionList from "@/components/EmotionList";
 
 export default function HomePage() {
   const [tensionEntry, setTensionEntry] = useLocalStorageState("tensionEntry", {
