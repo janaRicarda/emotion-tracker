@@ -34,23 +34,24 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-
-export default function EmotionList() {
+export default function EmotionList({ title, href }) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
 
   return (
     <>
-      <StyledH1>The seven basic emotions</StyledH1>
+      <StyledH1>{title}</StyledH1>
       <StyledList>
         {emotionData.map(({ slug, name, color }) => (
           <StyledListItem key={slug} $color={color}>
-          <StyledLink href={`/emotions/${slug}`}>{name}</StyledLink>
+            <StyledLink slug={slug} href={`${href}`}>
+              {name}
+            </StyledLink>
           </StyledListItem>
         ))}
       </StyledList>
     </>
-
   );
+  //href={`/emotions/${slug}`}
 }

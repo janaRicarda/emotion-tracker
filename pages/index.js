@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
@@ -57,7 +56,6 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-
 import EmotionList from "@/components/EmotionList";
 
 export default function HomePage() {
@@ -98,6 +96,7 @@ export default function HomePage() {
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
       <StyledButton type="submit">Save</StyledButton>
+      <StyledLink href="/create">Save and go on</StyledLink>
       <StyledList>
         {tensionEntry.map((entry) => {
           const { id, date, tensionLevel } = entry;
