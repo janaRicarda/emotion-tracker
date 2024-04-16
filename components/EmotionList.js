@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-export default function EmotionList({ title, href }) {
+export default function EmotionList({ title, page }) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
@@ -45,7 +45,7 @@ export default function EmotionList({ title, href }) {
       <StyledList>
         {emotionData.map(({ slug, name, color }) => (
           <StyledListItem key={slug} $color={color}>
-            <StyledLink slug={slug} href={`${href}`}>
+            <StyledLink slug={slug} href={`/${page}/${slug}`}>
               {name}
             </StyledLink>
           </StyledListItem>
@@ -53,5 +53,4 @@ export default function EmotionList({ title, href }) {
       </StyledList>
     </>
   );
-  //href={`/emotions/${slug}`}
 }

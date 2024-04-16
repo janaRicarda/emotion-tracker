@@ -14,7 +14,7 @@ export default function HomePage({ slug }) {
       <EmotionList
         title="The seven basic emotions"
         slug={slug}
-        href={`/emotions/${slug}`}
+        page="emotions"
       />
       <StyledLink href="./">Back to tension entry</StyledLink>
     </StyledWrapper>
