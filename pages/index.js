@@ -1,9 +1,5 @@
-
 import styled from "styled-components";
-import useLocalStorageState from "use-local-storage-state";
-import { uid } from "uid";
 import Link from "next/link";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const StyledForm = styled.form`
   display: flex;
@@ -37,48 +33,24 @@ const StyledButton = styled.button`
   width: 3rem;
 `;
 
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 2rem auto;
-  text-align: left;
-`;
-
-const StyledListItem = styled.li`
-  margin: 1.2rem auto;
-`;
-
 const StyledLink = styled(Link)`
   text-decoration: none;
-  padding: 1rem;
-  background-color: lightgray;
-  border: 1px solid black;
-  border-radius: 5px;
   color: black;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 8.5px;
+  &:hover {
+    background-color: lightskyblue;
+  }
 `;
 
-
-import EmotionList from "@/components/EmotionList";
-
-export default function HomePage() {
-  const [tensionEntry, setTensionEntry] = useLocalStorageState("tensionEntry", {
-    defaultValue: [],
-  });
-
-  function handleAddTensionEntry(data) {
-    const timeStamp = getCurrentTimeAndDate();
-    const newEntry = { ...data, id: uid(), date: timeStamp };
-    setTensionEntry(
-      tensionEntry.length === 0 ? [newEntry] : [...tensionEntry, newEntry]
-    );
-  }
-
+export default function HomePage({ onAddTensionEntry }) {
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    handleAddTensionEntry(data);
+    onAddTensionEntry(data);
   }
 
   return (
@@ -98,19 +70,10 @@ export default function HomePage() {
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
       <StyledButton type="submit">Save</StyledButton>
-      <StyledList>
-        {tensionEntry.map((entry) => {
-          const { id, date, tensionLevel } = entry;
-          return (
-            <StyledListItem key={id}>
-              {date} - Tension Level: {tensionLevel}%
-            </StyledListItem>
-          );
-        })}
-      </StyledList>
       <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
+      <StyledLink href="/emotion-records">Emotion records</StyledLink>
     </StyledForm>
   );
 }
 
-export { StyledLink };
+// export { StyledLink };
