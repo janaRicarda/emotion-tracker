@@ -39,9 +39,16 @@ const StyledLink = styled(Link)`
   margin: 1rem;
   padding: 1rem;
   border-radius: 8.5px;
+  text-align: center;
   &:hover {
     background-color: lightskyblue;
   }
+`;
+
+const StyledNav = styled.nav`
+  display: flex;
+  margin: 1.5rem auto;
+  line-height: 1.2rem;
 `;
 
 export default function HomePage({ onAddTensionEntry }) {
@@ -70,8 +77,10 @@ export default function HomePage({ onAddTensionEntry }) {
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
       <StyledButton type="submit">Save</StyledButton>
-      <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
-      <StyledLink href="/emotion-records">Emotion records</StyledLink>
+      <StyledNav>
+        <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
+        <StyledLink href="/emotion-records">Emotion records</StyledLink>
+      </StyledNav>
     </StyledForm>
   );
 }

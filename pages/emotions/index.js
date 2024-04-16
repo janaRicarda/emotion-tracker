@@ -21,9 +21,11 @@ const StyledWrapper = styled.div`
 
 export default function HomePage() {
   return (
-    <StyledWrapper>
-      <EmotionList />
-      <StyledLink href="./">Back to tension entry</StyledLink>
-    </StyledWrapper>
+    <>
+      <StyledWrapper>
+        <EmotionList />
+      </StyledWrapper>
+      <StyledLink href="./">← Back to tension entry</StyledLink>
+    </>
   );
 }

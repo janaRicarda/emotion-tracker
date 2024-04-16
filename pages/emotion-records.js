@@ -13,12 +13,24 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledTitle = styled.h1`
+  margin: 1.5rem auto 1rem;
+`;
+
 export default function EmotionRecords({ tensionEntry }) {
   return (
     <>
-      <h1>Recorded Emotions</h1>
-      <EmotionRecordsList tensionEntry={tensionEntry} />
-      <StyledLink href="/">← back to list</StyledLink>
+      <StyledWrapper>
+        <StyledTitle>Recorded Emotions</StyledTitle>
+        <EmotionRecordsList tensionEntry={tensionEntry} />
+      </StyledWrapper>
+      <StyledLink href="/">← Back to tension entry</StyledLink>
     </>
   );
 }

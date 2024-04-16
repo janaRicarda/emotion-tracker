@@ -34,7 +34,6 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-
 export default function EmotionList() {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
