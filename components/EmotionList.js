@@ -2,7 +2,13 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import Link from "next/link";
 
-const StyledUl = styled.ul`
+const StyledH1 = styled.h1`
+  text-align: center;
+  line-height: 2.2rem;
+  margin: 1rem auto 0;
+`;
+
+const StyledList = styled.ul`
   list-style: none;
   padding-left: 0;
   display: flex;
@@ -11,9 +17,9 @@ const StyledUl = styled.ul`
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  margin: 1rem;
+  margin: 3rem;
 `;
-const StyledLi = styled.li`
+const StyledListItem = styled.li`
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -22,23 +28,29 @@ const StyledLi = styled.li`
   font-weight: 600;
   font-size: 1.3rem;
 `;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
 `;
 
+
 export default function EmotionList() {
-  if (!emotionData)
-    <h1>Sorry, an error has occured. Please try again later!</h1>;
+  if (!emotionData) {
+    return <h1>Sorry, an error has occured. Please try again later!</h1>;
+  }
 
   return (
-    <StyledUl>
-      <h1>The seven basic emotions</h1>
-      {emotionData.map(({ slug, name, color }) => (
-        <StyledLi key={slug} $color={color}>
+    <>
+      <StyledH1>The seven basic emotions</StyledH1>
+      <StyledList>
+        {emotionData.map(({ slug, name, color }) => (
+          <StyledListItem key={slug} $color={color}>
           <StyledLink href={`/emotions/${slug}`}>{name}</StyledLink>
-        </StyledLi>
-      ))}
-    </StyledUl>
+          </StyledListItem>
+        ))}
+      </StyledList>
+    </>
+
   );
 }
