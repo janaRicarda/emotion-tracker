@@ -36,8 +36,6 @@ export default function EmotionRecordsList({ emotionEntries }) {
     }));
   }
 
-  console.log(show);
-
   return (
     <StyledList>
       {emotionEntries.map(({ id, date, tensionLevel }) => {
