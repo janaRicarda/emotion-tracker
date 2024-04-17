@@ -4,23 +4,26 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import { uid } from "uid";
 
 export default function App({ Component, pageProps }) {
-  const [tensionEntry, setTensionEntry] = useLocalStorageState("tensionEntry", {
-    defaultValue: [],
-  });
+  const [emotionEntries, setEmotionEntries] = useLocalStorageState(
+    "emotionEntries",
+    {
+      defaultValue: [],
+    }
+  );
 
-  function handleAddTensionEntry(data) {
+  function handleAddEmotionEntry(data) {
     const timeStamp = getCurrentTimeAndDate();
     const newEntry = { ...data, id: uid(), date: timeStamp };
-    setTensionEntry(
-      tensionEntry.length === 0 ? [newEntry] : [newEntry, ...tensionEntry]
+    setEmotionEntries(
+      emotionEntries.length === 0 ? [newEntry] : [newEntry, ...emotionEntries]
     );
   }
   return (
     <>
       <GlobalStyle />
       <Component
-        tensionEntry={tensionEntry}
-        onAddTensionEntry={handleAddTensionEntry}
+        emotionEntries={emotionEntries}
+        onAddEmotionEntry={handleAddEmotionEntry}
         {...pageProps}
       />
     </>

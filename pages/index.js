@@ -51,13 +51,13 @@ const StyledNav = styled.nav`
   line-height: 1.2rem;
 `;
 
-export default function HomePage({ onAddTensionEntry }) {
+export default function HomePage({ onAddEmotionEntry }) {
   function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    onAddTensionEntry(data);
+    onAddEmotionEntry(data);
   }
 
   return (
@@ -84,5 +84,3 @@ export default function HomePage({ onAddTensionEntry }) {
     </StyledForm>
   );
 }
-
-// export { StyledLink };

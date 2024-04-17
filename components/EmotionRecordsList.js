@@ -21,13 +21,13 @@ const StyledListItem = styled.li`
   }
 `;
 
-const StyledDetails = styled.div`
+const StyledDetails = styled.ul`
   display: ${({ $show }) => ($show ? "block" : "none")};
   padding: 0 1rem;
   margin-bottom: 2rem;
 `;
 
-export default function EmotionRecordsList({ tensionEntry }) {
+export default function EmotionRecordsList({ emotionEntries }) {
   const [show, setShow] = useState([]);
   function handleShow(index) {
     const updateShow = [...show];
@@ -37,7 +37,7 @@ export default function EmotionRecordsList({ tensionEntry }) {
 
   return (
     <StyledList>
-      {tensionEntry.map((entry, index) => {
+      {emotionEntries.map((entry, index) => {
         const { id, date, tensionLevel } = entry;
         return (
           <>
@@ -45,7 +45,7 @@ export default function EmotionRecordsList({ tensionEntry }) {
               {date}
             </StyledListItem>
             <StyledDetails $show={show[index]}>
-              - Tension Level: {tensionLevel}%
+              <li>Tension Level: {tensionLevel}%</li>
             </StyledDetails>
           </>
         );
