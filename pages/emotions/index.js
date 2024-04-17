@@ -19,13 +19,13 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function HomePage() {
+export default function EmotionListPage() {
   return (
     <>
       <StyledWrapper>
         <EmotionList />
       </StyledWrapper>
-      <StyledLink href="./">← Back to tension entry</StyledLink>
+      <StyledLink href="/">← Back to tension entry</StyledLink>
     </>
   );
 }
