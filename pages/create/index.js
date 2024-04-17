@@ -8,12 +8,11 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function EmotionListEntryForm({ slug }) {
+export default function EmotionListEntryForm() {
   return (
     <StyledWrapper>
       <EmotionList
         title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
-        slug={slug}
         page="create"
       />
       <StyledLink href="./">Back to tension entry</StyledLink>

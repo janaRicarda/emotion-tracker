@@ -8,14 +8,10 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function HomePage({ slug }) {
+export default function EmotionListPage() {
   return (
     <StyledWrapper>
-      <EmotionList
-        title="The seven basic emotions"
-        slug={slug}
-        page="emotions"
-      />
+      <EmotionList title="The seven basic emotions" page="emotions" />
       <StyledLink href="./">Back to tension entry</StyledLink>
     </StyledWrapper>
   );

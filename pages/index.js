@@ -3,6 +3,8 @@ import useLocalStorageState from "use-local-storage-state";
 import { uid } from "uid";
 import Link from "next/link";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const StyledForm = styled.form`
   display: flex;
@@ -28,12 +30,24 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const StyledButtonWrapper = styled.div`
+  display: ${({ $show }) => ($show ? "flex" : "none")};
+  width: inherit;
+  justify-content: center;
+  border: 1px solid black;
+`;
+
 const StyledSpan = styled.span`
   font-size: 0.8rem;
 `;
 
 const StyledButton = styled.button`
-  width: 3rem;
+  display: ${({ $show }) => ($show ? "none" : "block")};
+  width: 6rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin: 0.5rem;
 `;
 
 const StyledList = styled.ul`
@@ -56,18 +70,20 @@ const StyledLink = styled(Link)`
   color: black;
 `;
 
-import EmotionList from "@/components/EmotionList";
-
 export default function HomePage() {
-  const [tensionEntry, setTensionEntry] = useLocalStorageState("tensionEntry", {
+  const [emotionEntry, setEmotionEntry] = useLocalStorageState("emotionEntry", {
     defaultValue: [],
   });
 
-  function handleAddTensionEntry(data) {
+  const [show, setShow] = useState(false);
+
+  const router = useRouter();
+
+  function handleAddEmotionEntry(data) {
     const timeStamp = getCurrentTimeAndDate();
     const newEntry = { ...data, id: uid(), date: timeStamp };
-    setTensionEntry(
-      tensionEntry.length === 0 ? [newEntry] : [...tensionEntry, newEntry]
+    setEmotionEntry(
+      emotionEntry.length === 0 ? [newEntry] : [...emotionEntry, newEntry]
     );
   }
 
@@ -76,7 +92,23 @@ export default function HomePage() {
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    handleAddTensionEntry(data);
+    handleAddEmotionEntry(data);
+  }
+
+  function handleSaveAndGoOn() {
+    router.push({
+      pathname: `/create`,
+      query: emotionEntry,
+    });
+    console.log(emotionEntry);
+  }
+
+  function toggleShow() {
+    setShow(!show);
+  }
+
+  function handleBackButton(event) {
+    event.preventDefault();
   }
 
   return (
@@ -95,10 +127,20 @@ export default function HomePage() {
         <StyledSpan>0</StyledSpan>
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
-      <StyledButton type="submit">Save</StyledButton>
-      <StyledLink href="/create">Save and go on</StyledLink>
+      <StyledButton type="submit" onClick={toggleShow} $show={show}>
+        Save
+      </StyledButton>
+
+      <StyledButtonWrapper $show={show}>
+        <StyledButton type="button" onClick={handleBackButton}>
+          Back
+        </StyledButton>
+        <StyledButton type="button" onClick={handleSaveAndGoOn}>
+          Save and go on
+        </StyledButton>
+      </StyledButtonWrapper>
       <StyledList>
-        {tensionEntry.map((entry) => {
+        {emotionEntry.map((entry) => {
           const { id, date, tensionLevel } = entry;
           return (
             <StyledListItem key={id}>
