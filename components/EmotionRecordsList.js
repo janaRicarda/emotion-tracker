@@ -28,23 +28,25 @@ const StyledDetails = styled.ul`
 `;
 
 export default function EmotionRecordsList({ emotionEntries }) {
-  const [show, setShow] = useState([]);
-  function handleShow(index) {
-    const updateShow = [...show];
-    updateShow[index] = !updateShow[index];
-    setShow(updateShow);
+  const [show, setShow] = useState({});
+  function handleShow(id) {
+    setShow((prevShow) => ({
+      ...prevShow,
+      [id]: !prevShow[id],
+    }));
   }
+
+  console.log(show);
 
   return (
     <StyledList>
-      {emotionEntries.map((entry, index) => {
-        const { id, date, tensionLevel } = entry;
+      {emotionEntries.map(({ id, date, tensionLevel }) => {
         return (
           <>
-            <StyledListItem key={id} onClick={() => handleShow(index)}>
+            <StyledListItem key={id} onClick={() => handleShow(id)}>
               {date}
             </StyledListItem>
-            <StyledDetails $show={show[index]}>
+            <StyledDetails $show={show[id]}>
               <li>Tension Level: {tensionLevel}%</li>
             </StyledDetails>
           </>

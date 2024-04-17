@@ -14,10 +14,9 @@ export default function App({ Component, pageProps }) {
   function handleAddEmotionEntry(data) {
     const timeStamp = getCurrentTimeAndDate();
     const newEntry = { ...data, id: uid(), date: timeStamp };
-    setEmotionEntries(
-      emotionEntries.length === 0 ? [newEntry] : [newEntry, ...emotionEntries]
-    );
+    setEmotionEntries([newEntry, ...emotionEntries]);
   }
+
   return (
     <>
       <GlobalStyle />
