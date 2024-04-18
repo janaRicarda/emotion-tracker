@@ -56,11 +56,11 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
-export default function EmotionForm({ name, color }) {
+export default function EmotionForm({ name, color, handleDetailSubmit }) {
   return (
     <>
       <StyledH1>Record your {name}</StyledH1>
-      <StyledForm $color={color}>
+      <StyledForm $color={color} onSubmit={handleDetailSubmit}>
         <label htmlFor="date">Date and time:</label>
         <input type="date" id="date" name="date"></input>
         <label htmlFor="subemotion">Select Subemotion: </label>
