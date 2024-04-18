@@ -10,5 +10,6 @@ export default function EmotionEntry() {
   const { slug } = router.query;
   const emotion = emotionData.find((emotion) => emotion.slug === slug);
   if (!emotion) return <h1>emotionForm not found</h1>;
+
   return <EmotionForm name={emotion.name} color={emotion.color} />;
 }
