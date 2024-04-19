@@ -23,11 +23,13 @@ export default function App({ Component, pageProps }) {
   function handleAddEmotionDetails(data, id) {
     setEmotionEntries(
       emotionEntries.map((entry) =>
-        entry.id === id ? { ...entry, ...data, date: entry.date } : entry
+        entry.id === id ? { ...entry, ...data } : entry
       )
     );
     router.push("/emotion-records");
   }
+
+  console.log(emotionEntries);
 
   return (
     <>
