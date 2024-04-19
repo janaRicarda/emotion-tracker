@@ -29,8 +29,6 @@ export default function App({ Component, pageProps }) {
     router.push("/emotion-records");
   }
 
-  console.log(emotionEntries);
-
   return (
     <>
       <GlobalStyle />
