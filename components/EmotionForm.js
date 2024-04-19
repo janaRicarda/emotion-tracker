@@ -56,24 +56,64 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
-export default function EmotionForm({ name, color, handleDetailSubmit }) {
+const StyledTextInput = styled.input`
+  padding: 0.3rem 0;
+  border-radius: 6px;
+  border: 1px solid black;
+`;
+
+export default function EmotionForm({
+  name,
+  color,
+  onAddEmotionDetails,
+  id,
+  slug,
+  emotionEntries,
+  subemotions,
+}) {
+  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
+
+  const correspondingId = id;
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    onAddEmotionDetails(data, correspondingId);
+  }
+
   return (
     <>
       <StyledH1>Record your {name}</StyledH1>
-      <StyledForm $color={color} onSubmit={handleDetailSubmit}>
-        <label htmlFor="date">Date and time:</label>
-        <input type="date" id="date" name="date"></input>
-        <label htmlFor="subemotion">Select Subemotion: </label>
-        <StyledSelect id="subemotion" name="subemotion" required>
-          <option value="joy">Joy</option>
-          <option value="surprise">Surprise</option>
-          <option value="fear">Fear</option>
-          <option value="sadness">Sadness</option>
-          <option value="contempt">Contempt</option>
-          <option value="disgust">Disgust</option>
-          <option value="anger">Anger</option>
+      <StyledForm $color={color} onSubmit={handleSubmit}>
+        <p>Date: {correspondingEntry.date}</p>
+        <p>Tension-Level: {correspondingEntry.tensionLevel}%</p>
+        <label htmlFor="emotion"></label>
+        Emotion:
+        <StyledTextInput
+          type="text"
+          id="emotion"
+          name="emotion"
+          readOnly
+          value={name}
+        />
+        <label htmlFor="subemotion">*Select Subemotion: </label>
+        <StyledSelect
+          defaultValue={slug}
+          id="subemotion"
+          name="subemotion"
+          required
+        >
+          <option value={""}>--select a subemotion--</option>
+          <option value={""}>--none--</option>
+          {subemotions.map((sub) => (
+            <option key={sub} value={sub}>
+              {sub}
+            </option>
+          ))}
         </StyledSelect>
-        <label htmlFor="intensity"> Emotion Intensity: </label>
+        <label htmlFor="intensity"> *Emotion Intensity: </label>
         <input
           type="range"
           id="intensity"
@@ -86,7 +126,7 @@ export default function EmotionForm({ name, color, handleDetailSubmit }) {
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="category"> Association Category: </label>
+        <label htmlFor="category"> *Association Category: </label>
         <input
           type="range"
           id="category"
@@ -96,8 +136,9 @@ export default function EmotionForm({ name, color, handleDetailSubmit }) {
           required
         ></input>
         <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
+          <StyledSpan>unpleasant</StyledSpan>
+          <StyledSpan>neutral</StyledSpan>
+          <StyledSpan>pleasant</StyledSpan>
         </StyledWrapper>
         <label htmlFor="trigger"></label>
         Trigger:

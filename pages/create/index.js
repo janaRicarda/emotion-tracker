@@ -1,6 +1,7 @@
 import EmotionList from "@/components/EmotionList.js";
 import styled from "styled-components";
 import Link from "next/link.js";
+import { useRouter } from "next/router";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -20,11 +21,15 @@ const StyledLink = styled(Link)`
 `;
 
 export default function CreateIndexPage() {
+  const router = useRouter();
+  const id = router.query.id;
+
   return (
     <StyledWrapper>
       <EmotionList
         title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
         page="create"
+        id={id}
       />
       <StyledLink href="./">Back to tension entry</StyledLink>
     </StyledWrapper>

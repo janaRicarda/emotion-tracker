@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { uid } from "uid";
 
 const StyledForm = styled.form`
   display: flex;
@@ -66,31 +66,33 @@ const StyledNav = styled.nav`
   line-height: 1.2rem;
 `;
 
-export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
+const StyledBackButton = styled.input`
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  color: black;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 8.5px;
+  text-align: center;
+  &:hover {
+    background-color: lightskyblue;
+  }
+`;
+
+export default function HomePage({ onAddEmotionEntry }) {
   const [show, setShow] = useState(false);
-  const router = useRouter();
+  const [id, setId] = useState();
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    onAddEmotionEntry(data);
-  }
+    const id = uid();
 
-  /* function handleSaveAndGoOn() {
-    router.push({
-      pathname: `/create`,
-      query: emotionEntries,
-    });
-  }
- */
-  function toggleShow() {
-    setShow(!show);
-  }
-
-  function handleBackButton(event) {
-    event.preventDefault();
+    onAddEmotionEntry(data, id);
+    setId(id);
   }
 
   return (
@@ -110,15 +112,22 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        <StyledButton type="submit" onClick={toggleShow} $show={show}>
+        <StyledButton type="submit" onClick={() => setShow(!show)} $show={show}>
           Save
         </StyledButton>
 
         <StyledButtonWrapper $show={show}>
-          <StyledButton type="button" onClick={handleBackButton}>
-            Back
-          </StyledButton>
-          <StyledLink href="/create">Save and go on</StyledLink>
+          <StyledBackButton
+            type="reset"
+            value={"Back"}
+            onClick={() => setShow(!show)}
+          ></StyledBackButton>
+          <StyledLink
+            href={{ pathname: "/create", query: { id: id } }}
+            forwardedAs={`/create`}
+          >
+            Next
+          </StyledLink>
         </StyledButtonWrapper>
       </StyledForm>
       <StyledNav>

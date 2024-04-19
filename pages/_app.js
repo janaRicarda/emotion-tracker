@@ -1,7 +1,7 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
-import { uid } from "uid";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
@@ -11,28 +11,29 @@ export default function App({ Component, pageProps }) {
     }
   );
 
-  function handleAddEmotionEntry(data) {
+  const router = useRouter();
+
+  function handleAddEmotionEntry(data, id) {
     const timeStamp = getCurrentTimeAndDate();
-    const newEntry = { ...data, id: uid(), date: timeStamp };
+
+    const newEntry = { ...data, id, date: timeStamp };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
-  // function handleAddEmotionDetail(data) {
-  //   const newEntry = { ...data, subemotion: subemotion.value };
-  // }
 
-  function handleDetailSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    handleAddEmotionEntry(data);
-    const formElements = event.target.elements;
-    console.log(formElements.subemotion.value);
+  function handleAddEmotionDetails(data, id) {
+    setEmotionEntries(
+      emotionEntries.map((entry) =>
+        entry.id === id ? { ...entry, ...data, date: entry.date } : entry
+      )
+    );
+    router.push("/emotion-records");
   }
+
   return (
     <>
       <GlobalStyle />
       <Component
-        handleDetailSubmit={handleDetailSubmit}
+        onAddEmotionDetails={handleAddEmotionDetails}
         emotionEntries={emotionEntries}
         onAddEmotionEntry={handleAddEmotionEntry}
         {...pageProps}
