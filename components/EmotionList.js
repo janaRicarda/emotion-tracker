@@ -44,15 +44,16 @@ export default function EmotionList({ title, page, id }) {
       <StyledH1>{title}</StyledH1>
       <StyledList>
         {emotionData.map(({ slug, name, color }) => (
-          <StyledListItem key={slug} $color={color}>
-            <StyledLink
-              slug={slug}
-              forwardedAs={`/${page}/${slug}`}
-              href={{ pathname: `/${page}/${slug}`, query: { id } }}
-            >
+          <StyledLink
+            key={slug}
+            slug={slug}
+            forwardedAs={`/${page}/${slug}`}
+            href={{ pathname: `/${page}/${slug}`, query: { id } }}
+          >
+            <StyledListItem key={slug} $color={color}>
               {name}
-            </StyledLink>
-          </StyledListItem>
+            </StyledListItem>
+          </StyledLink>
         ))}
       </StyledList>
     </>

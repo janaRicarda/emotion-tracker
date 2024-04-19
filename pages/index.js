@@ -31,7 +31,6 @@ const StyledButtonWrapper = styled.div`
   display: ${({ $show }) => ($show ? "flex" : "none")};
   width: inherit;
   justify-content: center;
-  border: 1px solid black;
 `;
 
 const StyledSpan = styled.span`
@@ -40,11 +39,12 @@ const StyledSpan = styled.span`
 
 const StyledButton = styled.button`
   display: ${({ $show }) => ($show ? "none" : "block")};
+  background-color: lightskyblue;
   width: 6rem;
-  background-color: white;
   border: 1px solid black;
   border-radius: 6px;
-  margin: 0.5rem;
+  margin: 1rem;
+  padding: 1rem;
 `;
 
 const StyledLink = styled(Link)`
@@ -54,9 +54,10 @@ const StyledLink = styled(Link)`
   padding: 1rem;
   border-radius: 8.5px;
   text-align: center;
-  &:hover {
-    background-color: lightskyblue;
-  }
+  background-color: ${({ $actionButton }) =>
+    $actionButton ? "lightskyblue" : "white"};
+  border: ${({ $actionButton }) =>
+    $actionButton ? "1px solid black" : "none"};
 `;
 
 const StyledNav = styled.nav`
@@ -74,13 +75,20 @@ const StyledBackButton = styled.input`
   margin: 1rem;
   padding: 1rem;
   border-radius: 8.5px;
+  border: 1px solid black;
   text-align: center;
-  &:hover {
-    background-color: lightskyblue;
-  }
+  background-color: lightskyblue;
+`;
+
+const StyledMessage = styled.p`
+  align-self: center;
+  text-align: center;
+  font-weight: 600;
+  margin: 1rem auto;
 `;
 
 export default function HomePage({ onAddEmotionEntry }) {
+  const [tension, setTension] = useState("0");
   const [show, setShow] = useState(false);
   const [id, setId] = useState();
 
@@ -107,26 +115,35 @@ export default function HomePage({ onAddEmotionEntry }) {
           type="range"
           defaultValue={0}
           max={100}
+          onChange={(event) => setTension(event.target.value)}
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
+        {!show && <p>{tension}</p>}
         <StyledButton type="submit" onClick={() => setShow(!show)} $show={show}>
           Save
         </StyledButton>
 
+        {show && (
+          <StyledMessage>Your entry was successfully saved!</StyledMessage>
+        )}
         <StyledButtonWrapper $show={show}>
           <StyledBackButton
             type="reset"
-            value={"Back"}
-            onClick={() => setShow(!show)}
+            value={"Done"}
+            onClick={() => {
+              setShow(!show);
+              setTension("0");
+            }}
           ></StyledBackButton>
           <StyledLink
+            $actionButton
             href={{ pathname: "/create", query: { id: id } }}
             forwardedAs={`/create`}
           >
-            Next
+            Add more details
           </StyledLink>
         </StyledButtonWrapper>
       </StyledForm>
