@@ -110,6 +110,7 @@ export default function HomePage({ onAddEmotionEntry }) {
           On a scale from 0 to 100, how tense do you feel in this moment?
         </StyledLabel>
         <StyledInput
+          aria-label="Adjust tension level between 0 and 100"
           id="tension-level"
           name="tensionLevel"
           type="range"

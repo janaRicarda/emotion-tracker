@@ -15,6 +15,19 @@ const StyledForm = styled.form`
   justify-content: center;
   gap: 1rem;
 `;
+
+const EmotionLabel = styled.label`
+  display: flex;
+  gap: 0.3rem;
+`;
+
+const StyledTextInput = styled.input`
+  padding: 0 1rem 0 0;
+  border: none;
+  background-color: transparent;
+  line-height: 1rem;
+`;
+
 const StyledWrapper = styled.div`
   display: flex;
   width: inherit;
@@ -56,12 +69,6 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
-const StyledTextInput = styled.input`
-  padding: 0.3rem 0;
-  border-radius: 6px;
-  border: 1px solid black;
-`;
-
 export default function EmotionForm({
   name,
   color,
@@ -87,18 +94,23 @@ export default function EmotionForm({
     <>
       <StyledH1>Record your {name}</StyledH1>
       <StyledForm $color={color} onSubmit={handleSubmit}>
-        <p>Date: {correspondingEntry.date}</p>
-        <p>Tension-Level: {correspondingEntry.tensionLevel}%</p>
-        <label htmlFor="emotion"></label>
-        Emotion:
-        <StyledTextInput
-          type="text"
-          id="emotion"
-          name="emotion"
-          readOnly
-          value={name}
-        />
-        <label htmlFor="subemotion">*Select Subemotion: </label>
+        <p aria-labelledby="Date and time">Date: {correspondingEntry.date}</p>
+        <p aria-labelledby="Tension level">
+          Tension-Level: {correspondingEntry.tensionLevel}%
+        </p>
+
+        <EmotionLabel htmlFor="emotion">
+          Emotion:
+          <StyledTextInput
+            type="text"
+            id="emotion"
+            name="emotion"
+            readOnly
+            value={name}
+          />
+        </EmotionLabel>
+
+        <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
           defaultValue={slug}
           id="subemotion"
@@ -113,7 +125,7 @@ export default function EmotionForm({
             </option>
           ))}
         </StyledSelect>
-        <label htmlFor="intensity"> *Emotion Intensity: </label>
+        <label htmlFor="intensity">* Emotion Intensity:</label>
         <input
           type="range"
           id="intensity"
@@ -126,7 +138,7 @@ export default function EmotionForm({
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="category"> *Association Category: </label>
+        <label htmlFor="category">* Association Category:</label>
         <input
           type="range"
           id="category"
@@ -140,8 +152,7 @@ export default function EmotionForm({
           <StyledSpan>neutral</StyledSpan>
           <StyledSpan>pleasant</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="trigger"></label>
-        Trigger:
+        <label htmlFor="trigger">Trigger:</label>
         <StyledTextarea id="trigger" name="trigger"></StyledTextarea>
         <label htmlFor="notes">Notes: </label>
         <StyledTextarea id="notes" name="notes"></StyledTextarea>

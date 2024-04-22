@@ -1,6 +1,7 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -8,9 +9,9 @@ const StyledH1 = styled.h1`
   margin: 1rem auto 0;
 `;
 
-const StyledList = styled.ul`
+const EmotionSection = styled.section`
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -19,22 +20,23 @@ const StyledList = styled.ul`
   gap: 0.5rem;
   margin: 3rem;
 `;
-const StyledListItem = styled.li`
+
+const EmotionLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  background-color: ${({ $color }) => $color};
   border: 1px solid black;
   border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: ${({ $color }) => $color};
   width: 80vw;
+  max-width: 800px;
   font-weight: 600;
+  padding: 1rem;
   font-size: 1.3rem;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-`;
-
 export default function EmotionList({ title, page, id }) {
+  const router = useRouter();
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
@@ -42,20 +44,20 @@ export default function EmotionList({ title, page, id }) {
   return (
     <>
       <StyledH1>{title}</StyledH1>
-      <StyledList>
+
+      <EmotionSection>
         {emotionData.map(({ slug, name, color }) => (
-          <StyledLink
+          <EmotionLink
             key={slug}
+            $color={color}
             slug={slug}
             forwardedAs={`/${page}/${slug}`}
             href={{ pathname: `/${page}/${slug}`, query: { id } }}
           >
-            <StyledListItem key={slug} $color={color}>
-              {name}
-            </StyledListItem>
-          </StyledLink>
+            {name}
+          </EmotionLink>
         ))}
-      </StyledList>
+      </EmotionSection>
     </>
   );
 }
