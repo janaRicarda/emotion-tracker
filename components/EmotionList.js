@@ -1,7 +1,6 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -36,7 +35,6 @@ const EmotionLink = styled(Link)`
 `;
 
 export default function EmotionList({ title, page, id }) {
-  const router = useRouter();
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
