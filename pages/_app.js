@@ -21,8 +21,6 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
 
-  console.log(emotionEntries);
-
   return (
     <>
       <GlobalStyle />
