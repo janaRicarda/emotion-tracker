@@ -17,12 +17,19 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 
+  function handleDeleteEmotionEntry(id) {
+    setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+  }
+
+  console.log(emotionEntries);
+
   return (
     <>
       <GlobalStyle />
       <Component
         emotionEntries={emotionEntries}
         onAddEmotionEntry={handleAddEmotionEntry}
+        onDeleteEmotionEntry={handleDeleteEmotionEntry}
         {...pageProps}
       />
     </>
