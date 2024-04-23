@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Klecks from ".//../public/images/Klecks2.svg";
 
 const StyledHeader = styled.header`
   width: 100%;
+  height: 15vh;
   //background: linear-gradient(white, transparent);
-  background: var(--main-bright);
+  background: white;
   position: fixed;
   top: 0;
 `;
@@ -14,25 +14,48 @@ const StyledLogo = styled(Image)`
   aspect-ratio: auto;
   background: transparent;
 `;
-const StyledKlecks = styled(Klecks)`
-  width: 200px;
-  height: 100px;
-`;
-const styledP = styled.p`
+
+const StyledH1 = styled.h1`
   position: absolute;
-  top: 100px;
+  top: 30px;
+  left: 50px;
+  font-size: 2.5rem;
+  font-weight: 500;
+`;
+const StyledP = styled.p`
+  position: absolute;
+  top: 70px;
+  left: 160px;
+`;
+const StyledDiv = styled.div`
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: blue;
+  filter: blur(60px);
+  opacity: 70%;
+  position: fixed;
+  top: -60px;
+  left: 0;
+  right: 0;
+  z-index: 1;
 `;
 
 export default function Header() {
   return (
-    <StyledHeader>
-      <StyledLogo
-        src="/../public/images/Logo4.png"
-        height={160}
-        width={280}
+    <>
+      <StyledDiv></StyledDiv>
+
+      <StyledHeader>
+        {/* <StyledLogo
+        src="/../public/images/Klecks4.png"
+        height={150}
+        width={600}
         alt="A picture of the logo saying what a feeling"
-      ></StyledLogo>
-      {/* <StyledKlecks height={100} width={100} /> */}
-    </StyledHeader>
+      /> */}
+        <StyledH1>What a feeling</StyledH1>
+        <StyledP>Emotion Tracker</StyledP>
+      </StyledHeader>
+    </>
   );
 }

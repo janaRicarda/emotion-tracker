@@ -20,7 +20,7 @@ const StyledList = styled.ul`
   margin: 3rem;
 `;
 const StyledListItem = styled.li`
-  border: 1px solid var(--main-dark);
+  //border: 1px solid var(--main-dark);
   border-radius: 0.5rem;
   padding: 1rem;
   background-color: ${({ $color }) => $color};

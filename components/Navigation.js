@@ -14,6 +14,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--main-bright);
   background: var(--main-dark);
+  border-radius: 0.5rem;
   padding: 0.5rem;
   flex: 1;
   border: 1px solid var(--main-bright);
