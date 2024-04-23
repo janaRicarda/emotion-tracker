@@ -28,7 +28,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledButtonWrapper = styled.div`
-  display: ${({ $show }) => ($show ? "flex" : "none")};
+  display: flex;
   width: inherit;
   justify-content: center;
 `;
@@ -38,7 +38,6 @@ const StyledSpan = styled.span`
 `;
 
 const StyledButton = styled.button`
-  display: ${({ $show }) => ($show ? "none" : "block")};
   background-color: lightskyblue;
   width: 6rem;
   border: 1px solid black;
@@ -69,7 +68,6 @@ const StyledNav = styled.nav`
 
 const StyledBackButton = styled.input`
   background-color: transparent;
-  border: none;
   text-decoration: none;
   color: black;
   margin: 1rem;
@@ -89,7 +87,7 @@ const StyledMessage = styled.p`
 
 export default function HomePage({ onAddEmotionEntry }) {
   const [tension, setTension] = useState("0");
-  const [show, setShow] = useState(false);
+  const [isShown, setIsShown] = useState(true);
   const [id, setId] = useState();
 
   function handleSubmit(event) {
@@ -97,10 +95,11 @@ export default function HomePage({ onAddEmotionEntry }) {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    const id = uid();
+    const newId = uid();
 
-    onAddEmotionEntry(data, id);
-    setId(id);
+    onAddEmotionEntry(data, newId);
+    setId(newId);
+    setIsShown(!isShown);
   }
 
   return (
@@ -122,31 +121,31 @@ export default function HomePage({ onAddEmotionEntry }) {
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        {!show && <p>{tension}</p>}
-        <StyledButton type="submit" onClick={() => setShow(!show)} $show={show}>
-          Save
-        </StyledButton>
+        {!isShown && <p>{tension}</p>}
+        {isShown && <StyledButton type="submit">Save</StyledButton>}
 
-        {show && (
+        {!isShown && (
           <StyledMessage>Your entry was successfully saved!</StyledMessage>
         )}
-        <StyledButtonWrapper $show={show}>
-          <StyledBackButton
-            type="reset"
-            value={"Done"}
-            onClick={() => {
-              setShow(!show);
-              setTension("0");
-            }}
-          ></StyledBackButton>
-          <StyledLink
-            $actionButton
-            href={{ pathname: "/create", query: { id: id } }}
-            forwardedAs={`/create`}
-          >
-            Add more details
-          </StyledLink>
-        </StyledButtonWrapper>
+        {!isShown && (
+          <StyledButtonWrapper>
+            <StyledBackButton
+              type="reset"
+              value={"Done"}
+              onClick={() => {
+                setIsShown(!isShown);
+                setTension("0");
+              }}
+            ></StyledBackButton>
+            <StyledLink
+              $actionButton
+              href={{ pathname: "/create", query: { id: id } }}
+              forwardedAs={`/create`}
+            >
+              Add more details
+            </StyledLink>
+          </StyledButtonWrapper>
+        )}
       </StyledForm>
       <StyledNav>
         <StyledLink href="/emotions">The 7 basic emotions</StyledLink>

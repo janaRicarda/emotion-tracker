@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -30,7 +31,7 @@ const StyledTextInput = styled.input`
 
 const StyledWrapper = styled.div`
   display: flex;
-  width: inherit;
+  width: 100%;
   justify-content: space-between;
 `;
 
@@ -78,24 +79,24 @@ export default function EmotionForm({
   emotionEntries,
   subemotions,
 }) {
+  const router = useRouter();
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
-
-  const correspondingId = id;
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    onAddEmotionDetails(data, correspondingId);
+    onAddEmotionDetails(data, id);
+    router.push("/emotion-records");
   }
 
   return (
     <>
       <StyledH1>Record your {name}</StyledH1>
       <StyledForm $color={color} onSubmit={handleSubmit}>
-        <p aria-labelledby="Date and time">Date: {correspondingEntry.date}</p>
-        <p aria-labelledby="Tension level">
+        <p aria-label="Date and time">Date: {correspondingEntry.date}</p>
+        <p aria-label="Tension level">
           Tension-Level: {correspondingEntry.tensionLevel}%
         </p>
 
@@ -133,7 +134,7 @@ export default function EmotionForm({
           defaultValue={0}
           max={100}
           required
-        ></input>
+        />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
@@ -146,7 +147,7 @@ export default function EmotionForm({
           defaultValue={0}
           max={100}
           required
-        ></input>
+        />
         <StyledWrapper>
           <StyledSpan>unpleasant</StyledSpan>
           <StyledSpan>neutral</StyledSpan>

@@ -44,17 +44,27 @@ export default function EmotionList({ title, page, id }) {
       <StyledH1>{title}</StyledH1>
 
       <EmotionSection>
-        {emotionData.map(({ slug, name, color }) => (
-          <EmotionLink
-            key={slug}
-            $color={color}
-            slug={slug}
-            forwardedAs={`/${page}/${slug}`}
-            href={{ pathname: `/${page}/${slug}`, query: { id } }}
-          >
-            {name}
-          </EmotionLink>
-        ))}
+        {emotionData.map(({ slug, name, color }) =>
+          page === "create" ? (
+            <EmotionLink
+              key={slug}
+              $color={color}
+              slug={slug}
+              href={{ pathname: `/${page}/${slug}`, query: { id } }}
+            >
+              {name}
+            </EmotionLink>
+          ) : (
+            <EmotionLink
+              key={slug}
+              $color={color}
+              slug={slug}
+              href={`/emotions/${slug}`}
+            >
+              {name}
+            </EmotionLink>
+          )
+        )}
       </EmotionSection>
     </>
   );

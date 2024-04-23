@@ -1,7 +1,6 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
-import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
@@ -10,8 +9,6 @@ export default function App({ Component, pageProps }) {
       defaultValue: [],
     }
   );
-
-  const router = useRouter();
 
   function handleAddEmotionEntry(data, id) {
     const timeStamp = getCurrentTimeAndDate();
@@ -26,7 +23,6 @@ export default function App({ Component, pageProps }) {
         entry.id === id ? { ...entry, ...data } : entry
       )
     );
-    router.push("/emotion-records");
   }
 
   return (

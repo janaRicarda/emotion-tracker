@@ -60,7 +60,7 @@ export default function EmotionRecordsList({ emotionEntries }) {
                 {emotion && <li>Emotion: {emotion}</li>}
                 {subemotion && <li>Subemotion: {subemotion}</li>}
                 {intensity && <li>Intensity: {intensity}%</li>}
-                {category && <li>Pleasentness: {category}%</li>}
+                {category && <li>Pleasantness: {category}%</li>}
                 {trigger && <li>Trigger: {trigger}</li>}
                 {notes && <li>Notes: {notes}</li>}
               </StyledDetails>
