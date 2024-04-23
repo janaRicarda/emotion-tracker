@@ -2,6 +2,7 @@ import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import { uid } from "uid";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
@@ -20,11 +21,13 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component
-        emotionEntries={emotionEntries}
-        onAddEmotionEntry={handleAddEmotionEntry}
-        {...pageProps}
-      />
+      <Layout>
+        <Component
+          emotionEntries={emotionEntries}
+          onAddEmotionEntry={handleAddEmotionEntry}
+          {...pageProps}
+        />
+      </Layout>
     </>
   );
 }

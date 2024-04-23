@@ -9,8 +9,16 @@ export default createGlobalStyle`
   * {
   margin: 0;
 }
+:root {
+  --main-bright: #FFFFEB;
+  --main-dark: #030352;
+}
   body {
     margin: 0;
+    padding-top: 130px;
+    padding-bottom: 67px;
+    background-color: #FFFFEB;
+    color: #030352;
     font-family: system-ui;
     line-height: 1.5;
   -webkit-font-smoothing: antialiased;

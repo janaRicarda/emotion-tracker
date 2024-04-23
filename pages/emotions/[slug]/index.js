@@ -24,18 +24,13 @@ export default function EmotionDetailsPage() {
   const emotion = emotionData.find((emotion) => emotion.slug === slug);
   if (!emotion) return <h1>emotion not found</h1>;
   return (
-    <>
-      <EmotionDetails
-        name={emotion.name}
-        description={emotion.description}
-        emotionfunction={emotion.emotionfunction}
-        indications={emotion.indications}
-        subemotions={emotion.subemotions}
-        color={emotion.color}
-      />
-      <StyledLink $color={emotion.color} href="/emotions">
-        ← back to list{" "}
-      </StyledLink>
-    </>
+    <EmotionDetails
+      name={emotion.name}
+      description={emotion.description}
+      emotionfunction={emotion.emotionfunction}
+      indications={emotion.indications}
+      subemotions={emotion.subemotions}
+      color={emotion.color}
+    />
   );
 }

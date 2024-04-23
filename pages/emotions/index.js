@@ -21,11 +21,8 @@ const StyledWrapper = styled.div`
 
 export default function EmotionListPage() {
   return (
-    <>
-      <StyledWrapper>
-        <EmotionList />
-      </StyledWrapper>
-      <StyledLink href="/">← Back to tension entry</StyledLink>
-    </>
+    <StyledWrapper>
+      <EmotionList />
+    </StyledWrapper>
   );
 }
