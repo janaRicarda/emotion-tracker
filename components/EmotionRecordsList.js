@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
 
@@ -93,7 +93,6 @@ export default function EmotionRecordsList({
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
-  // to make animation work together with conditional rendering
   const [animation, setAnimation] = useState(false);
 
   function handleShowDetails(id) {
@@ -103,18 +102,22 @@ export default function EmotionRecordsList({
     }));
   }
 
-  function handleShowConfirmMessage(id) {
-    setShowConfirmMessage((prevShow) => ({
-      ...prevShow,
-      [id]: !prevShow[id],
-    }));
+  function toggleAnimatedConfirmMessage(id) {
+    function handleShowConfirmMessage(id) {
+      setShowConfirmMessage((prevShow) => ({
+        ...prevShow,
+        [id]: !prevShow[id],
+      }));
+    }
+    // Gives Animation time to be active and seen after appearing/leaving the DOM
+    if (!animation) {
+      setTimeout(() => setAnimation(!animation), 1);
+      handleShowConfirmMessage(id);
+    } else {
+      setTimeout(() => handleShowConfirmMessage(id), 200);
+      setAnimation(!animation);
+    }
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimation((preValue) => !preValue);
-    }, 200);
-  }, [showConfirmMessage]);
 
   return (
     <StyledList>
@@ -128,13 +131,15 @@ export default function EmotionRecordsList({
               <StyledDeleteButton
                 type="button"
                 aria-label="Delete Emotion Entry"
-                onClick={() => handleShowConfirmMessage(id)}
+                onClick={() => {
+                  toggleAnimatedConfirmMessage(id);
+                }}
               />
             </StyledListItemWrapper>
             {showConfirmMessage[id] && (
               <>
                 <StyledConfirmBackground
-                  onClick={() => handleShowConfirmMessage(id)}
+                  onClick={() => toggleAnimatedConfirmMessage(id)}
                 ></StyledConfirmBackground>
                 <StyledConfirmBox $animation={animation}>
                   <StyledConfirmMessage>
@@ -147,7 +152,7 @@ export default function EmotionRecordsList({
                     <StyledButton
                       aria-label="do not delete this entry"
                       $color={"#00b400"}
-                      onClick={() => setShowConfirmMessage(!showConfirmMessage)}
+                      onClick={() => toggleAnimatedConfirmMessage(id)}
                     >
                       Keep it!
                     </StyledButton>
@@ -155,8 +160,8 @@ export default function EmotionRecordsList({
                       aria-label="delete this entry"
                       $color={"#cc0100"}
                       onClick={() => {
-                        onDeleteEmotionEntry(id);
-                        setShowConfirmMessage(!showConfirmMessage);
+                        setTimeout(() => onDeleteEmotionEntry(id), 400);
+                        toggleAnimatedConfirmMessage(id);
                       }}
                     >
                       Delete it!
