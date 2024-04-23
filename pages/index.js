@@ -87,7 +87,7 @@ const StyledMessage = styled.p`
 
 export default function HomePage({ onAddEmotionEntry }) {
   const [tension, setTension] = useState("0");
-  const [isShown, setIsShown] = useState(true);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
 
   function handleSubmit(event) {
@@ -99,7 +99,7 @@ export default function HomePage({ onAddEmotionEntry }) {
 
     onAddEmotionEntry(data, newId);
     setId(newId);
-    setIsShown(!isShown);
+    setIsFormSubmitted(!isFormSubmitted);
   }
 
   return (
@@ -113,7 +113,7 @@ export default function HomePage({ onAddEmotionEntry }) {
           id="tension-level"
           name="tensionLevel"
           type="range"
-          defaultValue={0}
+          value={tension}
           max={100}
           onChange={(event) => setTension(event.target.value)}
         />
@@ -121,30 +121,34 @@ export default function HomePage({ onAddEmotionEntry }) {
           <StyledSpan>0</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        {!isShown && <p>{tension}</p>}
-        {isShown && <StyledButton type="submit">Save</StyledButton>}
-
-        {!isShown && (
-          <StyledMessage>Your entry was successfully saved!</StyledMessage>
+        {!isFormSubmitted && (
+          <>
+            <p>{tension}</p>
+            <StyledButton type="submit">Save</StyledButton>
+          </>
         )}
-        {!isShown && (
-          <StyledButtonWrapper>
-            <StyledBackButton
-              type="reset"
-              value={"Done"}
-              onClick={() => {
-                setIsShown(!isShown);
-                setTension("0");
-              }}
-            ></StyledBackButton>
-            <StyledLink
-              $actionButton
-              href={{ pathname: "/create", query: { id: id } }}
-              forwardedAs={`/create`}
-            >
-              Add more details
-            </StyledLink>
-          </StyledButtonWrapper>
+
+        {isFormSubmitted && (
+          <>
+            <StyledMessage>Your entry was successfully saved!</StyledMessage>
+            <StyledButtonWrapper>
+              <StyledBackButton
+                type="reset"
+                value={"Done"}
+                onClick={() => {
+                  setIsFormSubmitted(!isFormSubmitted);
+                  setTension("0");
+                }}
+              ></StyledBackButton>
+              <StyledLink
+                $actionButton
+                href={{ pathname: "/create", query: { id: id } }}
+                forwardedAs={`/create`}
+              >
+                Add more details
+              </StyledLink>
+            </StyledButtonWrapper>
+          </>
         )}
       </StyledForm>
       <StyledNav>

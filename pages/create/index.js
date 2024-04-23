@@ -28,7 +28,7 @@ export default function CreateIndexPage() {
     <StyledWrapper>
       <EmotionList
         title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
-        create
+        createMode
         id={id}
       />
       <StyledLink href="./">Back to tension entry</StyledLink>

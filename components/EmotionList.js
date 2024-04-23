@@ -34,7 +34,7 @@ const EmotionLink = styled(Link)`
   font-size: 1.3rem;
 `;
 
-export default function EmotionList({ title, create, id }) {
+export default function EmotionList({ title, createMode, id }) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
@@ -50,7 +50,7 @@ export default function EmotionList({ title, create, id }) {
             $color={color}
             slug={slug}
             href={
-              create
+              createMode
                 ? { pathname: `/create/${slug}`, query: { id } }
                 : `/emotions/${slug}`
             }
