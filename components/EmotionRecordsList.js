@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
 
@@ -44,7 +44,6 @@ const StyledDeleteButton = styled(TrashIcon)`
 `;
 
 const StyledConfirmBackground = styled.div`
-  display: ${({ $confirmMessage }) => ($confirmMessage ? "block" : "none")};
   background-color: black;
   opacity: 0.5;
   position: fixed;
@@ -63,9 +62,8 @@ const StyledConfirmBox = styled.div`
   padding: 1.5rem;
   box-shadow: 0 0 5px 0px;
   border-radius: 10px;
-  transform: ${({ $confirmMessage }) =>
-    $confirmMessage ? "scale(1)" : "scale(0)"};
-  transition: transform 0.4s;
+  transform: ${({ $animation }) => ($animation ? "scale(1)" : "scale(0)")};
+  transition: transform 0.3s;
   z-index: 3;
 `;
 
@@ -82,7 +80,7 @@ const StyledWrapper = styled.div`
 `;
 const StyledButton = styled.button`
   color: white;
-  background-color: ${({ $delete }) => ($delete ? "#cc0100" : "#00b400")};
+  background-color: ${({ $color }) => $color};
   border: none;
   border-radius: 5px;
   padding: 1rem;
@@ -99,13 +97,21 @@ export default function EmotionRecordsList({
     }));
   }
 
-  const [confirmMessage, setConfirmMessage] = useState(false);
-  function handleConfirmMessage(id) {
-    setConfirmMessage((prevShow) => ({
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+  function handleShowConfirmMessage(id) {
+    setShowConfirmMessage((prevShow) => ({
       ...prevShow,
       [id]: !prevShow[id],
     }));
   }
+
+  // to make animation work together with conditional rendering
+  const [animation, setAnimation] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimation((preValue) => !preValue);
+    }, 200);
+  }, [showConfirmMessage]);
 
   return (
     <>
@@ -120,34 +126,45 @@ export default function EmotionRecordsList({
                 <StyledDeleteButton
                   type="button"
                   aria-label="Delete Emotion Entry"
-                  onClick={() => handleConfirmMessage(id)}
+                  onClick={() => handleShowConfirmMessage(id)}
                 />
               </StyledListItemWrapper>
-              <StyledConfirmBackground
-                onClick={() => handleConfirmMessage(id)}
-                $confirmMessage={confirmMessage[id]}
-              ></StyledConfirmBackground>
-              <StyledConfirmBox $confirmMessage={confirmMessage[id]}>
-                <StyledConfirmMessage>
-                  Do you want to delete this Entry?
-                  <StyledConfirmMessage>
-                    <b>{date}</b>
-                  </StyledConfirmMessage>
-                </StyledConfirmMessage>
-                <StyledWrapper>
-                  <StyledButton
-                    onClick={() => setConfirmMessage(!confirmMessage)}
-                  >
-                    Keep it!
-                  </StyledButton>
-                  <StyledButton
-                    $delete
-                    onClick={() => onDeleteEmotionEntry(id)}
-                  >
-                    Delete it!
-                  </StyledButton>
-                </StyledWrapper>
-              </StyledConfirmBox>
+              {showConfirmMessage[id] && (
+                <>
+                  <StyledConfirmBackground
+                    onClick={() => handleShowConfirmMessage(id)}
+                  ></StyledConfirmBackground>
+                  <StyledConfirmBox $animation={animation}>
+                    <StyledConfirmMessage>
+                      Do you want to delete this Entry?
+                      <StyledConfirmMessage>
+                        <b>{date}</b>
+                      </StyledConfirmMessage>
+                    </StyledConfirmMessage>
+                    <StyledWrapper>
+                      <StyledButton
+                        aria-label="do not delete this entry"
+                        $color={"#00b400"}
+                        onClick={() =>
+                          setShowConfirmMessage(!showConfirmMessage)
+                        }
+                      >
+                        Keep it!
+                      </StyledButton>
+                      <StyledButton
+                        aria-label="delete this entry"
+                        $color={"#cc0100"}
+                        onClick={() => {
+                          onDeleteEmotionEntry(id);
+                          setShowConfirmMessage(!showConfirmMessage);
+                        }}
+                      >
+                        Delete it!
+                      </StyledButton>
+                    </StyledWrapper>
+                  </StyledConfirmBox>
+                </>
+              )}
               <StyledDetails $show={show[id]}>
                 <li>Tension Level: {tensionLevel}%</li>
               </StyledDetails>
