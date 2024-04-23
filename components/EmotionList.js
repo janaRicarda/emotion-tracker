@@ -34,7 +34,7 @@ const EmotionLink = styled(Link)`
   font-size: 1.3rem;
 `;
 
-export default function EmotionList({ title, page, id }) {
+export default function EmotionList({ title, create, id }) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
@@ -44,27 +44,20 @@ export default function EmotionList({ title, page, id }) {
       <StyledH1>{title}</StyledH1>
 
       <EmotionSection>
-        {emotionData.map(({ slug, name, color }) =>
-          page === "create" ? (
-            <EmotionLink
-              key={slug}
-              $color={color}
-              slug={slug}
-              href={{ pathname: `/${page}/${slug}`, query: { id } }}
-            >
-              {name}
-            </EmotionLink>
-          ) : (
-            <EmotionLink
-              key={slug}
-              $color={color}
-              slug={slug}
-              href={`/emotions/${slug}`}
-            >
-              {name}
-            </EmotionLink>
-          )
-        )}
+        {emotionData.map(({ slug, name, color }) => (
+          <EmotionLink
+            key={slug}
+            $color={color}
+            slug={slug}
+            href={
+              create
+                ? { pathname: `/create/${slug}`, query: { id } }
+                : `/emotions/${slug}`
+            }
+          >
+            {name}
+          </EmotionLink>
+        ))}
       </EmotionSection>
     </>
   );

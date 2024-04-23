@@ -22,7 +22,7 @@ const StyledWrapper = styled.div`
 export default function EmotionListPage() {
   return (
     <StyledWrapper>
-      <EmotionList title="The seven basic emotions" page="emotions" />
+      <EmotionList title="The seven basic emotions"/>
       <StyledLink href="./">Back to tension entry</StyledLink>
     </StyledWrapper>
   );
