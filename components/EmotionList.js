@@ -8,9 +8,9 @@ const StyledH1 = styled.h1`
   margin: 1rem auto 0;
 `;
 
-const StyledList = styled.ul`
+const EmotionSection = styled.section`
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -19,37 +19,46 @@ const StyledList = styled.ul`
   gap: 0.5rem;
   margin: 3rem;
 `;
-const StyledListItem = styled.li`
+
+const EmotionLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  background-color: ${({ $color }) => $color};
   border: 1px solid black;
   border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: ${({ $color }) => $color};
   width: 80vw;
+  max-width: 800px;
   font-weight: 600;
+  padding: 1rem;
   font-size: 1.3rem;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-`;
-
-export default function EmotionList() {
+export default function EmotionList({ title, createMode, id }) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
 
   return (
     <>
-      <StyledH1>The seven basic emotions</StyledH1>
-      <StyledList>
-        {emotionData.map(({ slug, name, color }) => (
-          <StyledListItem key={slug} $color={color}>
-          <StyledLink href={`/emotions/${slug}`}>{name}</StyledLink>
-          </StyledListItem>
-        ))}
-      </StyledList>
-    </>
+      <StyledH1>{title}</StyledH1>
 
+      <EmotionSection>
+        {emotionData.map(({ slug, name, color }) => (
+          <EmotionLink
+            key={slug}
+            $color={color}
+            slug={slug}
+            href={
+              createMode
+                ? { pathname: `/create/${slug}`, query: { id } }
+                : `/emotions/${slug}`
+            }
+          >
+            {name}
+          </EmotionLink>
+        ))}
+      </EmotionSection>
+    </>
   );
 }
