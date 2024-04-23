@@ -20,15 +20,13 @@ const StyledList = styled.ul`
   margin: 3rem;
 `;
 const StyledListItem = styled.li`
-  //border: 1px solid var(--main-dark);
+  border: 1px solid var(--main-dark);
   border-radius: 0.5rem;
   padding: 1rem;
-  //background-color: ${({ $color }) => $color};
+  background-color: ${({ $color }) => $color};
   width: 80vw;
   font-weight: 600;
   font-size: 1.3rem;
-  box-shadow: -5px -5px 30px 0 #ffffff, 5px 5px 15px 0 #aeaec0,
-    inset -5px -5px 5px 0 #aeaec0, 5px 5px 5px 0 #ffffff;
 `;
 
 const StyledLink = styled(Link)`
