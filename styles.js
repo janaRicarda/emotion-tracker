@@ -15,7 +15,7 @@ export default createGlobalStyle`
 }
   body {
     margin: 0;
-    padding-top: 130px;
+    padding-top: 140px;
     padding-bottom: 67px;
     background-color: #FFFFEB;
     color: #030352;

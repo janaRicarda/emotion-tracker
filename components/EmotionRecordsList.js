@@ -10,10 +10,12 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   margin: 1rem auto;
-  border: 1px solid black;
+  //border: 1px solid black;
   border-radius: 5px;
   padding: 1rem;
-  box-shadow: 0 0 3px 0;
+  //box-shadow: 0 0 3px 0;
+  box-shadow: -5px -5px 30px 0 #ffffff, 5px 5px 30px 0 #aeaec0,
+    inset -5px -5px 5px 0 #aeaec0, 5px 5px 5px 0 #ffffff;
   cursor: pointer;
 
   &:hover {
