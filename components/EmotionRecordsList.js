@@ -52,8 +52,6 @@ export default function EmotionRecordsList({
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
-  // const [animation, setAnimation] = useState(false);
-
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
       ...prevShow,
@@ -66,22 +64,6 @@ export default function EmotionRecordsList({
       ...prevShow,
       [id]: !prevShow[id],
     }));
-
-    // function toggleConfirmMessage(id) {
-    //   function handleShowConfirmMessage(id) {
-    //     setShowConfirmMessage((prevShow) => ({
-    //       ...prevShow,
-    //       [id]: !prevShow[id],
-    //     }));
-    //   }
-    // Gives Animation time to be active and seen after appearing/leaving the DOM
-    // if (!animation) {
-    //   handleShowConfirmMessage(id);
-    //   setTimeout(() => setAnimation(!animation), 1);
-    // } else {
-    //   setTimeout(() => handleShowConfirmMessage(id), 200);
-    //   setAnimation(!animation);
-    // }
   }
 
   return (
