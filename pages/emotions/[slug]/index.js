@@ -26,10 +26,12 @@ export default function EmotionDetailsPage() {
     (emotion) => emotion.slug === slug
   );
 
-  let prevEmotion = emotionData[emotionIndex - 1];
-  emotionIndex === 0 ? (prevEmotion = emotionData[6]) : prevEmotion;
-  let nextEmotion = emotionData[emotionIndex + 1];
-  emotionIndex === 6 ? (nextEmotion = emotionData[0]) : nextEmotion;
+  const prevEmotionIndex =
+    emotionIndex === 0 ? emotionData.length - 1 : emotionIndex - 1;
+  const prevEmotion = emotionData[prevEmotionIndex];
+  const nextEmotionIndex =
+    emotionIndex === emotionData.length - 1 ? 0 : emotionIndex + 1;
+  const nextEmotion = emotionData[nextEmotionIndex];
 
   if (!emotion) return <h1>emotion not found</h1>;
   return (
