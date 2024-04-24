@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
-const StyledConfirmBackground = styled.div`
+const StyledBackground = styled.div`
   background-color: black;
   opacity: 0.5;
   position: fixed;
   inset: 0;
   z-index: 2;
 `;
-const StyledConfirmBox = styled.div`
+const StyledPopUpMessage = styled.div`
   position: fixed;
   right: calc(50% - 175.25px);
   top: 13rem;
@@ -24,7 +25,7 @@ const StyledConfirmBox = styled.div`
   z-index: 3;
 `;
 
-const StyledConfirmMessage = styled.p`
+const StyledParagraph = styled.p`
   padding: 1rem 2rem;
   text-align: center;
 `;
@@ -44,45 +45,66 @@ const StyledButton = styled.button`
   padding: 1rem;
 `;
 
-export default function ConfirmDeleteMessage({
-  toggleConfirmMessage,
-  id,
-  animation,
-  date,
-  onDeleteEmotionEntry,
+export default function ConfirmMessage({
+  toggleMessage,
+  itemId,
+  itemText,
+  confirmFunction,
+  children,
+  cancelButtonText,
+  confirmButtonText,
 }) {
+  // for animation-state, useEffect and timeeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
+  //
+  const [animation, setAnimation] = useState(false);
+
+  useEffect(() => {
+    setAnimation(true);
+    return () => {};
+  }, []);
+
+  function handleCancel(itemId) {
+    setAnimation(false);
+    setTimeout(() => toggleMessage(itemId), 300);
+  }
+  function handleConfirm(itemId) {
+    setAnimation(false);
+    setTimeout(() => toggleMessage(itemId), 300);
+    setTimeout(() => {
+      confirmFunction(itemId);
+    }, 600);
+  }
+
   return (
     <>
-      <StyledConfirmBackground
-        onClick={() => toggleConfirmMessage(id)}
-      ></StyledConfirmBackground>
-      <StyledConfirmBox $animation={animation}>
-        <StyledConfirmMessage>
-          Do you want to delete this Entry?
-        </StyledConfirmMessage>
-        <StyledConfirmMessage>
-          <b>{date}</b>
-        </StyledConfirmMessage>
+      <StyledBackground
+        $animation={animation}
+        onClick={() => handleCancel(itemId)}
+      />
+      <StyledPopUpMessage $animation={animation}>
+        <StyledParagraph>{children}</StyledParagraph>
+        <StyledParagraph>
+          <b>{itemText}</b>
+        </StyledParagraph>
         <StyledWrapper>
           <StyledButton
-            aria-label="do not delete this entry"
+            aria-label="cancel"
             $color={"#00b400"}
-            onClick={() => toggleConfirmMessage(id)}
+            onClick={() => handleCancel(itemId)}
           >
-            Keep it!
+            {cancelButtonText}
           </StyledButton>
           <StyledButton
-            aria-label="delete this entry"
+            aria-label="confirm"
             $color={"#cc0100"}
             onClick={() => {
-              setTimeout(() => onDeleteEmotionEntry(id), 400);
-              toggleConfirmMessage(id);
+              handleConfirm(itemId);
             }}
           >
-            Delete it!
+            {confirmButtonText}
           </StyledButton>
         </StyledWrapper>
-      </StyledConfirmBox>
+      </StyledPopUpMessage>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
-import ConfirmDeleteMessage from "./ConfirmDeleteMessage";
+import ConfirmMessage from "./ConfirmDeleteMessage";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -52,7 +52,7 @@ export default function EmotionRecordsList({
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
-  const [animation, setAnimation] = useState(false);
+  // const [animation, setAnimation] = useState(false);
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -61,21 +61,27 @@ export default function EmotionRecordsList({
     }));
   }
 
-  function toggleConfirmMessage(id) {
-    function handleShowConfirmMessage(id) {
-      setShowConfirmMessage((prevShow) => ({
-        ...prevShow,
-        [id]: !prevShow[id],
-      }));
-    }
+  function handleShowConfirmMessage(id) {
+    setShowConfirmMessage((prevShow) => ({
+      ...prevShow,
+      [id]: !prevShow[id],
+    }));
+
+    // function toggleConfirmMessage(id) {
+    //   function handleShowConfirmMessage(id) {
+    //     setShowConfirmMessage((prevShow) => ({
+    //       ...prevShow,
+    //       [id]: !prevShow[id],
+    //     }));
+    //   }
     // Gives Animation time to be active and seen after appearing/leaving the DOM
-    if (!animation) {
-      handleShowConfirmMessage(id);
-      setTimeout(() => setAnimation(!animation), 1);
-    } else {
-      setTimeout(() => handleShowConfirmMessage(id), 200);
-      setAnimation(!animation);
-    }
+    // if (!animation) {
+    //   handleShowConfirmMessage(id);
+    //   setTimeout(() => setAnimation(!animation), 1);
+    // } else {
+    //   setTimeout(() => handleShowConfirmMessage(id), 200);
+    //   setAnimation(!animation);
+    // }
   }
 
   return (
@@ -95,27 +101,30 @@ export default function EmotionRecordsList({
           return (
             <>
               <StyledListItemWrapper>
-              <StyledListItem key={id} onClick={() => handleShowDetails(id)}>
+                <StyledListItem key={id} onClick={() => handleShowDetails(id)}>
                   {date}
                 </StyledListItem>
                 <StyledDeleteButton
-                type="button"
-                aria-label="Delete Emotion Entry"
-                onClick={() => {
-                  toggleConfirmMessage(id);
-                }}
-              />
-            </StyledListItemWrapper>
-            {showConfirmMessage[id] && (
-              <ConfirmDeleteMessage
-                toggleConfirmMessage={toggleConfirmMessage}
-                id={id}
-                animation={animation}
-                date={date}
-                onDeleteEmotionEntry={onDeleteEmotionEntry}
-              />
-            )}
-            <StyledDetails $showDetails={showDetails[id]}>
+                  type="button"
+                  aria-label="Delete Emotion Entry"
+                  onClick={() => {
+                    handleShowConfirmMessage(id);
+                  }}
+                />
+              </StyledListItemWrapper>
+              {showConfirmMessage[id] && (
+                <ConfirmMessage
+                  toggleMessage={handleShowConfirmMessage}
+                  itemId={id}
+                  itemText={date}
+                  confirmFunction={onDeleteEmotionEntry}
+                  cancelButtonText={"Keep it!"}
+                  confirmButtonText={"Delete it!"}
+                >
+                  Do you want to delete this entry?
+                </ConfirmMessage>
+              )}
+              <StyledDetails $showDetails={showDetails[id]}>
                 <li>Tension Level: {tensionLevel}%</li>
                 {emotion && <li>Emotion: {emotion}</li>}
                 {subemotion && <li>Subemotion: {subemotion}</li>}
