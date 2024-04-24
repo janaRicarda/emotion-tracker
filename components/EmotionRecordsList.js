@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
-import ConfirmMessage from "./ConfirmDeleteMessage";
+import ConfirmMessage from "./ConfirmMessage";
 
 const StyledList = styled.ul`
   list-style: none;
