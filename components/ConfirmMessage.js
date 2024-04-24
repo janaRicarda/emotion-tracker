@@ -53,6 +53,8 @@ export default function ConfirmMessage({
   children,
   cancelButtonText,
   confirmButtonText,
+  cancelButtonColor,
+  confirmButtonColor,
 }) {
   // for animation-state, useEffect and timeeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
   //
@@ -77,10 +79,7 @@ export default function ConfirmMessage({
 
   return (
     <>
-      <StyledBackground
-        $animation={animation}
-        onClick={() => handleCancel(itemId)}
-      />
+      <StyledBackground onClick={() => handleCancel(itemId)} />
       <StyledPopUpMessage $animation={animation}>
         <StyledParagraph>{children}</StyledParagraph>
         <StyledParagraph>
@@ -89,14 +88,14 @@ export default function ConfirmMessage({
         <StyledWrapper>
           <StyledButton
             aria-label="cancel"
-            $color={"#00b400"}
+            $color={cancelButtonColor}
             onClick={() => handleCancel(itemId)}
           >
             {cancelButtonText}
           </StyledButton>
           <StyledButton
             aria-label="confirm"
-            $color={"#cc0100"}
+            $color={confirmButtonColor}
             onClick={() => {
               handleConfirm(itemId);
             }}
