@@ -4,8 +4,8 @@ import Image from "next/image";
 const StyledHeader = styled.header`
   width: 100%;
   height: 15vh;
-  background: linear-gradient(white, transparent);
-  background: white;
+  background: var(--main-bright);
+
   position: fixed;
   top: 0;
 `;

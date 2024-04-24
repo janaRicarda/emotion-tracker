@@ -9,10 +9,11 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledTitle = styled.h1`
-  //margin: 1.5rem auto 1rem;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
   position: fixed;
   padding-bottom: 0.5rem;
-  //border-bottom: 1px solid black;
   background: linear-gradient(var(--main-bright) 90%, transparent);
 `;
 

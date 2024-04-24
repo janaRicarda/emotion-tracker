@@ -1,43 +1,55 @@
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 
 const StyledFooter = styled.footer`
   width: 100%;
+  position: fixed;
+  bottom: -10px;
+  left: 0;
+`;
 
-  height: 4.5rem;
+const StyledArticle = styled.article`
+  width: 100%;
+  display: flex;
+
   position: fixed;
   bottom: 0;
-  left: 0;
-  background: var(--main-bright);
-  display: flex;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--main-dark);
-  background: var(--main-bright);
-  border-radius: 0.5rem;
   padding: 0.5rem;
   flex: 1;
-  border: 1px solid var(--main-dark);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 90%;
   &:focus {
-    border: 1px solid var(--main-bright);
-
-    background: var(--main-dark);
-    color: var(--main-bright);
+    //background: var(--main-bright);
+    // border: 1px solid var(--main-dark);
+    color: rebeccapurple;
   }
 `;
 
 export default function Navgation() {
   return (
     <StyledFooter>
-      <StyledLink href="/emotions">7 basic emotions</StyledLink>
-      <StyledLink href="/">add entry</StyledLink>
-      <StyledLink href="/emotion-records">emotion records</StyledLink>
+      <Image
+        src="/../public/images/Klecks5.png"
+        height={100}
+        width={600}
+        alt="A picture of the logo saying what a feeling"
+      />
+      <StyledArticle>
+        <StyledLink href="/emotions">7 basic emotions</StyledLink>
+        <StyledLink href="/">add entry</StyledLink>
+        <StyledLink href="/emotion-records">emotion records</StyledLink>
+      </StyledArticle>
     </StyledFooter>
   );
 }

@@ -9,12 +9,12 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   border: 1px solid var(--main-dark);
-  border-radius: 5px;
+  border-radius: 0.5rem;
   padding: 1rem;
   box-shadow: 0 0 3px 0;
-
+  width: 80vw;
   cursor: pointer;
 
   &:hover {
