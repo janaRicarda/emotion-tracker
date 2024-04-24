@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
+import ConfirmDeleteMessage from "./ConfirmDeleteMessage";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -43,48 +44,6 @@ const StyledDeleteButton = styled(TrashIcon)`
   }
 `;
 
-const StyledConfirmBackground = styled.div`
-  background-color: black;
-  opacity: 0.5;
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-`;
-const StyledConfirmBox = styled.div`
-  position: fixed;
-  right: calc(50% - 175px);
-  top: 13rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  padding: 1.5rem;
-  box-shadow: 0 0 5px 0px;
-  border-radius: 10px;
-  transform: ${({ $animation }) => ($animation ? "scale(1)" : "scale(0)")};
-  transition: transform 0.3s;
-  z-index: 3;
-`;
-
-const StyledConfirmMessage = styled.p`
-  padding: 1.5rem;
-  text-align: center;
-`;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-const StyledButton = styled.button`
-  color: white;
-  background-color: ${({ $color }) => $color};
-  border: none;
-  border-radius: 5px;
-  padding: 1rem;
-`;
 export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
@@ -102,7 +61,7 @@ export default function EmotionRecordsList({
     }));
   }
 
-  function toggleAnimatedConfirmMessage(id) {
+  function toggleConfirmMessage(id) {
     function handleShowConfirmMessage(id) {
       setShowConfirmMessage((prevShow) => ({
         ...prevShow,
@@ -111,8 +70,8 @@ export default function EmotionRecordsList({
     }
     // Gives Animation time to be active and seen after appearing/leaving the DOM
     if (!animation) {
-      setTimeout(() => setAnimation(!animation), 1);
       handleShowConfirmMessage(id);
+      setTimeout(() => setAnimation(!animation), 1);
     } else {
       setTimeout(() => handleShowConfirmMessage(id), 200);
       setAnimation(!animation);
@@ -132,43 +91,18 @@ export default function EmotionRecordsList({
                 type="button"
                 aria-label="Delete Emotion Entry"
                 onClick={() => {
-                  toggleAnimatedConfirmMessage(id);
+                  toggleConfirmMessage(id);
                 }}
               />
             </StyledListItemWrapper>
             {showConfirmMessage[id] && (
-              <>
-                <StyledConfirmBackground
-                  onClick={() => toggleAnimatedConfirmMessage(id)}
-                ></StyledConfirmBackground>
-                <StyledConfirmBox $animation={animation}>
-                  <StyledConfirmMessage>
-                    Do you want to delete this Entry?
-                    <StyledConfirmMessage>
-                      <b>{date}</b>
-                    </StyledConfirmMessage>
-                  </StyledConfirmMessage>
-                  <StyledWrapper>
-                    <StyledButton
-                      aria-label="do not delete this entry"
-                      $color={"#00b400"}
-                      onClick={() => toggleAnimatedConfirmMessage(id)}
-                    >
-                      Keep it!
-                    </StyledButton>
-                    <StyledButton
-                      aria-label="delete this entry"
-                      $color={"#cc0100"}
-                      onClick={() => {
-                        setTimeout(() => onDeleteEmotionEntry(id), 400);
-                        toggleAnimatedConfirmMessage(id);
-                      }}
-                    >
-                      Delete it!
-                    </StyledButton>
-                  </StyledWrapper>
-                </StyledConfirmBox>
-              </>
+              <ConfirmDeleteMessage
+                toggleConfirmMessage={toggleConfirmMessage}
+                id={id}
+                animation={animation}
+                date={date}
+                onDeleteEmotionEntry={onDeleteEmotionEntry}
+              />
             )}
             <StyledDetails $showDetails={showDetails[id]}>
               <li>Tension Level: {tensionLevel}%</li>
