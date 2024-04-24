@@ -13,7 +13,7 @@ export default createGlobalStyle`
   margin: 0;
 }
 :root {
-  --main-bright: #ffffeb;
+  --main-bright: #f1eaea;
   --main-dark: #030352;
   --box-shadow: -5px -5px 30px 0 #ffffff, 5px 5px 15px 0 #aeaec0,
   inset -5px -5px 5px 0 #aeaec0, 5px 5px 5px 0 #ffffff;
@@ -44,3 +44,4 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 `;
+//#ffffeb;

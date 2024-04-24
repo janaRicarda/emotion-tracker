@@ -10,8 +10,9 @@ const StyledH1 = styled.h1`
   position: fixed;
   background-color: var(--main-bright);
   padding-bottom: 0.5rem;
-  width: 100%;
-  background: linear-gradient(var(--main-bright) 90%, transparent);
+  //width: 100%;
+  z-index: 2;
+  background: linear-gradient(transparent, var(--main-bright), transparent);
 `;
 
 const StyledList = styled.ul`

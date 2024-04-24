@@ -1,20 +1,15 @@
 import styled from "styled-components";
 import Link from "next/link";
-import Image from "next/image";
 
 const StyledFooter = styled.footer`
   width: 100%;
+  height: 5rem;
   position: fixed;
   bottom: -10px;
   left: 0;
-`;
-
-const StyledArticle = styled.article`
-  width: 100%;
+  background: #daaafa;
   display: flex;
-
-  position: fixed;
-  bottom: 0;
+  border-top: 1px solid var(--main-dark);
 `;
 
 const StyledLink = styled(Link)`
@@ -29,27 +24,15 @@ const StyledLink = styled(Link)`
   font-weight: 600;
   font-size: 1.3rem;
   line-height: 90%;
-  &:focus {
-    //background: var(--main-bright);
-    // border: 1px solid var(--main-dark);
-    color: rebeccapurple;
-  }
+  background: #f5d6a9:
 `;
 
 export default function Navgation() {
   return (
     <StyledFooter>
-      <Image
-        src="/../public/images/Klecks5.png"
-        height={100}
-        width={600}
-        alt="A picture of the logo saying what a feeling"
-      />
-      <StyledArticle>
-        <StyledLink href="/emotions">7 basic emotions</StyledLink>
-        <StyledLink href="/">add entry</StyledLink>
-        <StyledLink href="/emotion-records">emotion records</StyledLink>
-      </StyledArticle>
+      <StyledLink href="/emotions">7 basic emotions</StyledLink>
+      <StyledLink href="/">add entry</StyledLink>
+      <StyledLink href="/emotion-records">emotion records</StyledLink>
     </StyledFooter>
   );
 }
