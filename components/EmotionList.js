@@ -7,8 +7,9 @@ const StyledH1 = styled.h1`
   line-height: 2.2rem;
   //margin: 1rem auto 0;
   position: fixed;
+  background-color: var(--main-bright);
   padding-bottom: 0.5rem;
-
+  width: 100%;
   background: linear-gradient(var(--main-bright) 90%, transparent);
 `;
 
