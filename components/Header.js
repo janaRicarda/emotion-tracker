@@ -4,27 +4,28 @@ import Image from "next/image";
 const StyledHeader = styled.header`
   width: 100%;
   height: 15vh;
-  //background: linear-gradient(white, transparent);
+  background: linear-gradient(white, transparent);
   background: white;
   position: fixed;
   top: 0;
 `;
 
-const StyledLogo = styled(Image)`
-  aspect-ratio: auto;
-  background: transparent;
+const StyledLogo = styled.div`
+  position: absolute;
+  top: -20px;
+  left: -40px;
 `;
 
 const StyledH1 = styled.h1`
   position: absolute;
-  top: 30px;
+  top: 40px;
   left: 50px;
   font-size: 2.5rem;
   font-weight: 500;
 `;
 const StyledP = styled.p`
   position: absolute;
-  top: 70px;
+  top: 80px;
   left: 160px;
 `;
 const StyledDiv = styled.div`
@@ -44,17 +45,19 @@ const StyledDiv = styled.div`
 export default function Header() {
   return (
     <>
-      <StyledDiv></StyledDiv>
+      {/*  <StyledDiv></StyledDiv>*/}
 
       <StyledHeader>
-        {/* <StyledLogo
-        src="/../public/images/Klecks4.png"
-        height={150}
-        width={600}
-        alt="A picture of the logo saying what a feeling"
-      /> */}
-        <StyledH1>What a feeling</StyledH1>
-        <StyledP>Emotion Tracker</StyledP>
+        <StyledLogo>
+          <Image
+            src="/../public/images/Klecks4.png"
+            height={150}
+            width={600}
+            alt="A picture of the logo saying what a feeling"
+          />
+          <StyledH1>What a feeling</StyledH1>
+          <StyledP>Emotion Tracker</StyledP>
+        </StyledLogo>
       </StyledHeader>
     </>
   );

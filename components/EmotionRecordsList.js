@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 2.5rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;

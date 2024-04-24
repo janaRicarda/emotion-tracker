@@ -17,8 +17,8 @@ export default createGlobalStyle`
 }
   body {
     margin: 0;
-    padding-top: 140px;
-    padding-bottom: 67px;
+    padding: 120px 2rem 67px 2rem;
+   
     background-color: #FFFFEB;
     color: #030352;
     font-family: system-ui;

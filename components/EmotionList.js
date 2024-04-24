@@ -5,7 +5,11 @@ import Link from "next/link";
 const StyledH1 = styled.h1`
   text-align: center;
   line-height: 2.2rem;
-  margin: 1rem auto 0;
+  //margin: 1rem auto 0;
+  position: fixed;
+  padding-bottom: 0.5rem;
+
+  background: linear-gradient(var(--main-bright) 90%, transparent);
 `;
 
 const StyledList = styled.ul`
@@ -18,6 +22,7 @@ const StyledList = styled.ul`
   text-align: center;
   gap: 0.5rem;
   margin: 3rem;
+  padding: 2.5rem 0;
 `;
 const StyledListItem = styled.li`
   //border: 1px solid var(--main-dark);
@@ -25,6 +30,7 @@ const StyledListItem = styled.li`
   padding: 1rem;
   background-color: ${({ $color }) => $color};
   width: 80vw;
+
   font-weight: 600;
   font-size: 1.3rem;
 `;
