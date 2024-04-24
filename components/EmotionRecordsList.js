@@ -80,14 +80,25 @@ export default function EmotionRecordsList({
 
   return (
     <StyledList>
-      {emotionEntries.map(({ id, date, tensionLevel }) => {
-        return (
-          <>
-            <StyledListItemWrapper>
+      {emotionEntries.map(
+        ({
+          id,
+          date,
+          tensionLevel,
+          trigger,
+          intensity,
+          notes,
+          category,
+          emotion,
+          subemotion,
+        }) => {
+          return (
+            <>
+              <StyledListItemWrapper>
               <StyledListItem key={id} onClick={() => handleShowDetails(id)}>
-                {date}
-              </StyledListItem>
-              <StyledDeleteButton
+                  {date}
+                </StyledListItem>
+                <StyledDeleteButton
                 type="button"
                 aria-label="Delete Emotion Entry"
                 onClick={() => {
@@ -105,11 +116,18 @@ export default function EmotionRecordsList({
               />
             )}
             <StyledDetails $showDetails={showDetails[id]}>
-              <li>Tension Level: {tensionLevel}%</li>
-            </StyledDetails>
-          </>
-        );
-      })}
+                <li>Tension Level: {tensionLevel}%</li>
+                {emotion && <li>Emotion: {emotion}</li>}
+                {subemotion && <li>Subemotion: {subemotion}</li>}
+                {intensity && <li>Intensity: {intensity}%</li>}
+                {category && <li>Pleasantness: {category}%</li>}
+                {trigger && <li>Trigger: {trigger}</li>}
+                {notes && <li>Notes: {notes}</li>}
+              </StyledDetails>
+            </>
+          );
+        }
+      )}
     </StyledList>
   );
 }
