@@ -22,6 +22,15 @@ export default function EmotionDetailsPage() {
   }
   const { slug } = router.query;
   const emotion = emotionData.find((emotion) => emotion.slug === slug);
+  const emotionIndex = emotionData.findIndex(
+    (emotion) => emotion.slug === slug
+  );
+
+  let prevEmotion = emotionData[emotionIndex - 1];
+  emotionIndex === 0 ? (prevEmotion = emotionData[6]) : prevEmotion;
+  let nextEmotion = emotionData[emotionIndex + 1];
+  emotionIndex === 6 ? (nextEmotion = emotionData[0]) : nextEmotion;
+
   if (!emotion) return <h1>emotion not found</h1>;
   return (
     <>
@@ -32,6 +41,8 @@ export default function EmotionDetailsPage() {
         indications={emotion.indications}
         subemotions={emotion.subemotions}
         color={emotion.color}
+        prevEmotion={prevEmotion}
+        nextEmotion={nextEmotion}
       />
       <StyledLink $color={emotion.color} href="/emotions">
         ← back to list{" "}
