@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { emotionData } from "@/lib/db";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -71,13 +72,12 @@ const StyledSubmitButton = styled.button`
 `;
 
 export default function EmotionForm({
-  name,
-  color,
-  onAddEmotionDetails,
+  // name,
+  // color,
+  onSubmit,
   id,
   slug,
   emotionEntries,
-  subemotions,
 }) {
   const router = useRouter();
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
@@ -87,18 +87,38 @@ export default function EmotionForm({
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    onAddEmotionDetails(data, id);
+    onSubmit(data, id);
     router.push("/emotion-records");
   }
 
+  const {
+    emotion,
+    tensionLevel,
+    subemotion,
+    intensity,
+    category,
+    trigger,
+    notes,
+    isEdit,
+    date,
+  } = correspondingEntry;
+  console.log(emotion);
+  const correspondingEmotion = slug
+    ? emotionData.find((emotion) => emotion.slug === slug)
+    : emotionData.find((emotion) => emotion.slug === emotion);
+
+  const test = correspondingEmotion
+    ? ({ subemotions, name, color } = correspondingEmotion)
+    : "";
+
+  const { subemotions, name, color } = correspondingEmotion;
+
   return (
     <>
-      <StyledH1>Record your {name}</StyledH1>
+      <StyledH1>Record your {correspondingEmotion.name}</StyledH1>
       <StyledForm $color={color} onSubmit={handleSubmit}>
-        <p aria-label="Date and time">Date: {correspondingEntry.date}</p>
-        <p aria-label="Tension level">
-          Tension-Level: {correspondingEntry.tensionLevel}%
-        </p>
+        <p aria-label="Date and time">Date: {date}</p>
+        <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
 
         <EmotionLabel htmlFor="emotion">
           Emotion:
@@ -107,13 +127,13 @@ export default function EmotionForm({
             id="emotion"
             name="emotion"
             readOnly
-            value={name}
+            value={isEdit ? emotion : name}
           />
         </EmotionLabel>
 
         <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
-          defaultValue={slug}
+          defaultValue={isEdit ? subemotion ?? "" : ""}
           id="subemotion"
           name="subemotion"
           required

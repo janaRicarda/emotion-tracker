@@ -1,13 +1,17 @@
 import EmotionForm from "@/components/EmotionForm";
 import { useRouter } from "next/router";
 
-export default function Edit() {
+export default function EditPage({ emotionEntries }) {
   const router = useRouter();
 
-  const { id } = router;
+  const { id } = router.query;
 
   return (
-    <p>{id}</p>
-    //   <EmotionForm />
+    <EmotionForm
+      onSubmit={() => console.log("test")}
+      emotionEntries={emotionEntries}
+      id={id}
+      isEdit
+    />
   );
 }
