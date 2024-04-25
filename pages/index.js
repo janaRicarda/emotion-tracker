@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { uid } from "uid";
+import Link from "next/link";
 
 const StyledForm = styled.form`
   display: flex;
