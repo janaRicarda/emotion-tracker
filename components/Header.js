@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Logo from ".//../public/images/logo.png";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -12,7 +13,7 @@ const StyledHeader = styled.header`
   z-index: 1;
 `;
 
-const Logo = styled(Image)`
+const StyledLogo = styled(Image)`
   height: 150px;
   width: 200px;
   position: absolute;
@@ -22,12 +23,7 @@ const Logo = styled(Image)`
 export default function Header() {
   return (
     <StyledHeader>
-      <Logo
-        src="/../public/images/logo.jpeg"
-        width={400}
-        height={200}
-        alt="logo"
-      />
+      <StyledLogo src={Logo} alt="logo" />
     </StyledHeader>
   );
 }
