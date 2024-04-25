@@ -62,18 +62,17 @@ export default function ConfirmMessage({
 
   useEffect(() => {
     setAnimation(true);
-    return () => {};
   }, []);
 
-  function handleCancel(itemId) {
+  function handleCancel(cancelledItemID) {
     setAnimation(false);
-    setTimeout(() => toggleMessage(itemId), 300);
+    setTimeout(() => toggleMessage(cancelledItemID), 300);
   }
-  function handleConfirm(itemId) {
+  function handleConfirm(confirmedItemId) {
     setAnimation(false);
-    setTimeout(() => toggleMessage(itemId), 300);
+    setTimeout(() => toggleMessage(confirmedItemId), 300);
     setTimeout(() => {
-      confirmFunction(itemId);
+      confirmFunction(confirmedItemId);
     }, 600);
   }
 

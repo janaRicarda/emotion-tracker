@@ -82,8 +82,8 @@ export default function EmotionRecordsList({
         }) => {
           return (
             <>
-              <StyledListItemWrapper>
-                <StyledListItem key={id} onClick={() => handleShowDetails(id)}>
+              <StyledListItemWrapper key={id}>
+                <StyledListItem onClick={() => handleShowDetails(id)}>
                   {date}
                 </StyledListItem>
                 <StyledDeleteButton
