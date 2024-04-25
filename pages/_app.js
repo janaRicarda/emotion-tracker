@@ -13,8 +13,19 @@ export default function App({ Component, pageProps }) {
   function handleAddEmotionEntry(data, id) {
     const timeStamp = getCurrentTimeAndDate();
 
-    const newEntry = { ...data, id, date: timeStamp };
+    const newEntry = {
+      ...data,
+      id,
+      date: timeStamp,
+      emotion: "",
+      subemotion: "",
+      intensity: "",
+      category: "",
+      trigger: "",
+      notes: "",
+    };
     setEmotionEntries([newEntry, ...emotionEntries]);
+    console.log(emotionEntries);
   }
 
   function handleAddEmotionDetails(data, id) {

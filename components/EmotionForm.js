@@ -74,6 +74,7 @@ const StyledSubmitButton = styled.button`
 export default function EmotionForm({
   // name,
   // color,
+  isEdit,
   onSubmit,
   id,
   slug,
@@ -99,23 +100,31 @@ export default function EmotionForm({
     category,
     trigger,
     notes,
-    isEdit,
     date,
   } = correspondingEntry;
-  console.log(emotion);
+
   const correspondingEmotion = slug
     ? emotionData.find((emotion) => emotion.slug === slug)
-    : emotionData.find((emotion) => emotion.slug === emotion);
+    : isEdit
+    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
+    : { name: "emotion", color: "lightgray", subemotions: "" };
 
-  const test = correspondingEmotion
-    ? ({ subemotions, name, color } = correspondingEmotion)
-    : "";
+  console.log(correspondingEmotion);
+
+  // console.log(editableEmotion);
+  // const subemotions = correspondingEmotion.subemotions ?? [];
+  // const color = correspondingEmotion.color ?? "lightgray";
+  // const name = correspondingEmotion.name ?? "emotion";
 
   const { subemotions, name, color } = correspondingEmotion;
 
   return (
     <>
-      <StyledH1>Record your {correspondingEmotion.name}</StyledH1>
+      {isEdit ? (
+        <StyledH1>Edit your {name} </StyledH1>
+      ) : (
+        <StyledH1>Record your {name}</StyledH1>
+      )}
       <StyledForm $color={color} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
         <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
