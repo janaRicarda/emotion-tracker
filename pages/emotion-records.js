@@ -1,5 +1,4 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
-
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`

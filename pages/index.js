@@ -59,13 +59,6 @@ const StyledLink = styled(Link)`
     $actionButton ? "1px solid black" : "none"};
 `;
 
-const StyledNav = styled.nav`
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem auto;
-  line-height: 1.2rem;
-`;
-
 const StyledBackButton = styled.input`
   background-color: transparent;
   text-decoration: none;

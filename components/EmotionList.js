@@ -49,7 +49,6 @@ export default function EmotionList({ form, title, createMode, id }) {
   return (
     <>
       <StyledH1>{title}</StyledH1>
-
       <EmotionSection $form={form}>
         {emotionData.map(({ slug, name, color }) => (
           <EmotionLink
