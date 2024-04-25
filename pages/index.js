@@ -12,13 +12,13 @@ const StyledForm = styled.form`
   align-items: center;
 `;
 
-const StyledLabel = styled.label`
+const TensionLabel = styled.label`
   padding: 2rem;
   text-align: center;
 `;
 
 const StyledInput = styled.input`
-  width: inherit;
+  width: 100%;
 `;
 
 const StyledWrapper = styled.div`
@@ -85,8 +85,8 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
-export default function HomePage({ onAddEmotionEntry }) {
-  const [tension, setTension] = useState("0");
+export default function HomePage({ onAddEmotionEntry, tension, setTension }) {
+  // const [tension, setTension] = useState("0");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
 
@@ -105,9 +105,9 @@ export default function HomePage({ onAddEmotionEntry }) {
   return (
     <>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel htmlFor="tension-level">
+        <TensionLabel htmlFor="tension-level">
           On a scale from 0 to 100, how tense do you feel in this moment?
-        </StyledLabel>
+        </TensionLabel>
         <StyledInput
           aria-label="Adjust tension level between 0 and 100"
           id="tension-level"

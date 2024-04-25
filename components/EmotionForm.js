@@ -18,6 +18,15 @@ const StyledForm = styled.form`
   gap: 1rem;
 `;
 
+const TensionLabelEdit = styled.label`
+  padding: 0;
+  text-align: left;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+`;
+
 const EmotionLabel = styled.label`
   display: flex;
   gap: 0.3rem;
@@ -79,6 +88,7 @@ export default function EmotionForm({
   id,
   slug,
   emotionEntries,
+  setTension,
 }) {
   const router = useRouter();
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
@@ -104,41 +114,73 @@ export default function EmotionForm({
   } = correspondingEntry;
 
   const correspondingEmotion = slug
-    ? emotionData.find((emotion) => emotion.slug === slug)
-    : isEdit
+    ? emotionData.find((emotionObject) => emotionObject.slug === slug)
+    : isEdit && emotion
     ? emotionData.find((emotionObject) => emotionObject.name === emotion)
-    : { name: "emotion", color: "lightgray", subemotions: "" };
-
-  console.log(correspondingEmotion);
-
-  // console.log(editableEmotion);
-  // const subemotions = correspondingEmotion.subemotions ?? [];
-  // const color = correspondingEmotion.color ?? "lightgray";
-  // const name = correspondingEmotion.name ?? "emotion";
+    : { name: "emotion", color: "lightgray", subemotions: [] };
 
   const { subemotions, name, color } = correspondingEmotion;
 
   return (
     <>
       {isEdit ? (
-        <StyledH1>Edit your {name} </StyledH1>
+        <StyledH1>Edit your emotion entry</StyledH1>
       ) : (
         <StyledH1>Record your {name}</StyledH1>
       )}
       <StyledForm $color={color} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
-        <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
 
-        <EmotionLabel htmlFor="emotion">
-          Emotion:
-          <StyledTextInput
-            type="text"
-            id="emotion"
-            name="emotion"
-            readOnly
-            value={isEdit ? emotion : name}
-          />
-        </EmotionLabel>
+        {isEdit ? (
+          <>
+            <TensionLabelEdit htmlFor="tension-level">
+              Choose a tension level between 0 and 100:
+            </TensionLabelEdit>
+            <StyledInput
+              aria-label="Adjust tension level between 0 and 100"
+              id="tension-level"
+              name="tensionLevel"
+              type="range"
+              value={tensionLevel}
+              max={100}
+              onChange={(event) => setTension(event.target.value)}
+            />
+            <StyledWrapper>
+              <StyledSpan>0</StyledSpan>
+              <StyledSpan>{tensionLevel}</StyledSpan>
+              <StyledSpan>100</StyledSpan>
+            </StyledWrapper>
+          </>
+        ) : (
+          <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
+        )}
+
+        {isEdit ? (
+          <>
+            <label htmlFor="emotion">Select an emotion:</label>
+            <StyledSelect defaultValue={name} id="emotion" name="emotion">
+              <option value={""}>--select a emotion--</option>
+              <option value={""}>--none--</option>
+              {emotionData.map((emo) => (
+                <option key={emo.name} value={emo.name}>
+                  {emo.name}
+                </option>
+              ))}
+            </StyledSelect>
+          </>
+        ) : (
+          <EmotionLabel htmlFor="emotion">
+            Emotion:
+            <StyledTextInput
+              type="text"
+              id="emotion"
+              name="emotion"
+              readOnly
+              // value={isEdit ? emotion : name}
+              value={name}
+            />
+          </EmotionLabel>
+        )}
 
         <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
@@ -160,7 +202,7 @@ export default function EmotionForm({
           type="range"
           id="intensity"
           name="intensity"
-          defaultValue={0}
+          defaultValue={isEdit ? intensity : 0}
           max={100}
           required
         />
@@ -173,7 +215,7 @@ export default function EmotionForm({
           type="range"
           id="category"
           name="category"
-          defaultValue={0}
+          defaultValue={isEdit ? category : 0}
           max={100}
           required
         />
@@ -183,15 +225,26 @@ export default function EmotionForm({
           <StyledSpan>pleasant</StyledSpan>
         </StyledWrapper>
         <label htmlFor="trigger">Trigger:</label>
-        <StyledTextarea id="trigger" name="trigger"></StyledTextarea>
+        <StyledTextarea
+          id="trigger"
+          name="trigger"
+          defaultValue={isEdit ? trigger : ""}
+        ></StyledTextarea>
         <label htmlFor="notes">Notes: </label>
-        <StyledTextarea id="notes" name="notes"></StyledTextarea>
+        <StyledTextarea
+          id="notes"
+          name="notes"
+          defaultValue={isEdit ? notes : ""}
+        ></StyledTextarea>
         <StyledSubmitButton type="submit" $color={color}>
           Submit
         </StyledSubmitButton>
       </StyledForm>
       <StyledLink href="/" $color={color}>
         ← Back to Tension Entry
+      </StyledLink>
+      <StyledLink href="../emotion-records" $color={color}>
+        ← Back to emotion records
       </StyledLink>
     </>
   );

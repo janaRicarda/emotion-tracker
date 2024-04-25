@@ -1,8 +1,10 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
+import { useState } from "react";
 
 export default function App({ Component, pageProps }) {
+  const [tension, setTension] = useState("0");
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -43,6 +45,8 @@ export default function App({ Component, pageProps }) {
         onAddEmotionDetails={handleAddEmotionDetails}
         emotionEntries={emotionEntries}
         onAddEmotionEntry={handleAddEmotionEntry}
+        tension={tension}
+        setTension={setTension}
         {...pageProps}
       />
     </>
