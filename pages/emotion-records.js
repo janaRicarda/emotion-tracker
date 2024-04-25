@@ -15,17 +15,14 @@ const StyledTitle = styled.h1`
   position: fixed;
   z-index: 2;
   padding-bottom: 1rem;
-  //border: 1px solid black;
-  background: linear-gradient(transparent 5%, var(--main-bright), transparent);
+  background: linear-gradient(transparent, var(--main-bright), transparent);
 `;
 
 export default function EmotionRecords({ emotionEntries }) {
   return (
-    <>
-      <StyledWrapper>
-        <StyledTitle>Recorded Emotions</StyledTitle>
-        <EmotionRecordsList emotionEntries={emotionEntries} />
-      </StyledWrapper>
-    </>
+    <StyledWrapper>
+      <StyledTitle>Recorded Emotions</StyledTitle>
+      <EmotionRecordsList emotionEntries={emotionEntries} />
+    </StyledWrapper>
   );
 }

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Link from "next/link";
 
 const StyledForm = styled.form`
   display: flex;
@@ -33,25 +32,6 @@ const StyledButton = styled.button`
   width: 3rem;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  text-align: center;
-  &:hover {
-    background-color: lightskyblue;
-  }
-`;
-
-const StyledNav = styled.nav`
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem auto;
-  line-height: 1.2rem;
-`;
-
 export default function HomePage({ onAddEmotionEntry }) {
   function handleSubmit(event) {
     event.preventDefault();
@@ -62,28 +42,22 @@ export default function HomePage({ onAddEmotionEntry }) {
   }
 
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel htmlFor="tension-level">
-          On a scale from 0 to 100, how tense do you feel in this moment?
-        </StyledLabel>
-        <StyledInput
-          id="tension-level"
-          name="tensionLevel"
-          type="range"
-          defaultValue={0}
-          max={100}
-        />
-        <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </StyledWrapper>
-        <StyledButton type="submit">Save</StyledButton>
-      </StyledForm>
-      <StyledNav>
-        <StyledLink href="/emotions">The 7 basic emotions</StyledLink>
-        <StyledLink href="/emotion-records">Emotion records</StyledLink>
-      </StyledNav>
-    </>
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledLabel htmlFor="tension-level">
+        On a scale from 0 to 100, how tense do you feel in this moment?
+      </StyledLabel>
+      <StyledInput
+        id="tension-level"
+        name="tensionLevel"
+        type="range"
+        defaultValue={0}
+        max={100}
+      />
+      <StyledWrapper>
+        <StyledSpan>0</StyledSpan>
+        <StyledSpan>100</StyledSpan>
+      </StyledWrapper>
+      <StyledButton type="submit">Save</StyledButton>
+    </StyledForm>
   );
 }

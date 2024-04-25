@@ -21,8 +21,7 @@ const StyledLink = styled(Link)`
   justify-content: center;
   align-items: center;
   text-align: center;
-  //font-weight: 600;
-  //font-size: 1.3rem;
+
   line-height: 90%;
   background: #fad193;
   &:focus {

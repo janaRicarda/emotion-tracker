@@ -16,7 +16,6 @@ const StyledListItem = styled.li`
   box-shadow: 0 0 3px 0;
   width: 80vw;
   cursor: pointer;
-
   &:hover {
     background-color: lightskyblue;
   }

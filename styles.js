@@ -15,8 +15,7 @@ export default createGlobalStyle`
 :root {
   --main-bright: #f1eaea;
   --main-dark: #030352;
-  --box-shadow: -5px -5px 30px 0 #ffffff, 5px 5px 15px 0 #aeaec0,
-  inset -5px -5px 5px 0 #aeaec0, 5px 5px 5px 0 #ffffff;
+
 }
   body {
     margin: 0;

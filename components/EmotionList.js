@@ -6,13 +6,11 @@ const StyledH1 = styled.h1`
   font-weight: 500;
   text-align: center;
   line-height: 2.2rem;
-  //margin: 1rem auto 0;
+  margin: 1rem auto 0;
   position: fixed;
-  background-color: var(--main-bright);
-  padding-bottom: 0.5rem;
-  //width: 100%;
+  width: 100%;
   z-index: 2;
-  background: linear-gradient(transparent, var(--main-bright), transparent);
+  background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
 const StyledList = styled.ul`
@@ -28,12 +26,10 @@ const StyledList = styled.ul`
   padding: 2.5rem 0;
 `;
 const StyledListItem = styled.li`
-  //border: 1px solid var(--main-dark);
   border-radius: 0.5rem;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
   width: 80vw;
-
   font-weight: 600;
   font-size: 1.3rem;
 `;
