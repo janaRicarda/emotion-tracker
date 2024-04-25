@@ -9,13 +9,14 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledTitle = styled.h1`
-  //width: 100%;
+  width: 100%;
   text-align: center;
   font-weight: 500;
   position: fixed;
   z-index: 2;
-  padding-bottom: 0.5rem;
-  background: linear-gradient(transparent, var(--main-bright), transparent);
+  padding-bottom: 1rem;
+  //border: 1px solid black;
+  background: linear-gradient(transparent 5%, var(--main-bright), transparent);
 `;
 
 export default function EmotionRecords({ emotionEntries }) {
