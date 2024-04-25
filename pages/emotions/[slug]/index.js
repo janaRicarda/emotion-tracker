@@ -1,19 +1,6 @@
 import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
-import Link from "next/link";
-import styled from "styled-components";
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  &:hover {
-    background-color: ${({ $color }) => $color};
-  }
-`;
 
 export default function EmotionDetailsPage() {
   const router = useRouter();

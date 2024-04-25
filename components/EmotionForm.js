@@ -3,12 +3,20 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 const StyledH1 = styled.h1`
+  font-weight: 500;
+  width: 100vw;
   text-align: center;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  z-index: 1;
+  background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
 const StyledForm = styled.form`
   border-radius: 10px;
   margin: 1rem;
+  margin-top: 50px;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
   display: flex;
@@ -39,16 +47,6 @@ const StyledSpan = styled.span`
   font-size: 0.8rem;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  &:hover {
-    background-color: ${({ $color }) => $color};
-  }
-`;
 const StyledSelect = styled.select`
   border-radius: 6px;
   padding: 0.3rem 0;
@@ -161,9 +159,6 @@ export default function EmotionForm({
           Submit
         </StyledSubmitButton>
       </StyledForm>
-      <StyledLink href="/" $color={color}>
-        ← Back to Tension Entry
-      </StyledLink>
     </>
   );
 }
