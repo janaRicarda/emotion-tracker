@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styled from "styled-components";
 
 const StyledArticle = styled.article`
@@ -33,6 +34,22 @@ const StyledListItem = styled.li`
   border-radius: 5px;
 `;
 
+const StyledLink = styled(Link)`
+  font-size: 50px;
+  text-decoration: none;
+  color: black;
+  position: fixed;
+  margin: 1rem;
+  top: 50%;
+`;
+const PrevLink = styled(StyledLink)`
+  left: 0;
+`;
+
+const NextLink = styled(StyledLink)`
+  right: 0;
+`;
+
 export default function EmotionDetails({
   name,
   description,
@@ -40,6 +57,8 @@ export default function EmotionDetails({
   indications,
   subemotions,
   color,
+  prevEmotion,
+  nextEmotion,
 }) {
   return (
     <StyledArticle $color={color}>
@@ -55,6 +74,8 @@ export default function EmotionDetails({
           <StyledListItem key={sub}>{sub}</StyledListItem>
         ))}
       </StyledList>
+      <PrevLink href={`/emotions/${prevEmotion.slug}`}>↞</PrevLink>
+      <NextLink href={`/emotions/${nextEmotion.slug}`}>↠</NextLink>
     </StyledArticle>
   );
 }
