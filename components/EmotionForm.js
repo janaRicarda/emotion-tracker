@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
+import { useState } from "react";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -88,7 +89,8 @@ export default function EmotionForm({
   id,
   slug,
   emotionEntries,
-  setTension,
+  sliderValues,
+  setSliderValues,
 }) {
   const router = useRouter();
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
@@ -141,13 +143,18 @@ export default function EmotionForm({
               id="tension-level"
               name="tensionLevel"
               type="range"
-              value={tensionLevel}
+              value={sliderValues.tensionValue}
               max={100}
-              onChange={(event) => setTension(event.target.value)}
+              onChange={(event) =>
+                setSliderValues({
+                  ...sliderValues,
+                  tensionValue: event.target.value,
+                })
+              }
             />
             <StyledWrapper>
               <StyledSpan>0</StyledSpan>
-              <StyledSpan>{tensionLevel}</StyledSpan>
+              <StyledSpan>{sliderValues.tensionValue}</StyledSpan>
               <StyledSpan>100</StyledSpan>
             </StyledWrapper>
           </>
@@ -202,12 +209,19 @@ export default function EmotionForm({
           type="range"
           id="intensity"
           name="intensity"
-          defaultValue={isEdit ? intensity : 0}
+          value={sliderValues.intensityValue}
           max={100}
           required
+          onChange={(event) =>
+            setSliderValues({
+              ...sliderValues,
+              intensityValue: event.target.value,
+            })
+          }
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
+          <StyledSpan>{sliderValues.intensityValue}</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
         <label htmlFor="category">* Association Category:</label>

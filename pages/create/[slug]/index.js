@@ -2,7 +2,12 @@ import EmotionForm from "@/components/EmotionForm";
 // import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 
-export default function EmotionEntry({ onAddEmotionDetails, emotionEntries }) {
+export default function EmotionEntry({
+  onAddEmotionDetails,
+  emotionEntries,
+  sliderValues,
+  setSliderValues,
+}) {
   const router = useRouter();
   if (!router.query) {
     return null;
@@ -21,6 +26,8 @@ export default function EmotionEntry({ onAddEmotionDetails, emotionEntries }) {
       // color={emotion.color}
       id={id}
       slug={slug}
+      sliderValues={sliderValues}
+      setSliderValues={setSliderValues}
       // subemotions={emotion.subemotions}
     />
   );

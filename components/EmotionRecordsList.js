@@ -28,7 +28,11 @@ const StyledDetails = styled.ul`
   margin-bottom: 2rem;
 `;
 
-export default function EmotionRecordsList({ emotionEntries }) {
+export default function EmotionRecordsList({
+  emotionEntries,
+  sliderValues,
+  setSliderValues,
+}) {
   const [show, setShow] = useState({});
   function handleShow(id) {
     setShow((prevShow) => ({
@@ -56,7 +60,18 @@ export default function EmotionRecordsList({ emotionEntries }) {
               <StyledListItem key={id} onClick={() => handleShow(id)}>
                 {date}
               </StyledListItem>
-              <Link href={`./edit/${id}`}>Edit</Link>
+              <Link
+                href={`./edit/${id}`}
+                onClick={() =>
+                  setSliderValues({
+                    tensionValue: tensionLevel,
+                    intensityValue: intensity,
+                    categoryValue: category,
+                  })
+                }
+              >
+                Edit
+              </Link>
               <StyledDetails $show={show[id]}>
                 <li>Tension Level: {tensionLevel}%</li>
                 {emotion && <li>Emotion: {emotion}</li>}

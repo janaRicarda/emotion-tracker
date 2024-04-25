@@ -23,12 +23,15 @@ const StyledTitle = styled.h1`
   margin: 1.5rem auto 1rem;
 `;
 
-export default function EmotionRecords({ emotionEntries }) {
+export default function EmotionRecords({ emotionEntries, setSliderValues }) {
   return (
     <>
       <StyledWrapper>
         <StyledTitle>Recorded Emotions</StyledTitle>
-        <EmotionRecordsList emotionEntries={emotionEntries} />
+        <EmotionRecordsList
+          emotionEntries={emotionEntries}
+          setSliderValues={setSliderValues}
+        />
       </StyledWrapper>
       <StyledLink href="/">← Back to tension entry</StyledLink>
     </>
