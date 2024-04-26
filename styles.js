@@ -23,7 +23,7 @@ export default createGlobalStyle`
    
     background-color: var(--main-bright);
     color: var(--main-dark);
-    font-family: ${raleway.style.fontFamily};
+    font-family: ${raleway.style.fontFamily}, system-ui;
     line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   }
