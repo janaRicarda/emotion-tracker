@@ -5,7 +5,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 2.5rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;
@@ -15,13 +15,13 @@ const StyledListItemWrapper = styled.div`
 `;
 
 const StyledListItem = styled.li`
-  margin: 1rem auto;
-  border: 1px solid black;
-  border-radius: 5px;
+  margin: 0.5rem auto;
+  border: 1px solid var(--main-dark);
+  border-radius: 0.5rem;
   padding: 1rem;
   box-shadow: 0 0 3px 0;
+  width: 80vw;
   cursor: pointer;
-
   &:hover {
     background-color: lightskyblue;
   }

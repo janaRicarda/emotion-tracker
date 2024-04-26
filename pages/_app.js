@@ -5,6 +5,8 @@ import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 
+import Layout from "@/components/Layout";
+
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
@@ -53,13 +55,15 @@ export default function App({ Component, pageProps }) {
         {theme === "light" ? "☾" : "☀"}
       </StyledToggleTheme>
       <GlobalStyle />
-      <Component
-        onAddEmotionDetails={handleAddEmotionDetails}
-        emotionEntries={emotionEntries}
-        onAddEmotionEntry={handleAddEmotionEntry}
-        onDeleteEmotionEntry={handleDeleteEmotionEntry}
-        {...pageProps}
-      />
+      <Layout>
+        <Component
+          onAddEmotionDetails={handleAddEmotionDetails}
+          emotionEntries={emotionEntries}
+          onAddEmotionEntry={handleAddEmotionEntry}
+          onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          {...pageProps}
+        />
+      </Layout>
     </ThemeProvider>
   );
 }

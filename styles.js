@@ -1,5 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import { lightTheme, darkTheme } from "./components/Theme";
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({ subsets: ["latin"] });
 
 export default createGlobalStyle`
   *,
@@ -16,7 +19,11 @@ export default createGlobalStyle`
 }
   body {
     margin: 0;
-    font-family: system-ui;
+    padding: 120px 2rem 75px 2rem;
+   
+    background-color: var(--main-bright);
+    color: var(--main-dark);
+    font-family: ${raleway.style.fontFamily}, system-ui;
     line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   }
