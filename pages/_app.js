@@ -1,7 +1,7 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
-import { ThemeProvider } from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 
@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
   );
 
   function toggleTheme() {
-    theme === light ? setTheme("dark") : setTheme("light");
+    theme === "light" ? setTheme("dark") : setTheme("light");
   }
 
   function handleAddEmotionEntry(data, id) {
@@ -36,12 +36,22 @@ export default function App({ Component, pageProps }) {
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
+  const StyledToggleTheme = styled.button`
+    border-radius: 50%;
+    border: 1px solid var(--main-dark);
+    background-color: transparent;
+    font-size: 1rem;
+    margin: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+  `;
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-      <button type="button" onClick={toggleTheme}>
+      <StyledToggleTheme type="button" onClick={toggleTheme}>
         {theme === "light" ? "☾" : "☀"}
-      </button>
+      </StyledToggleTheme>
       <GlobalStyle />
       <Component
         onAddEmotionDetails={handleAddEmotionDetails}
