@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { lightTheme, darkTheme } from "./components/Theme";
 
 export default createGlobalStyle`
   *,
@@ -8,6 +9,10 @@ export default createGlobalStyle`
   }
   * {
   margin: 0;
+}
+:root {
+  --main-bright: ${({ theme }) => theme.background};
+  --main-dark: ${({ theme }) => theme.text};
 }
   body {
     margin: 0;
