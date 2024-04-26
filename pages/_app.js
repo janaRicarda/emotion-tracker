@@ -42,11 +42,13 @@ export default function App({ Component, pageProps }) {
     border-radius: 50%;
     border: 1px solid var(--main-dark);
     background-color: transparent;
+    color: var(--main-dark);
     font-size: 1rem;
     margin: 1rem;
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 2;
   `;
 
   return (
