@@ -85,7 +85,6 @@ export default function EmotionForm({
   editMode,
   onSubmit,
   id,
-  slug,
   emotionEntries,
 }) {
   const [formValues, setFormValues] = useState({
@@ -122,7 +121,9 @@ export default function EmotionForm({
   } = correspondingEntry;
 
   const correspondingEmotion = emotion
-    ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
+    ? emotionData.find(
+        (emotionObject) => emotionObject.slug === emotion.toLowerCase()
+      )
     : { name: "emotion", color: "lightgray", subemotions: [] };
 
   // console.log("emotion:" + emotion);
@@ -244,7 +245,7 @@ export default function EmotionForm({
 
         <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
-          value={editMode ? subemotion : ""}
+          // value={editMode ? subemotion : ""}
           id="subemotion"
           name="subemotion"
           required

@@ -48,13 +48,14 @@ export default function App({ Component, pageProps }) {
   //   );
   // }
 
+  console.log(emotionEntries[0]);
+
   return (
     <>
       <GlobalStyle />
       <Component
         onAddEmotionEntry={handleAddEmotionEntry}
         onAddEmotionDetails={handleAddEmotionDetails}
-        // onEditEmotionEntry={handleEditEntry}
         emotionEntries={emotionEntries}
         {...pageProps}
       />
