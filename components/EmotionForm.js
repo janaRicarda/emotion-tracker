@@ -88,13 +88,16 @@ export default function EmotionForm({
   slug,
   emotionEntries,
 }) {
-  const [sliderValues, setSliderValues] = useState({
+  const [formValues, setFormValues] = useState({
+    emotionValue: "",
+    colorValue: "",
+    subemotions: [],
     tensionValue: 0,
     intensityValue: 0,
     categoryValue: 50,
   });
+
   const router = useRouter();
-  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -104,6 +107,8 @@ export default function EmotionForm({
     onSubmit(data, id);
     router.push("/emotion-records");
   }
+
+  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
 
   const {
     emotion,
@@ -116,9 +121,24 @@ export default function EmotionForm({
     date,
   } = correspondingEntry;
 
+  const correspondingEmotion = emotion
+    ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
+    : { name: "emotion", color: "lightgray", subemotions: [] };
+
+  // console.log("emotion:" + emotion);
+  // const correspondingEmotion = emotionData.find(
+  //   (emotionObject) => emotionObject.slug === emotion
+  // );
+
+  const { subemotions, name, color } = correspondingEmotion;
+  // console.log("CorrespondingEmotion:", correspondingEmotion);
+  // console.log("Corresponding Entry:", correspondingEntry);
   useEffect(
     () =>
-      setSliderValues({
+      setFormValues({
+        emotionValue: emotion,
+        subemotions: subemotions,
+        colorValue: color,
         tensionValue: tensionLevel,
         intensityValue: intensity,
         categoryValue: category,
@@ -126,20 +146,25 @@ export default function EmotionForm({
     []
   );
 
-  // const correspondingEmotion = slug
-  //   ? emotionData.find((emotionObject) => emotionObject.slug === slug)
-  //   : editMode && emotion
-  //   ? emotionData.find((emotionObject) => emotionObject.name === emotion)
-  //   : { name: "emotion", color: "lightgray", subemotions: [] };
+  // function handleSubemotions(data) {
+  //   const test = emotionData.find((object) => object.slug === data);
+  //   const currentSubemotions = test.subemotions;
+  //   setFormValues({ ...formValues, subemotions: currentSubemotions });
+  // }
 
-  console.log("emotion:" + emotion);
-  const correspondingEmotion = emotionData.find(
-    (emotionObject) => emotionObject.slug === emotion
-  );
+  function handleColorAndSubemotions(data) {
+    const test = emotionData.find((object) => object.slug === data);
+    const currentColor = test.color;
+    const currentSubemotions = test.subemotions;
 
-  const { subemotions, name, color } = correspondingEmotion;
-  console.log("CorrespondingEmotion:", correspondingEmotion);
-  console.log("Corresponding Entry:", correspondingEntry);
+    setFormValues({
+      ...formValues,
+      colorValue: currentColor,
+      subemotions: currentSubemotions,
+    });
+  }
+
+  console.log(formValues);
   return (
     <>
       {editMode ? (
@@ -147,7 +172,7 @@ export default function EmotionForm({
       ) : (
         <StyledH1>Record your {name}</StyledH1>
       )}
-      <StyledForm $color={color} onSubmit={() => handleSubmit()}>
+      <StyledForm $color={formValues.colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
 
         {editMode ? (
@@ -160,18 +185,18 @@ export default function EmotionForm({
               id="tension-level"
               name="tensionLevel"
               type="range"
-              value={sliderValues.tensionValue}
+              value={formValues.tensionValue}
               max={100}
               onChange={(event) =>
-                setSliderValues({
-                  ...sliderValues,
+                setFormValues({
+                  ...formValues,
                   tensionValue: event.target.value,
                 })
               }
             />
             <StyledWrapper>
               <StyledSpan>0</StyledSpan>
-              <StyledSpan>{sliderValues.tensionValue}</StyledSpan>
+              <StyledSpan>{formValues.tensionValue}</StyledSpan>
               <StyledSpan>100</StyledSpan>
             </StyledWrapper>
           </>
@@ -182,7 +207,14 @@ export default function EmotionForm({
         {editMode ? (
           <>
             <label htmlFor="emotion">Select an emotion:</label>
-            <StyledSelect defaultValue={name} id="emotion" name="emotion">
+            <StyledSelect
+              value={formValues.emotion}
+              id="emotion"
+              name="emotion"
+              onChange={(event) => {
+                handleColorAndSubemotions(event.target.value.toLowerCase());
+              }}
+            >
               <option value={""}>--select a emotion--</option>
               <option value={""}>--none--</option>
               {emotionData.map((emo) => (
@@ -199,23 +231,27 @@ export default function EmotionForm({
               type="text"
               id="emotion"
               name="emotion"
-              readOnly
+              readOnly={editMode ? false : true}
               // value={editMode ? emotion : name}
               value={emotion}
+              // onChange={(event) => {
+              // const newColor = handleColor(event.target.value.toLowerCase);
+              // setFormValues({ ...formValues, colorValue: newColor });
+              // }}
             />
           </EmotionLabel>
         )}
 
         <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
-          // defaultValue={editMode ? subemotion ?? "" : ""}
+          value={editMode ? subemotion : ""}
           id="subemotion"
           name="subemotion"
           required
         >
           <option value={""}>--select a subemotion--</option>
           <option value={""}>--none--</option>
-          {subemotions.map((sub) => (
+          {formValues.subemotions.map((sub) => (
             <option key={sub} value={sub}>
               {sub}
             </option>
@@ -226,19 +262,19 @@ export default function EmotionForm({
           type="range"
           id="intensity"
           name="intensity"
-          value={sliderValues.intensityValue}
+          value={formValues.intensityValue}
           max={100}
           required
           onChange={(event) =>
-            setSliderValues({
-              ...sliderValues,
+            setFormValues({
+              ...formValues,
               intensityValue: event.target.value,
             })
           }
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
-          <StyledSpan>{sliderValues.intensityValue}</StyledSpan>
+          <StyledSpan>{formValues.intensityValue}</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
         <label htmlFor="category">* Association Category:</label>
