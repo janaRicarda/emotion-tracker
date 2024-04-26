@@ -17,11 +17,19 @@ const StyledTitle = styled.h1`
   background: linear-gradient(transparent, var(--main-bright), transparent);
 `;
 
-export default function EmotionRecords({ emotionEntries }) {
+export default function EmotionRecords({
+  emotionEntries,
+  onDeleteEmotionEntry,
+}) {
   return (
+
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
-      <EmotionRecordsList emotionEntries={emotionEntries} />
+      <EmotionRecordsList 
+      onDeleteEmotionEntry={onDeleteEmotionEntry}
+      emotionEntries={emotionEntries} 
+     />
     </StyledWrapper>
+
   );
 }
