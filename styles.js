@@ -1,4 +1,7 @@
 import { createGlobalStyle } from "styled-components";
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({ subsets: ["latin"] });
 
 export default createGlobalStyle`
   *,
@@ -9,9 +12,18 @@ export default createGlobalStyle`
   * {
   margin: 0;
 }
+:root {
+  --main-bright: #f1eaea;
+  --main-dark: #030352;
+
+}
   body {
     margin: 0;
-    font-family: system-ui;
+    padding: 120px 2rem 75px 2rem;
+   
+    background-color: var(--main-bright);
+    color: var(--main-dark);
+    font-family: ${raleway.style.fontFamily}, system-ui;
     line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   }
@@ -31,3 +43,4 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 `;
+//#ffffeb;

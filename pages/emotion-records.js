@@ -1,18 +1,5 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
-import Link from "next/link";
 import styled from "styled-components";
-
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  &:hover {
-    background-color: lightskyblue;
-  }
-`;
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -21,7 +8,13 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledTitle = styled.h1`
-  margin: 1.5rem auto 1rem;
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  position: fixed;
+  z-index: 2;
+  padding-bottom: 1rem;
+  background: linear-gradient(transparent, var(--main-bright), transparent);
 `;
 
 export default function EmotionRecords({
@@ -29,15 +22,14 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
 }) {
   return (
-    <>
-      <StyledWrapper>
-        <StyledTitle>Recorded Emotions</StyledTitle>
-        <EmotionRecordsList
-          onDeleteEmotionEntry={onDeleteEmotionEntry}
-          emotionEntries={emotionEntries}
-        />
-      </StyledWrapper>
-      <StyledLink href="/">← Back to tension entry</StyledLink>
-    </>
+
+    <StyledWrapper>
+      <StyledTitle>Recorded Emotions</StyledTitle>
+      <EmotionRecordsList 
+      onDeleteEmotionEntry={onDeleteEmotionEntry}
+      emotionEntries={emotionEntries} 
+     />
+    </StyledWrapper>
+
   );
 }
