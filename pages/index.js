@@ -85,14 +85,10 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
-export default function HomePage({
-  onAddEmotionEntry,
-  sliderValues,
-  setSliderValues,
-}) {
-  // const [tension, setTension] = useState("0");
+export default function HomePage({ onAddEmotionEntry }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
+  const [tension, setTension] = useState(0);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -117,14 +113,9 @@ export default function HomePage({
           id="tension-level"
           name="tensionLevel"
           type="range"
-          value={sliderValues.tensionValue}
+          value={tension}
           max={100}
-          onChange={(event) =>
-            setSliderValues({
-              ...sliderValues,
-              tensionValue: event.target.value,
-            })
-          }
+          onChange={(event) => setTension(event.target.value)}
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
@@ -132,7 +123,7 @@ export default function HomePage({
         </StyledWrapper>
         {!isFormSubmitted && (
           <>
-            <p>{sliderValues.tensionValue}</p>
+            <p>{tension}</p>
             <StyledButton type="submit">Save</StyledButton>
           </>
         )}
@@ -146,7 +137,7 @@ export default function HomePage({
                 value={"Done"}
                 onClick={() => {
                   setIsFormSubmitted(!isFormSubmitted);
-                  setSliderValues({ ...sliderValues, tensionValue: 0 });
+                  setTension(0);
                 }}
               ></StyledBackButton>
               <StyledLink

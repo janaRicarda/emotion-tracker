@@ -26,8 +26,8 @@ export default function EmotionEntry({
       // color={emotion.color}
       id={id}
       slug={slug}
-      sliderValues={sliderValues}
-      setSliderValues={setSliderValues}
+      // sliderValues={sliderValues}
+      // setSliderValues={setSliderValues}
       // subemotions={emotion.subemotions}
     />
   );

@@ -1,23 +1,17 @@
 import EmotionForm from "@/components/EmotionForm";
 import { useRouter } from "next/router";
 
-export default function EditPage({
-  emotionEntries,
-  sliderValues,
-  setSliderValues,
-}) {
+export default function EditPage({ emotionEntries, onEditEmotionEntry }) {
   const router = useRouter();
 
   const { id } = router.query;
 
   return (
     <EmotionForm
-      onSubmit={() => console.log("test")}
+      onSubmit={onEditEmotionEntry}
       emotionEntries={emotionEntries}
       id={id}
-      isEdit
-      sliderValues={sliderValues}
-      setSliderValues={setSliderValues}
+      editMode
     />
   );
 }

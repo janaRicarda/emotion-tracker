@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StyledH1 = styled.h1`
   text-align: center;
@@ -82,16 +82,17 @@ const StyledSubmitButton = styled.button`
 `;
 
 export default function EmotionForm({
-  // name,
-  // color,
-  isEdit,
+  editMode,
   onSubmit,
   id,
   slug,
   emotionEntries,
-  sliderValues,
-  setSliderValues,
 }) {
+  const [sliderValues, setSliderValues] = useState({
+    tensionValue: 0,
+    intensityValue: 0,
+    categoryValue: 50,
+  });
   const router = useRouter();
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
 
@@ -115,25 +116,41 @@ export default function EmotionForm({
     date,
   } = correspondingEntry;
 
-  const correspondingEmotion = slug
-    ? emotionData.find((emotionObject) => emotionObject.slug === slug)
-    : isEdit && emotion
-    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
-    : { name: "emotion", color: "lightgray", subemotions: [] };
+  useEffect(
+    () =>
+      setSliderValues({
+        tensionValue: tensionLevel,
+        intensityValue: intensity,
+        categoryValue: category,
+      }),
+    []
+  );
+
+  // const correspondingEmotion = slug
+  //   ? emotionData.find((emotionObject) => emotionObject.slug === slug)
+  //   : editMode && emotion
+  //   ? emotionData.find((emotionObject) => emotionObject.name === emotion)
+  //   : { name: "emotion", color: "lightgray", subemotions: [] };
+
+  console.log("emotion:" + emotion);
+  const correspondingEmotion = emotionData.find(
+    (emotionObject) => emotionObject.slug === emotion
+  );
 
   const { subemotions, name, color } = correspondingEmotion;
-
+  console.log("CorrespondingEmotion:", correspondingEmotion);
+  console.log("Corresponding Entry:", correspondingEntry);
   return (
     <>
-      {isEdit ? (
+      {editMode ? (
         <StyledH1>Edit your emotion entry</StyledH1>
       ) : (
         <StyledH1>Record your {name}</StyledH1>
       )}
-      <StyledForm $color={color} onSubmit={handleSubmit}>
+      <StyledForm $color={color} onSubmit={() => handleSubmit()}>
         <p aria-label="Date and time">Date: {date}</p>
 
-        {isEdit ? (
+        {editMode ? (
           <>
             <TensionLabelEdit htmlFor="tension-level">
               Choose a tension level between 0 and 100:
@@ -162,7 +179,7 @@ export default function EmotionForm({
           <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
         )}
 
-        {isEdit ? (
+        {editMode ? (
           <>
             <label htmlFor="emotion">Select an emotion:</label>
             <StyledSelect defaultValue={name} id="emotion" name="emotion">
@@ -183,15 +200,15 @@ export default function EmotionForm({
               id="emotion"
               name="emotion"
               readOnly
-              // value={isEdit ? emotion : name}
-              value={name}
+              // value={editMode ? emotion : name}
+              value={emotion}
             />
           </EmotionLabel>
         )}
 
         <label htmlFor="subemotion">* Select Subemotion:</label>
         <StyledSelect
-          defaultValue={isEdit ? subemotion ?? "" : ""}
+          // defaultValue={editMode ? subemotion ?? "" : ""}
           id="subemotion"
           name="subemotion"
           required
@@ -229,7 +246,7 @@ export default function EmotionForm({
           type="range"
           id="category"
           name="category"
-          defaultValue={isEdit ? category : 0}
+          defaultValue={editMode ? category : 0}
           max={100}
           required
         />
@@ -242,13 +259,13 @@ export default function EmotionForm({
         <StyledTextarea
           id="trigger"
           name="trigger"
-          defaultValue={isEdit ? trigger : ""}
+          defaultValue={editMode ? trigger : ""}
         ></StyledTextarea>
         <label htmlFor="notes">Notes: </label>
         <StyledTextarea
           id="notes"
           name="notes"
-          defaultValue={isEdit ? notes : ""}
+          defaultValue={editMode ? notes : ""}
         ></StyledTextarea>
         <StyledSubmitButton type="submit" $color={color}>
           Submit

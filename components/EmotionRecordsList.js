@@ -60,18 +60,7 @@ export default function EmotionRecordsList({
               <StyledListItem key={id} onClick={() => handleShow(id)}>
                 {date}
               </StyledListItem>
-              <Link
-                href={`./edit/${id}`}
-                onClick={() =>
-                  setSliderValues({
-                    tensionValue: tensionLevel,
-                    intensityValue: intensity,
-                    categoryValue: category,
-                  })
-                }
-              >
-                Edit
-              </Link>
+              <Link href={`./edit/${id}`}>Edit</Link>
               <StyledDetails $show={show[id]}>
                 <li>Tension Level: {tensionLevel}%</li>
                 {emotion && <li>Emotion: {emotion}</li>}
