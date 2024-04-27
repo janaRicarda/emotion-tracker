@@ -35,19 +35,6 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  // function handleEditEntry(data, id) {
-  //   console.log;
-  //   setEmotionEntries(
-  //     emotionEntries.map((entry) => {
-  //       if (entry.id === id)
-  //         return {
-  //           ...data,
-  //         };
-  //       else return entry;
-  //     })
-  //   );
-  // }
-
   console.log(emotionEntries[0]);
 
   return (

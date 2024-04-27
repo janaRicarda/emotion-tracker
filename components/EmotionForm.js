@@ -57,7 +57,7 @@ const StyledLink = styled(Link)`
   padding: 1rem;
   border-radius: 8.5px;
   &:hover {
-    background-color: ${({ $color }) => $color};
+    background-color: ${({ $backgroundColor }) => $backgroundColor};
   }
 `;
 const StyledSelect = styled.select`
@@ -87,25 +87,37 @@ export default function EmotionForm({
   id,
   emotionEntries,
 }) {
+  // for controlled-inputs
   const [formValues, setFormValues] = useState({
     emotionValue: "",
     colorValue: "",
-    subemotions: [],
+    subemotionsValue: [],
     tensionValue: 0,
     intensityValue: 0,
     categoryValue: 50,
   });
 
-  const router = useRouter();
+  useEffect(
+    () =>
+      setFormValues({
+        emotionValue: name,
+        subemotionsValue: subemotions,
+        colorValue: color,
+        tensionValue: tensionLevel,
+        intensityValue: intensity === "" ? 0 : intensity,
+        categoryValue: category,
+      }),
+    []
+  );
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    onSubmit(data, id);
-    router.push("/emotion-records");
-  }
+  const {
+    emotionValue,
+    colorValue,
+    subemotionsValue,
+    tensionValue,
+    intensityValue,
+    categoryValue,
+  } = formValues;
 
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
 
@@ -120,152 +132,130 @@ export default function EmotionForm({
     date,
   } = correspondingEntry;
 
+  const inCaseOfNoEmotion = {
+    name: "emotion",
+    color: "lightgray",
+    subemotions: [],
+  };
+
   const correspondingEmotion = emotion
     ? emotionData.find(
         (emotionObject) => emotionObject.slug === emotion.toLowerCase()
       )
-    : { name: "emotion", color: "lightgray", subemotions: [] };
-
-  // console.log("emotion:" + emotion);
-  // const correspondingEmotion = emotionData.find(
-  //   (emotionObject) => emotionObject.slug === emotion
-  // );
+    : inCaseOfNoEmotion;
 
   const { subemotions, name, color } = correspondingEmotion;
-  // console.log("CorrespondingEmotion:", correspondingEmotion);
-  // console.log("Corresponding Entry:", correspondingEntry);
-  useEffect(
-    () =>
-      setFormValues({
-        emotionValue: emotion,
-        subemotions: subemotions,
-        colorValue: color,
-        tensionValue: tensionLevel,
-        intensityValue: intensity,
-        categoryValue: category,
-      }),
-    []
-  );
 
-  // function handleSubemotions(data) {
-  //   const test = emotionData.find((object) => object.slug === data);
-  //   const currentSubemotions = test.subemotions;
-  //   setFormValues({ ...formValues, subemotions: currentSubemotions });
-  // }
+  const router = useRouter();
 
-  function handleColorAndSubemotions(data) {
-    const test = emotionData.find((object) => object.slug === data);
-    const currentColor = test.color;
-    const currentSubemotions = test.subemotions;
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    onSubmit(data, id);
+    router.push("/emotion-records");
+  }
+
+  function handleChangeEmotion(inputValue) {
+    const selectedEmotion = emotionData.find(
+      (emotion) => emotion.slug === inputValue.toLowerCase()
+    );
+
+    const updatedValues = selectedEmotion
+      ? {
+          emotionValue: selectedEmotion.name,
+          colorValue: selectedEmotion.color,
+          subemotionsValue: selectedEmotion.subemotions,
+        }
+      : {
+          emotionValue: "",
+          colorValue: "lightgray",
+          subemotionsValue: [],
+        };
 
     setFormValues({
       ...formValues,
-      colorValue: currentColor,
-      subemotions: currentSubemotions,
+      ...updatedValues,
     });
   }
 
-  console.log(formValues);
   return (
     <>
-      {editMode ? (
-        <StyledH1>Edit your emotion entry</StyledH1>
-      ) : (
-        <StyledH1>Record your {name}</StyledH1>
-      )}
-      <StyledForm $color={formValues.colorValue} onSubmit={handleSubmit}>
+      <StyledH1>
+        {editMode
+          ? emotionValue !== ""
+            ? `Edit your ${emotionValue}`
+            : `Edit your Entry`
+          : `Record your ${emotionValue}`}
+      </StyledH1>
+      <StyledForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
+        <>
+          <TensionLabelEdit htmlFor="tension-level">
+            Choose a tension level between 0 and 100:
+          </TensionLabelEdit>
+          <StyledInput
+            aria-label="Adjust tension level between 0 and 100"
+            id="tension-level"
+            name="tensionLevel"
+            type="range"
+            value={tensionValue}
+            max={100}
+            onChange={(event) =>
+              setFormValues({
+                ...formValues,
+                tensionValue: event.target.value,
+              })
+            }
+          />
+          <StyledWrapper>
+            <StyledSpan>0</StyledSpan>
+            <StyledSpan>{tensionValue}</StyledSpan>
+            <StyledSpan>100</StyledSpan>
+          </StyledWrapper>
+        </>
 
-        {editMode ? (
-          <>
-            <TensionLabelEdit htmlFor="tension-level">
-              Choose a tension level between 0 and 100:
-            </TensionLabelEdit>
-            <StyledInput
-              aria-label="Adjust tension level between 0 and 100"
-              id="tension-level"
-              name="tensionLevel"
-              type="range"
-              value={formValues.tensionValue}
-              max={100}
-              onChange={(event) =>
-                setFormValues({
-                  ...formValues,
-                  tensionValue: event.target.value,
-                })
-              }
-            />
-            <StyledWrapper>
-              <StyledSpan>0</StyledSpan>
-              <StyledSpan>{formValues.tensionValue}</StyledSpan>
-              <StyledSpan>100</StyledSpan>
-            </StyledWrapper>
-          </>
-        ) : (
-          <p aria-label="Tension level">Tension-Level: {tensionLevel}%</p>
-        )}
+        <>
+          <label htmlFor="emotion">Select an emotion:</label>
+          <StyledSelect
+            id="emotion"
+            name="emotion"
+            onChange={(event) => {
+              handleChangeEmotion(event.target.value);
+            }}
+          >
+            <option value={""}>--select a emotion--</option>
+            <option value={""}>None</option>
+            {emotionData.map((emotion) => (
+              <option
+                selected={emotion.name == emotionValue && true}
+                key={emotion.name}
+                value={emotion.name}
+              >
+                {emotion.name}
+              </option>
+            ))}
+          </StyledSelect>
+        </>
 
-        {editMode ? (
-          <>
-            <label htmlFor="emotion">Select an emotion:</label>
-            <StyledSelect
-              value={formValues.emotion}
-              id="emotion"
-              name="emotion"
-              onChange={(event) => {
-                handleColorAndSubemotions(event.target.value.toLowerCase());
-              }}
-            >
-              <option value={""}>--select a emotion--</option>
-              <option value={""}>--none--</option>
-              {emotionData.map((emo) => (
-                <option key={emo.name} value={emo.name}>
-                  {emo.name}
-                </option>
-              ))}
-            </StyledSelect>
-          </>
-        ) : (
-          <EmotionLabel htmlFor="emotion">
-            Emotion:
-            <StyledTextInput
-              type="text"
-              id="emotion"
-              name="emotion"
-              readOnly={editMode ? false : true}
-              // value={editMode ? emotion : name}
-              value={emotion}
-              // onChange={(event) => {
-              // const newColor = handleColor(event.target.value.toLowerCase);
-              // setFormValues({ ...formValues, colorValue: newColor });
-              // }}
-            />
-          </EmotionLabel>
-        )}
-
-        <label htmlFor="subemotion">* Select Subemotion:</label>
-        <StyledSelect
-          // value={editMode ? subemotion : ""}
-          id="subemotion"
-          name="subemotion"
-          required
-        >
-          <option value={""}>--select a subemotion--</option>
-          <option value={""}>--none--</option>
-          {formValues.subemotions.map((sub) => (
-            <option key={sub} value={sub}>
+        <label htmlFor="subemotion">Select Subemotion:</label>
+        <StyledSelect id="subemotion" name="subemotion">
+          <option value={""}>--choose a subemotion--</option>
+          <option value={""}>None</option>
+          {subemotionsValue.map((sub) => (
+            <option selected={subemotion && true} key={sub} value={sub}>
               {sub}
             </option>
           ))}
         </StyledSelect>
-        <label htmlFor="intensity">* Emotion Intensity:</label>
+        <label htmlFor="intensity">Emotion Intensity:</label>
         <input
           type="range"
           id="intensity"
           name="intensity"
-          value={formValues.intensityValue}
+          value={intensityValue}
           max={100}
-          required
           onChange={(event) =>
             setFormValues({
               ...formValues,
@@ -275,17 +265,22 @@ export default function EmotionForm({
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
-          <StyledSpan>{formValues.intensityValue}</StyledSpan>
+          <StyledSpan>{intensityValue}</StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="category">* Association Category:</label>
+        <label htmlFor="category">Association Category:</label>
         <input
           type="range"
           id="category"
           name="category"
-          defaultValue={editMode ? category : 0}
+          value={categoryValue}
           max={100}
-          required
+          onChange={(event) =>
+            setFormValues({
+              ...formValues,
+              categoryValue: event.target.value,
+            })
+          }
         />
         <StyledWrapper>
           <StyledSpan>unpleasant</StyledSpan>
@@ -296,22 +291,22 @@ export default function EmotionForm({
         <StyledTextarea
           id="trigger"
           name="trigger"
-          defaultValue={editMode ? trigger : ""}
+          defaultValue={trigger}
         ></StyledTextarea>
         <label htmlFor="notes">Notes: </label>
         <StyledTextarea
           id="notes"
           name="notes"
-          defaultValue={editMode ? notes : ""}
+          defaultValue={notes}
         ></StyledTextarea>
-        <StyledSubmitButton type="submit" $color={color}>
+        <StyledSubmitButton type="submit" $color={colorValue}>
           Submit
         </StyledSubmitButton>
       </StyledForm>
-      <StyledLink href="/" $color={color}>
+      <StyledLink href="/" $backgroundColor={colorValue}>
         ← Back to Tension Entry
       </StyledLink>
-      <StyledLink href="../emotion-records" $color={color}>
+      <StyledLink href="../emotion-records" $backgroundColor={colorValue}>
         ← Back to emotion records
       </StyledLink>
     </>
