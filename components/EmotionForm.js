@@ -92,6 +92,7 @@ export default function EmotionForm({
     emotionValue: "",
     colorValue: "",
     subemotionsValue: [],
+    selectedSubemotionValue: "",
     tensionValue: 0,
     intensityValue: 0,
     categoryValue: 50,
@@ -102,6 +103,7 @@ export default function EmotionForm({
       setFormValues({
         emotionValue: name,
         subemotionsValue: subemotions,
+        selectedSubemotionValue: subemotion,
         colorValue: color,
         tensionValue: tensionLevel,
         intensityValue: intensity === "" ? 0 : intensity,
@@ -114,6 +116,7 @@ export default function EmotionForm({
     emotionValue,
     colorValue,
     subemotionsValue,
+    selectedSubemotionValue,
     tensionValue,
     intensityValue,
     categoryValue,
@@ -191,60 +194,59 @@ export default function EmotionForm({
       </StyledH1>
       <StyledForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
-        <>
-          <TensionLabelEdit htmlFor="tension-level">
-            Choose a tension level between 0 and 100:
-          </TensionLabelEdit>
-          <StyledInput
-            aria-label="Adjust tension level between 0 and 100"
-            id="tension-level"
-            name="tensionLevel"
-            type="range"
-            value={tensionValue}
-            max={100}
-            onChange={(event) =>
-              setFormValues({
-                ...formValues,
-                tensionValue: event.target.value,
-              })
-            }
-          />
-          <StyledWrapper>
-            <StyledSpan>0</StyledSpan>
-            <StyledSpan>{tensionValue}</StyledSpan>
-            <StyledSpan>100</StyledSpan>
-          </StyledWrapper>
-        </>
-
-        <>
-          <label htmlFor="emotion">Select an emotion:</label>
-          <StyledSelect
-            id="emotion"
-            name="emotion"
-            onChange={(event) => {
-              handleChangeEmotion(event.target.value);
-            }}
-          >
-            <option value={""}>--select a emotion--</option>
-            <option value={""}>None</option>
-            {emotionData.map((emotion) => (
-              <option
-                selected={emotion.name == emotionValue && true}
-                key={emotion.name}
-                value={emotion.name}
-              >
-                {emotion.name}
-              </option>
-            ))}
-          </StyledSelect>
-        </>
-
+        <TensionLabelEdit htmlFor="tension-level">
+          Choose a tension level between 0 and 100:
+        </TensionLabelEdit>
+        <StyledInput
+          aria-label="Adjust tension level between 0 and 100"
+          id="tension-level"
+          name="tensionLevel"
+          type="range"
+          value={tensionValue}
+          max={100}
+          onChange={(event) =>
+            setFormValues({
+              ...formValues,
+              tensionValue: event.target.value,
+            })
+          }
+        />
+        <StyledWrapper>
+          <StyledSpan>0</StyledSpan>
+          <StyledSpan>{tensionValue}</StyledSpan>
+          <StyledSpan>100</StyledSpan>
+        </StyledWrapper>
+        <label htmlFor="emotion">Select an emotion:</label>
+        <StyledSelect
+          id="emotion"
+          name="emotion"
+          value={`${emotionValue}`}
+          onChange={(event) => {
+            handleChangeEmotion(event.target.value);
+          }}
+        >
+          <option value={""}>--select a emotion--</option>
+          {emotionData.map((emotion) => (
+            <option key={emotion.name} value={emotion.name}>
+              {emotion.name}
+            </option>
+          ))}
+        </StyledSelect>
         <label htmlFor="subemotion">Select Subemotion:</label>
-        <StyledSelect id="subemotion" name="subemotion">
+        <StyledSelect
+          value={`${selectedSubemotionValue}`}
+          id="subemotion"
+          name="subemotion"
+          onChange={(event) =>
+            setFormValues({
+              ...formValues,
+              selectedSubemotionValue: event.target.value,
+            })
+          }
+        >
           <option value={""}>--choose a subemotion--</option>
-          <option value={""}>None</option>
           {subemotionsValue.map((sub) => (
-            <option selected={subemotion && true} key={sub} value={sub}>
+            <option key={sub} value={sub}>
               {sub}
             </option>
           ))}
