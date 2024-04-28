@@ -189,8 +189,10 @@ export default function EmotionForm({
         {editMode
           ? emotionValue !== ""
             ? `Edit your ${emotionValue}`
-            : `Edit your Entry`
-          : `Record your ${emotionValue}`}
+            : `Edit your Emotion-Entry`
+          : emotionValue !== ""
+          ? `Record your ${emotionValue}`
+          : `Record your Emotion-Entry`}
       </StyledH1>
       <StyledForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">Date: {date}</p>
