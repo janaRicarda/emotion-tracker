@@ -98,6 +98,8 @@ export default function EmotionForm({
     categoryValue: 50,
   });
 
+  // needed in order to have "formValues" useState at top of function because variables are intialized after that
+  // "formValues" could be set to same values as in useEffect when moved to bottom of function
   useEffect(
     () =>
       setFormValues({
@@ -195,7 +197,9 @@ export default function EmotionForm({
           : `Record your Emotion-Entry`}
       </StyledH1>
       <StyledForm $color={colorValue} onSubmit={handleSubmit}>
-        <p aria-label="Date and time">Date: {date}</p>
+        <p aria-label="Date and time">
+          {editMode ? `Entry from:` : "Date: "} {date}
+        </p>
         <TensionLabelEdit htmlFor="tension-level">
           Choose a tension level between 0 and 100:
         </TensionLabelEdit>
