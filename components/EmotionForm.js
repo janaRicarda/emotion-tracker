@@ -91,7 +91,7 @@ export default function EmotionForm({
   const [formValues, setFormValues] = useState({
     emotionValue: "",
     colorValue: "",
-    subemotionsValue: [],
+    subemotionOptions: [],
     selectedSubemotionValue: "",
     tensionValue: 0,
     intensityValue: 0,
@@ -102,7 +102,7 @@ export default function EmotionForm({
     () =>
       setFormValues({
         emotionValue: name,
-        subemotionsValue: subemotions,
+        subemotionOptions: subemotions,
         selectedSubemotionValue: subemotion,
         colorValue: color,
         tensionValue: tensionLevel,
@@ -115,7 +115,7 @@ export default function EmotionForm({
   const {
     emotionValue,
     colorValue,
-    subemotionsValue,
+    subemotionOptions,
     selectedSubemotionValue,
     tensionValue,
     intensityValue,
@@ -160,21 +160,21 @@ export default function EmotionForm({
     router.push("/emotion-records");
   }
 
-  function handleChangeEmotion(inputValue) {
+  function handleChangeEmotion(choosenEmotion) {
     const selectedEmotion = emotionData.find(
-      (emotion) => emotion.slug === inputValue.toLowerCase()
+      (emotion) => emotion.name === choosenEmotion
     );
 
     const updatedValues = selectedEmotion
       ? {
           emotionValue: selectedEmotion.name,
           colorValue: selectedEmotion.color,
-          subemotionsValue: selectedEmotion.subemotions,
+          subemotionOptions: selectedEmotion.subemotions,
         }
       : {
           emotionValue: "",
           colorValue: "lightgray",
-          subemotionsValue: [],
+          subemotionOptions: [],
         };
 
     setFormValues({
@@ -247,7 +247,7 @@ export default function EmotionForm({
           }
         >
           <option value={""}>--choose a subemotion--</option>
-          {subemotionsValue.map((sub) => (
+          {subemotionOptions.map((sub) => (
             <option key={sub} value={sub}>
               {sub}
             </option>
