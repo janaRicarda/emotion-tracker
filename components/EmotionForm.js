@@ -144,9 +144,7 @@ export default function EmotionForm({
   };
 
   const correspondingEmotion = emotion
-    ? emotionData.find(
-        (emotionObject) => emotionObject.slug === emotion.toLowerCase()
-      )
+    ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
     : inCaseOfNoEmotion;
 
   const { subemotions, name, color } = correspondingEmotion;
