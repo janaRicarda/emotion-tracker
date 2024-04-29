@@ -135,7 +135,7 @@ export default function EmotionForm({
     trigger,
     notes,
     date,
-  } = { ...correspondingEntry };
+  } = correspondingEntry;
 
   const inCaseOfNoEmotion = {
     name: "emotion",
