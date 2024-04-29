@@ -87,6 +87,8 @@ export default function EmotionForm({
   id,
   emotionEntries,
 }) {
+  const router = useRouter();
+
   // for controlled-inputs
   const [formValues, setFormValues] = useState({
     emotionValue: "",
@@ -138,7 +140,6 @@ export default function EmotionForm({
   } = correspondingEntry;
 
   const inCaseOfNoEmotion = {
-    name: "emotion",
     color: "lightgray",
     subemotions: [],
   };
@@ -148,8 +149,6 @@ export default function EmotionForm({
     : inCaseOfNoEmotion;
 
   const { subemotions, name, color } = correspondingEmotion;
-
-  const router = useRouter();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -182,8 +181,6 @@ export default function EmotionForm({
       ...updatedValues,
     });
   }
-
-  console.log(formValues);
 
   return (
     <>

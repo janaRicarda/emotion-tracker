@@ -11,13 +11,13 @@ export default function App({ Component, pageProps }) {
   );
 
   function handleAddEmotionEntry(data, id) {
-    const timeStamp = getCurrentTimeAndDate();
+    const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
       ...data,
       id,
-      date: timeStamp,
-      emotion: "",
+      date: timeAndDate,
+      emotion: "none",
       subemotion: "",
       intensity: "",
       category: "",
@@ -34,6 +34,8 @@ export default function App({ Component, pageProps }) {
       )
     );
   }
+
+  console.log(emotionEntries[0]);
 
   return (
     <>
