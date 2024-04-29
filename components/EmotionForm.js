@@ -211,7 +211,7 @@ export default function EmotionForm({
             handleChangeEmotion(event.target.value);
           }}
         >
-          <option value={""}>--select a emotion--</option>
+          <option value={""}>--select emotion--</option>
           {emotionData.map((emotion) => (
             <option key={emotion.name} value={emotion.name}>
               {emotion.name}
@@ -230,7 +230,7 @@ export default function EmotionForm({
             })
           }
         >
-          <option value={""}>--choose a subemotion--</option>
+          <option value={""}>--select subemotion--</option>
           {subemotionOptions.map((sub) => (
             <option key={sub} value={sub}>
               {sub}
