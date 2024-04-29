@@ -107,6 +107,7 @@ export default function EmotionForm({
         subemotionOptions: subemotions,
         colorValue: color,
       }),
+
     []
   );
 
@@ -127,10 +128,8 @@ export default function EmotionForm({
     subemotions: [],
   };
 
-  const correspondingEmotion = correspondingEntry?.emotion
-    ? emotionData.find(
-        (emotionObject) => emotionObject.name === correspondingEntry.emotion
-      )
+  const correspondingEmotion = emotion
+    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
     : inCaseOfNoEmotion;
   const { subemotions, color } = correspondingEmotion;
 
