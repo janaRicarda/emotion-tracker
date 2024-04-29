@@ -6,6 +6,7 @@ const StyledArticle = styled.article`
   margin: 1rem;
   padding: 2rem;
   background-color: ${({ $color }) => $color};
+  color: #030352;
 `;
 
 const Title = styled.h1`
@@ -29,7 +30,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid var(--main-dark);
+  border: 1px solid #030352;
   padding: 0.5rem;
   border-radius: 5px;
 `;
@@ -37,7 +38,7 @@ const StyledListItem = styled.li`
 const StyledLink = styled(Link)`
   font-size: 50px;
   text-decoration: none;
-  color: black;
+  color: var(--main-dark);
   position: fixed;
   margin: 1rem;
   top: 50%;
@@ -56,12 +57,12 @@ export default function EmotionDetails({
   emotionfunction,
   indications,
   subemotions,
-  color,
+  slug,
   prevEmotion,
   nextEmotion,
 }) {
   return (
-    <StyledArticle $color={color}>
+    <StyledArticle $color={`var(--${slug})`}>
       <Title>{name}</Title>
       <p>{description}</p>
       <SubTitle>The function of {name}</SubTitle>

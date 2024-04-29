@@ -16,7 +16,8 @@ const StyledPopUpMessage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+
+  background-color: var(--main-bright);
   padding: 1.5rem;
   box-shadow: 0 0 5px 0px;
   border-radius: 10px;

@@ -31,6 +31,7 @@ export default function EmotionDetailsPage() {
       color={emotion.color}
       prevEmotion={prevEmotion}
       nextEmotion={nextEmotion}
+      slug={emotion.slug}
     />
   );
 }

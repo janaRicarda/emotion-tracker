@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Logo from ".//../public/images/logo.png";
+import LogoLight from ".//../public/images/logo.png";
+import LogoDark from ".//../public/images/logo_dark.png";
+import { lightTheme, darkTheme } from "./Theme";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -19,10 +21,14 @@ const StyledLogo = styled(Image)`
   left: 0;
 `;
 
-export default function Header() {
+export default function Header({ theme }) {
   return (
     <StyledHeader>
-      <StyledLogo src={Logo} alt="logo" />
+      {theme === "light" ? (
+        <StyledLogo src={LogoLight} alt="logo" />
+      ) : (
+        <StyledLogo src={LogoDark} alt="logo" />
+      )}
     </StyledHeader>
   );
 }

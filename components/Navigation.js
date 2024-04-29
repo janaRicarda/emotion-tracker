@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: var(--main-dark);
+  color: #030352;
   padding: 0.5rem;
   flex: 1;
   display: flex;

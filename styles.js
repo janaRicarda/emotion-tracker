@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { lightTheme, darkTheme } from "./components/Theme";
 import { Raleway } from "next/font/google";
 
 const raleway = Raleway({ subsets: ["latin"] });
@@ -13,9 +14,16 @@ export default createGlobalStyle`
   margin: 0;
 }
 :root {
-  --main-bright: #f1eaea;
-  --main-dark: #030352;
-
+  --main-bright: ${({ theme }) => theme.background};
+  --main-dark: ${({ theme }) => theme.text};
+ --button-background: ${({ theme }) => theme.buttonBackground};
+  --joy: ${({ theme }) => theme.joy};
+  --surprise: ${({ theme }) => theme.surprise};
+  --fear: ${({ theme }) => theme.fear};
+  --sadness: ${({ theme }) => theme.sadness};
+  --contempt: ${({ theme }) => theme.contempt};
+  --disgust: ${({ theme }) => theme.disgust};
+  --anger: ${({ theme }) => theme.anger};
 }
   body {
     margin: 0;
@@ -43,4 +51,3 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 `;
-//#ffffeb;

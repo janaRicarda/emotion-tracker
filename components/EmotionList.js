@@ -31,7 +31,7 @@ const EmotionSection = styled.section`
 const EmotionLink = styled(Link)`
   text-decoration: none;
   text-align: center;
-  color: var(--main-dark);
+  color: #030352;
   background-color: ${({ $color }) => $color};
   border-radius: 0.5rem;
   width: 80vw;
@@ -50,10 +50,10 @@ export default function EmotionList({ form, title, createMode, id }) {
     <>
       <StyledH1>{title}</StyledH1>
       <EmotionSection $form={form}>
-        {emotionData.map(({ slug, name, color }) => (
+        {emotionData.map(({ slug, name }) => (
           <EmotionLink
             key={slug}
-            $color={color}
+            $color={`var(--${slug})`}
             slug={slug}
             href={
               createMode

@@ -23,7 +23,7 @@ const StyledListItem = styled.li`
   width: 80vw;
   cursor: pointer;
   &:hover {
-    background-color: lightskyblue;
+    background-color: var(--button-background);
   }
 `;
 
@@ -38,7 +38,7 @@ const StyledDeleteButton = styled(TrashIcon)`
   position: absolute;
   top: -1rem;
   right: -1rem;
-
+  fill: var(--main-dark);
   &:hover {
     cursor: pointer;
   }
