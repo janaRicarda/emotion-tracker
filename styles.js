@@ -16,6 +16,7 @@ export default createGlobalStyle`
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
+  --logo: ${({ theme }) => theme.logo};
 }
   body {
     margin: 0;

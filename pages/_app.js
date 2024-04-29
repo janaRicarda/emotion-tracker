@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
         {theme === "light" ? "☾" : "☀"}
       </StyledToggleTheme>
       <GlobalStyle />
-      <Layout>
+      <Layout theme={theme}>
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}

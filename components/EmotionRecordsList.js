@@ -38,7 +38,7 @@ const StyledDeleteButton = styled(TrashIcon)`
   position: absolute;
   top: -1rem;
   right: -1rem;
-
+  fill: var(--main-dark);
   &:hover {
     cursor: pointer;
   }
