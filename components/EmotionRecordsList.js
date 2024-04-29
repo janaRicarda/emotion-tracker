@@ -23,7 +23,7 @@ const StyledListItem = styled.li`
   width: 80vw;
   cursor: pointer;
   &:hover {
-    background-color: lightskyblue;
+    background-color: var(--button-background);
   }
 `;
 

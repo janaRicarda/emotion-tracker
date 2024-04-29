@@ -38,7 +38,8 @@ const StyledSpan = styled.span`
 `;
 
 const StyledButton = styled.button`
-  background-color: lightskyblue;
+  background-color: var(--button-background);
+  color: var(--main-dark);
   width: 6rem;
   border: 1px solid black;
   border-radius: 6px;
@@ -48,13 +49,13 @@ const StyledButton = styled.button`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: var(--main-dark);
   margin: 1rem;
   padding: 1rem;
   border-radius: 8.5px;
   text-align: center;
   background-color: ${({ $actionButton }) =>
-    $actionButton ? "lightskyblue" : "white"};
+    $actionButton ? "var(--button-background)" : "white"};
   border: ${({ $actionButton }) =>
     $actionButton ? "1px solid black" : "none"};
 `;
@@ -62,13 +63,13 @@ const StyledLink = styled(Link)`
 const StyledBackButton = styled.input`
   background-color: transparent;
   text-decoration: none;
-  color: black;
+  color: var(--main-dark);
   margin: 1rem;
   padding: 1rem;
   border-radius: 8.5px;
   border: 1px solid black;
   text-align: center;
-  background-color: lightskyblue;
+  background-color: var(--button-background);
 `;
 
 const StyledMessage = styled.p`

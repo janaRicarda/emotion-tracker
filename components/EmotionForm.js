@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -23,6 +22,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
+  color: #030352;
 `;
 
 const EmotionLabel = styled.label`
@@ -59,7 +59,7 @@ const StyledTextarea = styled.textarea`
 
 const StyledSubmitButton = styled.button`
   background-color: white;
-  color: var(--main-dark);
+  color: #030352;
   border: 1px solid black;
   border-radius: 6px;
   padding: 0.5rem;

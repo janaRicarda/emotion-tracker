@@ -16,7 +16,14 @@ export default createGlobalStyle`
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
-  --logo: ${({ theme }) => theme.logo};
+ --button-background: ${({ theme }) => theme.buttonBackground};
+  --joy: ${({ theme }) => theme.joy};
+  --surprise: ${({ theme }) => theme.surprise};
+  --fear: ${({ theme }) => theme.fear};
+  --sadness: ${({ theme }) => theme.sadness};
+  --contempt: ${({ theme }) => theme.contempt};
+  --disgust: ${({ theme }) => theme.disgust};
+  --anger: ${({ theme }) => theme.anger};
 }
   body {
     margin: 0;
