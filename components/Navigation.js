@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-const StyledFooter = styled.footer`
+const StyledArticle = styled.article`
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -14,7 +14,7 @@ const StyledFooter = styled.footer`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: #030352;
+  //color: #030352;
   padding: 0.5rem;
   flex: 1;
   display: flex;
@@ -22,19 +22,17 @@ const StyledLink = styled(Link)`
   align-items: center;
   text-align: center;
 
-  line-height: 90%;
+  //line-height: 90%;
   background: #fad193;
-  &:focus {
-    background: #ecaffa;
-  }
+  display: none;
 `;
 
 export default function Navgation() {
   return (
-    <StyledFooter>
+    <StyledArticle>
       <StyledLink href="/emotions">7 basic emotions</StyledLink>
       <StyledLink href="/">add entry</StyledLink>
       <StyledLink href="/emotion-records">emotion records</StyledLink>
-    </StyledFooter>
+    </StyledArticle>
   );
 }
