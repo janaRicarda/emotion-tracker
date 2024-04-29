@@ -17,12 +17,12 @@ export default function App({ Component, pageProps }) {
       ...data,
       id,
       date: timeAndDate,
-      emotion: "none",
-      subemotion: "",
-      intensity: "",
-      category: "",
-      trigger: "",
-      notes: "",
+      // emotion: "none",
+      // subemotion: "",
+      // intensity: "",
+      // category: "",
+      // trigger: "",
+      // notes: "",
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }

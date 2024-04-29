@@ -28,18 +28,6 @@ const StyledInput = styled.input`
   width: 100%;
 `;
 
-const EmotionLabel = styled.label`
-  display: flex;
-  gap: 0.3rem;
-`;
-
-const StyledTextInput = styled.input`
-  padding: 0 1rem 0 0;
-  border: none;
-  background-color: transparent;
-  line-height: 1rem;
-`;
-
 const StyledWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -85,50 +73,12 @@ export default function EmotionForm({
   editMode,
   onSubmit,
   id,
-  emotionEntries,
+  correspondingEntry,
 }) {
   const router = useRouter();
 
-  // for controlled-inputs
-  const [formValues, setFormValues] = useState({
-    emotionValue: "",
-    colorValue: "",
-    subemotionOptions: [],
-    selectedSubemotionValue: "",
-    tensionValue: 0,
-    intensityValue: 0,
-    categoryValue: 50,
-  });
-
-  // UseEffect used in order to have "formValues" useState at top of function because variables are intialized after that
-  // "formValues" could be set to same values as in useEffect when moved to bottom of function
-  useEffect(
-    () =>
-      setFormValues({
-        emotionValue: name,
-        subemotionOptions: subemotions,
-        selectedSubemotionValue: subemotion,
-        colorValue: color,
-        tensionValue: tensionLevel,
-        intensityValue: intensity ? intensity : 0,
-        categoryValue: category,
-      }),
-    []
-  );
-
   const {
-    emotionValue,
-    colorValue,
-    subemotionOptions,
-    selectedSubemotionValue,
-    tensionValue,
-    intensityValue,
-    categoryValue,
-  } = formValues;
-
-  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
-
-  const {
+    date,
     emotion,
     tensionLevel,
     subemotion,
@@ -136,19 +86,54 @@ export default function EmotionForm({
     category,
     trigger,
     notes,
-    date,
   } = correspondingEntry;
+
+  // for controlled-inputs
+  const [formValues, setFormValues] = useState({
+    tensionValue: tensionLevel,
+    emotionValue: emotion,
+    selectedSubemotionValue: subemotion,
+    intensityValue: intensity,
+    categoryValue: category,
+    triggerValue: trigger,
+    notesValue: notes,
+    subemotionOptions: [],
+    colorValue: "",
+  });
+
+  useEffect(
+    () =>
+      setFormValues({
+        ...formValues,
+        subemotionOptions: subemotions,
+        colorValue: color,
+      }),
+    []
+  );
+
+  const {
+    tensionValue,
+    emotionValue,
+    selectedSubemotionValue,
+    intensityValue,
+    categoryValue,
+    triggerValue,
+    notesValue,
+    subemotionOptions,
+    colorValue,
+  } = formValues;
 
   const inCaseOfNoEmotion = {
     color: "lightgray",
     subemotions: [],
   };
 
-  const correspondingEmotion = emotion
-    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
+  const correspondingEmotion = correspondingEntry?.emotion
+    ? emotionData.find(
+        (emotionObject) => emotionObject.name === correspondingEntry.emotion
+      )
     : inCaseOfNoEmotion;
-
-  const { subemotions, name, color } = correspondingEmotion;
+  const { subemotions, color } = correspondingEmotion;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -296,13 +281,13 @@ export default function EmotionForm({
         <StyledTextarea
           id="trigger"
           name="trigger"
-          defaultValue={trigger}
+          defaultValue={triggerValue}
         ></StyledTextarea>
         <label htmlFor="notes">Notes: </label>
         <StyledTextarea
           id="notes"
           name="notes"
-          defaultValue={notes}
+          defaultValue={notesValue}
         ></StyledTextarea>
         <StyledSubmitButton type="submit" $color={colorValue}>
           Submit

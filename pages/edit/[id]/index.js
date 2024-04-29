@@ -6,10 +6,12 @@ export default function EditPage({ emotionEntries, onAddEmotionDetails }) {
 
   const { id } = router.query;
 
+  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
+  if (!correspondingEntry) return <h2>Page not found!</h2>;
   return (
     <EmotionForm
       onSubmit={onAddEmotionDetails}
-      emotionEntries={emotionEntries}
+      correspondingEntry={correspondingEntry}
       id={id}
       editMode
     />
