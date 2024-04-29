@@ -98,7 +98,7 @@ export default function EmotionForm({
     categoryValue: 50,
   });
 
-  // needed in order to have "formValues" useState at top of function because variables are intialized after that
+  // UseEffect used in order to have "formValues" useState at top of function because variables are intialized after that
   // "formValues" could be set to same values as in useEffect when moved to bottom of function
   useEffect(
     () =>
@@ -108,7 +108,7 @@ export default function EmotionForm({
         selectedSubemotionValue: subemotion,
         colorValue: color,
         tensionValue: tensionLevel,
-        intensityValue: intensity === "" ? 0 : intensity,
+        intensityValue: intensity ? intensity : 0,
         categoryValue: category,
       }),
     []
@@ -135,7 +135,7 @@ export default function EmotionForm({
     trigger,
     notes,
     date,
-  } = correspondingEntry;
+  } = { ...correspondingEntry };
 
   const inCaseOfNoEmotion = {
     name: "emotion",
@@ -144,7 +144,7 @@ export default function EmotionForm({
   };
 
   const correspondingEmotion = emotion
-    ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
+    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
     : inCaseOfNoEmotion;
 
   const { subemotions, name, color } = correspondingEmotion;
@@ -183,14 +183,16 @@ export default function EmotionForm({
     });
   }
 
+  console.log(formValues);
+
   return (
     <>
       <StyledH1>
         {editMode
-          ? emotionValue !== ""
+          ? emotionValue
             ? `Edit your ${emotionValue}`
             : `Edit your Emotion-Entry`
-          : emotionValue !== ""
+          : emotionValue
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledH1>

@@ -54,7 +54,7 @@ export default function EmotionList({
       <EmotionSection>
         {emotionData.map(({ slug, name, color }) => (
           <EmotionLink
-            onClick={() => handleAddDetails(slug, id)}
+            onClick={() => handleAddDetails(name, id)}
             key={slug}
             $color={color}
             slug={slug}
