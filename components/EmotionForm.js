@@ -239,6 +239,7 @@ export default function EmotionForm({
         </StyledSelect>
         <label htmlFor="intensity">Emotion Intensity:</label>
         <input
+          disabled={emotionValue ? false : true}
           type="range"
           id="intensity"
           name="intensity"
@@ -258,6 +259,7 @@ export default function EmotionForm({
         </StyledWrapper>
         <label htmlFor="category">Association Category:</label>
         <input
+          disabled={emotionValue ? false : true}
           type="range"
           id="category"
           name="category"
