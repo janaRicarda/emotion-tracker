@@ -37,7 +37,7 @@ const EmotionLink = styled(Link)`
   width: 80vw;
   max-width: 800px;
   font-weight: 600;
-  padding: 1rem;
+  padding: 0.8rem;
   font-size: 1.3rem;
 `;
 

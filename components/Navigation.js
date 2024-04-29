@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import Link from "next/link";
+import Menu1 from "./../public/menu1.svg";
 
-const StyledMenuButton = styled.button`
+const StyledMenuButton = styled(Menu1)`
+  width: 3rem;
+  fill: var(--main-dark);
   background: var(--main-bright);
   color: var(--main-dark);
   border-style: none;
-  margin: 0 1rem;
-  font-size: 3rem;
+  margin: 1rem;
   position: absolute;
   top: 0;
   right: 0;
@@ -37,9 +39,10 @@ const StyledLink = styled(Link)`
 export default function Navigation({ handleToggleMenu, setOpenFalse, isOpen }) {
   return (
     <>
-      <StyledMenuButton type="button" onClick={handleToggleMenu}>
-        ≣
-      </StyledMenuButton>
+      <StyledMenuButton
+        type="button"
+        onClick={handleToggleMenu}
+      ></StyledMenuButton>
       {isOpen && (
         <StyledArticle>
           <StyledLink onClick={setOpenFalse} href="/emotions">

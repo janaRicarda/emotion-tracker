@@ -45,10 +45,10 @@ export default function App({ Component, pageProps }) {
     color: var(--main-dark);
     font-size: 1rem;
     margin: 1rem;
-    position: absolute;
+    position: fixed;
     top: 0.7rem;
     right: 4rem;
-    z-index: 2;
+    z-index: 4;
   `;
 
   return (
