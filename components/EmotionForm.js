@@ -92,7 +92,7 @@ export default function EmotionForm({
     tensionValue: tensionLevel,
     emotionValue: emotion,
     selectedSubemotionValue: subemotion,
-    intensityValue: intensity,
+    intensityValue: intensity ? intensity : 0,
     categoryValue: category,
     triggerValue: trigger,
     notesValue: notes,
