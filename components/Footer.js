@@ -8,7 +8,7 @@ const StyledFooter = styled.footer`
   padding: 0.5rem;
   font-size: 0.8rem;
   text-align: center;
-  //display: flex;
+  background-color: var(--main-bright);
   border-top: 1px solid var(--main-dark);
 `;
 

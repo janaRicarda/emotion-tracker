@@ -46,8 +46,8 @@ export default function App({ Component, pageProps }) {
     font-size: 1rem;
     margin: 1rem;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 0.7rem;
+    right: 4rem;
     z-index: 2;
   `;
 

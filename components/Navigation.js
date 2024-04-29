@@ -1,38 +1,58 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+const StyledMenuButton = styled.button`
+  background: var(--main-bright);
+  color: var(--main-dark);
+  border-style: none;
+  margin: 0 1rem;
+  font-size: 3rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+
 const StyledArticle = styled.article`
   width: 100%;
-  height: 5rem;
+  background-color: var(--main-dark);
   position: fixed;
-  bottom: -10px;
-  left: 0;
-  background: #daaafa;
+  top: 5.5rem;
+
   display: flex;
-  border-top: 1px solid var(--main-dark);
+  flex-direction: column;
+  border: 1px solid var(--main-dark);
 `;
 
 const StyledLink = styled(Link)`
+  width: 100%;
   text-decoration: none;
-  //color: #030352;
+  color: var(--main-dark);
+  background-color: var(--button-background);
   padding: 0.5rem;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  //line-height: 90%;
-  background: #fad193;
-  display: none;
+  font-size: 1.4rem;
+  font-weight: 500;
+  text-align: end;
 `;
 
-export default function Navgation() {
+export default function Navigation({ handleToggleMenu, setOpenFalse, isOpen }) {
   return (
-    <StyledArticle>
-      <StyledLink href="/emotions">7 basic emotions</StyledLink>
-      <StyledLink href="/">add entry</StyledLink>
-      <StyledLink href="/emotion-records">emotion records</StyledLink>
-    </StyledArticle>
+    <>
+      <StyledMenuButton type="button" onClick={handleToggleMenu}>
+        ≣
+      </StyledMenuButton>
+      {isOpen && (
+        <StyledArticle>
+          <StyledLink onClick={setOpenFalse} href="/emotions">
+            7 basic emotions
+          </StyledLink>
+          <StyledLink onClick={setOpenFalse} href="/">
+            add entry
+          </StyledLink>
+          <StyledLink onClick={setOpenFalse} href="/emotion-records">
+            emotion records
+          </StyledLink>
+        </StyledArticle>
+      )}
+    </>
   );
 }
