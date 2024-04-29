@@ -1,14 +1,24 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
+import styled, { ThemeProvider } from "styled-components";
+import { useState } from "react";
+import { lightTheme, darkTheme } from "@/components/Theme";
+
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
+  const [theme, setTheme] = useState("light");
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
       defaultValue: [],
     }
   );
+
+  function toggleTheme() {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  }
 
   function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
@@ -17,12 +27,6 @@ export default function App({ Component, pageProps }) {
       ...data,
       id,
       date: timeAndDate,
-      // emotion: "none",
-      // subemotion: "",
-      // intensity: "",
-      // category: "",
-      // trigger: "",
-      // notes: "",
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
@@ -35,17 +39,37 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  console.log(emotionEntries[0]);
+  function handleDeleteEmotionEntry(id) {
+    setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+  }
+  const StyledToggleTheme = styled.button`
+    border-radius: 50%;
+    border: 1px solid var(--main-dark);
+    background-color: transparent;
+    color: var(--main-dark);
+    font-size: 1rem;
+    margin: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+  `;
 
   return (
-    <>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <StyledToggleTheme type="button" onClick={toggleTheme}>
+        {theme === "light" ? "☾" : "☀"}
+      </StyledToggleTheme>
       <GlobalStyle />
-      <Component
-        onAddEmotionEntry={handleAddEmotionEntry}
-        onAddEmotionDetails={handleAddEmotionDetails}
-        emotionEntries={emotionEntries}
-        {...pageProps}
-      />
-    </>
+      <Layout theme={theme}>
+        <Component
+          onAddEmotionDetails={handleAddEmotionDetails}
+          emotionEntries={emotionEntries}
+          onAddEmotionEntry={handleAddEmotionEntry}
+          onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          {...pageProps}
+        />
+      </Layout>
+    </ThemeProvider>
   );
 }

@@ -1,22 +1,30 @@
-import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
 import { useEffect, useState } from "react";
 
 const StyledH1 = styled.h1`
+  font-weight: 500;
+  width: 100vw;
   text-align: center;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  z-index: 1;
+  background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
 const StyledForm = styled.form`
   border-radius: 10px;
   margin: 1rem;
+  margin-top: 50px;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
+  color: #030352;
 `;
 
 const TensionLabelEdit = styled.label`
@@ -38,16 +46,6 @@ const StyledSpan = styled.span`
   font-size: 0.8rem;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  &:hover {
-    background-color: ${({ $backgroundColor }) => $backgroundColor};
-  }
-`;
 const StyledSelect = styled.select`
   border-radius: 6px;
   padding: 0.3rem 0;
@@ -60,6 +58,7 @@ const StyledTextarea = styled.textarea`
 
 const StyledSubmitButton = styled.button`
   background-color: white;
+  color: #030352;
   border: 1px solid black;
   border-radius: 6px;
   padding: 0.5rem;
@@ -293,12 +292,6 @@ export default function EmotionForm({
           Submit
         </StyledSubmitButton>
       </StyledForm>
-      <StyledLink href="/" $backgroundColor={colorValue}>
-        ← Back to Tension Entry
-      </StyledLink>
-      <StyledLink href="../emotion-records" $backgroundColor={colorValue}>
-        ← Back to emotion records
-      </StyledLink>
     </>
   );
 }

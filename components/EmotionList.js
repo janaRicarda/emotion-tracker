@@ -3,9 +3,16 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const StyledH1 = styled.h1`
+  font-weight: 500;
+  padding: 0 1rem 1rem 1rem;
+  font-size: 1.5rem;
   text-align: center;
-  line-height: 2.2rem;
+  line-height: 1.6rem;
   margin: 1rem auto 0;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
 const EmotionSection = styled.section`
@@ -18,14 +25,14 @@ const EmotionSection = styled.section`
   text-align: center;
   gap: 0.5rem;
   margin: 3rem;
+  padding-top: ${({ $form }) => ($form ? "4rem" : "1rem")};
 `;
 
 const EmotionLink = styled(Link)`
   text-decoration: none;
   text-align: center;
-  color: black;
+  color: #030352;
   background-color: ${({ $color }) => $color};
-  border: 1px solid black;
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
@@ -35,6 +42,7 @@ const EmotionLink = styled(Link)`
 `;
 
 export default function EmotionList({
+  form,
   title,
   createMode,
   id,
@@ -50,13 +58,12 @@ export default function EmotionList({
   return (
     <>
       <StyledH1>{title}</StyledH1>
-
-      <EmotionSection>
-        {emotionData.map(({ slug, name, color }) => (
+      <EmotionSection $form={form}>
+        {emotionData.map(({ slug, name }) => (
           <EmotionLink
             onClick={() => handleAddDetails(name, id)}
             key={slug}
-            $color={color}
+            $color={`var(--${slug})`}
             slug={slug}
             href={
               createMode
