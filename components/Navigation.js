@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
-import Menu1 from "./../public/menu1.svg";
+import Menu from "./../public/menu.svg";
+import Close from "./../public/close.svg";
 
-const StyledMenuButton = styled(Menu1)`
+const StyledMenuButton = styled(Menu)`
   width: 3rem;
   fill: var(--main-dark);
   background: var(--main-bright);
@@ -13,15 +14,31 @@ const StyledMenuButton = styled(Menu1)`
   top: 0;
   right: 0;
 `;
+const StyledCloseButton = styled(Close)`
+  width: 2rem;
+  fill: var(--main-dark);
+  background: var(--button-background);
+  color: var(--main-dark);
+  border-style: none;
+  margin: 1rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+  z-index: 3;
+`;
 
 const StyledArticle = styled.article`
-  width: 100%;
-  background-color: var(--main-dark);
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--button-background);
+  padding: 3rem 1rem;
   position: fixed;
-  top: 5.5rem;
-
+  top: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--main-dark);
 `;
 
@@ -30,19 +47,22 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--main-dark);
   background-color: var(--button-background);
-  padding: 0.5rem;
+  padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
-  text-align: end;
+  //text-align: end;
+  text-align: center;
 `;
 
 export default function Navigation({ handleToggleMenu, setOpenFalse, isOpen }) {
   return (
     <>
-      <StyledMenuButton
-        type="button"
-        onClick={handleToggleMenu}
-      ></StyledMenuButton>
+      {isOpen ? (
+        <StyledCloseButton type="button" onClick={handleToggleMenu} />
+      ) : (
+        <StyledMenuButton type="button" onClick={handleToggleMenu} />
+      )}
+
       {isOpen && (
         <StyledArticle>
           <StyledLink onClick={setOpenFalse} href="/emotions">
