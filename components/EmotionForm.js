@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
 import { useEffect, useState } from "react";
-
+import Circle from "../public/circle.svg";
 const StyledH1 = styled.h1`
   font-weight: 500;
   width: 100vw;
@@ -65,6 +65,23 @@ const StyledSubmitButton = styled.button`
   &:hover {
     background-color: darkslateblue;
     color: ${({ $color }) => $color};
+  }
+`;
+
+const StyledLabel = styled.label`
+  position: relative;
+`;
+
+const ToggleSwitch = styled(Circle)`
+  width: 1.7rem;
+  position: absolute;
+  display: inline;
+  fill: ${({ $color }) => ($color ? "green" : "red")};
+  margin-left: 0.5rem;
+  bottom: calc(50% - 0.85rem);
+
+  &:hover {
+    background-color: lightgray;
   }
 `;
 
@@ -252,23 +269,22 @@ export default function EmotionForm({
             </option>
           ))}
         </StyledSelect>
-        <label htmlFor="intensity">
+        <StyledLabel htmlFor="intensity">
           Emotion Intensity:{" "}
-          <span
-            onClick={() =>
-              setTogggleRangeInputs({
-                ...toggleRangeInputs,
-                toggleIntensity: !toggleIntensity,
-              })
-            }
-          >
-            {emotionValue
-              ? toggleIntensity
-                ? "Disable"
-                : "Enable"
-              : "Disabled"}
-          </span>
-        </label>
+          {emotionValue && (
+            <ToggleSwitch
+              $color={toggleIntensity}
+              onClick={() =>
+                setTogggleRangeInputs({
+                  ...toggleRangeInputs,
+                  toggleIntensity: !toggleIntensity,
+                })
+              }
+            >
+              {emotionValue ? (toggleIntensity ? "O" : "O") : "O"}
+            </ToggleSwitch>
+          )}
+        </StyledLabel>
         <input
           disabled={emotionValue ? (toggleIntensity ? false : true) : true}
           type="range"
@@ -284,29 +300,32 @@ export default function EmotionForm({
           }
         />
         <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
+          <StyledSpan>{toggleIntensity ? 0 : ""}</StyledSpan>
           <StyledSpan>
             {toggleIntensity ? intensityValue : "Disabled"}
           </StyledSpan>
-          <StyledSpan>100</StyledSpan>
+          <StyledSpan>{toggleIntensity ? 100 : ""}</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="category">
+        <StyledLabel htmlFor="category">
           Association Category:{" "}
-          <span
-            onClick={() =>
-              setTogggleRangeInputs({
-                ...toggleRangeInputs,
-                toggleCategory: !toggleCategory,
-              })
-            }
-          >
-            {emotionValue
-              ? toggleCategory
-                ? "Disable"
-                : "Enable"
-              : "Disabled"}
-          </span>
-        </label>
+          {emotionValue && (
+            <ToggleSwitch
+              $color={toggleCategory}
+              onClick={() =>
+                setTogggleRangeInputs({
+                  ...toggleRangeInputs,
+                  toggleCategory: !toggleCategory,
+                })
+              }
+            >
+              {emotionValue
+                ? toggleCategory
+                  ? "Disable"
+                  : "Enable"
+                : "Disabled"}
+            </ToggleSwitch>
+          )}
+        </StyledLabel>
         <input
           disabled={emotionValue ? (toggleCategory ? false : true) : true}
           type="range"
