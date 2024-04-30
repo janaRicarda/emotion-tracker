@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Circle from "../public/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
 
@@ -102,17 +102,25 @@ export default function EmotionForm({
     notes,
   } = correspondingEntry;
 
-  // for controlled-inputs
-  const [formValues, setFormValues] = useState({
-    tensionValue: tensionLevel,
-    emotionValue: emotion,
-    selectedSubemotionValue: subemotion,
-    intensityValue: intensity ? intensity : 0,
-    categoryValue: category,
-    triggerValue: trigger,
-    notesValue: notes,
-    subemotionOptions: [],
-    colorValue: "",
+  const [formValues, setFormValues] = useState(() => {
+    const inCaseOfNoEmotion = {
+      color: "lightgray",
+      subemotions: [],
+    };
+    const { color, subemotions } = emotion
+      ? emotionData.find((emotionObject) => emotionObject.name === emotion)
+      : inCaseOfNoEmotion;
+    return {
+      tensionValue: tensionLevel,
+      emotionValue: emotion,
+      selectedSubemotionValue: subemotion,
+      intensityValue: intensity ? intensity : 0,
+      categoryValue: category,
+      triggerValue: trigger,
+      notesValue: notes,
+      subemotionOptions: subemotions,
+      colorValue: color,
+    };
   });
 
   // for enable/disable intensity/category inputs
@@ -123,17 +131,6 @@ export default function EmotionForm({
   const { toggleIntensity, toggleCategory } = toggleRangeInputs;
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
-
-  useEffect(
-    () =>
-      setFormValues({
-        ...formValues,
-        subemotionOptions: subemotions,
-        colorValue: color,
-      }),
-
-    []
-  );
 
   const {
     tensionValue,
@@ -147,29 +144,20 @@ export default function EmotionForm({
     colorValue,
   } = formValues;
 
-  const inCaseOfNoEmotion = {
-    color: "lightgray",
-    subemotions: [],
-  };
-
-  const correspondingEmotion = emotion
-    ? emotionData.find((emotionObject) => emotionObject.name === emotion)
-    : inCaseOfNoEmotion;
-  const { subemotions, color } = correspondingEmotion;
-
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
     const updatedIntensity = toggleIntensity ? intensityValue : "";
-
     const updatedCategory = toggleCategory ? categoryValue : "";
 
-    onSubmit(
-      { ...data, intensity: updatedIntensity, category: updatedCategory },
-      id
-    );
+    const updatedData = {
+      ...data,
+      intensity: updatedIntensity,
+      category: updatedCategory,
+    };
+    onSubmit(updatedData, id);
     setShowConfirmMessage(true);
   }
 
