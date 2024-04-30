@@ -48,6 +48,7 @@ export default function App({ Component, pageProps }) {
     position: fixed;
     top: 0.7rem;
     right: 4rem;
+    /7left: 0;
     z-index: 4;
   `;
 

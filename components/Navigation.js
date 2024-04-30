@@ -6,7 +6,8 @@ import Close from "./../public/close.svg";
 const StyledMenuButton = styled(Menu)`
   width: 3rem;
   fill: var(--main-dark);
-  background: var(--main-bright);
+  //background: var(--main-bright);
+  background: transparent;
   color: var(--main-dark);
   border-style: none;
   margin: 1rem;
@@ -35,6 +36,7 @@ const StyledArticle = styled.article`
   position: fixed;
   top: 0;
   right: 0;
+  //z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;

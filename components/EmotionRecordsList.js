@@ -5,7 +5,7 @@ import ConfirmMessage from "./ConfirmMessage";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 2.5rem 0;
+  padding: 3.5rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;

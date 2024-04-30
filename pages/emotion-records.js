@@ -12,9 +12,9 @@ const StyledTitle = styled.h1`
   text-align: center;
   font-weight: 500;
   position: fixed;
-  z-index: 2;
-  padding-bottom: 1rem;
-  background: linear-gradient(transparent, var(--main-bright), transparent);
+  //z-index: 1;
+  //padding-bottom: 1rem;
+  //background: linear-gradient(transparent, var(--main-bright), transparent);
 `;
 
 export default function EmotionRecords({
@@ -22,14 +22,12 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
 }) {
   return (
-
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
-      <EmotionRecordsList 
-      onDeleteEmotionEntry={onDeleteEmotionEntry}
-      emotionEntries={emotionEntries} 
-     />
+      <EmotionRecordsList
+        onDeleteEmotionEntry={onDeleteEmotionEntry}
+        emotionEntries={emotionEntries}
+      />
     </StyledWrapper>
-
   );
 }
