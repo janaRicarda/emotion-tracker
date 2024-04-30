@@ -100,6 +100,14 @@ export default function EmotionForm({
     colorValue: "",
   });
 
+  // for enable/disable intensity/category
+  const [toggleRangeInputs, setTogggleRangeInputs] = useState({
+    toggleIntensity: true,
+    toggleCategory: true,
+  });
+
+  const { toggleIntensity, toggleCategory } = toggleRangeInputs;
+
   useEffect(
     () =>
       setFormValues({
@@ -138,7 +146,14 @@ export default function EmotionForm({
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    onSubmit(data, id);
+    const updatedIntensity = toggleIntensity ? intensityValue : "";
+
+    const updatedCategory = toggleCategory ? categoryValue : "";
+
+    onSubmit(
+      { ...data, intensity: updatedIntensity, category: updatedCategory },
+      id
+    );
     router.push("/emotion-records");
   }
 
@@ -237,9 +252,25 @@ export default function EmotionForm({
             </option>
           ))}
         </StyledSelect>
-        <label htmlFor="intensity">Emotion Intensity:</label>
+        <label htmlFor="intensity">
+          Emotion Intensity:{" "}
+          <span
+            onClick={() =>
+              setTogggleRangeInputs({
+                ...toggleRangeInputs,
+                toggleIntensity: !toggleIntensity,
+              })
+            }
+          >
+            {emotionValue
+              ? toggleIntensity
+                ? "Disable"
+                : "Enable"
+              : "Disabled"}
+          </span>
+        </label>
         <input
-          disabled={emotionValue ? false : true}
+          disabled={emotionValue ? (toggleIntensity ? false : true) : true}
           type="range"
           id="intensity"
           name="intensity"
@@ -254,12 +285,30 @@ export default function EmotionForm({
         />
         <StyledWrapper>
           <StyledSpan>0</StyledSpan>
-          <StyledSpan>{intensityValue}</StyledSpan>
+          <StyledSpan>
+            {toggleIntensity ? intensityValue : "Disabled"}
+          </StyledSpan>
           <StyledSpan>100</StyledSpan>
         </StyledWrapper>
-        <label htmlFor="category">Association Category:</label>
+        <label htmlFor="category">
+          Association Category:{" "}
+          <span
+            onClick={() =>
+              setTogggleRangeInputs({
+                ...toggleRangeInputs,
+                toggleCategory: !toggleCategory,
+              })
+            }
+          >
+            {emotionValue
+              ? toggleCategory
+                ? "Disable"
+                : "Enable"
+              : "Disabled"}
+          </span>
+        </label>
         <input
-          disabled={emotionValue ? false : true}
+          disabled={emotionValue ? (toggleCategory ? false : true) : true}
           type="range"
           id="category"
           name="category"
@@ -273,9 +322,9 @@ export default function EmotionForm({
           }
         />
         <StyledWrapper>
-          <StyledSpan>unpleasant</StyledSpan>
-          <StyledSpan>neutral</StyledSpan>
-          <StyledSpan>pleasant</StyledSpan>
+          <StyledSpan>{toggleCategory ? "unpleasant" : ""}</StyledSpan>
+          <StyledSpan>{toggleCategory ? "neutral" : "Disabled"}</StyledSpan>
+          <StyledSpan>{toggleCategory ? "pleasant" : ""}</StyledSpan>
         </StyledWrapper>
         <label htmlFor="trigger">Trigger:</label>
         <StyledTextarea
