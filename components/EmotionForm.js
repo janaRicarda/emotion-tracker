@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
 import { useEffect, useState } from "react";
 import Circle from "../public/circle.svg";
+import ConfirmMessage from "./ConfirmMessage";
+
 const StyledH1 = styled.h1`
   font-weight: 500;
   width: 100vw;
@@ -76,13 +78,9 @@ const ToggleSwitch = styled(Circle)`
   width: 1.7rem;
   position: absolute;
   display: inline;
-  fill: ${({ $color }) => ($color ? "green" : "red")};
+  fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
   margin-left: 0.5rem;
   bottom: calc(50% - 0.85rem);
-
-  &:hover {
-    background-color: lightgray;
-  }
 `;
 
 export default function EmotionForm({
@@ -117,13 +115,14 @@ export default function EmotionForm({
     colorValue: "",
   });
 
-  // for enable/disable intensity/category
+  // for enable/disable intensity/category inputs
   const [toggleRangeInputs, setTogggleRangeInputs] = useState({
     toggleIntensity: true,
     toggleCategory: true,
   });
-
   const { toggleIntensity, toggleCategory } = toggleRangeInputs;
+
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
   useEffect(
     () =>
@@ -171,7 +170,7 @@ export default function EmotionForm({
       { ...data, intensity: updatedIntensity, category: updatedCategory },
       id
     );
-    router.push("/emotion-records");
+    setShowConfirmMessage(true);
   }
 
   function handleChangeEmotion(choosenEmotion) {
@@ -273,6 +272,7 @@ export default function EmotionForm({
           Emotion Intensity:{" "}
           {emotionValue && (
             <ToggleSwitch
+              aria-label="Switch intensity input on and off"
               $color={toggleIntensity}
               onClick={() =>
                 setTogggleRangeInputs({
@@ -310,6 +310,7 @@ export default function EmotionForm({
           Association Category:{" "}
           {emotionValue && (
             <ToggleSwitch
+              aria-label="Switch association category input on and off"
               $color={toggleCategory}
               onClick={() =>
                 setTogggleRangeInputs({
@@ -357,9 +358,24 @@ export default function EmotionForm({
           name="notes"
           defaultValue={notesValue}
         ></StyledTextarea>
+
         <StyledSubmitButton type="submit" $color={colorValue}>
           Submit
         </StyledSubmitButton>
+        {showConfirmMessage && (
+          <ConfirmMessage
+            toggleMessage={() => setShowConfirmMessage(false)}
+            confirmFunction={() => {
+              router.push("/emotion-records");
+            }}
+            cancelButtonText={"Keep editing"}
+            confirmButtonText={"Go to emotion records"}
+            cancelButtonColor={"#cc0100"}
+            confirmButtonColor={"#00b400"}
+          >
+            Your changes were saved successfully!
+          </ConfirmMessage>
+        )}
       </StyledForm>
     </>
   );
