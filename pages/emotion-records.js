@@ -1,5 +1,6 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import styled from "styled-components";
+import SearchBar from "@/components/SearchBar";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -22,14 +23,13 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
 }) {
   return (
-
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
-      <EmotionRecordsList 
-      onDeleteEmotionEntry={onDeleteEmotionEntry}
-      emotionEntries={emotionEntries} 
-     />
+      <SearchBar />
+      <EmotionRecordsList
+        onDeleteEmotionEntry={onDeleteEmotionEntry}
+        emotionEntries={emotionEntries}
+      />
     </StyledWrapper>
-
   );
 }
