@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
+import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
+import { useRouter } from "next/router";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -34,10 +37,21 @@ const StyledDetails = styled.ul`
 `;
 
 const StyledDeleteButton = styled(TrashIcon)`
-  width: 2rem;
+  width: 1.6rem;
   position: absolute;
-  top: -1rem;
-  right: -1rem;
+  top: calc(50% - 0.8rem);
+  right: 0.2rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledEditButton = styled(PencilIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 0.8rem);
+  right: 2rem;
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;
@@ -51,6 +65,8 @@ export default function EmotionRecordsList({
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+
+  const router = useRouter();
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -86,6 +102,10 @@ export default function EmotionRecordsList({
                 <StyledListItem onClick={() => handleShowDetails(id)}>
                   {date}
                 </StyledListItem>
+                <StyledEditButton
+                  aria-label="Edit emotion entry"
+                  onClick={() => router.push(`./edit/${id}`)}
+                />
                 <StyledDeleteButton
                   type="button"
                   aria-label="Delete Emotion Entry"
