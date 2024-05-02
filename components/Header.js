@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logoneu from ".//../public/images/logoneu.png";
+import Logo from ".//../public/images/logo.png";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -28,17 +28,11 @@ export default function Header() {
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
-  function setOpenFalse() {
-    setIsOpen(!isOpen);
-  }
+
   return (
     <StyledHeader $isOpen={isOpen}>
-      <StyledLogo src={Logoneu} />
-      <Navigation
-        isOpen={isOpen}
-        handleToggleMenu={handleToggleMenu}
-        setOpenFalse={setOpenFalse}
-      />
+      <StyledLogo src={Logo} />
+      <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
     </StyledHeader>
   );
 }
