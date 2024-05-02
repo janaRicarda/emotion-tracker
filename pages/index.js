@@ -18,7 +18,7 @@ const StyledLabel = styled.label`
 `;
 
 const StyledInput = styled.input`
-  width: inherit;
+  width: 100%;
 `;
 
 const StyledWrapper = styled.div`
@@ -80,9 +80,9 @@ const StyledMessage = styled.p`
 `;
 
 export default function HomePage({ onAddEmotionEntry }) {
-  const [tension, setTension] = useState("0");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
+  const [tension, setTension] = useState(0);
 
   function handleSubmit(event) {
     event.preventDefault();

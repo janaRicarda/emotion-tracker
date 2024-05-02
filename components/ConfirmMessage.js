@@ -10,15 +10,16 @@ const StyledBackground = styled.div`
 `;
 const StyledPopUpMessage = styled.div`
   position: fixed;
-  right: calc(50% - 175.25px);
+  right: calc(50% - 180px);
   top: 13rem;
+  width: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   background-color: var(--main-bright);
-  padding: 1.5rem;
+  padding: 1rem;
   box-shadow: 0 0 5px 0px;
   border-radius: 10px;
   transform: ${({ $animation }) => ($animation ? "scale(1)" : "scale(0)")};
@@ -36,14 +37,17 @@ const StyledWrapper = styled.div`
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+  gap: 1rem;
   padding: 1rem;
 `;
 const StyledButton = styled.button`
   color: white;
   background-color: ${({ $color }) => $color};
   border: none;
-  border-radius: 5px;
-  padding: 1rem;
+  width: 14rem;
+  height: 4rem;
+  border-radius: 6px;
+  padding: 0.5rem;
 `;
 
 export default function ConfirmMessage({

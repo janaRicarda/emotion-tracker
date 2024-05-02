@@ -21,9 +21,13 @@ export default function App({ Component, pageProps }) {
   }
 
   function handleAddEmotionEntry(data, id) {
-    const timeStamp = getCurrentTimeAndDate();
+    const timeAndDate = getCurrentTimeAndDate();
 
-    const newEntry = { ...data, id, date: timeStamp };
+    const newEntry = {
+      ...data,
+      id,
+      date: timeAndDate,
+    };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 

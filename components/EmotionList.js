@@ -49,17 +49,27 @@ const EmotionLink = styled(Link)`
   font-size: 1.3rem;
 `;
 
-export default function EmotionList({ form, title, createMode, id }) {
+export default function EmotionList({
+  form,
+  title,
+  createMode,
+  id,
+  onAddEmotionDetails,
+}) {
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
-
+  function handleAddDetails(data, id) {
+    const emotion = { emotion: data };
+    onAddEmotionDetails(emotion, id);
+  }
   return (
     <>
       <StyledH1>{title}</StyledH1>
       <EmotionSection $form={form}>
         {emotionData.map(({ slug, name }) => (
           <EmotionLink
+            onClick={() => handleAddDetails(name, id)}
             key={slug}
             $color={`var(--${slug})`}
             slug={slug}
