@@ -239,6 +239,7 @@ export default function EmotionForm({
         </StyledSelect>
         <label htmlFor="subemotion">Select Subemotion:</label>
         <StyledSelect
+          disabled={emotionValue ? false : true}
           value={`${selectedSubemotionValue}`}
           id="subemotion"
           name="subemotion"
@@ -288,11 +289,19 @@ export default function EmotionForm({
           }
         />
         <StyledWrapper>
-          <StyledSpan>{toggleIntensity ? 0 : ""}</StyledSpan>
           <StyledSpan>
-            {toggleIntensity ? intensityValue : "Disabled"}
+            {emotionValue ? (toggleIntensity ? 0 : "") : ""}
           </StyledSpan>
-          <StyledSpan>{toggleIntensity ? 100 : ""}</StyledSpan>
+          <StyledSpan>
+            {emotionValue
+              ? toggleIntensity
+                ? intensityValue
+                : "Disabled"
+              : "Disabled"}
+          </StyledSpan>
+          <StyledSpan>
+            {emotionValue ? (toggleIntensity ? 100 : "") : ""}
+          </StyledSpan>
         </StyledWrapper>
         <StyledLabel htmlFor="category">
           Association Category:{" "}
@@ -330,9 +339,19 @@ export default function EmotionForm({
           }
         />
         <StyledWrapper>
-          <StyledSpan>{toggleCategory ? "unpleasant" : ""}</StyledSpan>
-          <StyledSpan>{toggleCategory ? "neutral" : "Disabled"}</StyledSpan>
-          <StyledSpan>{toggleCategory ? "pleasant" : ""}</StyledSpan>
+          <StyledSpan>
+            {emotionValue ? (toggleCategory ? "unpleasant" : "") : ""}
+          </StyledSpan>
+          <StyledSpan>
+            {emotionValue
+              ? toggleCategory
+                ? "neutral"
+                : "Disabled"
+              : "Disabled"}
+          </StyledSpan>
+          <StyledSpan>
+            {emotionValue ? (toggleCategory ? "pleasant" : "") : ""}
+          </StyledSpan>
         </StyledWrapper>
         <label htmlFor="trigger">Trigger:</label>
         <StyledTextarea
