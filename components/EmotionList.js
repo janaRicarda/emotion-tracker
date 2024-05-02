@@ -13,17 +13,16 @@ const StyledH1 = styled.h1`
   font-size: 1.5rem;
   text-align: center;
   line-height: 1.6rem;
-  margin: 1rem auto 0;
+
   position: fixed;
+  padding: 1rem;
   width: 100%;
   top: 100px;
-  //z-index: 1;
+  z-index: 1;
   background: var(--main-bright);
 `;
 
 const EmotionSection = styled.section`
-  //border: 1px solid black;
-  //box-shadow: var(--box-shadow);
   border-radius: 12px;
   list-style: none;
   padding: 0;
@@ -33,7 +32,7 @@ const EmotionSection = styled.section`
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  margin: 3rem;
+  margin: 2rem;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
