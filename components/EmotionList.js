@@ -2,11 +2,6 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import Link from "next/link";
 
-/* const ListSection = styled.section`
-  border: 1px solid black;
-  margin: 0 2rem 0 2rem;
-`; */
-
 const StyledH1 = styled.h1`
   font-weight: 500;
   padding: 0 1rem 1rem 1rem;
@@ -45,7 +40,7 @@ const EmotionLink = styled(Link)`
   color: #030352;
 
   background-color: ${({ $color }) => $color};
-  //background: #fbc58f;
+
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;

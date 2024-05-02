@@ -48,8 +48,8 @@ export default function App({ Component, pageProps }) {
     position: fixed;
     top: 0.7rem;
     right: 4rem;
-    /7left: 0;
-    z-index: 4;
+
+    z-index: 3;
   `;
 
   return (
@@ -58,7 +58,7 @@ export default function App({ Component, pageProps }) {
         {theme === "light" ? "☾" : "☀"}
       </StyledToggleTheme>
       <GlobalStyle />
-      <Layout theme={theme}>
+      <Layout>
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}

@@ -6,7 +6,7 @@ import Close from "./../public/close.svg";
 const StyledMenuButton = styled(Menu)`
   width: 3rem;
   fill: var(--main-dark);
-  //background: var(--main-bright);
+
   background: transparent;
   color: var(--main-dark);
   border-style: none;
@@ -25,7 +25,7 @@ const StyledCloseButton = styled(Close)`
   position: absolute;
   top: 0.5rem;
   right: 0;
-  z-index: 3;
+  z-index: 2;
 `;
 
 const StyledArticle = styled.article`
@@ -36,12 +36,11 @@ const StyledArticle = styled.article`
   position: fixed;
   top: 0;
   right: 0;
-  //z-index: 3;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--main-dark);
 `;
 
 const StyledLink = styled(Link)`
@@ -52,7 +51,7 @@ const StyledLink = styled(Link)`
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
-  //text-align: end;
+
   text-align: center;
 `;
 
