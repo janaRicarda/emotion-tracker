@@ -12,6 +12,7 @@ const StyledInput = styled.input`
   width: 80vw;
   padding: 1rem;
   background-color: var(--main-bright);
+
   color: var(--main-dark);
   border-radius: 12px;
   border: 1px solid var(--main-dark);
@@ -41,10 +42,10 @@ export default function SearchBar({ searchTerm, setSearchTerm, handleSearch }) {
     <StyledForm onSubmit={handleSubmit}>
       <label htmlFor="searchTerm">Search:</label>
       <StyledInput
-        //type="text"
+        type="search"
         id="searchTerm"
         name="searchTerm"
-        placeholder="Search for date, time, tensionlevel..."
+        // placeholder="Search for date, time, tensionlevel..."
         //value={searchTerm}
         onChange={handleSearch}
         //onChange={(event) => setSearchTerm(event.target.value)}
