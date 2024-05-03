@@ -5,6 +5,7 @@ import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import SearchBar from "./SearchBar";
+import Fuse from "fuse.js";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -62,12 +63,38 @@ export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(emotionEntries);
+  const [search, setSearch] = useState(emotionEntries);
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
   const router = useRouter();
+
+  function handleSearch(event) {
+    const { value } = event.target;
+    if (value.length === 0) {
+      setSearchTerm(emotionEntries);
+      return;
+    }
+    const fuse = new Fuse(emotionEntries, {
+      keys: [
+        "date",
+        "tensionLevel",
+        "trigger",
+        "intensity",
+        "notes",
+        "category",
+        "emotion",
+        "subemotion",
+      ],
+    });
+
+    console.log(fuse);
+    const results = fuse.search(value);
+    const items = results.map((result) => result.item);
+    setSearchTerm(items);
+  }
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -82,10 +109,14 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-  console.log(emotionEntries);
+
   return (
     <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
+      />
       <StyledList>
         {emotionEntries.map(
           ({

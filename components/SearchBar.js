@@ -32,8 +32,8 @@ const StyledMagnifier = styled(Magnifier)`
   fill: var(--main-dark);
 `;
 
-export default function SearchBar({ searchTerm, setSearchTerm }) {
-  function handleSubmit() {
+export default function SearchBar({ searchTerm, setSearchTerm, handleSearch }) {
+  function handleSubmit(event) {
     event.preventDefault();
   }
 
@@ -41,11 +41,13 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
     <StyledForm onSubmit={handleSubmit}>
       <label htmlFor="searchTerm">Search:</label>
       <StyledInput
+        //type="text"
         id="searchTerm"
         name="searchTerm"
         placeholder="Search for date, time, tensionlevel..."
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
+        //value={searchTerm}
+        onChange={handleSearch}
+        //onChange={(event) => setSearchTerm(event.target.value)}
       />
       <StyledButton type="submit">
         <StyledMagnifier />
