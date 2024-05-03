@@ -14,7 +14,7 @@ const StyledTitle = styled.h1`
   position: fixed;
   top: 100px;
   z-index: 1;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: var(--main-bright);
 `;
 

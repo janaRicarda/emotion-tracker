@@ -9,7 +9,7 @@ import Fuse from "fuse.js";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 3.5rem 0;
+  padding: 1rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;
@@ -64,7 +64,7 @@ export default function EmotionRecordsList({
   onDeleteEmotionEntry,
 }) {
   const [searchTerm, setSearchTerm] = useState(emotionEntries);
-  const [search, setSearch] = useState(emotionEntries);
+
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
@@ -78,6 +78,8 @@ export default function EmotionRecordsList({
       return;
     }
     const fuse = new Fuse(emotionEntries, {
+      includeScore: true,
+      threshold: 0.2,
       keys: [
         "date",
         "tensionLevel",
@@ -90,7 +92,6 @@ export default function EmotionRecordsList({
       ],
     });
 
-    console.log(fuse);
     const results = fuse.search(value);
     const items = results.map((result) => result.item);
     setSearchTerm(items);
@@ -112,13 +113,10 @@ export default function EmotionRecordsList({
 
   return (
     <>
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        handleSearch={handleSearch}
-      />
+      <SearchBar handleSearch={handleSearch} />
+
       <StyledList>
-        {emotionEntries.map(
+        {searchTerm?.map(
           ({
             id,
             date,
@@ -179,12 +177,3 @@ export default function EmotionRecordsList({
     </>
   );
 }
-
-/* 
-{emotionEntries
-  .filter(({ emotion }) => {
-    if (searchTerm === "") {
-      return emotionEntries;
-    } else if (emotion.includes(searchTerm)) {
-      return emotionEntries;
-    } */
