@@ -4,6 +4,7 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
+import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 
@@ -39,6 +40,14 @@ export default function App({ Component, pageProps }) {
     );
   }
 
+  function toggleHighlight(id) {
+    setEmotionEntries(
+      emotionEntries.map((entry) =>
+        entry.id === id ? { ...entry, highlighted: !entry.highlighted } : entry
+      )
+    );
+  }
+
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
@@ -67,6 +76,7 @@ export default function App({ Component, pageProps }) {
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          toggleHighlight={toggleHighlight}
           {...pageProps}
         />
       </Layout>

@@ -5,6 +5,8 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
+import HeartOutlineIcon from "../public/heart-outline.svg";
+import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -58,9 +60,32 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 
+const StyledOutlineButton = styled(HeartOutlineIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledFilledButton = styled(HeartFilledIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
+  toggleHighlight,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -95,6 +120,7 @@ export default function EmotionRecordsList({
           category,
           emotion,
           subemotion,
+          highlighted,
         }) => {
           return (
             <>
@@ -113,6 +139,11 @@ export default function EmotionRecordsList({
                     handleShowConfirmMessage(id);
                   }}
                 />
+                {highlighted ? (
+                  <StyledFilledButton onClick={() => toggleHighlight(id)} />
+                ) : (
+                  <StyledOutlineButton onClick={() => toggleHighlight(id)} />
+                )}
               </StyledListItemWrapper>
               {showConfirmMessage[id] && (
                 <ConfirmMessage

@@ -20,16 +20,16 @@ const StyledTitle = styled.h1`
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
+  toggleHighlight,
 }) {
   return (
-
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
-      <EmotionRecordsList 
-      onDeleteEmotionEntry={onDeleteEmotionEntry}
-      emotionEntries={emotionEntries} 
-     />
+      <EmotionRecordsList
+        onDeleteEmotionEntry={onDeleteEmotionEntry}
+        emotionEntries={emotionEntries}
+        toggleHighlight={toggleHighlight}
+      />
     </StyledWrapper>
-
   );
 }
