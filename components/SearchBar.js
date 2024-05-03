@@ -32,12 +32,11 @@ const StyledMagnifier = styled(Magnifier)`
   fill: var(--main-dark);
 `;
 
-export default function Searchbar() {
-  const [searchTerm, setSearchTerm] = useState("");
-
+export default function SearchBar({ searchTerm, setSearchTerm }) {
   function handleSubmit() {
     event.preventDefault();
   }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <label htmlFor="searchTerm">Search:</label>
