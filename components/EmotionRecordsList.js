@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
@@ -10,7 +9,7 @@ import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 3.5rem 0;
+  padding: 2.5rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;

@@ -4,7 +4,6 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
-import { useRouter } from "next/router";
 
 import Layout from "@/components/Layout";
 
