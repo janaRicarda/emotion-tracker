@@ -21,8 +21,10 @@ const StyledTitle = styled.h1`
 
 const StyledHighlightButton = styled.button`
   font-size: 1rem;
-  margin-left: 4rem;
-  border-radius: 0.2rem;
+  border: 1px solid var(--main-dark);
+  border-radius: 6px;
+  background: var(--button-background);
+  color: var(--main-dark);
 `;
 
 export default function EmotionRecords({
@@ -41,7 +43,7 @@ export default function EmotionRecords({
         Recorded Emotions{" "}
         <span>
           <StyledHighlightButton onClick={handleShowHighlighted}>
-            {showHighlighted ? "Show All Entries" : "Show Highlighted Entries"}
+            {showHighlighted ? "Show all Entries" : "Show highlighted Entries"}
           </StyledHighlightButton>
         </span>
       </StyledTitle>
