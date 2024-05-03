@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
 const StyledInput = styled.input`
-  margin-top: 50px;
-  width: 80vw;
+  margin-top: 35px;
+  width: 90vw;
   padding: 0.5rem;
   background-color: var(--main-bright);
   color: var(--main-dark);
-  border-radius: 12px;
+  border-radius: 20px;
 
   border: 1px solid var(--main-dark);
+  position: fixed;
+  z-index: 1;
 `;
 
 export default function SearchBar({ handleSearch }) {

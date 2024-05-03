@@ -9,7 +9,7 @@ import Fuse from "fuse.js";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 1rem 0;
+  padding: 6rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;
