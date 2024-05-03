@@ -1,5 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
+import ChevronPrev from "./../public/chevron-left.svg";
+import ChevronNext from "./../public/chevron-right.svg";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -36,11 +38,7 @@ const StyledListItem = styled.li`
 `;
 
 const StyledLink = styled(Link)`
-  font-size: 50px;
-  text-decoration: none;
-  color: var(--main-dark);
   position: fixed;
-  margin: 1rem;
   top: 50%;
 `;
 const PrevLink = styled(StyledLink)`
@@ -49,6 +47,17 @@ const PrevLink = styled(StyledLink)`
 
 const NextLink = styled(StyledLink)`
   right: 0;
+`;
+const StyledChevronPrev = styled(ChevronPrev)`
+  width: 3.5rem;
+  height: 3.5rem;
+  fill: var(--main-dark);
+`;
+
+const StyledChevronNext = styled(ChevronNext)`
+  width: 3.5rem;
+  height: 3.5rem;
+  fill: var(--main-dark);
 `;
 
 export default function EmotionDetails({
@@ -75,8 +84,12 @@ export default function EmotionDetails({
           <StyledListItem key={sub}>{sub}</StyledListItem>
         ))}
       </StyledList>
-      <PrevLink href={`/emotions/${prevEmotion.slug}`}>↞</PrevLink>
-      <NextLink href={`/emotions/${nextEmotion.slug}`}>↠</NextLink>
+      <PrevLink href={`/emotions/${prevEmotion.slug}`}>
+        <StyledChevronPrev />
+      </PrevLink>
+      <NextLink href={`/emotions/${nextEmotion.slug}`}>
+        <StyledChevronNext />
+      </NextLink>
     </StyledArticle>
   );
 }
