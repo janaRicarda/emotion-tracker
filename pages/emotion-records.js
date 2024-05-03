@@ -22,6 +22,10 @@ export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
+  const filteresEmotionEntries = emotionEntries.filter(
+    (entry) => entry.searchTerm
+  );
+
   return (
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>

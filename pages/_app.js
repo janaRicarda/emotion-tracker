@@ -4,7 +4,6 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
-
 import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
@@ -42,6 +41,7 @@ export default function App({ Component, pageProps }) {
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
+
   const StyledToggleTheme = styled.button`
     border-radius: 50%;
     border: 1px solid var(--main-dark);

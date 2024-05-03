@@ -18,6 +18,8 @@ const StyledInput = styled.input`
 `;
 
 const StyledButton = styled.button`
+  background-color: var(--main-bright);
+
   border: 1px solid var(--main-dark);
   border-radius: 12px;
   width: 3rem;
@@ -27,7 +29,7 @@ const StyledButton = styled.button`
 const StyledMagnifier = styled(Magnifier)`
   width: 2rem;
   height: 2rem;
-  fill: var(--man-dark);
+  fill: var(--main-dark);
 `;
 
 export default function Searchbar() {
