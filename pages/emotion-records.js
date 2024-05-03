@@ -32,10 +32,10 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
 }) {
-  const [showHighlighted, setShowHighlighted] = useState(false);
+  const [isHighlighted, setIsHighlighted] = useState(false);
 
   function handleShowHighlighted() {
-    setShowHighlighted(!showHighlighted);
+    setIsHighlighted(!isHighlighted);
   }
   return (
     <StyledWrapper>
@@ -43,7 +43,7 @@ export default function EmotionRecords({
         Recorded Emotions{" "}
         <span>
           <StyledHighlightButton onClick={handleShowHighlighted}>
-            {showHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+            {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
           </StyledHighlightButton>
         </span>
       </StyledTitle>
@@ -51,8 +51,8 @@ export default function EmotionRecords({
       <EmotionRecordsList
         onDeleteEmotionEntry={onDeleteEmotionEntry}
         emotionEntries={
-          showHighlighted
-            ? emotionEntries.filter((entry) => entry.highlighted)
+          isHighlighted
+            ? emotionEntries.filter((entry) => entry.isHighlighted)
             : emotionEntries
         }
         toggleHighlight={toggleHighlight}

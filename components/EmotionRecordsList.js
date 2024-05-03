@@ -119,7 +119,7 @@ export default function EmotionRecordsList({
           category,
           emotion,
           subemotion,
-          highlighted,
+          isHighlighted,
         }) => {
           return (
             <>
@@ -138,7 +138,7 @@ export default function EmotionRecordsList({
                     handleShowConfirmMessage(id);
                   }}
                 />
-                {highlighted ? (
+                {isHighlighted ? (
                   <StyledFilledButton onClick={() => toggleHighlight(id)} />
                 ) : (
                   <StyledOutlineButton onClick={() => toggleHighlight(id)} />

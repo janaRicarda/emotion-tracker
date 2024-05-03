@@ -42,7 +42,9 @@ export default function App({ Component, pageProps }) {
   function toggleHighlight(id) {
     setEmotionEntries(
       emotionEntries.map((entry) =>
-        entry.id === id ? { ...entry, highlighted: !entry.highlighted } : entry
+        entry.id === id
+          ? { ...entry, isHighlighted: !entry.isHighlighted }
+          : entry
       )
     );
   }
