@@ -12,9 +12,10 @@ const StyledTitle = styled.h1`
   text-align: center;
   font-weight: 500;
   position: fixed;
-  z-index: 2;
-  padding-bottom: 1rem;
-  background: linear-gradient(transparent, var(--main-bright), transparent);
+  top: 100px;
+  z-index: 1;
+  padding: 1rem;
+  background-color: var(--main-bright);
 `;
 
 export default function EmotionRecords({

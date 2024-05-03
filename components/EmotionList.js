@@ -8,14 +8,17 @@ const StyledH1 = styled.h1`
   font-size: 1.5rem;
   text-align: center;
   line-height: 1.6rem;
-  margin: 1rem auto 0;
+
   position: fixed;
+  padding: 1rem;
   width: 100%;
-  z-index: 2;
-  background: linear-gradient(transparent, var(--main-bright) 20%);
+  top: 100px;
+  z-index: 1;
+  background: var(--main-bright);
 `;
 
 const EmotionSection = styled.section`
+  border-radius: 12px;
   list-style: none;
   padding: 0;
   display: flex;
@@ -24,7 +27,10 @@ const EmotionSection = styled.section`
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  margin: 3rem;
+  margin: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
   padding-top: ${({ $form }) => ($form ? "4rem" : "1rem")};
 `;
 
@@ -32,12 +38,14 @@ const EmotionLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   color: #030352;
+
   background-color: ${({ $color }) => $color};
+
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
   font-weight: 600;
-  padding: 1rem;
+  padding: 0.8rem;
   font-size: 1.3rem;
 `;
 

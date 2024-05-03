@@ -24,6 +24,7 @@ export default createGlobalStyle`
   --contempt: ${({ theme }) => theme.contempt};
   --disgust: ${({ theme }) => theme.disgust};
   --anger: ${({ theme }) => theme.anger};
+  --box-shadow: -5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #aeaec0, inset -5px -5px 5px 0 #aeaec0, inset 5px 5px 5px 0 #ffffff;
 }
   body {
     margin: 0;

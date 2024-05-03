@@ -26,7 +26,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  color: #030352;
+  color: var(--main-dark);
 `;
 
 const TensionLabelEdit = styled.label`

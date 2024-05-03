@@ -1,13 +1,13 @@
 import Header from "./Header";
-import Navigation from "./Navigation";
+import Footer from "./Footer";
 
-export default function Layout({ children, theme }) {
+export default function Layout({ children }) {
   return (
     <>
-      <Header theme={theme} />
+      <Header />
       {children}
 
-      <Navigation />
+      <Footer />
     </>
   );
 }
