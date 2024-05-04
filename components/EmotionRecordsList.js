@@ -63,7 +63,7 @@ export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
-  const [searchTerm, setSearchTerm] = useState(emotionEntries);
+  const [searchResult, setSearchResult] = useState(emotionEntries);
 
   const [showDetails, setShowDetails] = useState({});
 
@@ -74,7 +74,7 @@ export default function EmotionRecordsList({
   function handleSearch(event) {
     const { value } = event.target;
     if (value.length === 0) {
-      setSearchTerm(emotionEntries);
+      setSearchResult(emotionEntries);
       return;
     }
     const fuse = new Fuse(emotionEntries, {
@@ -94,7 +94,7 @@ export default function EmotionRecordsList({
 
     const results = fuse.search(value);
     const items = results.map((result) => result.item);
-    setSearchTerm(items);
+    setSearchResult(items);
   }
 
   function handleShowDetails(id) {
@@ -116,7 +116,7 @@ export default function EmotionRecordsList({
       <SearchBar handleSearch={handleSearch} />
 
       <StyledList>
-        {searchTerm?.map(
+        {searchResult?.map(
           ({
             id,
             date,
