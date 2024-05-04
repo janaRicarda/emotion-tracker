@@ -77,6 +77,7 @@ export default function EmotionRecordsList({
       setSearchResult(emotionEntries);
       return;
     }
+
     const fuse = new Fuse(emotionEntries, {
       includeScore: true,
       threshold: 0.2,
