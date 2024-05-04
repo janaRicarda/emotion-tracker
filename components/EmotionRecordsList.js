@@ -58,6 +58,9 @@ const StyledEditButton = styled(PencilIcon)`
     cursor: pointer;
   }
 `;
+const StyledTextMessage = styled.p`
+  margin-top: 100px;
+`;
 
 export default function EmotionRecordsList({
   emotionEntries,
@@ -115,7 +118,9 @@ export default function EmotionRecordsList({
   return (
     <>
       <SearchBar handleSearch={handleSearch} />
-
+      {searchResult.length === 0 && (
+        <StyledTextMessage>sorry, no results found!</StyledTextMessage>
+      )}
       <StyledList>
         {searchResult?.map(
           ({
