@@ -16,10 +16,12 @@ const StyledInput = styled.input`
 export default function SearchBar({ handleSearch }) {
   return (
     <StyledInput
+      aria-label="Search"
       type="search"
       id="searchTerm"
       name="searchTerm"
       placeholder="Search for Date, Tensionlevel, Emotion..."
+      aria-placeholder="Search for Date, Tensionlevel, Emotion..."
       onChange={handleSearch}
     />
   );
