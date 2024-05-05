@@ -4,8 +4,8 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
-import SearchBar from "./SearchBar";
-import Fuse from "fuse.js";
+// import SearchBar from "./SearchBar";
+// import Fuse from "fuse.js";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -63,42 +63,12 @@ const StyledTextMessage = styled.p`
 `;
 
 export default function EmotionRecordsList({
-  emotionEntries,
+  shownEntries,
   onDeleteEmotionEntry,
 }) {
-  const [searchTerm, setSearchTerm] = useState();
-
-  const [shownEntries, SetShownEntries] = useState(emotionEntries);
-
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
-
-  useEffect(() => {
-    if (!searchTerm) {
-      SetShownEntries(emotionEntries);
-      return;
-    }
-
-    const fuse = new Fuse(emotionEntries, {
-      includeScore: true,
-      threshold: 0.4,
-      keys: [
-        "date",
-        "tensionLevel",
-        "trigger",
-        "intensity",
-        "notes",
-        "category",
-        "emotion",
-        "subemotion",
-      ],
-    });
-
-    const results = fuse.search(searchTerm);
-    const items = results.map((result) => result.item);
-    SetShownEntries(items);
-  }, [emotionEntries, searchTerm]);
 
   const router = useRouter();
 
@@ -118,9 +88,8 @@ export default function EmotionRecordsList({
 
   return (
     <>
-      <SearchBar setSearchTerm={setSearchTerm} />
       {shownEntries.length === 0 && (
-        <StyledTextMessage>sorry, no results found!</StyledTextMessage>
+        <StyledTextMessage>sorry, no results</StyledTextMessage>
       )}
       <StyledList>
         {shownEntries?.map(

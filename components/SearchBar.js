@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 
 const StyledInput = styled.input`
   margin-top: 35px;
@@ -13,7 +15,35 @@ const StyledInput = styled.input`
   z-index: 1;
 `;
 
-export default function SearchBar({ setSearchTerm }) {
+export default function SearchBar({ SetShownEntries, emotionEntries }) {
+  const [searchTerm, setSearchTerm] = useState();
+
+  useEffect(() => {
+    if (!searchTerm) {
+      SetShownEntries(emotionEntries);
+      return;
+    }
+
+    const fuse = new Fuse(emotionEntries, {
+      includeScore: true,
+      threshold: 0.4,
+      keys: [
+        "date",
+        "tensionLevel",
+        "trigger",
+        "intensity",
+        "notes",
+        "category",
+        "emotion",
+        "subemotion",
+      ],
+    });
+
+    const results = fuse.search(searchTerm);
+    const items = results.map((result) => result.item);
+    SetShownEntries(items);
+  }, [emotionEntries, searchTerm]);
+
   return (
     <StyledInput
       aria-label="Search"

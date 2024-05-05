@@ -1,5 +1,8 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import styled from "styled-components";
+import SearchBar from "@/components/SearchBar";
+import { useState } from "react";
+import Link from "next/link";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -17,19 +20,44 @@ const StyledTitle = styled.h1`
   padding: 0.5rem;
   background-color: var(--main-bright);
 `;
+const StyledTextMessage = styled.p`
+  margin-top: 100px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  padding: 3px;
+  background-color: lightgray;
+  border-radius: 6px;
+`;
 
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
+  const [shownEntries, SetShownEntries] = useState(emotionEntries);
+
   return (
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
-
-      <EmotionRecordsList
-        onDeleteEmotionEntry={onDeleteEmotionEntry}
+      <SearchBar
+        SetShownEntries={SetShownEntries}
         emotionEntries={emotionEntries}
       />
+
+      {emotionEntries.length === 0 && (
+        <StyledTextMessage>
+          sorry, you haven&apos;t made any Entries yet! Go to{" "}
+          <StyledLink href="./">add Entry</StyledLink> to make a new Entry.
+        </StyledTextMessage>
+      )}
+
+      {emotionEntries.length !== 0 && (
+        <EmotionRecordsList
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
+          shownEntries={shownEntries}
+        />
+      )}
     </StyledWrapper>
   );
 }
