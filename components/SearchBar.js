@@ -42,7 +42,7 @@ export default function SearchBar({ SetShownEntries, emotionEntries }) {
     const results = fuse.search(searchTerm);
     const items = results.map((result) => result.item);
     SetShownEntries(items);
-  }, [emotionEntries, searchTerm]);
+  }, [emotionEntries, searchTerm, SetShownEntries]);
 
   return (
     <StyledInput

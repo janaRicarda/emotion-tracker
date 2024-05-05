@@ -27,8 +27,9 @@ const StyledTextMessage = styled.p`
 const StyledLink = styled(Link)`
   text-decoration: none;
   padding: 3px;
-  background-color: lightgray;
+  background-color: var(--button-background);
   border-radius: 6px;
+  color: var(--main-dark);
 `;
 
 export default function EmotionRecords({
@@ -47,8 +48,8 @@ export default function EmotionRecords({
 
       {emotionEntries.length === 0 && (
         <StyledTextMessage>
-          sorry, you haven&apos;t made any Entries yet! Go to{" "}
-          <StyledLink href="./">add Entry</StyledLink> to make a new Entry.
+          You haven&apos;t made any Entries yet! Make a{" "}
+          <StyledLink href="./">new Entry</StyledLink>
         </StyledTextMessage>
       )}
 
