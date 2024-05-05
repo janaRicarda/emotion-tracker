@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
-// import SearchBar from "./SearchBar";
-// import Fuse from "fuse.js";
 
 const StyledList = styled.ul`
   list-style: none;
