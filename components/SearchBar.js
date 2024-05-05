@@ -13,7 +13,7 @@ const StyledInput = styled.input`
   z-index: 1;
 `;
 
-export default function SearchBar({ handleSearch }) {
+export default function SearchBar({ setSearchTerm }) {
   return (
     <StyledInput
       aria-label="Search"
@@ -22,7 +22,7 @@ export default function SearchBar({ handleSearch }) {
       name="searchTerm"
       placeholder="Search for Date, Tensionlevel, Emotion..."
       aria-placeholder="Search for Date, Tensionlevel, Emotion..."
-      onChange={handleSearch}
+      onChange={(event) => setSearchTerm(event.target.value)}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
@@ -66,24 +66,23 @@ export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
-  const [searchResult, setSearchResult] = useState(emotionEntries);
+  const [searchTerm, setSearchTerm] = useState();
+
+  const [shownEntries, SetShownEntries] = useState(emotionEntries);
 
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
-  const router = useRouter();
-
-  function handleSearch(event) {
-    const { value } = event.target;
-    if (value.length === 0) {
-      setSearchResult(emotionEntries);
+  useEffect(() => {
+    if (!searchTerm) {
+      SetShownEntries(emotionEntries);
       return;
     }
 
     const fuse = new Fuse(emotionEntries, {
       includeScore: true,
-      threshold: 0.2,
+      threshold: 0.4,
       keys: [
         "date",
         "tensionLevel",
@@ -96,10 +95,12 @@ export default function EmotionRecordsList({
       ],
     });
 
-    const results = fuse.search(value);
+    const results = fuse.search(searchTerm);
     const items = results.map((result) => result.item);
-    setSearchResult(items);
-  }
+    SetShownEntries(items);
+  }, [emotionEntries, searchTerm]);
+
+  const router = useRouter();
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -117,12 +118,12 @@ export default function EmotionRecordsList({
 
   return (
     <>
-      <SearchBar handleSearch={handleSearch} />
-      {searchResult.length === 0 && (
+      <SearchBar setSearchTerm={setSearchTerm} />
+      {shownEntries.length === 0 && (
         <StyledTextMessage>sorry, no results found!</StyledTextMessage>
       )}
       <StyledList>
-        {searchResult?.map(
+        {shownEntries?.map(
           ({
             id,
             date,
