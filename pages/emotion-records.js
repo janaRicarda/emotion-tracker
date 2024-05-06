@@ -32,19 +32,51 @@ const StyledLink = styled(Link)`
   color: var(--main-dark);
 `;
 
+const StyledHighlightButton = styled.button`
+  font-size: 1rem;
+  border: 1px solid var(--main-dark);
+  border-radius: 6px;
+  background: var(--button-background);
+  color: var(--main-dark);
+`;
+
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
+  toggleHighlight,
 }) {
+
   const [shownEntries, SetShownEntries] = useState(emotionEntries);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+
+
+  function handleShowHighlighted() {
+    setIsHighlighted(!isHighlighted);
+  }
 
   return (
     <StyledWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
+      <StyledHighlightButton onClick={handleShowHighlighted}>
+            {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+          </StyledHighlightButton>
       <SearchBar
         SetShownEntries={SetShownEntries}
-        emotionEntries={emotionEntries}
-      />
+        emotionEntries={emotionEntries} />
+
+  
+
+
+      <EmotionRecordsList
+        onDeleteEmotionEntry={onDeleteEmotionEntry}
+        emotionEntries={
+          isHighlighted
+            ? emotionEntries.filter((entry) => entry.isHighlighted)
+            : emotionEntries
+        }
+        toggleHighlight={toggleHighlight}
+
+     
 
       {emotionEntries.length === 0 && (
         <StyledTextMessage>
@@ -57,8 +89,9 @@ export default function EmotionRecords({
         <EmotionRecordsList
           onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={shownEntries}
-        />
+       />
       )}
+      />
     </StyledWrapper>
   );
 }

@@ -30,6 +30,7 @@ const StyledPopUpMessage = styled.div`
 const StyledParagraph = styled.p`
   padding: 1rem 2rem;
   text-align: center;
+  color: var(--main-dark);
 `;
 
 const StyledWrapper = styled.div`

@@ -4,6 +4,8 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
+import HeartOutlineIcon from "../public/heart-outline.svg";
+import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledList = styled.ul`
   list-style: none;
@@ -60,9 +62,36 @@ const StyledTextMessage = styled.p`
   margin-top: 100px;
 `;
 
+const StyledOutlineButton = styled(HeartOutlineIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledFilledButton = styled(HeartFilledIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledP = styled.p`
+  margin-top: 150px;
+`;
+
 export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
+  toggleHighlight,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -89,6 +118,7 @@ export default function EmotionRecordsList({
       {shownEntries.length === 0 && (
         <StyledTextMessage>sorry, no results</StyledTextMessage>
       )}
+      {emotionEntries.length === 0 && <StyledP>No highlighted entries</StyledP>}
       <StyledList>
         {shownEntries?.map(
           ({
