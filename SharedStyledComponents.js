@@ -12,6 +12,16 @@ const StyledButton = styled.button`
   padding: 1rem;
 `;
 
+const StyledConfirmOrCancelButton = styled.button`
+  color: white;
+  background-color: ${({ $color }) => $color};
+  border: none;
+  width: 14rem;
+  height: 4rem;
+  border-radius: 6px;
+  padding: 0.5rem;
+`;
+
 const StyledBackButton = styled.input`
   background-color: transparent;
   text-decoration: none;
@@ -25,29 +35,50 @@ const StyledBackButton = styled.input`
 `;
 
 //links
-const StyledAddDetailsLink = styled(Link)`
+const StyledStandardLink = styled(Link)`
   text-decoration: none;
-  color: var(--main-dark);
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
   text-align: center;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
+  border-radius: 8px;
+`;
+
+const StyledLink = styled(Link)`
+  position: fixed;
+  top: 50%;
 `;
 
 //headlines
 const StyledTitle = styled.h1`
-  width: 100%;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  width: 100%;
   position: fixed;
   top: 100px;
   z-index: 1;
   padding: 1rem;
   background-color: var(--main-bright);
+`;
+
+//simple
+const StyledCenteredTitle = styled.h1`
+  text-align: center;
+  margin: 1.5rem;
+  font-size: 2rem;
+`;
+
+//lists
+
+const StyledBasicList = styled.ul`
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+`;
+const StyledListItem = styled.li`
+  border: 1px solid #030352;
+  padding: 0.5rem;
+  border-radius: 5px;
 `;
 
 //wrapper
@@ -63,6 +94,15 @@ const StyledButtonWrapper = styled.div`
   justify-content: center;
 `;
 
+const StyledConfirmButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+`;
+
 const StyledFlexWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -70,11 +110,15 @@ const StyledFlexWrapper = styled.div`
 `;
 
 export {
+  StyledConfirmOrCancelButton,
+  StyledConfirmButtonWrapper,
   StyledButton,
   StyledBackButton,
-  StyledAddDetailsLink,
   StyledWrapper,
   StyledButtonWrapper,
   StyledFlexWrapper,
   StyledTitle,
+  StyledCenteredTitle,
+  StyledLink,
+  StyledStandardLink,
 };

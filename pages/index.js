@@ -6,8 +6,18 @@ import {
   StyledWrapper,
   StyledButton,
   StyledBackButton,
-  StyledAddDetailsLink,
+  StyledStandardLink,
 } from "@/SharedStyledComponents";
+
+const StyledAddDetailsLink = styled(StyledStandardLink)`
+  color: var(--main-dark);
+  margin: 1rem;
+  padding: 1rem;
+  background-color: ${({ $actionButton }) =>
+    $actionButton ? "var(--button-background)" : "white"};
+  border: ${({ $actionButton }) =>
+    $actionButton ? "1px solid black" : "none"};
+`;
 
 const StyledTensionForm = styled.form`
   display: flex;

@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import ChevronPrev from "./../public/chevron-left.svg";
 import ChevronNext from "./../public/chevron-right.svg";
+import { StyledCenteredTitle, StyledLink } from "@/SharedStyledComponents";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -9,12 +10,6 @@ const StyledArticle = styled.article`
   padding: 2rem;
   background-color: ${({ $color }) => $color};
   color: #030352;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  margin: 1.5rem;
-  font-size: 2rem;
 `;
 
 const SubTitle = styled.h2`
@@ -37,10 +32,6 @@ const StyledListItem = styled.li`
   border-radius: 5px;
 `;
 
-const StyledLink = styled(Link)`
-  position: fixed;
-  top: 50%;
-`;
 const PrevLink = styled(StyledLink)`
   left: 0;
 `;
@@ -72,7 +63,7 @@ export default function EmotionDetails({
 }) {
   return (
     <StyledArticle $color={`var(--${slug})`}>
-      <Title>{name}</Title>
+      <StyledCenteredTitle>{name}</StyledCenteredTitle>
       <p>{description}</p>
       <SubTitle>The function of {name}</SubTitle>
       <p>{emotionfunction}</p>

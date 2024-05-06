@@ -1,20 +1,11 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
-import Link from "next/link";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 
-const StyledH1 = styled.h1`
-  font-weight: 500;
-  padding: 0 1rem 1rem 1rem;
+const StyledEmotionListTitle = styled(StyledTitle)`
   font-size: 1.5rem;
-  text-align: center;
   line-height: 1.6rem;
-
-  position: fixed;
-  padding: 1rem;
-  width: 100%;
-  top: 100px;
-  z-index: 1;
-  background: var(--main-bright);
+  padding: 0 1rem 1rem 1rem;
 `;
 
 const EmotionSection = styled.section`
@@ -34,14 +25,9 @@ const EmotionSection = styled.section`
   padding-top: ${({ $form }) => ($form ? "4rem" : "1rem")};
 `;
 
-const EmotionLink = styled(Link)`
-  text-decoration: none;
-  text-align: center;
+const EmotionLink = styled(StyledStandardLink)`
   color: #030352;
-
   background-color: ${({ $color }) => $color};
-
-  border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
   font-weight: 600;
@@ -65,7 +51,7 @@ export default function EmotionList({
   }
   return (
     <>
-      <StyledH1>{title}</StyledH1>
+      <StyledEmotionListTitle>{title}</StyledEmotionListTitle>
       <EmotionSection $form={form}>
         {emotionData.map(({ slug, name }) => (
           <EmotionLink
