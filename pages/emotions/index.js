@@ -1,16 +1,10 @@
 import EmotionList from "@/components/EmotionList";
-import styled from "styled-components";
-
-const StyledWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
+import { StyledFlexWrapper } from "@/SharedStyledComponents";
 
 export default function EmotionListPage() {
   return (
-    <StyledWrapper>
+    <StyledFlexWrapper>
       <EmotionList title="The seven basic emotions" />
-    </StyledWrapper>
+    </StyledFlexWrapper>
   );
 }

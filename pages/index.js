@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { uid } from "uid";
-import Link from "next/link";
+import {
+  StyledButtonWrapper,
+  StyledWrapper,
+  StyledButton,
+  StyledBackButton,
+  StyledAddDetailsLink,
+} from "@/SharedStyledComponents";
 
-const StyledForm = styled.form`
+const StyledTensionForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 80vw;
@@ -21,55 +27,8 @@ const StyledInput = styled.input`
   width: 100%;
 `;
 
-const StyledWrapper = styled.div`
-  display: flex;
-  width: inherit;
-  justify-content: space-between;
-`;
-
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  width: inherit;
-  justify-content: center;
-`;
-
 const StyledSpan = styled.span`
   font-size: 0.8rem;
-`;
-
-const StyledButton = styled.button`
-  background-color: var(--button-background);
-  color: var(--main-dark);
-  width: 6rem;
-  border: 1px solid black;
-  border-radius: 6px;
-  margin: 1rem;
-  padding: 1rem;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: var(--main-dark);
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  text-align: center;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
-`;
-
-const StyledBackButton = styled.input`
-  background-color: transparent;
-  text-decoration: none;
-  color: var(--main-dark);
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  border: 1px solid black;
-  text-align: center;
-  background-color: var(--button-background);
 `;
 
 const StyledMessage = styled.p`
@@ -97,7 +56,7 @@ export default function HomePage({ onAddEmotionEntry }) {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledTensionForm onSubmit={handleSubmit}>
       <StyledLabel htmlFor="tension-level">
         On a scale from 0 to 100, how tense do you feel in this moment?
       </StyledLabel>
@@ -133,16 +92,16 @@ export default function HomePage({ onAddEmotionEntry }) {
                 setTension("0");
               }}
             ></StyledBackButton>
-            <StyledLink
+            <StyledAddDetailsLink
               $actionButton
               href={{ pathname: "/create", query: { id: id } }}
               forwardedAs={`/create`}
             >
               Add more details
-            </StyledLink>
+            </StyledAddDetailsLink>
           </StyledButtonWrapper>
         </>
       )}
-    </StyledForm>
+    </StyledTensionForm>
   );
 }
