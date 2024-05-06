@@ -10,10 +10,10 @@ const StyledH1 = styled.h1`
   width: 100vw;
   text-align: center;
   position: fixed;
-  top: 120px;
+  top: 100px;
   left: 0;
   z-index: 1;
-  background: linear-gradient(transparent, var(--main-bright) 20%);
+  background-color: var(--main-bright);
 `;
 
 const StyledForm = styled.form`
@@ -26,7 +26,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  color: var(--main-dark);
+  color: #030352;
 `;
 
 const TensionLabelEdit = styled.label`
