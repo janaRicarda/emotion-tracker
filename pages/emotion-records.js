@@ -54,19 +54,27 @@ export default function EmotionRecords({
 }) {
   const [shownEntries, SetShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isShown, setIsShown] = useState(false);
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
+  }
+  function handleShowSearchBar() {
+    setIsShown(!isShown);
   }
 
   return (
     <StyledWrapper>
       <StyledPageHeader>
         <StyledTitle>Recorded Emotions</StyledTitle>
+
         <SearchBar
+          isShown={isShown}
+          handleShowSearchBar={handleShowSearchBar}
           SetShownEntries={SetShownEntries}
           emotionEntries={emotionEntries}
         />
+
         <StyledHighlightButton onClick={handleShowHighlighted}>
           {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
         </StyledHighlightButton>
