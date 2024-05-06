@@ -10,15 +10,22 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledTitle = styled.h1`
+const StyledPageHeader = styled.header`
   width: 100%;
-  text-align: center;
-  font-weight: 500;
+  background-color: var(--main-bright);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 100px;
   z-index: 1;
-  padding: 0.5rem;
-  background-color: var(--main-bright);
+`;
+
+const StyledTitle = styled.h1`
+  font-weight: 500;
 `;
 const StyledTextMessage = styled.p`
   margin-top: 100px;
@@ -45,10 +52,8 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
 }) {
-
   const [shownEntries, SetShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
-
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
@@ -56,41 +61,37 @@ export default function EmotionRecords({
 
   return (
     <StyledWrapper>
-      <StyledTitle>Recorded Emotions</StyledTitle>
-      <StyledHighlightButton onClick={handleShowHighlighted}>
-            {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-          </StyledHighlightButton>
-      <SearchBar
-        SetShownEntries={SetShownEntries}
-        emotionEntries={emotionEntries} />
-
-  
-
-
+      <StyledPageHeader>
+        <StyledTitle>Recorded Emotions</StyledTitle>
+        <SearchBar
+          SetShownEntries={SetShownEntries}
+          emotionEntries={emotionEntries}
+        />
+        <StyledHighlightButton onClick={handleShowHighlighted}>
+          {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+        </StyledHighlightButton>
+      </StyledPageHeader>
       <EmotionRecordsList
         onDeleteEmotionEntry={onDeleteEmotionEntry}
-        emotionEntries={
+        shownEntries={
           isHighlighted
-            ? emotionEntries.filter((entry) => entry.isHighlighted)
-            : emotionEntries
+            ? shownEntries.filter((entry) => entry.isHighlighted)
+            : shownEntries
         }
         toggleHighlight={toggleHighlight}
 
-     
-
-      {emotionEntries.length === 0 && (
+        /* {shownEntries.length === 0 && (
         <StyledTextMessage>
           You haven&apos;t made any Entries yet! Make a{" "}
           <StyledLink href="./">new Entry</StyledLink>
         </StyledTextMessage>
-      )}
-
-      {emotionEntries.length !== 0 && (
+      )}  */
+        /*{shownEntries.length !== 0 && (
         <EmotionRecordsList
           onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={shownEntries}
        />
-      )}
+      )}   */
       />
     </StyledWrapper>
   );

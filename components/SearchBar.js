@@ -3,16 +3,13 @@ import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 
 const StyledInput = styled.input`
-  margin-top: 35px;
   width: 90vw;
   padding: 0.5rem;
   background-color: var(--main-bright);
   color: var(--main-dark);
   border-radius: 20px;
-
+  font-size: 0.8rem;
   border: 1px solid var(--main-dark);
-  position: fixed;
-  z-index: 1;
 `;
 
 export default function SearchBar({ SetShownEntries, emotionEntries }) {

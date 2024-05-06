@@ -9,8 +9,8 @@ import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledList = styled.ul`
   list-style: none;
-  padding: 6rem 0;
-  margin: 0 auto 1rem;
+  padding: 0;
+  margin: 8rem auto 1rem;
   text-align: left;
 `;
 
@@ -59,7 +59,7 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 const StyledTextMessage = styled.p`
-  margin-top: 100px;
+  margin-top: 150px;
 `;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
@@ -85,10 +85,11 @@ const StyledFilledButton = styled(HeartFilledIcon)`
 `;
 
 const StyledP = styled.p`
-  margin-top: 150px;
+  margin-top: 50px;
 `;
 
 export default function EmotionRecordsList({
+  emotionEntries,
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
@@ -118,7 +119,7 @@ export default function EmotionRecordsList({
       {shownEntries.length === 0 && (
         <StyledTextMessage>sorry, no results</StyledTextMessage>
       )}
-      {emotionEntries.length === 0 && <StyledP>No highlighted entries</StyledP>}
+      {/* {shownEntries.length === 0 && <StyledP>No highlighted entries</StyledP>} */}
       <StyledList>
         {shownEntries?.map(
           ({
@@ -131,6 +132,7 @@ export default function EmotionRecordsList({
             category,
             emotion,
             subemotion,
+            isHighlighted,
           }) => {
             return (
               <>
@@ -149,6 +151,11 @@ export default function EmotionRecordsList({
                       handleShowConfirmMessage(id);
                     }}
                   />
+                  {isHighlighted ? (
+                    <StyledFilledButton onClick={() => toggleHighlight(id)} />
+                  ) : (
+                    <StyledOutlineButton onClick={() => toggleHighlight(id)} />
+                  )}
                 </StyledListItemWrapper>
                 {showConfirmMessage[id] && (
                   <ConfirmMessage
