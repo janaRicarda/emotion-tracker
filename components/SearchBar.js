@@ -1,6 +1,24 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
+import Magnifier from "../public/magnify.svg";
+import Close from "../public/close.svg";
+
+const StyledContainer = styled.article`
+  width: 100%;
+  height: auto;
+  display: flex;
+`;
+
+const StyledMagnifier = styled(Magnifier)`
+  width: 2rem;
+  fill: var(--main-dark);
+`;
+
+const StyledClose = styled(Close)`
+  width: 2rem;
+  fill: var(--main-dark);
+`;
 
 const StyledInput = styled.input`
   width: 90vw;
@@ -14,6 +32,11 @@ const StyledInput = styled.input`
 
 export default function SearchBar({ SetShownEntries, emotionEntries }) {
   const [searchTerm, setSearchTerm] = useState();
+  const [isClicked, setIsClicked] = useState(false);
+
+  function handleShowSearchBar() {
+    setIsClicked(!isClicked);
+  }
 
   useEffect(() => {
     if (!searchTerm) {
@@ -40,16 +63,23 @@ export default function SearchBar({ SetShownEntries, emotionEntries }) {
     const items = results.map((result) => result.item);
     SetShownEntries(items);
   }, [emotionEntries, searchTerm, SetShownEntries]);
-
+  console.log(isClicked);
   return (
-    <StyledInput
-      aria-label="Search"
-      type="search"
-      id="searchTerm"
-      name="searchTerm"
-      placeholder="Search for Date, Tensionlevel, Emotion..."
-      aria-placeholder="Search for Date, Tensionlevel, Emotion..."
-      onChange={(event) => setSearchTerm(event.target.value)}
-    />
+    <StyledContainer>
+      <button type="button" onClick={handleShowSearchBar}>
+        {isClicked ? <StyledMagnifier /> : <StyledClose />}
+      </button>
+      {isClicked && (
+        <StyledInput
+          aria-label="Search"
+          type="search"
+          id="searchTerm"
+          name="searchTerm"
+          placeholder="Search for Date, Tensionlevel, Emotion..."
+          aria-placeholder="Search for Date, Tensionlevel, Emotion..."
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      )}
+    </StyledContainer>
   );
 }
