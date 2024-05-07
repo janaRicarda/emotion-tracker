@@ -69,7 +69,7 @@ export default function EmotionList({
       <EmotionSection $form={form}>
         {emotionData.map(({ slug, name }) => (
           <EmotionLink
-            onClick={() => handleAddDetails(name, id)}
+            onClick={createMode && (() => handleAddDetails(name, id))}
             key={slug}
             $color={`var(--${slug})`}
             slug={slug}
