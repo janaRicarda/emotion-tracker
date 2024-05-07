@@ -4,11 +4,7 @@ import { emotionData } from "@/lib/db";
 import { useState } from "react";
 import Circle from "../public/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
-import {
-  StyledInput,
-  StyledWrapper,
-  StyledTitle,
-} from "@/SharedStyledComponents";
+import { StyledInput, StyledWrapper } from "@/SharedStyledComponents";
 
 const StyledH1 = styled.h1`
   font-weight: 500;

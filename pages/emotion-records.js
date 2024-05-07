@@ -1,17 +1,17 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
-import { StyledFlexWrapper, StyledTitle } from "@/SharedStyledComponents";
+import { StyledFlexColumnWrapper, StyledTitle } from "@/SharedStyledComponents";
 
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
 }) {
   return (
-    <StyledFlexWrapper>
+    <StyledFlexColumnWrapper>
       <StyledTitle>Recorded Emotions</StyledTitle>
       <EmotionRecordsList
         onDeleteEmotionEntry={onDeleteEmotionEntry}
         emotionEntries={emotionEntries}
       />
-    </StyledFlexWrapper>
+    </StyledFlexColumnWrapper>
   );
 }

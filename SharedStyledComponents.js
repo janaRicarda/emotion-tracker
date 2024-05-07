@@ -71,18 +71,6 @@ const StyledSubmitButton = styled.button`
   }
 `;
 
-//links
-const StyledStandardLink = styled(Link)`
-  text-decoration: none;
-  text-align: center;
-  border-radius: 8px;
-`;
-
-const StyledLink = styled(Link)`
-  position: fixed;
-  top: 50%;
-`;
-
 //headlines
 const StyledTitle = styled.h1`
   text-align: center;
@@ -95,10 +83,23 @@ const StyledTitle = styled.h1`
   background-color: var(--main-bright);
 `;
 
+// umbenennen in basic
 const StyledCenteredTitle = styled.h1`
   text-align: center;
   margin: 1.5rem;
   font-size: 2rem;
+`;
+
+//links
+const StyledStandardLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+`;
+
+const StyledLink = styled(Link)`
+  position: fixed;
+  top: 50%;
 `;
 
 //lists
@@ -160,7 +161,7 @@ const StyledConfirmButtonWrapper = styled.div`
   padding: 1rem;
 `;
 
-const StyledFlexWrapper = styled.div`
+const StyledFlexColumnWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -178,7 +179,7 @@ export {
   StyledBackButton,
   StyledWrapper,
   StyledButtonWrapper,
-  StyledFlexWrapper,
+  StyledFlexColumnWrapper,
   StyledTitle,
   StyledCenteredTitle,
   StyledLink,
