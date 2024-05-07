@@ -62,6 +62,8 @@ export default function EmotionRecords({
     setIsHighlighted(!isHighlighted);
   }
 
+  console.log(shownEntries);
+
   return (
     <StyledWrapper>
       <StyledPageHeader>

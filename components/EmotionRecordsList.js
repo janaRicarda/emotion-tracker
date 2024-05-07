@@ -113,9 +113,7 @@ export default function EmotionRecordsList({
   return (
     <>
       {shownEntries.length === 0 && (
-        <StyledTextMessage>
-          {isHighlighted ? "No highlighted entries" : "sorry, no results found"}
-        </StyledTextMessage>
+        <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
       )}
       <StyledList>
         {shownEntries?.map(
