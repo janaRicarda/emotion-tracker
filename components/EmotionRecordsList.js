@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/trash-icon.svg";

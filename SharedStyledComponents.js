@@ -12,83 +12,27 @@ const StyledButton = styled.button`
   padding: 1rem;
 `;
 
-const StyledConfirmOrCancelButton = styled.button`
-  color: white;
-  background-color: ${({ $color }) => $color};
-  border: none;
-  width: 14rem;
-  height: 4rem;
-  border-radius: 6px;
-  padding: 0.5rem;
-`;
-
-const StyledBackButton = styled.input`
-  background-color: transparent;
-  text-decoration: none;
-  color: var(--main-dark);
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 8.5px;
-  border: 1px solid black;
-  text-align: center;
-  background-color: var(--button-background);
-`;
-
-// const StyledMenuButton = styled(Menu)`
-//   width: 3rem;
-//   fill: var(--main-dark);
-
-//   background: transparent;
-//   color: var(--main-dark);
-//   border-style: none;
-//   margin: 1rem;
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-// `;
-// const StyledCloseButton = styled(Close)`
-//   width: 2rem;
-//   fill: var(--main-dark);
-//   background: var(--button-background);
-//   color: var(--main-dark);
-//   border-style: none;
-//   margin: 1rem;
-//   position: absolute;
-//   top: 0.5rem;
-//   right: 0;
-//   z-index: 2;
-// `;
-
-const StyledSubmitButton = styled.button`
-  background-color: white;
-  color: #030352;
-  border: 1px solid black;
-  border-radius: 6px;
-  padding: 0.5rem;
-  &:hover {
-    background-color: darkslateblue;
-    color: ${({ $color }) => $color};
-  }
-`;
-
 //headlines
-const StyledTitle = styled.h1`
+const StyledBasicTitle = styled.h1`
   text-align: center;
-  font-weight: 600;
-  width: 100%;
   position: fixed;
-  top: 100px;
   z-index: 1;
+  font-weight: 600;
+`;
+
+const StyledTitle = styled(StyledBasicTitle)`
+  width: 100%;
+  top: 100px;
   padding: 1rem;
   background-color: var(--main-bright);
 `;
 
-// umbenennen in basic
-const StyledCenteredTitle = styled.h1`
-  text-align: center;
-  margin: 1.5rem;
-  font-size: 2rem;
-`;
+// löschen
+// const StyledCenteredTitle = styled.h1`
+//   text-align: center;
+//   margin: 1.5rem;
+//   font-size: 2rem;
+// `;
 
 //links
 const StyledStandardLink = styled(Link)`
@@ -97,7 +41,7 @@ const StyledStandardLink = styled(Link)`
   border-radius: 8px;
 `;
 
-const StyledLink = styled(Link)`
+const StyledFixedLink = styled(Link)`
   position: fixed;
   top: 50%;
 `;
@@ -152,15 +96,6 @@ const StyledButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-const StyledConfirmButtonWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-`;
-
 const StyledFlexColumnWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -173,16 +108,13 @@ const StyledInput = styled.input`
 `;
 
 export {
-  StyledConfirmOrCancelButton,
-  StyledConfirmButtonWrapper,
   StyledButton,
-  StyledBackButton,
   StyledWrapper,
   StyledButtonWrapper,
   StyledFlexColumnWrapper,
   StyledTitle,
-  StyledCenteredTitle,
-  StyledLink,
+  StyledBasicTitle,
+  StyledFixedLink,
   StyledStandardLink,
   StyledInput,
 };

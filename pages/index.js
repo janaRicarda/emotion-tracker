@@ -5,7 +5,6 @@ import {
   StyledButtonWrapper,
   StyledWrapper,
   StyledButton,
-  StyledBackButton,
   StyledStandardLink,
   StyledInput,
 } from "@/SharedStyledComponents";
@@ -43,6 +42,17 @@ const StyledMessage = styled.p`
   text-align: center;
   font-weight: 600;
   margin: 1rem auto;
+`;
+
+const StyledBackButton = styled.input`
+  text-decoration: none;
+  color: var(--main-dark);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 8.5px;
+  border: 1px solid black;
+  text-align: center;
+  background-color: var(--button-background);
 `;
 
 export default function HomePage({ onAddEmotionEntry }) {

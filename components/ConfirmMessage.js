@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import {
-  StyledConfirmOrCancelButton,
-  StyledConfirmButtonWrapper,
-} from "@/SharedStyledComponents";
+import { StyledButton, StyledWrapper } from "@/SharedStyledComponents";
 
 const StyledBackground = styled.div`
   background-color: black;
@@ -34,6 +31,22 @@ const StyledPopUpMessage = styled.div`
 const StyledConfirmText = styled.p`
   padding: 1rem 2rem;
   text-align: center;
+`;
+
+const StyledConfirmButtonWrapper = styled(StyledWrapper)`
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+`;
+
+const StyledConfirmOrCancelButton = styled(StyledButton)`
+  color: white;
+  background-color: ${({ $color }) => $color};
+  width: 14rem;
+  height: 4rem;
+  padding: 0.5rem;
+  margin: 0;
 `;
 
 export default function ConfirmMessage({

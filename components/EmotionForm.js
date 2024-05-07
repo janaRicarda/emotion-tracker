@@ -4,16 +4,17 @@ import { emotionData } from "@/lib/db";
 import { useState } from "react";
 import Circle from "../public/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
-import { StyledInput, StyledWrapper } from "@/SharedStyledComponents";
+import {
+  StyledInput,
+  StyledWrapper,
+  StyledBasicTitle,
+  StyledButton,
+} from "@/SharedStyledComponents";
 
-const StyledH1 = styled.h1`
-  font-weight: 500;
+const StyledEmotionFormTitle = styled(StyledBasicTitle)`
   width: 100vw;
-  text-align: center;
-  position: fixed;
   top: 120px;
   left: 0;
-  z-index: 1;
   background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
@@ -49,12 +50,12 @@ const StyledTextarea = styled.textarea`
   border-radius: 6px;
 `;
 
-const StyledSubmitButton = styled.button`
+const StyledSubmitButton = styled(StyledButton)`
   background-color: white;
   color: #030352;
-  border: 1px solid black;
-  border-radius: 6px;
   padding: 0.5rem;
+  margin: 0;
+  width: inherit;
   &:hover {
     background-color: darkslateblue;
     color: ${({ $color }) => $color};
@@ -177,7 +178,7 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledH1>
+      <StyledEmotionFormTitle>
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -185,7 +186,7 @@ export default function EmotionForm({
           : emotionValue
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
-      </StyledH1>
+      </StyledEmotionFormTitle>
       <StyledForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {date}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import ChevronPrev from "./../public/chevron-left.svg";
 import ChevronNext from "./../public/chevron-right.svg";
-import { StyledCenteredTitle, StyledLink } from "@/SharedStyledComponents";
+import { StyledCenteredTitle, StyledFixedLink } from "@/SharedStyledComponents";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -32,11 +32,11 @@ const StyledListItem = styled.li`
   border-radius: 5px;
 `;
 
-const PrevLink = styled(StyledLink)`
+const PrevLink = styled(StyledFixedLink)`
   left: 0;
 `;
 
-const NextLink = styled(StyledLink)`
+const NextLink = styled(StyledFixedLink)`
   right: 0;
 `;
 const StyledChevronPrev = styled(ChevronPrev)`
