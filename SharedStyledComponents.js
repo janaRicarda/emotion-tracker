@@ -40,38 +40,12 @@ const StyledFixedLink = styled(Link)`
 `;
 
 //lists
-
-const StyledBasicList = styled.ul`
+const StyledList = styled.ul`
   list-style: none;
-  padding-left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  justify-content: center;
-`;
-
-const StyledRecordsList = styled.ul`
-  list-style: none;
-  padding: 3.5rem 0;
-  margin: 0 auto 1rem;
-  text-align: left;
-`;
-
-const StyledRecordListItem = styled.li`
-  margin: 0.5rem auto;
-  border: 1px solid var(--main-dark);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  box-shadow: 0 0 3px 0;
-  width: 80vw;
-  cursor: pointer;
-  &:hover {
-    background-color: var(--button-background);
-  }
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid #030352;
+  border: 1px solid var(--main-dark);
   padding: 0.5rem;
   border-radius: 6px;
 `;
@@ -109,5 +83,7 @@ export {
   StyledBasicTitle,
   StyledFixedLink,
   StyledStandardLink,
+  StyledList,
   StyledInput,
+  StyledListItem,
 };

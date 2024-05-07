@@ -4,9 +4,9 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
+import { StyledList, StyledListItem } from "@/SharedStyledComponents";
 
-const StyledRecordsList = styled.ul`
-  list-style: none;
+const StyledRecordsList = styled(StyledList)`
   padding: 3.5rem 0;
   margin: 0 auto 1rem;
   text-align: left;
@@ -16,10 +16,8 @@ const StyledListItemWrapper = styled.div`
   position: relative;
 `;
 
-const StyledRecordListItem = styled.li`
+const StyledRecordListItem = styled(StyledListItem)`
   margin: 0.5rem auto;
-  border: 1px solid var(--main-dark);
-  border-radius: 0.5rem;
   padding: 1rem;
   box-shadow: 0 0 3px 0;
   width: 80vw;
@@ -30,6 +28,7 @@ const StyledRecordListItem = styled.li`
 `;
 
 const StyledDetails = styled.ul`
+  list-style: none;
   display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
   padding: 0 1rem;
   margin-bottom: 2rem;
@@ -80,7 +79,7 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-
+  console.log(emotionEntries);
   return (
     <StyledRecordsList>
       {emotionEntries.map(
