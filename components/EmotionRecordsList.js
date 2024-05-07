@@ -88,7 +88,6 @@ export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
-  isHighlighted,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
