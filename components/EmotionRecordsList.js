@@ -6,7 +6,7 @@ import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 
-const StyledList = styled.ul`
+const StyledRecordsList = styled.ul`
   list-style: none;
   padding: 3.5rem 0;
   margin: 0 auto 1rem;
@@ -17,7 +17,7 @@ const StyledListItemWrapper = styled.div`
   position: relative;
 `;
 
-const StyledListItem = styled.li`
+const StyledRecordListItem = styled.li`
   margin: 0.5rem auto;
   border: 1px solid var(--main-dark);
   border-radius: 0.5rem;
@@ -83,7 +83,7 @@ export default function EmotionRecordsList({
   }
 
   return (
-    <StyledList>
+    <StyledRecordsList>
       {emotionEntries.map(
         ({
           id,
@@ -99,9 +99,9 @@ export default function EmotionRecordsList({
           return (
             <>
               <StyledListItemWrapper key={id}>
-                <StyledListItem onClick={() => handleShowDetails(id)}>
+                <StyledRecordListItem onClick={() => handleShowDetails(id)}>
                   {date}
-                </StyledListItem>
+                </StyledRecordListItem>
                 <StyledEditButton
                   aria-label="Edit emotion entry"
                   onClick={() => router.push(`./edit/${id}`)}
@@ -141,6 +141,6 @@ export default function EmotionRecordsList({
           );
         }
       )}
-    </StyledList>
+    </StyledRecordsList>
   );
 }

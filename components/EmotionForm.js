@@ -4,6 +4,11 @@ import { emotionData } from "@/lib/db";
 import { useState } from "react";
 import Circle from "../public/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
+import {
+  StyledInput,
+  StyledWrapper,
+  StyledTitle,
+} from "@/SharedStyledComponents";
 
 const StyledH1 = styled.h1`
   font-weight: 500;
@@ -32,16 +37,6 @@ const StyledForm = styled.form`
 const TensionLabelEdit = styled.label`
   padding: 0;
   text-align: left;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-`;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 `;
 
 const StyledSpan = styled.span`

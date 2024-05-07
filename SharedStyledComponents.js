@@ -34,6 +34,43 @@ const StyledBackButton = styled.input`
   background-color: var(--button-background);
 `;
 
+// const StyledMenuButton = styled(Menu)`
+//   width: 3rem;
+//   fill: var(--main-dark);
+
+//   background: transparent;
+//   color: var(--main-dark);
+//   border-style: none;
+//   margin: 1rem;
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+// `;
+// const StyledCloseButton = styled(Close)`
+//   width: 2rem;
+//   fill: var(--main-dark);
+//   background: var(--button-background);
+//   color: var(--main-dark);
+//   border-style: none;
+//   margin: 1rem;
+//   position: absolute;
+//   top: 0.5rem;
+//   right: 0;
+//   z-index: 2;
+// `;
+
+const StyledSubmitButton = styled.button`
+  background-color: white;
+  color: #030352;
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 0.5rem;
+  &:hover {
+    background-color: darkslateblue;
+    color: ${({ $color }) => $color};
+  }
+`;
+
 //links
 const StyledStandardLink = styled(Link)`
   text-decoration: none;
@@ -58,7 +95,6 @@ const StyledTitle = styled.h1`
   background-color: var(--main-bright);
 `;
 
-//simple
 const StyledCenteredTitle = styled.h1`
   text-align: center;
   margin: 1.5rem;
@@ -75,6 +111,27 @@ const StyledBasicList = styled.ul`
   gap: 0.3rem;
   justify-content: center;
 `;
+
+const StyledRecordsList = styled.ul`
+  list-style: none;
+  padding: 3.5rem 0;
+  margin: 0 auto 1rem;
+  text-align: left;
+`;
+
+const StyledRecordListItem = styled.li`
+  margin: 0.5rem auto;
+  border: 1px solid var(--main-dark);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 3px 0;
+  width: 80vw;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--button-background);
+  }
+`;
+
 const StyledListItem = styled.li`
   border: 1px solid #030352;
   padding: 0.5rem;
@@ -84,7 +141,7 @@ const StyledListItem = styled.li`
 //wrapper
 const StyledWrapper = styled.div`
   display: flex;
-  width: inherit;
+  width: 100%;
   justify-content: space-between;
 `;
 
@@ -109,6 +166,11 @@ const StyledFlexWrapper = styled.div`
   flex-direction: column;
 `;
 
+//form, inputs
+const StyledInput = styled.input`
+  width: 100%;
+`;
+
 export {
   StyledConfirmOrCancelButton,
   StyledConfirmButtonWrapper,
@@ -121,4 +183,5 @@ export {
   StyledCenteredTitle,
   StyledLink,
   StyledStandardLink,
+  StyledInput,
 };

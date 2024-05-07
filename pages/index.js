@@ -7,6 +7,7 @@ import {
   StyledButton,
   StyledBackButton,
   StyledStandardLink,
+  StyledInput,
 } from "@/SharedStyledComponents";
 
 const StyledAddDetailsLink = styled(StyledStandardLink)`
@@ -28,13 +29,9 @@ const StyledTensionForm = styled.form`
   align-items: center;
 `;
 
-const StyledLabel = styled.label`
+const StyledTensionLabel = styled.label`
   padding: 2rem;
   text-align: center;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
 `;
 
 const StyledSpan = styled.span`
@@ -67,9 +64,9 @@ export default function HomePage({ onAddEmotionEntry }) {
 
   return (
     <StyledTensionForm onSubmit={handleSubmit}>
-      <StyledLabel htmlFor="tension-level">
+      <StyledTensionLabel htmlFor="tension-level">
         On a scale from 0 to 100, how tense do you feel in this moment?
-      </StyledLabel>
+      </StyledTensionLabel>
       <StyledInput
         aria-label="Adjust tension level between 0 and 100"
         id="tension-level"
