@@ -1,51 +1,32 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
-import Magnifier from "../public/magnify-fat.svg";
-import Close from "../public/close.svg";
-import { keyframes } from "styled-components";
-
-const fadeIn = keyframes`
-  from {
-  width: 0;
-  
-  }
-   to {
-   width: 80vw;
-  
-  }
-`;
+import Magnifier from "../public/magnify.svg";
 
 const StyledContainer = styled.article`
-  width: 80vw;
   height: auto;
   display: flex;
   position: relative;
 `;
 
 const StyledMagnifier = styled(Magnifier)`
-  width: 2rem;
+  width: 1.8rem;
   fill: var(--main-dark);
   position: absolute;
-  left: 0;
-`;
-
-const StyledClose = styled(Close)`
-  width: 2rem;
-  fill: var(--main-dark);
-  position: absolute;
-  left: 0;
+  top: calc(50% - 15px);
+  left: 3px;
 `;
 
 const StyledInput = styled.input`
-  width: 80vw;
-  padding: 0.3rem 0.3rem 0.3rem 2rem;
+  width: ${({ $isShown }) => ($isShown ? "80vw" : "35px")};
+  height: 35px;
+  padding-left: 2rem;
   background-color: var(--main-bright);
   color: var(--main-dark);
-  border-radius: 20px;
+  border-radius: ${({ $isShown }) => ($isShown ? "20px" : "18px")};
   font-size: 0.8rem;
   border: 1px solid var(--main-dark);
-  animation: ${fadeIn} 1s linear;
+  transition: width 1s linear;
 `;
 
 export default function SearchBar({
@@ -84,22 +65,17 @@ export default function SearchBar({
   console.log(isShown);
   return (
     <StyledContainer>
-      {isShown && (
-        <StyledInput
-          aria-label="Search"
-          type="search"
-          id="searchTerm"
-          name="searchTerm"
-          placeholder="Search for Date, Tensionlevel, Emotion..."
-          aria-placeholder="Search for Date, Tensionlevel, Emotion..."
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-      )}
-      {isShown ? (
-        <StyledClose onClick={handleShowSearchBar} />
-      ) : (
-        <StyledMagnifier onClick={handleShowSearchBar} />
-      )}
+      <StyledInput
+        $isShown={isShown}
+        aria-label="Search"
+        type="search"
+        id="searchTerm"
+        name="searchTerm"
+        placeholder="Search for Date, Tensionlevel, Emotion..."
+        aria-placeholder="Search for Date, Tensionlevel, Emotion..."
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
+      <StyledMagnifier onClick={handleShowSearchBar} />
     </StyledContainer>
   );
 }
