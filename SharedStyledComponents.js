@@ -27,18 +27,11 @@ const StyledTitle = styled(StyledBasicTitle)`
   background-color: var(--main-bright);
 `;
 
-// löschen
-// const StyledCenteredTitle = styled.h1`
-//   text-align: center;
-//   margin: 1.5rem;
-//   font-size: 2rem;
-// `;
-
 //links
 const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 6px;
 `;
 
 const StyledFixedLink = styled(Link)`
@@ -80,7 +73,7 @@ const StyledRecordListItem = styled.li`
 const StyledListItem = styled.li`
   border: 1px solid #030352;
   padding: 0.5rem;
-  border-radius: 5px;
+  border-radius: 6px;
 `;
 
 //wrapper
