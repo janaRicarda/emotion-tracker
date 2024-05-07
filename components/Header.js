@@ -15,7 +15,7 @@ const StyledHeader = styled.header`
 `;
 
 const StyledLogo = styled(Image)`
-  height: 200px;
+  height: 100px;
   width: 200px;
   position: absolute;
   top: 0;

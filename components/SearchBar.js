@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
-import Magnifier from "../public/magnify.svg";
+import Magnifier from "../public/magnify-fat.svg";
 import Close from "../public/close.svg";
 import { keyframes } from "styled-components";
 
 const fadeIn = keyframes`
   from {
-    width: 0;
-   
+  width: 0;
+  
   }
    to {
-    width: 80vw;
-   
+   width: 80vw;
+  
   }
 `;
 

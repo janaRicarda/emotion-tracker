@@ -7,10 +7,13 @@ const StyledWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function EmotionListPage() {
+export default function EmotionListPage({ onAddEmotionDetails }) {
   return (
     <StyledWrapper>
-      <EmotionList title="The seven basic emotions" />
+      <EmotionList
+        title="The seven basic emotions"
+        onAddEmotionDetails={onAddEmotionDetails}
+      />
     </StyledWrapper>
   );
 }
