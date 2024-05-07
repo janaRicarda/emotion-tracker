@@ -78,7 +78,6 @@ export default function App({ Component, pageProps }) {
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
-  console.log(emotionEntries[0]);
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <StyledToggleTheme type="button" onClick={toggleTheme}>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 import Magnifier from "../public/magnify.svg";
 
-const StyledContainer = styled.article`
+const StyledContainer = styled.div`
   height: auto;
   display: flex;
   position: relative;
@@ -26,15 +26,11 @@ const StyledInput = styled.input`
   border-radius: ${({ $isShown }) => ($isShown ? "20px" : "18px")};
   font-size: 0.8rem;
   border: 1px solid var(--main-dark);
-  transition: width 1s linear;
+  transition: width 600ms linear;
 `;
 
-export default function SearchBar({
-  isShown,
-  handleShowSearchBar,
-  SetShownEntries,
-  emotionEntries,
-}) {
+export default function SearchBar({ SetShownEntries, emotionEntries }) {
+  const [isShown, setIsShown] = useState(false);
   const [searchTerm, setSearchTerm] = useState();
 
   useEffect(() => {
@@ -62,7 +58,11 @@ export default function SearchBar({
     const items = results.map((result) => result.item);
     SetShownEntries(items);
   }, [emotionEntries, searchTerm, SetShownEntries]);
-  console.log(isShown);
+
+  function handleShowSearchBar() {
+    setIsShown(!isShown);
+  }
+
   return (
     <StyledContainer>
       <StyledInput

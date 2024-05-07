@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledPageHeader = styled.header`
+const StyledPageHeader = styled.section`
   width: 100%;
   background-color: var(--main-bright);
   padding: 0.5rem;
@@ -28,12 +28,15 @@ const StyledTitle = styled.h1`
   font-weight: 500;
 `;
 const StyledTextMessage = styled.p`
-  margin-top: 100px;
+  margin-top: 150px;
+  text-align: center;
+  line-height: 3;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  padding: 3px;
+  border: 1px solid var(--main-dark);
+  padding: 0.5rem;
   background-color: var(--button-background);
   border-radius: 6px;
   color: var(--main-dark);
@@ -54,13 +57,9 @@ export default function EmotionRecords({
 }) {
   const [shownEntries, SetShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
-  const [isShown, setIsShown] = useState(false);
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
-  }
-  function handleShowSearchBar() {
-    setIsShown(!isShown);
   }
 
   return (
@@ -68,39 +67,38 @@ export default function EmotionRecords({
       <StyledPageHeader>
         <StyledTitle>Recorded Emotions</StyledTitle>
 
-        <SearchBar
-          isShown={isShown}
-          handleShowSearchBar={handleShowSearchBar}
-          SetShownEntries={SetShownEntries}
-          emotionEntries={emotionEntries}
-        />
+        {emotionEntries.length !== 0 && (
+          <>
+            <SearchBar
+              SetShownEntries={SetShownEntries}
+              emotionEntries={emotionEntries}
+            />
 
-        <StyledHighlightButton onClick={handleShowHighlighted}>
-          {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-        </StyledHighlightButton>
+            <StyledHighlightButton onClick={handleShowHighlighted}>
+              {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+            </StyledHighlightButton>
+          </>
+        )}
       </StyledPageHeader>
-      <EmotionRecordsList
-        onDeleteEmotionEntry={onDeleteEmotionEntry}
-        shownEntries={
-          isHighlighted
-            ? shownEntries.filter((entry) => entry.isHighlighted)
-            : shownEntries
-        }
-        toggleHighlight={toggleHighlight}
-
-        /* {shownEntries.length === 0 && (
+      {emotionEntries.length === 0 && (
         <StyledTextMessage>
-          You haven&apos;t made any Entries yet! Make a{" "}
-          <StyledLink href="./">new Entry</StyledLink>
+          You haven&apos;t made any Entries yet.<br></br>
+          <StyledLink href="./">add Entry &rarr;</StyledLink>
         </StyledTextMessage>
-      )}  */
-        /*{shownEntries.length !== 0 && (
+      )}
+
+      {emotionEntries.length !== 0 && (
         <EmotionRecordsList
           onDeleteEmotionEntry={onDeleteEmotionEntry}
-          shownEntries={shownEntries}
-       />
-      )}   */
-      />
+          shownEntries={
+            isHighlighted
+              ? shownEntries.filter((entry) => entry.isHighlighted)
+              : shownEntries
+          }
+          toggleHighlight={toggleHighlight}
+          isHighlighted={isHighlighted}
+        />
+      )}
     </StyledWrapper>
   );
 }

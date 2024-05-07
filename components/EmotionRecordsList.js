@@ -84,15 +84,11 @@ const StyledFilledButton = styled(HeartFilledIcon)`
   }
 `;
 
-const StyledP = styled.p`
-  margin-top: 50px;
-`;
-
 export default function EmotionRecordsList({
-  emotionEntries,
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
+  isHighlighted,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -117,9 +113,10 @@ export default function EmotionRecordsList({
   return (
     <>
       {shownEntries.length === 0 && (
-        <StyledTextMessage>sorry, no results</StyledTextMessage>
+        <StyledTextMessage>
+          {isHighlighted ? "No highlighted entries" : "sorry, no results found"}
+        </StyledTextMessage>
       )}
-      {/* {shownEntries.length === 0 && <StyledP>No highlighted entries</StyledP>} */}
       <StyledList>
         {shownEntries?.map(
           ({
