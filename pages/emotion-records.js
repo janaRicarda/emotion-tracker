@@ -1,25 +1,18 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
-import { StyledFlexColumnWrapper, StyledTitle } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledTitle,
+  StyledButton,
+} from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useState } from "react";
 
-// const StyledTitle = styled.h1`
-//   width: 100%;
-//   text-align: center;
-//   font-weight: 500;
-//   position: fixed;
-//   top: 100px;
-//   z-index: 1;
-//   padding: 1rem;
-//   background-color: var(--main-bright);
-// `;
-
-const StyledHighlightButton = styled.button`
+const StyledHighlightButton = styled(StyledButton)`
   font-size: 1rem;
   border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  background: var(--button-background);
-  color: var(--main-dark);
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem;
 `;
 
 export default function EmotionRecords({
