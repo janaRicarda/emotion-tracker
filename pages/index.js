@@ -2,15 +2,14 @@ import styled from "styled-components";
 import { useState } from "react";
 import { uid } from "uid";
 import {
-  StyledButtonWrapper,
   StyledWrapper,
   StyledButton,
   StyledStandardLink,
   StyledInput,
+  StyledForm,
 } from "@/SharedStyledComponents";
 
 const StyledAddDetailsLink = styled(StyledStandardLink)`
-  color: var(--main-dark);
   margin: 1rem;
   padding: 1rem;
   background-color: ${({ $actionButton }) =>
@@ -19,13 +18,10 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
     $actionButton ? "1px solid black" : "none"};
 `;
 
-const StyledTensionForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
+const StyledTensionForm = styled(StyledForm)`
   margin: 2rem auto;
-  justify-content: center;
   align-items: center;
+  width: 80vw;
 `;
 
 const StyledTensionLabel = styled.label`
@@ -42,6 +38,11 @@ const StyledMessage = styled.p`
   text-align: center;
   font-weight: 600;
   margin: 1rem auto;
+`;
+
+const StyledButtonWrapper = styled(StyledWrapper)`
+  width: inherit;
+  justify-content: center;
 `;
 
 const StyledBackButton = styled.input`

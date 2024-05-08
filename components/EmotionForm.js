@@ -9,6 +9,7 @@ import {
   StyledWrapper,
   StyledBasicTitle,
   StyledButton,
+  StyledForm,
 } from "@/SharedStyledComponents";
 
 const StyledEmotionFormTitle = styled(StyledBasicTitle)`
@@ -18,17 +19,13 @@ const StyledEmotionFormTitle = styled(StyledBasicTitle)`
   background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
-const StyledForm = styled.form`
+const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
   margin: 1rem;
   margin-top: 50px;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   gap: 1rem;
-  color: var(--main-dark);
 `;
 
 const TensionLabelEdit = styled.label`
@@ -52,7 +49,6 @@ const StyledTextarea = styled.textarea`
 
 const StyledSubmitButton = styled(StyledButton)`
   background-color: white;
-  color: #030352;
   padding: 0.5rem;
   margin: 0;
   width: inherit;
@@ -187,7 +183,7 @@ export default function EmotionForm({
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledEmotionFormTitle>
-      <StyledForm $color={colorValue} onSubmit={handleSubmit}>
+      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {date}
         </p>
@@ -375,7 +371,7 @@ export default function EmotionForm({
             Your changes were saved successfully!
           </ConfirmMessage>
         )}
-      </StyledForm>
+      </StyledEmotionForm>
     </>
   );
 }

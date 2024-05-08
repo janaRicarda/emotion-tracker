@@ -6,7 +6,7 @@ const StyledButton = styled.button`
   background-color: var(--button-background);
   color: var(--main-dark);
   width: 6rem;
-  border: 1px solid black;
+  border: 1px solid var(--main-dark);
   border-radius: 6px;
   margin: 1rem;
   padding: 1rem;
@@ -32,6 +32,7 @@ const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border-radius: 6px;
+  color: var(--main-dark);
 `;
 
 const StyledFixedLink = styled(Link)`
@@ -57,12 +58,6 @@ const StyledWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StyledButtonWrapper = styled.div`
-  display: flex;
-  width: inherit;
-  justify-content: center;
-`;
-
 const StyledFlexColumnWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -70,6 +65,13 @@ const StyledFlexColumnWrapper = styled.div`
 `;
 
 //form, inputs
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--main-dark);
+`;
+
 const StyledInput = styled.input`
   width: 100%;
 `;
@@ -77,7 +79,6 @@ const StyledInput = styled.input`
 export {
   StyledButton,
   StyledWrapper,
-  StyledButtonWrapper,
   StyledFlexColumnWrapper,
   StyledTitle,
   StyledBasicTitle,
@@ -85,5 +86,6 @@ export {
   StyledStandardLink,
   StyledList,
   StyledInput,
+  StyledForm,
   StyledListItem,
 };

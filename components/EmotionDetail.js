@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import ChevronPrev from "./../public/chevron-left.svg";
 import ChevronNext from "./../public/chevron-right.svg";
-import { StyledFixedLink, StyledListItem } from "@/SharedStyledComponents";
+import {
+  StyledFixedLink,
+  StyledListItem,
+  StyledList,
+} from "@/SharedStyledComponents";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
   margin: 1rem;
   padding: 2rem;
   background-color: ${({ $color }) => $color};
-  color: #030352;
+  color: var(--main-dark);
 `;
 
 const EmotionDetailsTitle = styled.h1`
@@ -23,8 +27,7 @@ const SubTitle = styled.h2`
   line-height: 2rem;
 `;
 
-const StyledList = styled.ul`
-  list-style: none;
+const StyledSubemotionsList = styled(StyledList)`
   padding-left: 0;
   display: flex;
   flex-wrap: wrap;
@@ -70,11 +73,11 @@ export default function EmotionDetails({
       <SubTitle>Physical indications</SubTitle>
       <p>{indications}</p>
       <SubTitle>Subemotions</SubTitle>
-      <StyledList>
+      <StyledSubemotionsList>
         {subemotions.map((sub) => (
           <StyledListItem key={sub}>{sub}</StyledListItem>
         ))}
-      </StyledList>
+      </StyledSubemotionsList>
       <PrevLink href={`/emotions/${prevEmotion.slug}`}>
         <StyledChevronPrev />
       </PrevLink>

@@ -26,7 +26,6 @@ const EmotionSection = styled.section`
 `;
 
 const EmotionLink = styled(StyledStandardLink)`
-  color: #030352;
   background-color: ${({ $color }) => $color};
   width: 80vw;
   max-width: 800px;

@@ -27,8 +27,7 @@ const StyledRecordListItem = styled(StyledListItem)`
   }
 `;
 
-const StyledDetails = styled.ul`
-  list-style: none;
+const StyledDetails = styled(StyledList)`
   display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
   padding: 0 1rem;
   margin-bottom: 2rem;
@@ -79,7 +78,6 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-  console.log(emotionEntries);
   return (
     <StyledRecordsList>
       {emotionEntries.map(
