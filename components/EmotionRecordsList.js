@@ -5,9 +5,11 @@ import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList, StyledListItem } from "@/SharedStyledComponents";
+import HeartOutlineIcon from "../public/heart-outline.svg";
+import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledRecordsList = styled(StyledList)`
-  padding: 3.5rem 0;
+  padding: 7rem 0;
   margin: 0 auto 1rem;
   text-align: left;
 `;
@@ -55,9 +57,36 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 
+const StyledOutlineButton = styled(HeartOutlineIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledFilledButton = styled(HeartFilledIcon)`
+  width: 1.6rem;
+  position: absolute;
+  top: calc(50% - 2.4rem);
+  right: -0.6rem;
+  fill: var(--main-dark);
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledP = styled.p`
+  margin-top: 150px;
+`;
+
 export default function EmotionRecordsList({
   emotionEntries,
   onDeleteEmotionEntry,
+  toggleHighlight,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -79,64 +108,73 @@ export default function EmotionRecordsList({
     }));
   }
   return (
-    <StyledRecordsList>
-      {emotionEntries.map(
-        ({
-          id,
-          date,
-          tensionLevel,
-          trigger,
-          intensity,
-          notes,
-          category,
-          emotion,
-          subemotion,
-        }) => {
-          return (
-            <>
-              <StyledListItemWrapper key={id}>
-                <StyledRecordListItem onClick={() => handleShowDetails(id)}>
-                  {date}
-                </StyledRecordListItem>
-                <StyledEditButton
-                  aria-label="Edit emotion entry"
-                  onClick={() => router.push(`./edit/${id}`)}
-                />
-                <StyledDeleteButton
-                  type="button"
-                  aria-label="Delete Emotion Entry"
-                  onClick={() => {
-                    handleShowConfirmMessage(id);
-                  }}
-                />
-              </StyledListItemWrapper>
-              {showConfirmMessage[id] && (
-                <ConfirmMessage
-                  toggleMessage={handleShowConfirmMessage}
-                  itemId={id}
-                  itemText={date}
-                  confirmFunction={onDeleteEmotionEntry}
-                  cancelButtonText={"Keep it!"}
-                  confirmButtonText={"Delete it!"}
-                  cancelButtonColor={"#00b400"}
-                  confirmButtonColor={"#cc0100"}
-                >
-                  Do you want to delete this entry?
-                </ConfirmMessage>
-              )}
-              <StyledDetails $showDetails={showDetails[id]}>
-                <li>Tension Level: {tensionLevel}%</li>
-                {emotion && <li>Emotion: {emotion}</li>}
-                {subemotion && <li>Subemotion: {subemotion}</li>}
-                {intensity && <li>Intensity: {intensity}%</li>}
-                {category && <li>Pleasantness: {category}%</li>}
-                {trigger && <li>Trigger: {trigger}</li>}
-                {notes && <li>Notes: {notes}</li>}
-              </StyledDetails>
-            </>
-          );
-        }
-      )}
-    </StyledRecordsList>
+    <>
+      {emotionEntries.length === 0 && <StyledP>No highlighted entries</StyledP>}
+      <StyledRecordsList>
+        {emotionEntries.map(
+          ({
+            id,
+            date,
+            tensionLevel,
+            trigger,
+            intensity,
+            notes,
+            category,
+            emotion,
+            subemotion,
+            isHighlighted,
+          }) => {
+            return (
+              <>
+                <StyledListItemWrapper key={id}>
+                  <StyledRecordListItem onClick={() => handleShowDetails(id)}>
+                    {date}
+                  </StyledRecordListItem>
+                  <StyledEditButton
+                    aria-label="Edit emotion entry"
+                    onClick={() => router.push(`./edit/${id}`)}
+                  />
+                  <StyledDeleteButton
+                    type="button"
+                    aria-label="Delete Emotion Entry"
+                    onClick={() => {
+                      handleShowConfirmMessage(id);
+                    }}
+                  />
+                  {isHighlighted ? (
+                    <StyledFilledButton onClick={() => toggleHighlight(id)} />
+                  ) : (
+                    <StyledOutlineButton onClick={() => toggleHighlight(id)} />
+                  )}
+                </StyledListItemWrapper>
+                {showConfirmMessage[id] && (
+                  <ConfirmMessage
+                    toggleMessage={handleShowConfirmMessage}
+                    itemId={id}
+                    itemText={date}
+                    confirmFunction={onDeleteEmotionEntry}
+                    cancelButtonText={"Keep it!"}
+                    confirmButtonText={"Delete it!"}
+                    cancelButtonColor={"#00b400"}
+                    confirmButtonColor={"#cc0100"}
+                  >
+                    Do you want to delete this entry?
+                  </ConfirmMessage>
+                )}
+                <StyledDetails $showDetails={showDetails[id]}>
+                  <li>Tension Level: {tensionLevel}%</li>
+                  {emotion && <li>Emotion: {emotion}</li>}
+                  {subemotion && <li>Subemotion: {subemotion}</li>}
+                  {intensity && <li>Intensity: {intensity}%</li>}
+                  {category && <li>Pleasantness: {category}%</li>}
+                  {trigger && <li>Trigger: {trigger}</li>}
+                  {notes && <li>Notes: {notes}</li>}
+                </StyledDetails>
+              </>
+            );
+          }
+        )}
+      </StyledRecordsList>
+    </>
   );
 }

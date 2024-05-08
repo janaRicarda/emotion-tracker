@@ -4,6 +4,8 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
+import Moon from "../public/moon.svg";
+import Sun from "../public/sun.svg";
 
 import Layout from "@/components/Layout";
 
@@ -39,10 +41,22 @@ export default function App({ Component, pageProps }) {
     );
   }
 
+  function toggleHighlight(id) {
+    setEmotionEntries(
+      emotionEntries.map((entry) =>
+        entry.id === id
+          ? { ...entry, isHighlighted: !entry.isHighlighted }
+          : entry
+      )
+    );
+  }
+
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
   const StyledToggleTheme = styled.button`
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     border: 1px solid var(--main-dark);
     background-color: transparent;
@@ -56,10 +70,18 @@ export default function App({ Component, pageProps }) {
     z-index: 3;
   `;
 
+  const StyledMoon = styled(Moon)`
+    fill: var(--main-dark);
+  `;
+
+  const StyledSun = styled(Sun)`
+    fill: var(--main-dark);
+  `;
+
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <StyledToggleTheme type="button" onClick={toggleTheme}>
-        {theme === "light" ? "☾" : "☀"}
+        {theme === "light" ? <StyledMoon /> : <StyledSun />}
       </StyledToggleTheme>
       <GlobalStyle />
       <Layout>
@@ -68,6 +90,7 @@ export default function App({ Component, pageProps }) {
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          toggleHighlight={toggleHighlight}
           {...pageProps}
         />
       </Layout>

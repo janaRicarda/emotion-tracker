@@ -31,6 +31,7 @@ const StyledPopUpMessage = styled.div`
 const StyledConfirmText = styled.p`
   padding: 1rem 2rem;
   text-align: center;
+  color: var(--main-dark);
 `;
 
 const StyledConfirmButtonWrapper = styled(StyledWrapper)`

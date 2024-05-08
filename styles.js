@@ -1,8 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import { lightTheme, darkTheme } from "./components/Theme";
-import { Raleway } from "next/font/google";
+import { Manrope } from "next/font/google";
 
-const raleway = Raleway({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"] });
 
 export default createGlobalStyle`
   *,
@@ -32,7 +32,7 @@ export default createGlobalStyle`
    
     background-color: var(--main-bright);
     color: var(--main-dark);
-    font-family: ${raleway.style.fontFamily}, system-ui;
+    font-family: ${manrope.style.fontFamily}, system-ui;
     line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   }
