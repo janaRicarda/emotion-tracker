@@ -7,18 +7,18 @@ import { useRouter } from "next/router";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 
-const StyledList = styled.ul`
+const StyledUnorderedList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 8rem auto 1rem;
   text-align: left;
 `;
 
-const StyledListItemWrapper = styled.div`
+const StyledListItem = styled.li`
   position: relative;
 `;
 
-const StyledListItem = styled.li`
+const StyledParagraph = styled.p`
   margin: 0.5rem auto;
   border: 1px solid var(--main-dark);
   border-radius: 0.5rem;
@@ -114,7 +114,7 @@ export default function EmotionRecordsList({
       {shownEntries.length === 0 && (
         <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
       )}
-      <StyledList>
+      <StyledUnorderedList>
         {shownEntries?.map(
           ({
             id,
@@ -130,10 +130,10 @@ export default function EmotionRecordsList({
           }) => {
             return (
               <>
-                <StyledListItemWrapper key={id}>
-                  <StyledListItem onClick={() => handleShowDetails(id)}>
+                <StyledListItem key={id}>
+                  <StyledParagraph onClick={() => handleShowDetails(id)}>
                     {date}
-                  </StyledListItem>
+                  </StyledParagraph>
                   <StyledEditButton
                     aria-label="Edit emotion entry"
                     onClick={() => router.push(`./edit/${id}`)}
@@ -150,7 +150,7 @@ export default function EmotionRecordsList({
                   ) : (
                     <StyledOutlineButton onClick={() => toggleHighlight(id)} />
                   )}
-                </StyledListItemWrapper>
+                </StyledListItem>
                 {showConfirmMessage[id] && (
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
@@ -178,7 +178,7 @@ export default function EmotionRecordsList({
             );
           }
         )}
-      </StyledList>
+      </StyledUnorderedList>
     </>
   );
 }
