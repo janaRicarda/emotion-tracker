@@ -17,7 +17,7 @@ const StyledH1 = styled.h1`
   background: var(--main-bright);
 `;
 
-const EmotionSection = styled.section`
+const StyledEmotionList = styled.ul`
   border-radius: 12px;
   list-style: none;
   padding: 0;
@@ -28,25 +28,24 @@ const EmotionSection = styled.section`
   text-align: center;
   gap: 0.5rem;
   margin: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-top: ${({ $form }) => ($form ? "4rem" : "1rem")};
+  padding: ${({ $form }) => ($form ? "4rem" : "1rem")} 1rem 1rem;
 `;
 
-const EmotionLink = styled(Link)`
-  text-decoration: none;
+const StyledListItem = styled.li`
   text-align: center;
-  color: #030352;
-
   background-color: ${({ $color }) => $color};
-
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
   font-weight: 600;
-  padding: 0.8rem;
   font-size: 1.3rem;
+`;
+
+const EmotionLink = styled(Link)`
+  display: block;
+  padding: 0.8rem;
+  text-decoration: none;
+  color: #030352;
 `;
 
 export default function EmotionList({
@@ -66,23 +65,26 @@ export default function EmotionList({
   return (
     <>
       <StyledH1>{title}</StyledH1>
-      <EmotionSection $form={form}>
+      <StyledEmotionList $form={form}>
         {emotionData.map(({ slug, name }) => (
-          <EmotionLink
+          <StyledListItem
             onClick={createMode && (() => handleAddDetails(name, id))}
-            key={slug}
             $color={`var(--${slug})`}
-            slug={slug}
-            href={
-              createMode
-                ? { pathname: `/create/${slug}`, query: { id } }
-                : `/emotions/${slug}`
-            }
+            key={slug}
           >
-            {name}
-          </EmotionLink>
+            <EmotionLink
+              slug={slug}
+              href={
+                createMode
+                  ? { pathname: `/create/${slug}`, query: { id } }
+                  : `/emotions/${slug}`
+              }
+            >
+              {name}
+            </EmotionLink>
+          </StyledListItem>
         ))}
-      </EmotionSection>
+      </StyledEmotionList>
     </>
   );
 }
