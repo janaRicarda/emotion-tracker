@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import Fuse from "fuse.js";
+import { useState } from "react";
 import Magnifier from "../public/magnify.svg";
 
 const StyledContainer = styled.div`
@@ -29,35 +28,8 @@ const StyledInput = styled.input`
   transition: width 600ms linear;
 `;
 
-export default function SearchBar({ SetShownEntries, emotionEntries }) {
+export default function SearchBar({ onSearch }) {
   const [isShown, setIsShown] = useState(false);
-  const [searchTerm, setSearchTerm] = useState();
-
-  useEffect(() => {
-    if (!searchTerm) {
-      SetShownEntries(emotionEntries);
-      return;
-    }
-
-    const fuse = new Fuse(emotionEntries, {
-      includeScore: true,
-      threshold: 0.4,
-      keys: [
-        "date",
-        "tensionLevel",
-        "trigger",
-        "intensity",
-        "notes",
-        "category",
-        "emotion",
-        "subemotion",
-      ],
-    });
-
-    const results = fuse.search(searchTerm);
-    const items = results.map((result) => result.item);
-    SetShownEntries(items);
-  }, [emotionEntries, searchTerm, SetShownEntries]);
 
   function handleShowSearchBar() {
     setIsShown(!isShown);
@@ -73,7 +45,7 @@ export default function SearchBar({ SetShownEntries, emotionEntries }) {
         name="searchTerm"
         placeholder="Search for Date, Tensionlevel, Emotion..."
         aria-placeholder="Search for Date, Tensionlevel, Emotion..."
-        onChange={(event) => setSearchTerm(event.target.value)}
+        onChange={(event) => onSearch(event.target.value)}
       />
       <StyledMagnifier onClick={handleShowSearchBar} />
     </StyledContainer>
