@@ -6,6 +6,7 @@ import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
+import { exampleData } from "@/utils/exampleData";
 
 import Layout from "@/components/Layout";
 
@@ -35,10 +36,12 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
+  const data = exampleData;
+
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [],
+      defaultValue: [...data],
     }
   );
 
@@ -49,10 +52,16 @@ export default function App({ Component, pageProps }) {
   function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
 
+    // const time = new Date();
+    // const lastWeek = new Date(time.getTime() - 7 * 24 * 60 * 60 * 1000); gives milliseconds format
+    // new Date(lastWeek.toDateString()) gives date fromat with hrs set to 00:00, makes comparison do days possible
+    // ISO date as a Date object is best comparable; it give formatting options as shown above
+
     const newEntry = {
       ...data,
       id,
       date: timeAndDate,
+      isoDate: new Date(),
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }

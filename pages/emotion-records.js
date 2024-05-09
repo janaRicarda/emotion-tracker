@@ -43,12 +43,18 @@ const StyledLink = styled(Link)`
   color: var(--main-dark);
 `;
 
-const StyledHighlightButton = styled.button`
+const StyledToggleButton = styled.button`
   font-size: 1rem;
+  width: 100px;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
-  background: var(--button-background);
+  background-color: ${({ $active }) => $active && "var(--button-background)"};
   color: var(--main-dark);
+`;
+
+const StyledButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export default function EmotionRecords({
@@ -58,7 +64,7 @@ export default function EmotionRecords({
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [shownEntries, setShownEntries] = useState(emotionEntries);
-  const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isHighlighted, setIsHighlighted] = useState("All");
 
   useEffect(() => {
     if (!searchTerm) {
@@ -102,10 +108,29 @@ export default function EmotionRecords({
         {emotionEntries.length !== 0 && (
           <>
             <SearchBar onSearch={handleSearch} />
-
-            <StyledHighlightButton onClick={handleShowHighlighted}>
-              {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-            </StyledHighlightButton>
+            <StyledButtonGroup>
+              <StyledToggleButton
+                $active={isHighlighted === "All" ? true : false}
+                onClick={() => setIsHighlighted("All")}
+              >
+                All
+              </StyledToggleButton>
+              <StyledToggleButton
+                $active={isHighlighted === "Yesterday" ? true : false}
+                onClick={() => setIsHighlighted("Yesterday")}
+              >
+                Yesterday
+              </StyledToggleButton>
+              <StyledToggleButton
+                $active={isHighlighted === "Highlighted" ? true : false}
+                onClick={() => {
+                  handleShowHighlighted;
+                  setIsHighlighted("Highlighted");
+                }}
+              >
+                Highlighted
+              </StyledToggleButton>
+            </StyledButtonGroup>
           </>
         )}
       </StyledPageHeader>
