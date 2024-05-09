@@ -45,7 +45,7 @@ const StyledLink = styled(Link)`
 
 const StyledToggleButton = styled.button`
   font-size: 1rem;
-  width: 100px;
+  flex: 25%;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
   background-color: ${({ $active }) => $active && "var(--button-background)"};
@@ -54,6 +54,9 @@ const StyledToggleButton = styled.button`
 
 const StyledButtonGroup = styled.div`
   display: flex;
+  overflow-x: scroll;
+  padding: 0.6rem;
+  width: 80vw;
   gap: 10px;
 `;
 
@@ -92,12 +95,52 @@ export default function EmotionRecords({
     setShownEntries(items);
   }, [emotionEntries, searchTerm]);
 
-  function handleShowHighlighted() {
-    setIsHighlighted(!isHighlighted);
-  }
-
   function handleSearch(input) {
     setSearchTerm(input);
+  }
+
+  function getEntriesFromYesterday() {
+    const currentTime = new Date();
+    const yesterdayMilliseconds = new Date(
+      currentTime.getTime() - 24 * 60 * 60 * 1000
+    );
+    const yesterdayStart = new Date(
+      yesterdayMilliseconds.setHours(2, 0, 0, 0)
+    ).toISOString();
+    const yesterdayEnd = new Date(
+      currentTime.setHours(1, 59, 59, 999)
+    ).toISOString();
+
+    console.log(yesterdayStart);
+    console.log(yesterdayEnd);
+
+    const yesterdayEntries = emotionEntries.filter((entry) => {
+      const entryDate = entry.dateObject;
+      const result = entryDate >= yesterdayStart && entryDate <= yesterdayEnd;
+      return result;
+    });
+
+    setShownEntries(yesterdayEntries);
+  }
+
+  function getEntriesFromLastWeek() {
+    const currentTime = new Date();
+    const weekMilliseconds = new Date(
+      currentTime.getTime() - 7 * 24 * 60 * 60 * 1000
+    );
+    const weekStart = new Date(
+      weekMilliseconds.setHours(2, 0, 0, 0)
+    ).toISOString();
+    const weekEnd = new Date(
+      currentTime.setHours(1, 59, 59, 999)
+    ).toISOString();
+
+    const lastWeekEntries = emotionEntries.filter((entry) => {
+      const entryDate = entry.dateObject;
+      const result = entryDate >= weekStart && entryDate <= weekEnd;
+      return result;
+    });
+    setShownEntries(lastWeekEntries);
   }
 
   return (
@@ -111,20 +154,46 @@ export default function EmotionRecords({
             <StyledButtonGroup>
               <StyledToggleButton
                 $active={isHighlighted === "All" ? true : false}
-                onClick={() => setIsHighlighted("All")}
+                onClick={() => {
+                  setIsHighlighted("All");
+                  setShownEntries(emotionEntries);
+                }}
               >
                 All
               </StyledToggleButton>
               <StyledToggleButton
+                $active={isHighlighted === "Today" ? true : false}
+                onClick={() => setIsHighlighted("Today")}
+              >
+                Today
+              </StyledToggleButton>
+              <StyledToggleButton
                 $active={isHighlighted === "Yesterday" ? true : false}
-                onClick={() => setIsHighlighted("Yesterday")}
+                onClick={() => {
+                  setIsHighlighted("Yesterday");
+                  getEntriesFromYesterday();
+                }}
               >
                 Yesterday
               </StyledToggleButton>
               <StyledToggleButton
+                $active={isHighlighted === "Last Week" ? true : false}
+                onClick={() => {
+                  setIsHighlighted("Last Week");
+                  getEntriesFromLastWeek();
+                }}
+              >
+                Week
+              </StyledToggleButton>
+              <StyledToggleButton
+                $active={isHighlighted === "Last Month" ? true : false}
+                onClick={() => setIsHighlighted("Last Month")}
+              >
+                Month
+              </StyledToggleButton>
+              <StyledToggleButton
                 $active={isHighlighted === "Highlighted" ? true : false}
                 onClick={() => {
-                  handleShowHighlighted;
                   setIsHighlighted("Highlighted");
                 }}
               >
@@ -144,11 +213,7 @@ export default function EmotionRecords({
       {emotionEntries.length !== 0 && (
         <EmotionRecordsList
           onDeleteEmotionEntry={onDeleteEmotionEntry}
-          shownEntries={
-            isHighlighted
-              ? shownEntries.filter((entry) => entry.isHighlighted)
-              : shownEntries
-          }
+          shownEntries={shownEntries}
           toggleHighlight={toggleHighlight}
           isHighlighted={isHighlighted}
         />

@@ -10,7 +10,7 @@ import HeartFilledIcon from "../public/heart-filled.svg";
 const StyledUnorderedList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 8rem auto 1rem;
+  margin: 9rem auto 1rem;
   text-align: left;
 `;
 

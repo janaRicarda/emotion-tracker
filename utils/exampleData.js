@@ -17,7 +17,7 @@ function generateExampleData() {
       year: "numeric",
       hour: "numeric",
       minute: "numeric",
-      hour12: true,
+      hour12: false,
     });
 
     const isoDateString = currentDate.toISOString();
@@ -25,7 +25,7 @@ function generateExampleData() {
     const entry = {
       date: dateString.replace(" at", ","),
       id: generateRandomId(),
-      isoDate: isoDateString,
+      dateObject: isoDateString,
       tensionLevel: getRandomTensionLevel(),
     };
 
@@ -38,7 +38,7 @@ function generateExampleData() {
 
   function getRandomTensionLevel() {
     // Generate a random tension level between 0 and 5
-    return Math.floor(Math.random() * 6).toString();
+    return Math.floor(Math.random() * 100).toString();
   }
 }
 

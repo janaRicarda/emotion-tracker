@@ -84,6 +84,7 @@ export default function App({ Component, pageProps }) {
     );
   }
 
+
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
