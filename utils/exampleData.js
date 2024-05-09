@@ -1,7 +1,6 @@
-let exampleData = [];
-
 // Start date: 3 months ago from today
-function generateExampleData() {
+export default function generateExampleData() {
+  let exampleData = [];
   const startDate = new Date();
   startDate.setMonth(startDate.getMonth() - 3);
 
@@ -40,7 +39,16 @@ function generateExampleData() {
     // Generate a random tension level between 0 and 5
     return Math.floor(Math.random() * 100).toString();
   }
-}
 
-generateExampleData();
-export { exampleData };
+  const sortedExampleDate = exampleData.toSorted((a, b) => {
+    if (a.dateObject > b.dateObject) {
+      return -1;
+    }
+    if (a.dateObject < b.dateObject) {
+      return 1;
+    }
+    return 0;
+  });
+
+  return sortedExampleDate;
+}

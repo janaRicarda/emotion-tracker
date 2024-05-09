@@ -6,7 +6,7 @@ import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
-import { exampleData } from "@/utils/exampleData";
+import generateExampleData from "@/utils/exampleData";
 
 import Layout from "@/components/Layout";
 
@@ -36,7 +36,7 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
-  const data = exampleData;
+  const data = generateExampleData();
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
@@ -83,7 +83,6 @@ export default function App({ Component, pageProps }) {
       )
     );
   }
-
 
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
