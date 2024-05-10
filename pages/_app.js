@@ -66,8 +66,6 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 
-  console.log(emotionEntries[0])
-
   function handleAddEmotionDetails(data, id) {
     setEmotionEntries(
       emotionEntries.map((entry) =>

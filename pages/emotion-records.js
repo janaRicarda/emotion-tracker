@@ -1,7 +1,7 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
 
@@ -45,7 +45,6 @@ const StyledLink = styled(Link)`
 
 const StyledToggleButton = styled.button`
   font-size: 1rem;
-  flex: 25%;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
   background-color: ${({ $active }) => $active && "var(--button-background)"};
@@ -54,7 +53,8 @@ const StyledToggleButton = styled.button`
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  overflow-x: scroll;
+  justify-content: center;
+  flex-wrap: wrap;
   padding: 0.6rem;
   width: 80vw;
   gap: 10px;
@@ -66,16 +66,35 @@ export default function EmotionRecords({
   toggleHighlight,
 }) {
   const [searchTerm, setSearchTerm] = useState();
+  const [filterdEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
-  const [isHighlighted, setIsHighlighted] = useState("All");
+  const [isActive, setIsActive] = useState({
+    all: true,
+    today: false,
+    yesterday: false,
+    week: false,
+    month: false,
+    highlighted: false,
+  });
 
+  // sets filteredEntries useState; able to react to deletion of entries
+  useEffect(() => {
+    isActive.all && setShownEntries(emotionEntries);
+    isActive.today && getEntriesFromToday(emotionEntries);
+    isActive.yesterday && getEntriesFromYesterday(emotionEntries);
+    isActive.week && getEntriesFromLastWeek(emotionEntries);
+    isActive.month && getEntriesFromLastMonth(emotionEntries);
+    isActive.highlighted && getHighlightedEntries(emotionEntries);
+  }, [isActive, emotionEntries]);
+
+  // searches filteredEntries and sets shownEntries useState accordingly
   useEffect(() => {
     if (!searchTerm) {
-      setShownEntries(emotionEntries);
+      setShownEntries(filterdEntries);
       return;
     }
 
-    const fuse = new Fuse(emotionEntries, {
+    const fuse = new Fuse(filterdEntries, {
       includeScore: true,
       threshold: 0.4,
       keys: [
@@ -93,38 +112,38 @@ export default function EmotionRecords({
     const results = fuse.search(searchTerm);
     const items = results.map((result) => result.item);
     setShownEntries(items);
-  }, [emotionEntries, searchTerm]);
+  }, [searchTerm, filterdEntries]);
 
   function handleSearch(input) {
     setSearchTerm(input);
   }
 
-  function getEntriesFromToday() {
-    const currentTime = new Date();
+  function getEntriesFromToday(arrayToFilter) {
     const today = new Date().toISOString().slice(0, 10);
-    const entriesFromToday = emotionEntries.filter((entry) => {
+
+    const entriesFromToday = arrayToFilter.filter((entry) => {
       const entrieDate = entry.isoDate.slice(0, 10);
       const result = entrieDate == today;
       return result;
     });
-    setShownEntries(entriesFromToday);
+    setFilteredEntries(entriesFromToday);
   }
 
-  function getEntriesFromYesterday() {
+  function getEntriesFromYesterday(arrayToFilter) {
     const currentTime = new Date();
     const yesterday = new Date(currentTime.setDate(currentTime.getDate() - 1))
       .toISOString()
       .slice(0, 10);
 
-    const entriesFromYesterday = emotionEntries.filter((entry) => {
+    const entriesFromYesterday = arrayToFilter.filter((entry) => {
       const entrieDate = entry.isoDate.slice(0, 10);
       const result = entrieDate == yesterday;
       return result;
     });
-    setShownEntries(entriesFromYesterday);
+    setFilteredEntries(entriesFromYesterday);
   }
 
-  function getEntriesFromLastWeek() {
+  function getEntriesFromLastWeek(arrayToFilter) {
     const currentTime = new Date();
     const sevenDaysAgo = new Date(
       currentTime.setDate(currentTime.getDate() - 7)
@@ -133,16 +152,16 @@ export default function EmotionRecords({
       .slice(0, 10);
     const today = new Date().toISOString().slice(0, 10);
 
-    const entriesFromLastSevenDays = emotionEntries.filter((entry) => {
+    const entriesFromLastSevenDays = arrayToFilter.filter((entry) => {
       const entrieDate = entry.isoDate.slice(0, 10);
       const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
       return result;
     });
 
-    setShownEntries(entriesFromLastSevenDays);
+    setFilteredEntries(entriesFromLastSevenDays);
   }
 
-  function getEntriesFromLastMonth() {
+  function getEntriesFromLastMonth(arrayToFilter) {
     const currentTime = new Date();
     const today = new Date().toISOString().slice(0, 10);
     const thirtyDaysAgo = new Date(
@@ -151,20 +170,20 @@ export default function EmotionRecords({
       .toISOString()
       .slice(0, 10);
 
-    const entriesFromLastThirtyDays = emotionEntries.filter((entry) => {
+    const entriesFromLastThirtyDays = arrayToFilter.filter((entry) => {
       const entrieDate = entry.isoDate.slice(0, 10);
       const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
       return result;
     });
 
-    setShownEntries(entriesFromLastThirtyDays);
+    setFilteredEntries(entriesFromLastThirtyDays);
   }
 
-  function getHighlightedEntries() {
-    const highlightedEntries = emotionEntries.filter(
+  function getHighlightedEntries(arrayToFilter) {
+    const highlightedEntries = arrayToFilter.filter(
       (entry) => entry.isHighlighted
     );
-    setShownEntries(highlightedEntries);
+    setFilteredEntries(highlightedEntries);
   }
 
   return (
@@ -177,55 +196,92 @@ export default function EmotionRecords({
             <SearchBar onSearch={handleSearch} />
             <StyledButtonGroup>
               <StyledToggleButton
-                $active={isHighlighted === "All" ? true : false}
+                $active={isActive.all && true}
                 onClick={() => {
-                  setIsHighlighted("All");
+                  setIsActive({
+                    all: true,
+                    today: false,
+                    yesterday: false,
+                    week: false,
+                    month: false,
+                    highlighted: false,
+                  });
                   setShownEntries(emotionEntries);
                 }}
               >
                 All
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isHighlighted === "Today" ? true : false}
+                $active={isActive.today && true}
                 onClick={() => {
-                  setIsHighlighted("Today");
-                  getEntriesFromToday();
+                  setIsActive({
+                    all: false,
+                    today: true,
+                    yesterday: false,
+                    week: false,
+                    month: false,
+                    highlighted: false,
+                  });
                 }}
               >
                 Today
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isHighlighted === "Yesterday" ? true : false}
+                $active={isActive.yesterday && true}
                 onClick={() => {
-                  setIsHighlighted("Yesterday");
-                  getEntriesFromYesterday();
+                  setIsActive({
+                    all: false,
+                    today: false,
+                    yesterday: true,
+                    week: false,
+                    month: false,
+                    highlighted: false,
+                  });
                 }}
               >
                 Yesterday
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isHighlighted === "Last Week" ? true : false}
+                $active={isActive.week && true}
                 onClick={() => {
-                  setIsHighlighted("Last Week");
-                  getEntriesFromLastWeek();
+                  setIsActive({
+                    all: false,
+                    today: false,
+                    yesterday: false,
+                    week: true,
+                    month: false,
+                    highlighted: false,
+                  });
                 }}
               >
                 Week
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isHighlighted === "Last Month" ? true : false}
+                $active={isActive.month && true}
                 onClick={() => {
-                  setIsHighlighted("Last Month");
-                  getEntriesFromLastMonth();
+                  setIsActive({
+                    all: false,
+                    today: false,
+                    yesterday: false,
+                    week: false,
+                    month: true,
+                    highlighted: false,
+                  });
                 }}
               >
                 Month
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isHighlighted === "Highlighted" ? true : false}
+                $active={isActive.highlighted && true}
                 onClick={() => {
-                  setIsHighlighted("Highlighted");
-                  getHighlightedEntries();
+                  setIsActive({
+                    all: false,
+                    today: false,
+                    yesterday: false,
+                    week: false,
+                    month: false,
+                    highlighted: true,
+                  });
                 }}
               >
                 Highlighted
@@ -246,7 +302,6 @@ export default function EmotionRecords({
           onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={shownEntries}
           toggleHighlight={toggleHighlight}
-          isHighlighted={isHighlighted}
         />
       )}
     </StyledWrapper>

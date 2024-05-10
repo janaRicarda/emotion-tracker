@@ -10,7 +10,7 @@ import HeartFilledIcon from "../public/heart-filled.svg";
 const StyledUnorderedList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 9rem auto 1rem;
+  margin: 11rem auto 1rem;
   text-align: left;
 `;
 
@@ -59,7 +59,7 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 const StyledTextMessage = styled.p`
-  margin-top: 150px;
+  margin-top: 12rem;
 `;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
@@ -115,7 +115,7 @@ export default function EmotionRecordsList({
         <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
       )}
       <StyledUnorderedList>
-        {shownEntries?.map(
+        {shownEntries.map(
           ({
             id,
             date,
