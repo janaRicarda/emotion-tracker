@@ -1,14 +1,12 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import {
   StyledFlexColumnWrapper,
-  StyledTitle,
   StyledButton,
   StyledStandardLink,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Fuse from "fuse.js";
 
 const StyledWrapper = styled.div`
@@ -47,6 +45,10 @@ const StyledHighlightButton = styled(StyledButton)`
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
+`;
+
+const StyledEmotionRecordsTitle = styled.h1`
+  font-weight: 600;
 `;
 
 export default function EmotionRecords({
@@ -95,7 +97,7 @@ export default function EmotionRecords({
   return (
     <StyledFlexColumnWrapper>
       <StyledPageHeader>
-        <StyledTitle>Recorded Emotions</StyledTitle>
+        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
 
         {emotionEntries.length !== 0 && (
           <>
