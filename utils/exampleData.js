@@ -24,7 +24,7 @@ export default function generateExampleData() {
     const entry = {
       date: dateString.replace(" at", ","),
       id: generateRandomId(),
-      dateObject: isoDateString,
+      isoDate: isoDateString,
       tensionLevel: getRandomTensionLevel(),
     };
 
@@ -36,15 +36,15 @@ export default function generateExampleData() {
   }
 
   function getRandomTensionLevel() {
-    // Generate a random tension level between 0 and 5
+    // Generate a random tension level between 0 and 100
     return Math.floor(Math.random() * 100).toString();
   }
 
   const sortedExampleDate = exampleData.toSorted((a, b) => {
-    if (a.dateObject > b.dateObject) {
+    if (a.isoDate > b.isoDate) {
       return -1;
     }
-    if (a.dateObject < b.dateObject) {
+    if (a.isoDate < b.isoDate) {
       return 1;
     }
     return 0;

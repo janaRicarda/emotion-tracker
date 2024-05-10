@@ -99,48 +99,72 @@ export default function EmotionRecords({
     setSearchTerm(input);
   }
 
-  function getEntriesFromYesterday() {
+  function getEntriesFromToday() {
     const currentTime = new Date();
-    const yesterdayMilliseconds = new Date(
-      currentTime.getTime() - 24 * 60 * 60 * 1000
-    );
-    const yesterdayStart = new Date(
-      yesterdayMilliseconds.setHours(2, 0, 0, 0)
-    ).toISOString();
-    const yesterdayEnd = new Date(
-      currentTime.setHours(1, 59, 59, 999)
-    ).toISOString();
-
-    console.log(yesterdayStart);
-    console.log(yesterdayEnd);
-
-    const yesterdayEntries = emotionEntries.filter((entry) => {
-      const entryDate = entry.dateObject;
-      const result = entryDate >= yesterdayStart && entryDate <= yesterdayEnd;
+    const today = new Date().toISOString().slice(0, 10);
+    const entriesFromToday = emotionEntries.filter((entry) => {
+      const entrieDate = entry.isoDate.slice(0, 10);
+      const result = entrieDate == today;
       return result;
     });
+    setShownEntries(entriesFromToday);
+  }
 
-    setShownEntries(yesterdayEntries);
+  function getEntriesFromYesterday() {
+    const currentTime = new Date();
+    const yesterday = new Date(currentTime.setDate(currentTime.getDate() - 1))
+      .toISOString()
+      .slice(0, 10);
+
+    const entriesFromYesterday = emotionEntries.filter((entry) => {
+      const entrieDate = entry.isoDate.slice(0, 10);
+      const result = entrieDate == yesterday;
+      return result;
+    });
+    setShownEntries(entriesFromYesterday);
   }
 
   function getEntriesFromLastWeek() {
     const currentTime = new Date();
-    const weekMilliseconds = new Date(
-      currentTime.getTime() - 7 * 24 * 60 * 60 * 1000
-    );
-    const weekStart = new Date(
-      weekMilliseconds.setHours(2, 0, 0, 0)
-    ).toISOString();
-    const weekEnd = new Date(
-      currentTime.setHours(1, 59, 59, 999)
-    ).toISOString();
+    const sevenDaysAgo = new Date(
+      currentTime.setDate(currentTime.getDate() - 7)
+    )
+      .toISOString()
+      .slice(0, 10);
+    const today = new Date().toISOString().slice(0, 10);
 
-    const lastWeekEntries = emotionEntries.filter((entry) => {
-      const entryDate = entry.dateObject;
-      const result = entryDate >= weekStart && entryDate <= weekEnd;
+    const entriesFromLastSevenDays = emotionEntries.filter((entry) => {
+      const entrieDate = entry.isoDate.slice(0, 10);
+      const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
       return result;
     });
-    setShownEntries(lastWeekEntries);
+
+    setShownEntries(entriesFromLastSevenDays);
+  }
+
+  function getEntriesFromLastMonth() {
+    const currentTime = new Date();
+    const today = new Date().toISOString().slice(0, 10);
+    const thirtyDaysAgo = new Date(
+      currentTime.setDate(currentTime.getDate() - 30)
+    )
+      .toISOString()
+      .slice(0, 10);
+
+    const entriesFromLastThirtyDays = emotionEntries.filter((entry) => {
+      const entrieDate = entry.isoDate.slice(0, 10);
+      const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
+      return result;
+    });
+
+    setShownEntries(entriesFromLastThirtyDays);
+  }
+
+  function getHighlightedEntries() {
+    const highlightedEntries = emotionEntries.filter(
+      (entry) => entry.isHighlighted
+    );
+    setShownEntries(highlightedEntries);
   }
 
   return (
@@ -163,7 +187,10 @@ export default function EmotionRecords({
               </StyledToggleButton>
               <StyledToggleButton
                 $active={isHighlighted === "Today" ? true : false}
-                onClick={() => setIsHighlighted("Today")}
+                onClick={() => {
+                  setIsHighlighted("Today");
+                  getEntriesFromToday();
+                }}
               >
                 Today
               </StyledToggleButton>
@@ -187,7 +214,10 @@ export default function EmotionRecords({
               </StyledToggleButton>
               <StyledToggleButton
                 $active={isHighlighted === "Last Month" ? true : false}
-                onClick={() => setIsHighlighted("Last Month")}
+                onClick={() => {
+                  setIsHighlighted("Last Month");
+                  getEntriesFromLastMonth();
+                }}
               >
                 Month
               </StyledToggleButton>
@@ -195,6 +225,7 @@ export default function EmotionRecords({
                 $active={isHighlighted === "Highlighted" ? true : false}
                 onClick={() => {
                   setIsHighlighted("Highlighted");
+                  getHighlightedEntries();
                 }}
               >
                 Highlighted

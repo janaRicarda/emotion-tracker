@@ -61,10 +61,12 @@ export default function App({ Component, pageProps }) {
       ...data,
       id,
       date: timeAndDate,
-      isoDate: new Date(),
+      isoDate: new Date().toISOString(),
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
+
+  console.log(emotionEntries[0])
 
   function handleAddEmotionDetails(data, id) {
     setEmotionEntries(
