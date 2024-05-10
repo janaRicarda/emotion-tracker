@@ -1,4 +1,10 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
+import {
+  StyledFlexColumnWrapper,
+  StyledTitle,
+  StyledButton,
+  StyledStandardLink,
+} from "@/SharedStyledComponents";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
@@ -25,30 +31,22 @@ const StyledPageHeader = styled.section`
   z-index: 1;
 `;
 
-const StyledTitle = styled.h1`
-  font-weight: 500;
-`;
 const StyledTextMessage = styled.p`
   margin-top: 150px;
   text-align: center;
   line-height: 3;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  border: 1px solid var(--main-dark);
+const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
-  border-radius: 6px;
-  color: var(--main-dark);
 `;
 
-const StyledHighlightButton = styled.button`
+const StyledHighlightButton = styled(StyledButton)`
   font-size: 1rem;
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  background: var(--button-background);
-  color: var(--main-dark);
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem;
 `;
 
 export default function EmotionRecords({
@@ -95,7 +93,7 @@ export default function EmotionRecords({
   }
 
   return (
-    <StyledWrapper>
+    <StyledFlexColumnWrapper>
       <StyledPageHeader>
         <StyledTitle>Recorded Emotions</StyledTitle>
 
@@ -128,6 +126,6 @@ export default function EmotionRecords({
           isHighlighted={isHighlighted}
         />
       )}
-    </StyledWrapper>
+    </StyledFlexColumnWrapper>
   );
 }

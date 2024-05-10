@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { StyledButton, StyledWrapper } from "@/SharedStyledComponents";
 
 const StyledBackground = styled.div`
   background-color: black;
@@ -27,28 +28,26 @@ const StyledPopUpMessage = styled.div`
   z-index: 3;
 `;
 
-const StyledParagraph = styled.p`
+const StyledConfirmText = styled.p`
   padding: 1rem 2rem;
   text-align: center;
   color: var(--main-dark);
 `;
 
-const StyledWrapper = styled.div`
-  display: flex;
-  width: 100%;
+const StyledConfirmButtonWrapper = styled(StyledWrapper)`
   justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
 `;
-const StyledButton = styled.button`
+
+const StyledConfirmOrCancelButton = styled(StyledButton)`
   color: white;
   background-color: ${({ $color }) => $color};
-  border: none;
   width: 14rem;
   height: 4rem;
-  border-radius: 6px;
   padding: 0.5rem;
+  margin: 0;
 `;
 
 export default function ConfirmMessage({
@@ -86,19 +85,19 @@ export default function ConfirmMessage({
     <>
       <StyledBackground onClick={() => handleCancel(itemId)} />
       <StyledPopUpMessage $animation={animation}>
-        <StyledParagraph>{children}</StyledParagraph>
-        <StyledParagraph>
+        <StyledConfirmText>{children}</StyledConfirmText>
+        <StyledConfirmText>
           <b>{itemText}</b>
-        </StyledParagraph>
-        <StyledWrapper>
-          <StyledButton
+        </StyledConfirmText>
+        <StyledConfirmButtonWrapper>
+          <StyledConfirmOrCancelButton
             aria-label="cancel"
             $color={cancelButtonColor}
             onClick={() => handleCancel(itemId)}
           >
             {cancelButtonText}
-          </StyledButton>
-          <StyledButton
+          </StyledConfirmOrCancelButton>
+          <StyledConfirmOrCancelButton
             aria-label="confirm"
             $color={confirmButtonColor}
             onClick={() => {
@@ -106,8 +105,8 @@ export default function ConfirmMessage({
             }}
           >
             {confirmButtonText}
-          </StyledButton>
-        </StyledWrapper>
+          </StyledConfirmOrCancelButton>
+        </StyledConfirmButtonWrapper>
       </StyledPopUpMessage>
     </>
   );
