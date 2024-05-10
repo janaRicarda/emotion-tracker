@@ -4,24 +4,24 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
+import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 
-const StyledList = styled.ul`
+const StyledRecordsList = styled(StyledList)`
   list-style: none;
-  padding: 7rem 0;
-  margin: 0 auto 1rem;
-  text-align: left;
+  padding: 0;
+  margin: 8rem auto 1rem;
 `;
 
-const StyledListItemWrapper = styled.div`
+const StyledRecordListItem = styled.li`
   position: relative;
 `;
 
-const StyledListItem = styled.li`
-  margin: 0.5rem auto;
+const StyledParagraph = styled.p`
   border: 1px solid var(--main-dark);
-  border-radius: 0.5rem;
+  border-radius: 6px;
+  margin: 0.5rem auto;
   padding: 1rem;
   box-shadow: 0 0 3px 0;
   width: 80vw;
@@ -31,7 +31,7 @@ const StyledListItem = styled.li`
   }
 `;
 
-const StyledDetails = styled.ul`
+const StyledDetails = styled(StyledList)`
   display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
   padding: 0 1rem;
   margin-bottom: 2rem;
@@ -58,6 +58,9 @@ const StyledEditButton = styled(PencilIcon)`
     cursor: pointer;
   }
 `;
+const StyledTextMessage = styled.p`
+  margin-top: 150px;
+`;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
   width: 1.6rem;
@@ -81,12 +84,8 @@ const StyledFilledButton = styled(HeartFilledIcon)`
   }
 `;
 
-const StyledP = styled.p`
-  margin-top: 150px;
-`;
-
 export default function EmotionRecordsList({
-  emotionEntries,
+  shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
 }) {
@@ -109,12 +108,13 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-
   return (
     <>
-      {emotionEntries.length === 0 && <StyledP>No highlighted entries</StyledP>}
-      <StyledList>
-        {emotionEntries.map(
+      {shownEntries.length === 0 && (
+        <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
+      )}
+      <StyledRecordsList>
+        {shownEntries?.map(
           ({
             id,
             date,
@@ -129,10 +129,10 @@ export default function EmotionRecordsList({
           }) => {
             return (
               <>
-                <StyledListItemWrapper key={id}>
-                  <StyledListItem onClick={() => handleShowDetails(id)}>
+                <StyledRecordListItem key={id}>
+                  <StyledParagraph onClick={() => handleShowDetails(id)}>
                     {date}
-                  </StyledListItem>
+                  </StyledParagraph>
                   <StyledEditButton
                     aria-label="Edit emotion entry"
                     onClick={() => router.push(`./edit/${id}`)}
@@ -149,7 +149,7 @@ export default function EmotionRecordsList({
                   ) : (
                     <StyledOutlineButton onClick={() => toggleHighlight(id)} />
                   )}
-                </StyledListItemWrapper>
+                </StyledRecordListItem>
                 {showConfirmMessage[id] && (
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
@@ -177,7 +177,7 @@ export default function EmotionRecordsList({
             );
           }
         )}
-      </StyledList>
+      </StyledRecordsList>
     </>
   );
 }

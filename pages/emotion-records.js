@@ -1,6 +1,13 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
+import {
+  StyledFlexColumnWrapper,
+  StyledButton,
+  StyledStandardLink,
+} from "@/SharedStyledComponents";
 import styled from "styled-components";
-import { useState } from "react";
+import SearchBar from "@/components/SearchBar";
+import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -8,23 +15,40 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledTitle = styled.h1`
+const StyledPageHeader = styled.section`
   width: 100%;
-  text-align: center;
-  font-weight: 500;
+  background-color: var(--main-bright);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 100px;
   z-index: 1;
-  padding: 1rem;
-  background-color: var(--main-bright);
 `;
 
-const StyledHighlightButton = styled.button`
+const StyledTextMessage = styled.p`
+  margin-top: 150px;
+  text-align: center;
+  line-height: 3;
+`;
+
+const StyledLink = styled(StyledStandardLink)`
+  padding: 0.5rem;
+  background-color: var(--button-background);
+`;
+
+const StyledHighlightButton = styled(StyledButton)`
   font-size: 1rem;
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  background: var(--button-background);
-  color: var(--main-dark);
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem;
+`;
+
+const StyledEmotionRecordsTitle = styled.h1`
+  font-weight: 600;
 `;
 
 export default function EmotionRecords({
@@ -32,31 +56,78 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
 }) {
+  const [searchTerm, setSearchTerm] = useState();
+  const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
+
+  useEffect(() => {
+    if (!searchTerm) {
+      setShownEntries(emotionEntries);
+      return;
+    }
+
+    const fuse = new Fuse(emotionEntries, {
+      includeScore: true,
+      threshold: 0.4,
+      keys: [
+        "date",
+        "tensionLevel",
+        "trigger",
+        "intensity",
+        "notes",
+        "category",
+        "emotion",
+        "subemotion",
+      ],
+    });
+
+    const results = fuse.search(searchTerm);
+    const items = results.map((result) => result.item);
+    setShownEntries(items);
+  }, [emotionEntries, searchTerm]);
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
   }
-  return (
-    <StyledWrapper>
-      <StyledTitle>
-        Recorded Emotions{" "}
-        <span>
-          <StyledHighlightButton onClick={handleShowHighlighted}>
-            {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-          </StyledHighlightButton>
-        </span>
-      </StyledTitle>
 
-      <EmotionRecordsList
-        onDeleteEmotionEntry={onDeleteEmotionEntry}
-        emotionEntries={
-          isHighlighted
-            ? emotionEntries.filter((entry) => entry.isHighlighted)
-            : emotionEntries
-        }
-        toggleHighlight={toggleHighlight}
-      />
-    </StyledWrapper>
+  function handleSearch(input) {
+    setSearchTerm(input);
+  }
+
+  return (
+    <StyledFlexColumnWrapper>
+      <StyledPageHeader>
+        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
+
+        {emotionEntries.length !== 0 && (
+          <>
+            <SearchBar onSearch={handleSearch} />
+
+            <StyledHighlightButton onClick={handleShowHighlighted}>
+              {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+            </StyledHighlightButton>
+          </>
+        )}
+      </StyledPageHeader>
+      {emotionEntries.length === 0 && (
+        <StyledTextMessage>
+          You haven&apos;t made any Entries yet.<br></br>
+          <StyledLink href="./">add Entry &rarr;</StyledLink>
+        </StyledTextMessage>
+      )}
+
+      {emotionEntries.length !== 0 && (
+        <EmotionRecordsList
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
+          shownEntries={
+            isHighlighted
+              ? shownEntries.filter((entry) => entry.isHighlighted)
+              : shownEntries
+          }
+          toggleHighlight={toggleHighlight}
+          isHighlighted={isHighlighted}
+        />
+      )}
+    </StyledFlexColumnWrapper>
   );
 }

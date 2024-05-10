@@ -4,44 +4,33 @@ import { emotionData } from "@/lib/db";
 import { useState } from "react";
 import Circle from "../public/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
+import {
+  StyledInput,
+  StyledWrapper,
+  StyledBasicTitle,
+  StyledButton,
+  StyledForm,
+} from "@/SharedStyledComponents";
 
-const StyledH1 = styled.h1`
-  font-weight: 500;
+const StyledEmotionFormTitle = styled(StyledBasicTitle)`
   width: 100vw;
-  text-align: center;
-  position: fixed;
-  top: 100px;
+  top: 120px;
   left: 0;
-  z-index: 1;
-  background-color: var(--main-bright);
+  background: linear-gradient(transparent, var(--main-bright) 20%);
 `;
 
-const StyledForm = styled.form`
+const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
   margin: 1rem;
   margin-top: 50px;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   gap: 1rem;
-  color: #030352;
 `;
 
 const TensionLabelEdit = styled.label`
   padding: 0;
   text-align: left;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-`;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 `;
 
 const StyledSpan = styled.span`
@@ -58,12 +47,11 @@ const StyledTextarea = styled.textarea`
   border-radius: 6px;
 `;
 
-const StyledSubmitButton = styled.button`
+const StyledSubmitButton = styled(StyledButton)`
   background-color: white;
-  color: #030352;
-  border: 1px solid black;
-  border-radius: 6px;
   padding: 0.5rem;
+  margin: 0;
+  width: inherit;
   &:hover {
     background-color: darkslateblue;
     color: ${({ $color }) => $color};
@@ -114,8 +102,8 @@ export default function EmotionForm({
       tensionValue: tensionLevel,
       emotionValue: emotion,
       selectedSubemotionValue: subemotion,
-      intensityValue: intensity ? intensity : 0,
-      categoryValue: category,
+      intensityValue: intensity ? intensity : "0",
+      categoryValue: category ? category : "50",
       triggerValue: trigger,
       notesValue: notes,
       subemotionOptions: subemotions,
@@ -186,7 +174,7 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledH1>
+      <StyledEmotionFormTitle>
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -194,8 +182,8 @@ export default function EmotionForm({
           : emotionValue
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
-      </StyledH1>
-      <StyledForm $color={colorValue} onSubmit={handleSubmit}>
+      </StyledEmotionFormTitle>
+      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {date}
         </p>
@@ -383,7 +371,7 @@ export default function EmotionForm({
             Your changes were saved successfully!
           </ConfirmMessage>
         )}
-      </StyledForm>
+      </StyledEmotionForm>
     </>
   );
 }

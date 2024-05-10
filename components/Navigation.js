@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Link from "next/link";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledMenuButton = styled(Menu)`
   width: 3rem;
@@ -43,16 +43,13 @@ const StyledArticle = styled.article`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(StyledStandardLink)`
   width: 100%;
-  text-decoration: none;
   color: var(--main-dark);
   background-color: var(--button-background);
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
-
-  text-align: center;
 `;
 
 export default function Navigation({ handleToggleMenu, isOpen }) {

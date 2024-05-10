@@ -1,29 +1,33 @@
-import Link from "next/link";
 import styled from "styled-components";
 import ChevronPrev from "./../public/chevron-left.svg";
 import ChevronNext from "./../public/chevron-right.svg";
+import {
+  StyledFixedLink,
+  StyledListItem,
+  StyledList,
+} from "@/SharedStyledComponents";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
   margin: 1rem;
   padding: 2rem;
   background-color: ${({ $color }) => $color};
-  color: #030352;
+  color: var(--main-dark);
 `;
 
-const Title = styled.h1`
+const EmotionDetailsTitle = styled.h1`
   text-align: center;
-  margin: 1.5rem;
+  margin: 0.5rem 1.5rem 1.5rem;
   font-size: 2rem;
 `;
 
 const SubTitle = styled.h2`
   text-align: center;
   margin: 1rem;
+  line-height: 2rem;
 `;
 
-const StyledList = styled.ul`
-  list-style: none;
+const StyledSubemotionsList = styled(StyledList)`
   padding-left: 0;
   display: flex;
   flex-wrap: wrap;
@@ -31,21 +35,11 @@ const StyledList = styled.ul`
   justify-content: center;
 `;
 
-const StyledListItem = styled.li`
-  border: 1px solid #030352;
-  padding: 0.5rem;
-  border-radius: 5px;
-`;
-
-const StyledLink = styled(Link)`
-  position: fixed;
-  top: 50%;
-`;
-const PrevLink = styled(StyledLink)`
+const PrevLink = styled(StyledFixedLink)`
   left: 0;
 `;
 
-const NextLink = styled(StyledLink)`
+const NextLink = styled(StyledFixedLink)`
   right: 0;
 `;
 const StyledChevronPrev = styled(ChevronPrev)`
@@ -72,18 +66,18 @@ export default function EmotionDetails({
 }) {
   return (
     <StyledArticle $color={`var(--${slug})`}>
-      <Title>{name}</Title>
+      <EmotionDetailsTitle>{name}</EmotionDetailsTitle>
       <p>{description}</p>
       <SubTitle>The function of {name}</SubTitle>
       <p>{emotionfunction}</p>
       <SubTitle>Physical indications</SubTitle>
       <p>{indications}</p>
       <SubTitle>Subemotions</SubTitle>
-      <StyledList>
+      <StyledSubemotionsList>
         {subemotions.map((sub) => (
           <StyledListItem key={sub}>{sub}</StyledListItem>
         ))}
-      </StyledList>
+      </StyledSubemotionsList>
       <PrevLink href={`/emotions/${prevEmotion.slug}`}>
         <StyledChevronPrev />
       </PrevLink>

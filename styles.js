@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { lightTheme, darkTheme } from "./components/Theme";
 import { Manrope } from "next/font/google";
 
 const manrope = Manrope({ subsets: ["latin"] });

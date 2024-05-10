@@ -1,23 +1,14 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
-import Link from "next/link";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 
-const StyledH1 = styled.h1`
-  font-weight: 500;
-  padding: 0 1rem 1rem 1rem;
+const StyledEmotionListTitle = styled(StyledTitle)`
   font-size: 1.5rem;
-  text-align: center;
   line-height: 1.6rem;
-
-  position: fixed;
-  padding: 1rem;
-  width: 100%;
-  top: 100px;
-  z-index: 1;
-  background: var(--main-bright);
+  padding: 0 1rem 1rem 1rem;
 `;
 
-const EmotionSection = styled.section`
+const StyledEmotionList = styled.ul`
   border-radius: 12px;
   list-style: none;
   padding: 0;
@@ -28,25 +19,22 @@ const EmotionSection = styled.section`
   text-align: center;
   gap: 0.5rem;
   margin: 2rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-  padding-top: ${({ $form }) => ($form ? "4rem" : "1rem")};
+  padding: ${({ $form }) => ($form ? "4rem" : "1rem")} 1rem 1rem;
 `;
 
-const EmotionLink = styled(Link)`
-  text-decoration: none;
+const StyledListItem = styled.li`
   text-align: center;
-  color: #030352;
-
   background-color: ${({ $color }) => $color};
-
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
   font-weight: 600;
-  padding: 0.8rem;
   font-size: 1.3rem;
+`;
+
+const EmotionLink = styled(StyledStandardLink)`
+  display: block;
+  padding: 0.8rem;
 `;
 
 export default function EmotionList({
@@ -65,24 +53,27 @@ export default function EmotionList({
   }
   return (
     <>
-      <StyledH1>{title}</StyledH1>
-      <EmotionSection $form={form}>
+      <StyledEmotionListTitle>{title}</StyledEmotionListTitle>
+      <StyledEmotionList $form={form}>
         {emotionData.map(({ slug, name }) => (
-          <EmotionLink
-            onClick={() => handleAddDetails(name, id)}
-            key={slug}
+          <StyledListItem
+            onClick={createMode && (() => handleAddDetails(name, id))}
             $color={`var(--${slug})`}
-            slug={slug}
-            href={
-              createMode
-                ? { pathname: `/create/${slug}`, query: { id } }
-                : `/emotions/${slug}`
-            }
+            key={slug}
           >
-            {name}
-          </EmotionLink>
+            <EmotionLink
+              slug={slug}
+              href={
+                createMode
+                  ? { pathname: `/create/${slug}`, query: { id } }
+                  : `/emotions/${slug}`
+              }
+            >
+              {name}
+            </EmotionLink>
+          </StyledListItem>
         ))}
-      </EmotionSection>
+      </StyledEmotionList>
     </>
   );
 }
