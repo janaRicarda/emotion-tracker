@@ -60,6 +60,7 @@ const StyledEditButton = styled(PencilIcon)`
 `;
 const StyledTextMessage = styled.p`
   margin-top: 12rem;
+  text-align: center;
 `;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
@@ -88,6 +89,8 @@ export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
+  filterdEntries,
+  isActive,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -112,7 +115,11 @@ export default function EmotionRecordsList({
   return (
     <>
       {shownEntries.length === 0 && (
-        <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
+        <StyledTextMessage>
+          {filterdEntries.length === 0 && isActive.highlighted
+            ? `You haven't highlighted any Entries yet. Click the heart-symbol if you wanna highlight an entry`
+            : "Sorry, nothing found"}
+        </StyledTextMessage>
       )}
       <StyledUnorderedList>
         {shownEntries.map(

@@ -299,6 +299,8 @@ export default function EmotionRecords({
 
       {emotionEntries.length !== 0 && (
         <EmotionRecordsList
+          filterdEntries={filterdEntries}
+          isActive={isActive}
           onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={shownEntries}
           toggleHighlight={toggleHighlight}
