@@ -6,6 +6,7 @@ import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
+import Link from "next/link";
 
 const StyledUnorderedList = styled.ul`
   list-style: none;
@@ -85,6 +86,24 @@ const StyledFilledButton = styled(HeartFilledIcon)`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  border: 1px solid var(--main-dark);
+  position: relative;
+  top: 1rem;
+  padding: 0.5rem;
+  background-color: var(--button-background);
+  border-radius: 6px;
+  color: var(--main-dark);
+`;
+
+const StyledHeartSymbol = styled(HeartOutlineIcon)`
+  width: 1.4rem;
+  display: inline;
+  position: relative;
+  top: 5px;
+`;
+
 export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
@@ -114,13 +133,24 @@ export default function EmotionRecordsList({
 
   return (
     <>
-      {shownEntries.length === 0 && (
-        <StyledTextMessage>
-          {filterdEntries.length === 0 && isActive.highlighted
-            ? `You haven't highlighted any Entries yet. Click the heart-symbol if you wanna highlight an entry`
-            : "Sorry, nothing found"}
-        </StyledTextMessage>
-      )}
+      {shownEntries.length === 0 &&
+        (filterdEntries.length === 0 ? (
+          isActive.highlighted ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.`
+            </StyledTextMessage>
+          ) : isActive.today ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
+          ) : (
+            <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
       <StyledUnorderedList>
         {shownEntries.map(
           ({

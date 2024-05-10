@@ -77,7 +77,7 @@ export default function EmotionRecords({
     highlighted: false,
   });
 
-  // sets filteredEntries useState; able to react to deletion of entries
+  // sets filteredEntries useState according to isActive useState value with the corresponding timeFunction; able to react to deletion of entries
   useEffect(() => {
     isActive.all && setShownEntries(emotionEntries);
     isActive.today && getEntriesFromToday(emotionEntries);
