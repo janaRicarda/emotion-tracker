@@ -1,22 +1,41 @@
 import styled from "styled-components";
 import { StyledTitle } from "@/SharedStyledComponents";
 
+const StyledWelcome = styled.h1`
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+const StyledText = styled.p`
+  margin-bottom: 1rem;
+`;
+
+const StyledSummary = styled.summary`
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+`;
+
+const StyledOl = styled.ol`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
 export default function Manual() {
   return (
     <>
-      <StyledTitle>Welcome to the What a feeling app!</StyledTitle>
-      <p>
+      <StyledWelcome>Welcome to the What a feeling app!</StyledWelcome>
+      <StyledText>
         This tool is designed to help you track and understand your emotions
         better. Below are some guidelines to help you navigate the app
         effectively:
-      </p>
+      </StyledText>
 
       {/* <details>
         <summary>Purpose of the app</summary>
       </details> */}
       <details>
-        <summary>How can I make a new entry?</summary>
-        <ol>
+        <StyledSummary>How can I make a new entry?</StyledSummary>
+        <StyledOl>
           <li>
             Upon launching the app, you'll be prompted to make a new entry.
           </li>
@@ -45,15 +64,15 @@ export default function Manual() {
             notes.
           </li>
           <li>After completing the questionnaire, save your entry.</li>
-        </ol>
+        </StyledOl>
       </details>
       <details>
-        <summary>What if my entry was wrong?</summary>
+        <StyledSummary>What if my entry was wrong?</StyledSummary>
         <p>
           If you feel that your entry was incorrect or want to make changes, you
           can edit or delete it.
         </p>
-        <ol>
+        <StyledOl>
           <li>
             You can navigate through the app by clicking on the burger menu in
             the top right corner.
@@ -73,11 +92,11 @@ export default function Manual() {
             Please note that there is no option to restore your entries once
             they’re deleted.
           </li>
-        </ol>
+        </StyledOl>
       </details>
       <details>
-        <summary>How to answer the question?</summary>
-        <ol>
+        <StyledSummary>How to answer the question?</StyledSummary>
+        <StyledOl>
           <li>
             When answering the question about which basic emotion your feeling
             resembles the most, choose the one that closely aligns with your
@@ -104,8 +123,14 @@ export default function Manual() {
             yourself through all of the emotions without returning to the
             emotions list all the time.
           </li>
-        </ol>
+        </StyledOl>
       </details>
+      <p>
+        Remember, the What a feeling app is here to assist you in understanding
+        and managing your emotions. Feel free to explore its features, utilize
+        the graphs, highlight and filter specific entries, and gain insights
+        into the basic emotions. Happy feeling!
+      </p>
     </>
   );
 }
