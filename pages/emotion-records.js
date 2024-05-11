@@ -68,26 +68,80 @@ export default function EmotionRecords({
   const [searchTerm, setSearchTerm] = useState();
   const [filterdEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
-  const [isActive, setIsActive] = useState({
-    all: true,
-    today: false,
-    yesterday: false,
-    week: false,
-    month: false,
-    highlighted: false,
+  const [buttonState, setButtonState] = useState({
+    todayButton: true,
   });
 
-  // sets filteredEntries useState according to isActive useState value with the corresponding timeFunction; able to react to deletion of entries
+  // sets filteredEntries-useState depending on button-state; reacts to changing emotionEntrie in case of e.g. deletion
   useEffect(() => {
-    isActive.all && setShownEntries(emotionEntries);
-    isActive.today && getEntriesFromToday(emotionEntries);
-    isActive.yesterday && getEntriesFromYesterday(emotionEntries);
-    isActive.week && getEntriesFromLastWeek(emotionEntries);
-    isActive.month && getEntriesFromLastMonth(emotionEntries);
-    isActive.highlighted && getHighlightedEntries(emotionEntries);
-  }, [isActive, emotionEntries]);
+    function handleFilterTime() {
+      //bundled variables using currentTime
+      const currentTime = new Date();
+      const today = new Date().toISOString().slice(0, 10);
+      const yesterday = new Date(currentTime.setDate(currentTime.getDate() - 1))
+        .toISOString()
+        .slice(0, 10);
+      const sevenDaysAgo = new Date(
+        currentTime.setDate(currentTime.getDate() - 7)
+      )
+        .toISOString()
+        .slice(0, 10);
+      const thirtyDaysAgo = new Date(
+        currentTime.setDate(currentTime.getDate() - 30)
+      )
+        .toISOString()
+        .slice(0, 10);
 
-  // searches filteredEntries and sets shownEntries useState accordingly
+      // bundled filter functions dependend on buttonState state
+      if (buttonState.allButton) {
+        return emotionEntries;
+      }
+      if (buttonState.todayButton) {
+        const entriesFromToday = emotionEntries.filter((entry) => {
+          const entrieDate = entry.isoDate.slice(0, 10);
+          const result = entrieDate == today;
+          return result;
+        });
+        return entriesFromToday;
+      }
+      if (buttonState.yesterdayButton) {
+        const entriesFromYesterday = emotionEntries.filter((entry) => {
+          const entrieDate = entry.isoDate.slice(0, 10);
+          const result = entrieDate == yesterday;
+          return result;
+        });
+        return entriesFromYesterday;
+      }
+      if (buttonState.weekButton) {
+        const entriesFromLastSevenDays = emotionEntries.filter((entry) => {
+          const entrieDate = entry.isoDate.slice(0, 10);
+          const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
+          return result;
+        });
+
+        return entriesFromLastSevenDays;
+      }
+      if (buttonState.monthButton) {
+        const entriesFromLastThirtyDays = emotionEntries.filter((entry) => {
+          const entrieDate = entry.isoDate.slice(0, 10);
+          const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
+          return result;
+        });
+
+        return entriesFromLastThirtyDays;
+      }
+      if (buttonState.highlightedButton) {
+        const highlightedEntries = emotionEntries.filter(
+          (entry) => entry.isHighlighted
+        );
+        return highlightedEntries;
+      } else return;
+    }
+
+    setFilteredEntries(handleFilterTime());
+  }, [buttonState, emotionEntries]);
+
+  // searches filteredEntries-useState and sets shownEntries-useState accordingly
   useEffect(() => {
     if (!searchTerm) {
       setShownEntries(filterdEntries);
@@ -118,74 +172,6 @@ export default function EmotionRecords({
     setSearchTerm(input);
   }
 
-  function getEntriesFromToday(arrayToFilter) {
-    const today = new Date().toISOString().slice(0, 10);
-
-    const entriesFromToday = arrayToFilter.filter((entry) => {
-      const entrieDate = entry.isoDate.slice(0, 10);
-      const result = entrieDate == today;
-      return result;
-    });
-    setFilteredEntries(entriesFromToday);
-  }
-
-  function getEntriesFromYesterday(arrayToFilter) {
-    const currentTime = new Date();
-    const yesterday = new Date(currentTime.setDate(currentTime.getDate() - 1))
-      .toISOString()
-      .slice(0, 10);
-
-    const entriesFromYesterday = arrayToFilter.filter((entry) => {
-      const entrieDate = entry.isoDate.slice(0, 10);
-      const result = entrieDate == yesterday;
-      return result;
-    });
-    setFilteredEntries(entriesFromYesterday);
-  }
-
-  function getEntriesFromLastWeek(arrayToFilter) {
-    const currentTime = new Date();
-    const sevenDaysAgo = new Date(
-      currentTime.setDate(currentTime.getDate() - 7)
-    )
-      .toISOString()
-      .slice(0, 10);
-    const today = new Date().toISOString().slice(0, 10);
-
-    const entriesFromLastSevenDays = arrayToFilter.filter((entry) => {
-      const entrieDate = entry.isoDate.slice(0, 10);
-      const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
-      return result;
-    });
-
-    setFilteredEntries(entriesFromLastSevenDays);
-  }
-
-  function getEntriesFromLastMonth(arrayToFilter) {
-    const currentTime = new Date();
-    const today = new Date().toISOString().slice(0, 10);
-    const thirtyDaysAgo = new Date(
-      currentTime.setDate(currentTime.getDate() - 30)
-    )
-      .toISOString()
-      .slice(0, 10);
-
-    const entriesFromLastThirtyDays = arrayToFilter.filter((entry) => {
-      const entrieDate = entry.isoDate.slice(0, 10);
-      const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
-      return result;
-    });
-
-    setFilteredEntries(entriesFromLastThirtyDays);
-  }
-
-  function getHighlightedEntries(arrayToFilter) {
-    const highlightedEntries = arrayToFilter.filter(
-      (entry) => entry.isHighlighted
-    );
-    setFilteredEntries(highlightedEntries);
-  }
-
   return (
     <StyledWrapper>
       <StyledPageHeader>
@@ -196,91 +182,60 @@ export default function EmotionRecords({
             <SearchBar onSearch={handleSearch} />
             <StyledButtonGroup>
               <StyledToggleButton
-                $active={isActive.all && true}
+                $active={buttonState.allButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: true,
-                    today: false,
-                    yesterday: false,
-                    week: false,
-                    month: false,
-                    highlighted: false,
+                  setButtonState({
+                    allButton: true,
                   });
-                  setShownEntries(emotionEntries);
                 }}
               >
                 All
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isActive.today && true}
+                $active={buttonState.todayButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: false,
-                    today: true,
-                    yesterday: false,
-                    week: false,
-                    month: false,
-                    highlighted: false,
+                  setButtonState({
+                    todayButton: true,
                   });
                 }}
               >
                 Today
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isActive.yesterday && true}
+                $active={buttonState.yesterdayButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: false,
-                    today: false,
-                    yesterday: true,
-                    week: false,
-                    month: false,
-                    highlighted: false,
+                  setButtonState({
+                    yesterdayButton: true,
                   });
                 }}
               >
                 Yesterday
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isActive.week && true}
+                $active={buttonState.weekButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: false,
-                    today: false,
-                    yesterday: false,
-                    week: true,
-                    month: false,
-                    highlighted: false,
+                  setButtonState({
+                    weekButton: true,
                   });
                 }}
               >
                 Week
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isActive.month && true}
+                $active={buttonState.monthButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: false,
-                    today: false,
-                    yesterday: false,
-                    week: false,
-                    month: true,
-                    highlighted: false,
+                  setButtonState({
+                    monthButton: true,
                   });
                 }}
               >
                 Month
               </StyledToggleButton>
               <StyledToggleButton
-                $active={isActive.highlighted && true}
+                $active={buttonState.highlightedButton && true}
                 onClick={() => {
-                  setIsActive({
-                    all: false,
-                    today: false,
-                    yesterday: false,
-                    week: false,
-                    month: false,
-                    highlighted: true,
+                  setButtonState({
+                    highlightedButton: true,
                   });
                 }}
               >
@@ -300,7 +255,7 @@ export default function EmotionRecords({
       {emotionEntries.length !== 0 && (
         <EmotionRecordsList
           filterdEntries={filterdEntries}
-          isActive={isActive}
+          buttonState={buttonState}
           onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={shownEntries}
           toggleHighlight={toggleHighlight}

@@ -109,7 +109,7 @@ export default function EmotionRecordsList({
   onDeleteEmotionEntry,
   toggleHighlight,
   filterdEntries,
-  isActive,
+  buttonState,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -135,12 +135,12 @@ export default function EmotionRecordsList({
     <>
       {shownEntries.length === 0 &&
         (filterdEntries.length === 0 ? (
-          isActive.highlighted ? (
+          buttonState.highlightedButton ? (
             <StyledTextMessage>
               You haven&apos;t highlighted any Entries yet. Click the{" "}
               <StyledHeartSymbol /> on a Entry to highlight it.`
             </StyledTextMessage>
-          ) : isActive.today ? (
+          ) : buttonState.todayButton ? (
             <StyledTextMessage>
               You haven&apos;t made any Entries today.<br></br>
               <StyledLink href="./">add Entry &rarr;</StyledLink>
