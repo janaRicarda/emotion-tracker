@@ -43,7 +43,7 @@ const StyledLink = styled(Link)`
   color: var(--main-dark);
 `;
 
-const StyledToggleButton = styled.button`
+const StyledFilterButton = styled.button`
   font-size: 1rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
@@ -72,9 +72,9 @@ export default function EmotionRecords({
     todayButton: true,
   });
 
-  // sets filteredEntries-useState depending on button-state; reacts to changing emotionEntrie in case of e.g. deletion
+  // sets filteredEntries depending on buttonState; reacts to changing of emotionEntrie in case of e.g. deletion
   useEffect(() => {
-    function handleFilterTime() {
+    function getFilteredEntries() {
       //bundled variables using currentTime
       const currentTime = new Date();
       const today = new Date().toISOString().slice(0, 10);
@@ -92,7 +92,7 @@ export default function EmotionRecords({
         .toISOString()
         .slice(0, 10);
 
-      // bundled filter functions dependend on buttonState state
+      // bundled filter functions dependend on buttonState
       if (buttonState.allButton) {
         return emotionEntries;
       }
@@ -138,10 +138,10 @@ export default function EmotionRecords({
       } else return;
     }
 
-    setFilteredEntries(handleFilterTime());
+    setFilteredEntries(getFilteredEntries());
   }, [buttonState, emotionEntries]);
 
-  // searches filteredEntries-useState and sets shownEntries-useState accordingly
+  // searches only filteredEntries and sets shownEntries accordingly
   useEffect(() => {
     if (!searchTerm) {
       setShownEntries(filterdEntries);
@@ -172,6 +172,15 @@ export default function EmotionRecords({
     setSearchTerm(input);
   }
 
+  const filterButtons = [
+    { name: "allButton", label: "All" },
+    { name: "todayButton", label: "Today" },
+    { name: "yesterdayButton", label: "Yesterday" },
+    { name: "weekButton", label: "Week" },
+    { name: "monthButton", label: "Month" },
+    { name: "highlightedButton", label: "Highlighted" },
+  ];
+
   return (
     <StyledWrapper>
       <StyledPageHeader>
@@ -181,66 +190,15 @@ export default function EmotionRecords({
           <>
             <SearchBar onSearch={handleSearch} />
             <StyledButtonGroup>
-              <StyledToggleButton
-                $active={buttonState.allButton && true}
-                onClick={() => {
-                  setButtonState({
-                    allButton: true,
-                  });
-                }}
-              >
-                All
-              </StyledToggleButton>
-              <StyledToggleButton
-                $active={buttonState.todayButton && true}
-                onClick={() => {
-                  setButtonState({
-                    todayButton: true,
-                  });
-                }}
-              >
-                Today
-              </StyledToggleButton>
-              <StyledToggleButton
-                $active={buttonState.yesterdayButton && true}
-                onClick={() => {
-                  setButtonState({
-                    yesterdayButton: true,
-                  });
-                }}
-              >
-                Yesterday
-              </StyledToggleButton>
-              <StyledToggleButton
-                $active={buttonState.weekButton && true}
-                onClick={() => {
-                  setButtonState({
-                    weekButton: true,
-                  });
-                }}
-              >
-                Week
-              </StyledToggleButton>
-              <StyledToggleButton
-                $active={buttonState.monthButton && true}
-                onClick={() => {
-                  setButtonState({
-                    monthButton: true,
-                  });
-                }}
-              >
-                Month
-              </StyledToggleButton>
-              <StyledToggleButton
-                $active={buttonState.highlightedButton && true}
-                onClick={() => {
-                  setButtonState({
-                    highlightedButton: true,
-                  });
-                }}
-              >
-                Highlighted
-              </StyledToggleButton>
+              {filterButtons.map(({ name, label }) => (
+                <StyledFilterButton
+                  key={name}
+                  $active={buttonState[name] && true}
+                  onClick={() => setButtonState({ [name]: true, test: "test" })}
+                >
+                  {label}
+                </StyledFilterButton>
+              ))}
             </StyledButtonGroup>
           </>
         )}
