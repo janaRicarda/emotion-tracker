@@ -3,7 +3,14 @@ import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
-import { lightTheme, darkTheme } from "@/components/Theme";
+import {
+  lightTheme,
+  darkTheme,
+  warmTheme,
+  coldTheme,
+  neutralTheme,
+  highContrastTheme,
+} from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 

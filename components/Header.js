@@ -22,7 +22,7 @@ const StyledLogo = styled(Image)`
   left: 0;
 `;
 
-export default function Header() {
+export default function Header({ switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleToggleMenu() {
@@ -32,7 +32,11 @@ export default function Header() {
   return (
     <StyledHeader $isOpen={isOpen}>
       <StyledLogo src={Logo} />
-      <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
+      <Navigation
+        isOpen={isOpen}
+        handleToggleMenu={handleToggleMenu}
+        switchTheme={switchTheme}
+      />
     </StyledHeader>
   );
 }
