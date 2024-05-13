@@ -59,7 +59,7 @@ const StyledButtonGroup = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   padding: 0.6rem;
-  width: 80vw;
+  width: 90vw;
   gap: 10px;
 `;
 
@@ -87,75 +87,76 @@ export default function EmotionRecords({
   const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [buttonState, setButtonState] = useState({
     todayButton: true,
+    name: "todayButton",
+    label: "Today",
+    singleComparison: true,
+    daysAgo: 0,
   });
 
   //useStates for DayPicker
   const [month, setMonth] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState();
   const [showDayPicker, setShowDayPicker] = useState(false);
+  //
 
-  // sets filteredEntries depending on buttonState; reacts to changing of emotionEntrie in case of e.g. deletion
+  const filterButtons = [
+    { name: "allButton", label: "All" },
+    { name: "todayButton", label: "Today", singleComparison: true, daysAgo: 0 },
+    {
+      name: "yesterdayButton",
+      label: "Yesterday",
+      singleComparison: true,
+      daysAgo: 1,
+    },
+    { name: "weekButton", label: " Last Week", daysAgo: 7 },
+    { name: "monthButton", label: "Last Month", daysAgo: 30 },
+    { name: "highlightedButton", label: "Highlighted" },
+    { name: "datePicker", label: "Custom 📅" },
+  ];
+
+  // sets filteredEntries depending on buttonState; reacts to changes of emotionEntrie in case of e.g. deletion
+
   useEffect(() => {
-    function getFilteredEntries() {
-      //bundled variables using currentTime
+    // helper functions
+    function getDate(daysToGoBack) {
       const currentTime = new Date();
-      const today = new Date().toISOString().slice(0, 10);
-      const yesterday = new Date(currentTime.setDate(currentTime.getDate() - 1))
-        .toISOString()
-        .slice(0, 10);
-      const sevenDaysAgo = new Date(
-        currentTime.setDate(currentTime.getDate() - 7)
-      )
-        .toISOString()
-        .slice(0, 10);
-      const thirtyDaysAgo = new Date(
-        currentTime.setDate(currentTime.getDate() - 30)
-      )
-        .toISOString()
-        .slice(0, 10);
+      const date = new Date(
+        new Date(
+          currentTime.setDate(currentTime.getDate() - daysToGoBack)
+        ).toDateString()
+      ).getTime();
 
-      // bundled filter functions dependend on buttonState
-      if (buttonState.allButton) {
-        setShowDayPicker(false);
-        return emotionEntries;
-      }
-      if (buttonState.todayButton) {
-        setShowDayPicker(false);
-        const entriesFromToday = emotionEntries.filter((entry) => {
-          const entrieDate = entry.isoDate.slice(0, 10);
-          const result = entrieDate == today;
-          return result;
-        });
-        return entriesFromToday;
-      }
-      if (buttonState.yesterdayButton) {
-        setShowDayPicker(false);
-        const entriesFromYesterday = emotionEntries.filter((entry) => {
-          const entrieDate = entry.isoDate.slice(0, 10);
-          const result = entrieDate == yesterday;
-          return result;
-        });
-        return entriesFromYesterday;
-      }
-      if (buttonState.weekButton) {
-        setShowDayPicker(false);
-        const entriesFromLastSevenDays = emotionEntries.filter((entry) => {
-          const entrieDate = entry.isoDate.slice(0, 10);
-          const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
-          return result;
-        });
+      return date;
+    }
 
-        return entriesFromLastSevenDays;
-      }
-      if (buttonState.monthButton) {
-        setShowDayPicker(false);
-        const entriesFromLastThirtyDays = emotionEntries.filter((entry) => {
-          const entrieDate = entry.isoDate.slice(0, 10);
-          const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
-          return result;
-        });
+    function getFilteredEntries(boolean, firstDate, secondDate) {
+      const filteredEntries = emotionEntries.filter((entry) => {
+        const entrieDate = new Date(
+          new Date(entry.isoDate).toDateString()
+        ).getTime();
 
-        return entriesFromLastThirtyDays;
+        const result = boolean
+          ? entrieDate === firstDate
+          : entrieDate >= firstDate && entrieDate <= secondDate;
+        return result;
+      });
+      return filteredEntries;
+    }
+
+    const { daysAgo, singleComparison } = buttonState;
+    //
+
+    setFilteredEntries(() => {
+      if (
+        buttonState.todayButton ||
+        buttonState.yesterdayButton ||
+        buttonState.weekButton ||
+        buttonState.monthButton
+      ) {
+        setShowDayPicker(false);
+        const todayOrEarlier = getDate(daysAgo);
+        const today = getDate(0);
+        return getFilteredEntries(singleComparison, todayOrEarlier, today);
       }
       if (buttonState.highlightedButton) {
         setShowDayPicker(false);
@@ -172,27 +173,24 @@ export default function EmotionRecords({
           const selectedStartDate = new Date(
             selectedTime.from.toDateString()
           ).getTime();
+
           const selectedEndDate =
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
-          // entrieDate >= selectedStartDate && entrieDate <= selectedEndDate
 
-          const entriesFromTimeRange = emotionEntries.filter((entry) => {
-            const entrieDate = new Date(
-              new Date(entry.isoDate).toDateString()
-            ).getTime();
+          const isSecondDateSelected = !selectedTime.to;
 
-            const result = selectedTime.to
-              ? entrieDate >= selectedStartDate && entrieDate <= selectedEndDate
-              : selectedStartDate === entrieDate;
-            return result;
-          });
-          return entriesFromTimeRange;
+          return getFilteredEntries(
+            isSecondDateSelected,
+            selectedStartDate,
+            selectedEndDate
+          );
         }
+      } else {
+        setShowDayPicker(false);
+        return emotionEntries;
       }
-    }
-
-    setFilteredEntries(getFilteredEntries());
+    });
   }, [buttonState, emotionEntries, selectedTime]);
 
   // searches only filteredEntries and sets shownEntries accordingly
@@ -226,24 +224,14 @@ export default function EmotionRecords({
     setSearchTerm(input);
   }
 
-  const filterButtons = [
-    { name: "allButton", label: "All" },
-    { name: "todayButton", label: "Today" },
-    { name: "yesterdayButton", label: "Yesterday" },
-    { name: "weekButton", label: "Week" },
-    { name: "monthButton", label: "Month" },
-    { name: "highlightedButton", label: "Highlighted" },
-    { name: "datePicker", label: "Custom 📅" },
-  ];
-
-  function getDate(date) {
-    const selectedDate = new Intl.DateTimeFormat(`de`, {
+  function getFormattedDate(selectedDate) {
+    const date = new Intl.DateTimeFormat(`de`, {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    }).format(date);
+    }).format(selectedDate);
 
-    return selectedDate;
+    return date;
   }
 
   return (
@@ -255,15 +243,23 @@ export default function EmotionRecords({
           <>
             <SearchBar onSearch={handleSearch} />
             <StyledButtonGroup>
-              {filterButtons.map(({ name, label }) => (
-                <StyledFilterButton
-                  key={name}
-                  $active={buttonState[name] && true}
-                  onClick={() => setButtonState({ [name]: true })}
-                >
-                  {label}
-                </StyledFilterButton>
-              ))}
+              {filterButtons.map(
+                ({ name, label, singleComparison, daysAgo }) => (
+                  <StyledFilterButton
+                    key={name}
+                    $active={buttonState[name] && true}
+                    onClick={() =>
+                      setButtonState({
+                        [name]: true,
+                        singleComparison,
+                        daysAgo,
+                      })
+                    }
+                  >
+                    {label}
+                  </StyledFilterButton>
+                )
+              )}
             </StyledButtonGroup>
           </>
         )}
@@ -278,7 +274,7 @@ export default function EmotionRecords({
       {emotionEntries.length !== 0 && (
         <>
           {showDayPicker && (
-            <>
+            <div style={{ marginTop: "150px" }}>
               <DayPicker
                 mode="range"
                 selected={selectedTime}
@@ -290,11 +286,11 @@ export default function EmotionRecords({
               {selectedTime ? (
                 <p style={{ textAlign: "center" }}>
                   Your Selection:<br></br>
-                  {getDate(selectedTime.from)}
+                  {getFormattedDate(selectedTime.from)}
                   {selectedTime.to &&
                     selectedTime.from.toString() !==
                       selectedTime.to.toString() &&
-                    " - " + getDate(selectedTime.to)}
+                    " - " + getFormattedDate(selectedTime.to)}
                 </p>
               ) : (
                 <p>Select a single date or a range of dates</p>
@@ -318,7 +314,7 @@ export default function EmotionRecords({
                   Hide
                 </StyledNavButton>
               </WrapperForNavigation>
-            </>
+            </div>
           )}
           <EmotionRecordsList
             filterdEntries={filterdEntries}

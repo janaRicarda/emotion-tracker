@@ -54,7 +54,7 @@ p, h1, h2, h3, h4, h5, h6 {
 // DayPicker className for color-styles; more styles under node-modules/react-day-picker
 
 .rdp {
-    --rdp-cell-size: 40px; /* Size of the day cells. */
+    --rdp-cell-size: 35px; /* Size of the day cells. */
     --rdp-caption-font-size: 18px; /* Font size for the caption labels. */
     --rdp-accent-color: var(--button-background); /* Accent color for the background of selected days. */
     --rdp-background-color: var(--button-background); /* Background color for the hovered/focused elements. */
