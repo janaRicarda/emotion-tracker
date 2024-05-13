@@ -14,19 +14,31 @@ import {
 const StyledPageHeader = styled.section`
   width: 100%;
   background-color: var(--main-bright);
-  padding: 0.5rem;
+  padding: 2rem 0.5rem 0.5rem;
+  margin: 1rem 1rem 8rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 100px;
+  top: 80px;
+  height: fit-content;
   z-index: 1;
+`;
+
+const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
+  flex-direction: row;
+  gap: 1rem;
+  margin: 1rem;
 `;
 
 const StyledEmotionRecordsTitle = styled.h1`
   font-weight: 600;
+`;
+
+const StyledSpacer = styled.p`
+  margin: 4rem;
 `;
 
 const StyledHighlightButton = styled(StyledButton)`
@@ -34,6 +46,13 @@ const StyledHighlightButton = styled(StyledButton)`
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
+`;
+
+const StyledSubTitle = styled.h2`
+  padding: 0.5rem;
+  margin: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 `;
 
 const chance = new Chance();
@@ -88,8 +107,7 @@ function simulateTensionData(time, daysTimestamp) {
 
     return container;
   });
-  //pushing date
-  //elimination of elements according to probability
+  //adding date
   const tensionEntries = hourlyEntries
     .map((entry) => {
       const objectDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
@@ -102,6 +120,7 @@ function simulateTensionData(time, daysTimestamp) {
       };
       return object;
     })
+    //elimination of elements according to probability
     .filter((entry) => entry.toBeDeleted !== true);
   return tensionEntries;
 }
@@ -171,7 +190,7 @@ function generateCompleteData(daysGoingBack) {
   const completeEntries = [...detailedEntries, ...completeTensionEntries]
     .sort(compare)
     .reverse();
-
+  console.log(completeEntries);
   return completeEntries;
 }
 
@@ -205,62 +224,56 @@ export default function GenerateAndDisplay({
   }
 
   return (
-    <section>
-      <h1>Data Generator</h1>
-      <p>Timespan for data </p>
-      <p>
-        <label htmlFor="daysback">
-          Days
-          <input
-            type="number"
-            id="daysGoingback"
-            value={daysGoingBack}
-            max={100}
-            onChange={(event) => setDaysGoingBack(event.target.value)}
-          />
-        </label>
-      </p>
+    <StyledFlexColumnWrapper>
+      <StyledPageHeader>
+        <StyledEmotionRecordsTitle>Data Generator</StyledEmotionRecordsTitle>
 
-      <button
-        type="button"
-        onClick={() => setSimulatedEntries(generateCompleteData(daysGoingBack))}
-      >
-        Generate
-      </button>
-
-      <StyledFlexColumnWrapper>
-        <StyledPageHeader>
-          <StyledEmotionRecordsTitle>
-            Recorded Emotions (generated)
-          </StyledEmotionRecordsTitle>
-
-          {simulatedEntries.length !== 0 && (
-            <>
-              {/* <SearchBar onSearch={handleSearch} /> */}
-
-              <StyledHighlightButton onClick={handleShowHighlighted}>
-                {isHighlighted
-                  ? "Show all Entries"
-                  : "Show highlighted Entries"}
-              </StyledHighlightButton>
-            </>
-          )}
-        </StyledPageHeader>
+        <StyledFlexWrapper>
+          <p>Generate data for</p>
+          <label htmlFor="daysback">
+            <input
+              type="number"
+              id="daysGoingback"
+              value={daysGoingBack}
+              max={100}
+              onChange={(event) => setDaysGoingBack(event.target.value)}
+            />
+            Days
+          </label>
+          <button
+            type="button"
+            onClick={() => {
+              setSimulatedEntries(generateCompleteData(daysGoingBack));
+              setShownEntries(simulatedEntries);
+            }}
+          >
+            Generate
+          </button>{" "}
+        </StyledFlexWrapper>
+        <StyledSubTitle>Recorded Emotions (generated)</StyledSubTitle>
 
         {simulatedEntries.length !== 0 && (
-          <EmotionRecordsList
-            emotionEntries={simulatedEntries}
-            onDeleteEmotionEntry={onDeleteEmotionEntry}
-            shownEntries={
-              isHighlighted
-                ? shownEntries.filter((entry) => entry.isHighlighted)
-                : shownEntries
-            }
-            toggleHighlight={toggleHighlight}
-            isHighlighted={isHighlighted}
-          />
+          <>
+            <StyledHighlightButton onClick={handleShowHighlighted}>
+              {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
+            </StyledHighlightButton>
+          </>
         )}
-      </StyledFlexColumnWrapper>
-    </section>
+      </StyledPageHeader>
+      <StyledSpacer></StyledSpacer>
+      {simulatedEntries.length !== 0 && (
+        <EmotionRecordsList
+          emotionEntries={simulatedEntries}
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
+          shownEntries={
+            isHighlighted
+              ? shownEntries.filter((entry) => entry.isHighlighted)
+              : shownEntries
+          }
+          toggleHighlight={toggleHighlight}
+          isHighlighted={isHighlighted}
+        />
+      )}
+    </StyledFlexColumnWrapper>
   );
 }
