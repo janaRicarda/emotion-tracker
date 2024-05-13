@@ -1,9 +1,10 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
+import { DayPicker } from "react-day-picker";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -47,7 +48,9 @@ const StyledFilterButton = styled.button`
   font-size: 1rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
-  background-color: ${({ $active }) => $active && "var(--button-background)"};
+  background-color: var(--main-bright);
+  background-color: ${({ $active }) =>
+    $active ? "var(--button-background)" : "var(--main-bright)"};
   color: var(--main-dark);
 `;
 
@@ -58,6 +61,20 @@ const StyledButtonGroup = styled.div`
   padding: 0.6rem;
   width: 80vw;
   gap: 10px;
+`;
+
+const StyledNavButton = styled.button`
+  border: 1px solid var(--main-dark);
+  border-radius: 6px;
+  margin: 0.5rem;
+  background-color: var(--button-background);
+  opacity: ${(props) => (props.disabled ? "0.25" : "1")};
+  color: var(--main-dark);
+`;
+
+const WrapperForNavigation = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export default function EmotionRecords({
@@ -71,6 +88,11 @@ export default function EmotionRecords({
   const [buttonState, setButtonState] = useState({
     todayButton: true,
   });
+
+  //useStates for DayPicker
+  const [month, setMonth] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState();
+  const [showDayPicker, setShowDayPicker] = useState(false);
 
   // sets filteredEntries depending on buttonState; reacts to changing of emotionEntrie in case of e.g. deletion
   useEffect(() => {
@@ -94,9 +116,11 @@ export default function EmotionRecords({
 
       // bundled filter functions dependend on buttonState
       if (buttonState.allButton) {
+        setShowDayPicker(false);
         return emotionEntries;
       }
       if (buttonState.todayButton) {
+        setShowDayPicker(false);
         const entriesFromToday = emotionEntries.filter((entry) => {
           const entrieDate = entry.isoDate.slice(0, 10);
           const result = entrieDate == today;
@@ -105,6 +129,7 @@ export default function EmotionRecords({
         return entriesFromToday;
       }
       if (buttonState.yesterdayButton) {
+        setShowDayPicker(false);
         const entriesFromYesterday = emotionEntries.filter((entry) => {
           const entrieDate = entry.isoDate.slice(0, 10);
           const result = entrieDate == yesterday;
@@ -113,6 +138,7 @@ export default function EmotionRecords({
         return entriesFromYesterday;
       }
       if (buttonState.weekButton) {
+        setShowDayPicker(false);
         const entriesFromLastSevenDays = emotionEntries.filter((entry) => {
           const entrieDate = entry.isoDate.slice(0, 10);
           const result = entrieDate >= sevenDaysAgo && entrieDate <= today;
@@ -122,6 +148,7 @@ export default function EmotionRecords({
         return entriesFromLastSevenDays;
       }
       if (buttonState.monthButton) {
+        setShowDayPicker(false);
         const entriesFromLastThirtyDays = emotionEntries.filter((entry) => {
           const entrieDate = entry.isoDate.slice(0, 10);
           const result = entrieDate >= thirtyDaysAgo && entrieDate <= today;
@@ -131,15 +158,42 @@ export default function EmotionRecords({
         return entriesFromLastThirtyDays;
       }
       if (buttonState.highlightedButton) {
+        setShowDayPicker(false);
         const highlightedEntries = emotionEntries.filter(
           (entry) => entry.isHighlighted
         );
         return highlightedEntries;
-      } else return;
+      }
+      if (buttonState.datePicker) {
+        setShowDayPicker(true);
+        if (!selectedTime) {
+          return emotionEntries;
+        } else {
+          const selectedStartDate = new Date(
+            selectedTime.from.toDateString()
+          ).getTime();
+          const selectedEndDate =
+            selectedTime.to &&
+            new Date(selectedTime.to.toDateString()).getTime();
+          // entrieDate >= selectedStartDate && entrieDate <= selectedEndDate
+
+          const entriesFromTimeRange = emotionEntries.filter((entry) => {
+            const entrieDate = new Date(
+              new Date(entry.isoDate).toDateString()
+            ).getTime();
+
+            const result = selectedTime.to
+              ? entrieDate >= selectedStartDate && entrieDate <= selectedEndDate
+              : selectedStartDate === entrieDate;
+            return result;
+          });
+          return entriesFromTimeRange;
+        }
+      }
     }
 
     setFilteredEntries(getFilteredEntries());
-  }, [buttonState, emotionEntries]);
+  }, [buttonState, emotionEntries, selectedTime]);
 
   // searches only filteredEntries and sets shownEntries accordingly
   useEffect(() => {
@@ -179,7 +233,18 @@ export default function EmotionRecords({
     { name: "weekButton", label: "Week" },
     { name: "monthButton", label: "Month" },
     { name: "highlightedButton", label: "Highlighted" },
+    { name: "datePicker", label: "Custom 📅" },
   ];
+
+  function getDate(date) {
+    const selectedDate = new Intl.DateTimeFormat(`de`, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(date);
+
+    return selectedDate;
+  }
 
   return (
     <StyledWrapper>
@@ -194,7 +259,7 @@ export default function EmotionRecords({
                 <StyledFilterButton
                   key={name}
                   $active={buttonState[name] && true}
-                  onClick={() => setButtonState({ [name]: true, test: "test" })}
+                  onClick={() => setButtonState({ [name]: true })}
                 >
                   {label}
                 </StyledFilterButton>
@@ -211,13 +276,58 @@ export default function EmotionRecords({
       )}
 
       {emotionEntries.length !== 0 && (
-        <EmotionRecordsList
-          filterdEntries={filterdEntries}
-          buttonState={buttonState}
-          onDeleteEmotionEntry={onDeleteEmotionEntry}
-          shownEntries={shownEntries}
-          toggleHighlight={toggleHighlight}
-        />
+        <>
+          {showDayPicker && (
+            <>
+              <DayPicker
+                mode="range"
+                selected={selectedTime}
+                onSelect={setSelectedTime}
+                toDate={new Date()}
+                month={month}
+                onMonthChange={setMonth}
+              />
+              {selectedTime ? (
+                <p style={{ textAlign: "center" }}>
+                  Your Selection:<br></br>
+                  {getDate(selectedTime.from)}
+                  {selectedTime.to &&
+                    selectedTime.from.toString() !==
+                      selectedTime.to.toString() &&
+                    " - " + getDate(selectedTime.to)}
+                </p>
+              ) : (
+                <p>Select a single date or a range of dates</p>
+              )}
+              <WrapperForNavigation>
+                <StyledNavButton
+                  disabled={
+                    month.getMonth() === new Date().getMonth() ? true : false
+                  }
+                  onClick={() => setMonth(new Date())}
+                >
+                  Today
+                </StyledNavButton>
+                <StyledNavButton
+                  disabled={selectedTime ? false : true}
+                  onClick={() => setSelectedTime()}
+                >
+                  Reset
+                </StyledNavButton>
+                <StyledNavButton onClick={() => setShowDayPicker(false)}>
+                  Hide
+                </StyledNavButton>
+              </WrapperForNavigation>
+            </>
+          )}
+          <EmotionRecordsList
+            filterdEntries={filterdEntries}
+            buttonState={buttonState}
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            shownEntries={shownEntries}
+            toggleHighlight={toggleHighlight}
+          />
+        </>
       )}
     </StyledWrapper>
   );
