@@ -2,69 +2,26 @@ import { uid } from "uid";
 import Chance from "chance";
 import useLocalStorageState from "use-local-storage-state";
 import { emotionData, exampleData } from "@/lib/db";
-import styled from "styled-components";
-import TrashIcon from "@/public/trash-icon.svg";
-import PencilIcon from "@/public/pencil.svg";
-import ConfirmMessage from "@/components/ConfirmMessage";
+
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const StyledList = styled.ul`
-  list-style: none;
-  padding: 2.5rem 0;
-  margin: 0 auto 1rem;
-  text-align: left;
-`;
-
-const StyledListItemWrapper = styled.div`
-  position: relative;
-`;
-
-const StyledListItem = styled.li`
-  margin: 0.5rem auto;
-  border: 1px solid var(--main-dark);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  box-shadow: 0 0 3px 0;
-  width: 80vw;
-  cursor: pointer;
-  &:hover {
-    background-color: var(--button-background);
-  }
-`;
-
-const StyledDetails = styled.ul`
-  display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
-  padding: 0 1rem;
-  margin-bottom: 2rem;
-`;
-
-const StyledDeleteButton = styled(TrashIcon)`
-  width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 0.8rem);
-  right: 0.2rem;
-  fill: var(--main-dark);
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StyledEditButton = styled(PencilIcon)`
-  width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 0.8rem);
-  right: 2rem;
-  fill: var(--main-dark);
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 const chance = new Chance();
 
-// generating random tension entries for a day, feed with fullDate.getHours() for currentday;
+const dateOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
 
+const timeOptions = {
+  hour: "numeric",
+  hour12: false,
+  minute: "numeric",
+};
+
+// generating random tension entries for a day, feed with time  in hours for currentday;
 //math model sin
 
 function simulateTensionData(time, daysTimestamp) {
@@ -102,22 +59,30 @@ function simulateTensionData(time, daysTimestamp) {
 
     return container;
   });
+  //pushing date
   //elimination of elements according to probability
-  const tensionEntries = hourlyEntries.filter(
-    (entry) => entry.toBeDeleted !== true
-  );
+  const tensionEntries = hourlyEntries
+    .map((entry) => {
+      const objectDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
+        new Date(daysTimestamp)
+      );
+      const object = {
+        ...entry,
+        date: objectDate,
+        dateAndTime: objectDate + ", " + entry.time,
+      };
+      return object;
+    })
+    .filter((entry) => entry.toBeDeleted !== true);
   return tensionEntries;
 }
 
 function generateDetailedEntry() {
   const id = uid();
-  //   const hour = chance.integer({ min: 6, max: 22 });
-  //   const minutes = chance.integer({ min: 0, max: 59 });
   const randomEmotionNumber = chance.integer({ min: 0, max: 6 });
   const randomStory = chance.integer({ min: 0, max: 2 });
   const detailedEntry = {
     id,
-    // time: hour + ":" + minutes.toString().padStart(2, "0"),
     tensionLevel: chance.integer({ min: 0, max: 100 }),
     emotion: exampleData[randomEmotionNumber].emotion,
     trigger: exampleData[randomEmotionNumber].stories[randomStory].trigger,
@@ -131,24 +96,9 @@ function generateDetailedEntry() {
 function generateCompleteData(daysGoingBack) {
   const currentFullDate = new Date();
   const daysTimestamp = currentFullDate.valueOf();
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  // const timeOptions = { hour: "numeric", hour12: false, minute: "numeric" };
-  const daysToFill = [...Array(daysGoingBack).keys()];
 
-  function compare(a, b) {
-    if (a.timeStamp < b.timeStamp) {
-      return -1;
-    }
-    if (a.timeStamp > b.timeStamp) {
-      return 1;
-    }
-    return 0;
-  }
+  const daysToFill = [...Array(Number(daysGoingBack)).keys()];
+  console.log(daysToFill);
   const tensionEntries = daysToFill.map((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
     const array = [...simulateTensionData(23, timeStamp)];
@@ -162,17 +112,33 @@ function generateCompleteData(daysGoingBack) {
       timeStamp: daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000,
       id: uid(),
     };
-    const objectDate = new Intl.DateTimeFormat("en-US", options).format(
+    const objectDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
       new Date(object.timeStamp)
     );
+    const objectTime = new Intl.DateTimeFormat("en-US", timeOptions).format(
+      new Date(object.timeStamp)
+    );
+    const objectDateAndTime = objectDate + ", " + objectTime;
     const entry = {
       ...object,
       date: objectDate,
+      time: objectTime,
+      dateAndTime: objectDateAndTime,
       ...generateDetailedEntry(),
     };
     return entry;
   });
   detailedEntries.reverse();
+
+  function compare(a, b) {
+    if (a.timeStamp < b.timeStamp) {
+      return -1;
+    }
+    if (a.timeStamp > b.timeStamp) {
+      return 1;
+    }
+    return 0;
+  }
 
   const completeEntries = [...detailedEntries, ...completeTensionEntries]
     .sort(compare)
@@ -211,7 +177,7 @@ export default function GenerateAndDisplay({ emotionEntries }) {
           Days
           <input
             type="number"
-            id="daysback"
+            id="daysGoingback"
             value={daysGoingBack}
             max={100}
             onChange={(event) => setDaysGoingBack(event.target.value)}
