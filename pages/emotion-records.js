@@ -9,11 +9,11 @@ import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+// const StyledWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
 
 const StyledPageHeader = styled.section`
   width: 100%;

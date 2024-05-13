@@ -2,9 +2,39 @@ import { uid } from "uid";
 import Chance from "chance";
 import useLocalStorageState from "use-local-storage-state";
 import { emotionData, exampleData } from "@/lib/db";
-
+import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import EmotionRecordsList from "@/components/EmotionRecordsList";
+import {
+  StyledButton,
+  StyledFlexColumnWrapper,
+} from "@/SharedStyledComponents";
+
+const StyledPageHeader = styled.section`
+  width: 100%;
+  background-color: var(--main-bright);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 100px;
+  z-index: 1;
+`;
+
+const StyledEmotionRecordsTitle = styled.h1`
+  font-weight: 600;
+`;
+
+const StyledHighlightButton = styled(StyledButton)`
+  font-size: 1rem;
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem;
+`;
 
 const chance = new Chance();
 
@@ -22,8 +52,7 @@ const timeOptions = {
 };
 
 // generating random tension entries for a day, feed with time  in hours for currentday;
-//math model sin
-
+// math model: sin
 function simulateTensionData(time, daysTimestamp) {
   const hours = [
     5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
@@ -68,8 +97,8 @@ function simulateTensionData(time, daysTimestamp) {
       );
       const object = {
         ...entry,
-        date: objectDate,
-        dateAndTime: objectDate + ", " + entry.time,
+        dateOfEntry: objectDate,
+        date: objectDate + ", " + entry.time,
       };
       return object;
     })
@@ -98,7 +127,6 @@ function generateCompleteData(daysGoingBack) {
   const daysTimestamp = currentFullDate.valueOf();
 
   const daysToFill = [...Array(Number(daysGoingBack)).keys()];
-  console.log(daysToFill);
   const tensionEntries = daysToFill.map((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
     const array = [...simulateTensionData(23, timeStamp)];
@@ -121,9 +149,9 @@ function generateCompleteData(daysGoingBack) {
     const objectDateAndTime = objectDate + ", " + objectTime;
     const entry = {
       ...object,
-      date: objectDate,
+      dateOfEntry: objectDate,
       time: objectTime,
-      dateAndTime: objectDateAndTime,
+      date: objectDateAndTime,
       ...generateDetailedEntry(),
     };
     return entry;
@@ -143,12 +171,15 @@ function generateCompleteData(daysGoingBack) {
   const completeEntries = [...detailedEntries, ...completeTensionEntries]
     .sort(compare)
     .reverse();
-  console.log(completeEntries);
 
   return completeEntries;
 }
 
-export default function GenerateAndDisplay({ emotionEntries }) {
+export default function GenerateAndDisplay({
+  // emotionEntries,
+  onDeleteEmotionEntry,
+  toggleHighlight,
+}) {
   const [daysGoingBack, setDaysGoingBack] = useState(1);
   const [simulatedEntries, setSimulatedEntries] = useLocalStorageState(
     "simulatedEntries",
@@ -156,10 +187,15 @@ export default function GenerateAndDisplay({ emotionEntries }) {
       defaultValue: [],
     }
   );
+  const [shownEntries, setShownEntries] = useState(simulatedEntries);
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
-
+  const [isHighlighted, setIsHighlighted] = useState(false);
   const router = useRouter();
+
+  function handleShowHighlighted() {
+    setIsHighlighted(!isHighlighted);
+  }
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -191,6 +227,40 @@ export default function GenerateAndDisplay({ emotionEntries }) {
       >
         Generate
       </button>
+
+      <StyledFlexColumnWrapper>
+        <StyledPageHeader>
+          <StyledEmotionRecordsTitle>
+            Recorded Emotions (generated)
+          </StyledEmotionRecordsTitle>
+
+          {simulatedEntries.length !== 0 && (
+            <>
+              {/* <SearchBar onSearch={handleSearch} /> */}
+
+              <StyledHighlightButton onClick={handleShowHighlighted}>
+                {isHighlighted
+                  ? "Show all Entries"
+                  : "Show highlighted Entries"}
+              </StyledHighlightButton>
+            </>
+          )}
+        </StyledPageHeader>
+
+        {simulatedEntries.length !== 0 && (
+          <EmotionRecordsList
+            emotionEntries={simulatedEntries}
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            shownEntries={
+              isHighlighted
+                ? shownEntries.filter((entry) => entry.isHighlighted)
+                : shownEntries
+            }
+            toggleHighlight={toggleHighlight}
+            isHighlighted={isHighlighted}
+          />
+        )}
+      </StyledFlexColumnWrapper>
     </section>
   );
 }
