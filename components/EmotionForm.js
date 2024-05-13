@@ -25,6 +25,7 @@ const StyledEmotionForm = styled(StyledForm)`
   margin-top: 50px;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
+  color: var(--text-on-bright);
   gap: 1rem;
 `;
 

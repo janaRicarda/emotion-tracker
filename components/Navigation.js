@@ -2,6 +2,11 @@ import styled from "styled-components";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
 import { StyledStandardLink } from "@/SharedStyledComponents";
+import { warmTheme, coldTheme, neutralTheme, highContrastTheme } from "./Theme";
+import {
+  StyledButton,
+  StyledFlexColumnWrapper,
+} from "../SharedStyledComponents";
 
 const StyledMenuButton = styled(Menu)`
   width: 3rem;
@@ -17,8 +22,9 @@ const StyledMenuButton = styled(Menu)`
 `;
 const StyledCloseButton = styled(Close)`
   width: 2rem;
-  fill: var(--main-dark);
-  background: var(--button-background);
+
+  fill: var(--text-on-bright);
+  //background: var(--button-background);
   color: var(--main-dark);
   border-style: none;
   margin: 1rem;
@@ -45,14 +51,27 @@ const StyledArticle = styled.article`
 
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
-  color: var(--main-dark);
+  color: var(--text-on-bright);
   background-color: var(--button-background);
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
 `;
 
-export default function Navigation({ handleToggleMenu, isOpen }) {
+const ThemeWrapper = styled(StyledFlexColumnWrapper)`
+  align-items: start;
+  justify-content: none;
+  gap: 1px;
+  border: 1px solid var(--text-on-bright);
+`;
+const ThemeButton = styled(StyledButton)`
+  color: var(--text-on-bright);
+  padding: 0.5rem;
+  margin: 0.2rem;
+  width: inherit;
+`;
+
+export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
   return (
     <>
       {isOpen ? (
@@ -72,6 +91,23 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
           <StyledLink onClick={handleToggleMenu} href="/emotion-records">
             emotion records
           </StyledLink>
+          <details>
+            <summary>Colorschemes</summary>
+            <ThemeWrapper>
+              <ThemeButton onClick={() => switchTheme(warmTheme)}>
+                warm
+              </ThemeButton>
+              <ThemeButton onClick={() => switchTheme(coldTheme)}>
+                cold
+              </ThemeButton>
+              <ThemeButton onClick={() => switchTheme(neutralTheme)}>
+                neutral
+              </ThemeButton>
+              <ThemeButton onClick={() => switchTheme(highContrastTheme)}>
+                high contrast
+              </ThemeButton>
+            </ThemeWrapper>
+          </details>
         </StyledArticle>
       )}
     </>

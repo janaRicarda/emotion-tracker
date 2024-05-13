@@ -15,6 +15,7 @@ export default createGlobalStyle`
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
+  --text-on-bright: ${({ theme }) => theme.textOnBright};
  --button-background: ${({ theme }) => theme.buttonBackground};
   --joy: ${({ theme }) => theme.joy};
   --surprise: ${({ theme }) => theme.surprise};

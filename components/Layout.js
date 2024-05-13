@@ -1,14 +1,10 @@
 import Header from "./Header";
 import Footer from "./Footer";
 
-export default function Layout({ children }) {
-  // function switchTheme() {
-  //   setNewTheme(warmTheme);
-  // }
-
+export default function Layout({ children, theme, switchTheme }) {
   return (
     <>
-      <Header />
+      <Header switchTheme={switchTheme} />
       {children}
       <Footer />
     </>

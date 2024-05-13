@@ -31,7 +31,7 @@ export default function Header({ switchTheme }) {
 
   return (
     <StyledHeader $isOpen={isOpen}>
-      <StyledLogo src={Logo} />
+      <StyledLogo src={Logo} alt="logo" />
       <Navigation
         isOpen={isOpen}
         handleToggleMenu={handleToggleMenu}

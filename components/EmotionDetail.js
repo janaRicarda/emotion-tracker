@@ -12,7 +12,7 @@ const StyledArticle = styled.article`
   margin: 1rem;
   padding: 2rem;
   background-color: ${({ $color }) => $color};
-  color: var(--main-dark);
+  color: var(--text-on-bright);
 `;
 
 const EmotionDetailsTitle = styled.h1`

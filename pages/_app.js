@@ -6,10 +6,10 @@ import { useState } from "react";
 import {
   lightTheme,
   darkTheme,
-  warmTheme,
+  /*  warmTheme,
   coldTheme,
   neutralTheme,
-  highContrastTheme,
+  highContrastTheme, */
 } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
@@ -41,7 +41,11 @@ const StyledSun = styled(Sun)`
 `;
 
 export default function App({ Component, pageProps }) {
-  const [theme, setTheme] = useState("light");
+  const defaultTheme = lightTheme || darkTheme;
+  // const customTheme = [warmTheme, coldTheme, neutralTheme, highContrastTheme];
+  // const [theme, setTheme] = useState("light");
+  //const [theme, setTheme] = useState(lightTheme);
+  const [theme, setTheme] = useState(defaultTheme);
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -50,8 +54,18 @@ export default function App({ Component, pageProps }) {
   );
 
   function toggleTheme() {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+    // theme === "light" ? setTheme("dark") : setTheme("light");
+    //theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
+    theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
+
+  function switchWarmTheme() {
+    setTheme(warmTheme);
+  }
+  function switchTheme(customTheme) {
+    setTheme(customTheme);
+  }
+  // const newTheme = [warmTheme, coldTheme, neutralTheme, highContrastTheme];
 
   function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
@@ -86,12 +100,12 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
   return (
-    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme}>
       <StyledToggleTheme type="button" onClick={toggleTheme}>
-        {theme === "light" ? <StyledMoon /> : <StyledSun />}
+        {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
       </StyledToggleTheme>
       <GlobalStyle />
-      <Layout>
+      <Layout switchTheme={switchTheme}>
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
