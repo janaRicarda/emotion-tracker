@@ -43,8 +43,8 @@ export default function SearchBar({ onSearch }) {
         type="search"
         id="searchTerm"
         name="searchTerm"
-        placeholder="Search for Date, Tensionlevel, Emotion..."
-        aria-placeholder="Search for Date, Tensionlevel, Emotion..."
+        placeholder="Search for Tensionlevel, Emotion, Trigger..."
+        aria-placeholder="Search for Tensionlevel, Emotion, Trigger..."
         onChange={(event) => onSearch(event.target.value)}
       />
       <StyledMagnifier onClick={handleShowSearchBar} />
