@@ -108,7 +108,7 @@ export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
-  filterdEntries,
+  filteredEntries,
   buttonState,
 }) {
   const [showDetails, setShowDetails] = useState({});
@@ -134,7 +134,7 @@ export default function EmotionRecordsList({
   return (
     <>
       {shownEntries.length === 0 &&
-        (filterdEntries.length === 0 ? (
+        (filteredEntries.length === 0 ? (
           buttonState.highlightedButton ? (
             <StyledTextMessage>
               You haven&apos;t highlighted any Entries yet. Click the{" "}

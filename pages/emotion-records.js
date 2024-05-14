@@ -64,7 +64,7 @@ const StyledButtonGroup = styled.div`
 `;
 
 const StyledNavButton = styled.button`
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--main-background);
   border-radius: 6px;
   margin: 0.5rem;
   background-color: var(--button-background);
@@ -83,7 +83,7 @@ export default function EmotionRecords({
   toggleHighlight,
 }) {
   const [searchTerm, setSearchTerm] = useState();
-  const [filterdEntries, setFilteredEntries] = useState(emotionEntries);
+  const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [buttonState, setButtonState] = useState({
     todayButton: true,
@@ -178,7 +178,7 @@ export default function EmotionRecords({
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
 
-          const isSecondDateSelected = !selectedTime.to;
+          const isSecondDateSelected = !selectedEndDate;
 
           return getFilteredEntries(
             isSecondDateSelected,
@@ -196,11 +196,11 @@ export default function EmotionRecords({
   // searches only filteredEntries and sets shownEntries accordingly
   useEffect(() => {
     if (!searchTerm) {
-      setShownEntries(filterdEntries);
+      setShownEntries(filteredEntries);
       return;
     }
 
-    const fuse = new Fuse(filterdEntries, {
+    const fuse = new Fuse(filteredEntries, {
       includeScore: true,
       threshold: 0.4,
       keys: [
@@ -218,7 +218,7 @@ export default function EmotionRecords({
     const results = fuse.search(searchTerm);
     const items = results.map((result) => result.item);
     setShownEntries(items);
-  }, [searchTerm, filterdEntries]);
+  }, [searchTerm, filteredEntries]);
 
   function handleSearch(input) {
     setSearchTerm(input);
@@ -317,7 +317,7 @@ export default function EmotionRecords({
             </div>
           )}
           <EmotionRecordsList
-            filterdEntries={filterdEntries}
+            filteredEntries={filteredEntries}
             buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             shownEntries={shownEntries}
