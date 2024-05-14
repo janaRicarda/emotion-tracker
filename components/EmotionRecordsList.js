@@ -8,11 +8,18 @@ import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 import Link from "next/link";
+import CalendarIcon from "/public/calendar.svg";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 11rem auto 1rem;
   text-align: left;
+`;
+
+const StyledCalendarIcon = styled(CalendarIcon)`
+  width: 1.5rem;
+  display: inline;
+  vertical-align: bottom;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -180,7 +187,7 @@ export default function EmotionRecordsList({
             </StyledDateIndicator>
           ) : (
             <StyledDateIndicator>
-              Click the calendar and select a date
+              Click the calendar <StyledCalendarIcon /> and select a date
             </StyledDateIndicator>
           )
         ) : null}

@@ -9,6 +9,13 @@ import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 import { DayPicker } from "react-day-picker";
+import CalendarIcon from "/public/calendar.svg";
+
+const StyledCalendarIcon = styled(CalendarIcon)`
+  width: 1.5rem;
+  display: inline;
+  vertical-align: bottom;
+`;
 
 const StyledPageHeader = styled.section`
   width: 100%;
@@ -133,8 +140,15 @@ export default function EmotionRecords({
     { name: "weekButton", label: " Last Week", daysAgo: 7 },
     { name: "monthButton", label: "Last Month", daysAgo: 30 },
     { name: "highlightedButton", label: "Highlighted" },
-    { name: "datePicker", label: "Custom 📅", setShow: true },
+    {
+      name: "datePicker",
+      label: `Custom`,
+      icon: <StyledCalendarIcon />,
+      setShow: true,
+    },
   ];
+
+  console.log(CalendarIcon);
 
   // sets filteredEntries depending on buttonState; reacts to changes of emotionEntrie in case of e.g. deletion
 
@@ -260,7 +274,7 @@ export default function EmotionRecords({
         <SearchBar onSearch={handleSearch} />
         <StyledButtonGroup>
           {filterButtons.map(
-            ({ name, label, singleComparison, daysAgo, setShow }) => (
+            ({ name, label, singleComparison, daysAgo, setShow, icon }) => (
               <StyledFilterButton
                 key={name}
                 $active={buttonState[name] && true}
@@ -274,6 +288,7 @@ export default function EmotionRecords({
                 }}
               >
                 {label}
+                {icon}
               </StyledFilterButton>
             )
           )}
