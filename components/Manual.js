@@ -67,7 +67,7 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    background-color: var(--button-background);
+    //background-color: var(--button-background);
     background-color: ${({ $itemColor }) => $itemColor};
     text-align: center;
     color: var(--text-on-bright);
@@ -84,24 +84,28 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    background-color: var(--button-background);
+    //background-color: var(--button-background);
     background-color: ${({ $itemColor }) => $itemColor};
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(even) {
-    border-right: 2px dotted var(--button-background);
+    //border-right: 2px dotted var(--button-background);
+    border-right: 2px dotted ${({ $itemColor }) => $itemColor};
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-    border-bottom: 2px dotted var(--button-background);
+    //border-bottom: 2px dotted var(--button-background);
+    border-bottom: 2px dotted ${({ $itemColor }) => $itemColor};
     padding-right: 2rem;
   }
   &:nth-child(odd) {
-    border-left: 2px dotted var(--button-background);
+    //border-left: 2px dotted var(--button-background);
+    border-left: 2px dotted ${({ $itemColor }) => $itemColor};
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    border-bottom: 2px dotted var(--button-background);
+    //border-bottom: 2px dotted var(--button-background);
+    border-bottom: 2px dotted ${({ $itemColor }) => $itemColor};
     padding-right: 2rem;
   }
 `;
@@ -123,6 +127,20 @@ export default function Manual() {
       : window.scrollY <= 2500
       ? setItemColor("var(--disgust)")
       : window.scrollY <= 3000
+      ? setItemColor("var(--anger)")
+      : window.scrollY <= 3500
+      ? setItemColor("var(--joy)")
+      : window.scrollY <= 4000
+      ? setItemColor("var(--surprise)")
+      : window.scrollY <= 4500
+      ? setItemColor("var(--fear)")
+      : window.scrollY <= 5000
+      ? setItemColor("var(--sadness)")
+      : window.scrollY <= 5500
+      ? setItemColor("var(--contempt)")
+      : window.scrollY <= 6000
+      ? setItemColor("var(--disgust)")
+      : window.scrollY <= 6500
       ? setItemColor("var(--anger)")
       : setItemColor("var(--joy)");
   }
