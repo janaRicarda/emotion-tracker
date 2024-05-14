@@ -9,15 +9,6 @@ import {
   StyledForm,
 } from "@/SharedStyledComponents";
 
-const StyledAddDetailsLink = styled(StyledStandardLink)`
-  margin: 1rem;
-  padding: 1rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
-`;
-
 const StyledTensionForm = styled(StyledForm)`
   margin: 2rem auto;
   align-items: center;
@@ -41,19 +32,30 @@ const StyledMessage = styled.p`
 `;
 
 const StyledButtonWrapper = styled(StyledWrapper)`
-  width: inherit;
+  //width: inherit;
+  width: 100%;
   justify-content: center;
 `;
 
 const StyledBackButton = styled.input`
+  width: 10rem;
   text-decoration: none;
   color: var(--text-on-bright);
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
   border-radius: 8.5px;
   border: 1px solid black;
   text-align: center;
   background-color: var(--button-background);
+`;
+const StyledAddDetailsLink = styled(StyledStandardLink)`
+  width: 10rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: ${({ $actionButton }) =>
+    $actionButton ? "var(--button-background)" : "white"};
+  border: ${({ $actionButton }) =>
+    $actionButton ? "1px solid black" : "none"};
 `;
 
 export default function HomePage({ onAddEmotionEntry }) {

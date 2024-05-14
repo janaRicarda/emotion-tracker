@@ -16,6 +16,9 @@ const StyledWelcome = styled.h1`
 const StyledText = styled.p`
   margin-top: 2rem;
   margin-bottom: 3rem;
+  // margin-right: 2rem;
+  //margin-left: 2rem;
+  //padding: 0 0.5rem 0 0.5rem;
   &:last-child {
     text-align: center;
     font-size: 1.5rem;
@@ -65,7 +68,7 @@ const StyledListItem = styled.li`
     line-height: 3rem;
     background-color: var(--button-background);
     text-align: center;
-    color: var(--main-dark);
+    color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(odd):before {
@@ -81,7 +84,7 @@ const StyledListItem = styled.li`
     line-height: 3rem;
     background-color: var(--button-background);
     text-align: center;
-    color: var(--main-dark);
+    color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(even) {
