@@ -104,7 +104,9 @@ export default function Manual() {
   return (
     <>
       <StyledSection>
-        <StyledWelcome>Welcome to the What a feeling app!</StyledWelcome>
+        <StyledWelcome>
+          Welcome to the <b>What a feeling app</b>!
+        </StyledWelcome>
         <StyledText>
           This tool is designed to help you track and understand your emotions
           better. Below are some guidelines to help you navigate the app
@@ -124,7 +126,7 @@ export default function Manual() {
         ))}
 
         <StyledText>
-          Remember, the What a feeling app is here to assist you in
+          Remember, the <b>What a feeling</b> app is here to assist you in
           understanding and managing your emotions. Feel free to explore its
           features, utilize the graphs, highlight and filter specific entries,
           and gain insights into the basic emotions.
