@@ -89,6 +89,14 @@ export default function Navigation({
 
   switchTheme,
 }) {
+  const colorSchemes = [
+    { title: "what a feeling", name: lightTheme },
+    { title: "warm", name: warmTheme },
+    { title: "cold", name: coldTheme },
+    { title: "neutral", name: neutralTheme },
+    { title: "high contrast", name: highContrastTheme },
+  ];
+  console.log(colorSchemes[1].name);
   return (
     <>
       {isOpen ? (
@@ -111,46 +119,18 @@ export default function Navigation({
           <details>
             <StyledSummary>colorschemes</StyledSummary>
             <ThemeWrapper>
-              <ThemeButton
-                onClick={() => {
-                  switchTheme(lightTheme);
-                  handleToggleMenu();
-                }}
-              >
-                what a feeling
-              </ThemeButton>
-              <ThemeButton
-                onClick={() => {
-                  switchTheme(warmTheme);
-                  handleToggleMenu();
-                }}
-              >
-                warm
-              </ThemeButton>
-              <ThemeButton
-                onClick={() => {
-                  switchTheme(coldTheme);
-                  handleToggleMenu();
-                }}
-              >
-                cold
-              </ThemeButton>
-              <ThemeButton
-                onClick={() => {
-                  switchTheme(neutralTheme);
-                  handleToggleMenu();
-                }}
-              >
-                neutral
-              </ThemeButton>
-              <ThemeButton
-                onClick={() => {
-                  switchTheme(highContrastTheme);
-                  handleToggleMenu();
-                }}
-              >
-                high contrast
-              </ThemeButton>
+              {colorSchemes.map(({ title, name }) => (
+                <ThemeButton
+                  key={title}
+                  type="button"
+                  onClick={() => {
+                    switchTheme(name);
+                    handleToggleMenu();
+                  }}
+                >
+                  {title}
+                </ThemeButton>
+              ))}
             </ThemeWrapper>
           </details>
         </StyledArticle>

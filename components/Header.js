@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logo from ".//../public/images/logo.png";
+import Logo from ".//../public/images/logo-f.png";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -15,11 +15,11 @@ const StyledHeader = styled.header`
 `;
 
 const StyledLogo = styled(Image)`
-  height: 100px;
-  width: 200px;
+  height: 50px;
+  width: 50px;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1rem;
+  left: 1rem;
 `;
 
 export default function Header({ switchTheme }) {

@@ -84,7 +84,7 @@ export default function App({ Component, pageProps }) {
   }
   return (
     <ThemeProvider theme={theme}>
-      {theme === defaultTheme ? (
+      {theme === lightTheme || theme === darkTheme ? (
         <StyledToggleTheme type="button" onClick={toggleTheme}>
           {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
         </StyledToggleTheme>

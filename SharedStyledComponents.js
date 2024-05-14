@@ -12,6 +12,11 @@ const StyledButton = styled.button`
   padding: 1rem;
 `;
 
+const StyledSubmitButton = styled(StyledButton)`
+  background-color: var(--main-dark);
+  color: var(--text-on-bright);
+`;
+
 //headlines
 const StyledBasicTitle = styled.h1`
   text-align: center;

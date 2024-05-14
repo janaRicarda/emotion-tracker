@@ -24,7 +24,7 @@ const StyledEmotionList = styled.ul`
 
 const StyledListItem = styled.li`
   text-align: center;
-  background-color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
