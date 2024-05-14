@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { manualData } from "@/lib/db";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -16,9 +18,7 @@ const StyledWelcome = styled.h1`
 const StyledText = styled.p`
   margin-top: 2rem;
   margin-bottom: 3rem;
-  // margin-right: 2rem;
-  //margin-left: 2rem;
-  //padding: 0 0.5rem 0 0.5rem;
+
   &:last-child {
     text-align: center;
     font-size: 1.5rem;
@@ -55,6 +55,7 @@ const StyledListItem = styled.li`
   margin: 0;
   padding: 2rem;
   position: relative;
+
   &:nth-child(even):before {
     content: counter(item);
     position: absolute;
@@ -67,6 +68,7 @@ const StyledListItem = styled.li`
     width: 3rem;
     line-height: 3rem;
     background-color: var(--button-background);
+    background-color: ${({ $itemColor }) => $itemColor};
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
@@ -83,6 +85,7 @@ const StyledListItem = styled.li`
     width: 3rem;
     line-height: 3rem;
     background-color: var(--button-background);
+    background-color: ${({ $itemColor }) => $itemColor};
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
@@ -104,38 +107,62 @@ const StyledListItem = styled.li`
 `;
 
 export default function Manual() {
+  const [itemColor, setItemColor] = useState("var(--joy)");
+
+  function listenSrollEvent() {
+    window.scrollY === 0
+      ? setItemColor("var(--joy)")
+      : window.scrollY <= 500
+      ? setItemColor("var(--surprise)")
+      : window.scrollY <= 1000
+      ? setItemColor("var(--fear)")
+      : window.scrollY <= 1500
+      ? setItemColor("var(--sadness)")
+      : window.scrollY <= 2000
+      ? setItemColor("var(--contempt)")
+      : window.scrollY <= 2500
+      ? setItemColor("var(--disgust)")
+      : window.scrollY <= 3000
+      ? setItemColor("var(--anger)")
+      : setItemColor("var(--joy)");
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", listenSrollEvent);
+  });
+
   return (
-    <>
-      <StyledSection>
-        <StyledWelcome>
-          Welcome to the <b>What a feeling app</b>!
-        </StyledWelcome>
-        <StyledText>
-          This tool is designed to help you track and understand your emotions
-          better. Below are some guidelines to help you navigate the app
-          effectively:
-        </StyledText>
+    <StyledSection>
+      <StyledWelcome>
+        Welcome to the <b>What a feeling app</b>!
+      </StyledWelcome>
+      <StyledText>
+        This tool is designed to help you track and understand your emotions
+        better. Below are some guidelines to help you navigate the app
+        effectively:
+      </StyledText>
 
-        {manualData.map(({ question, text, answers }) => (
-          <StyledDetails key={question}>
-            <StyledSummary>{question}</StyledSummary>
-            <StyledText>{text}</StyledText>
-            <StyledOl>
-              {answers.map((answer) => (
-                <StyledListItem key={answer}>{answer}</StyledListItem>
-              ))}
-            </StyledOl>
-          </StyledDetails>
-        ))}
+      {manualData.map(({ question, text, answers }) => (
+        <StyledDetails key={question}>
+          <StyledSummary>{question}</StyledSummary>
+          <StyledText>{text}</StyledText>
+          <StyledOl>
+            {answers.map((answer) => (
+              <StyledListItem key={answer} $itemColor={itemColor}>
+                {answer}
+              </StyledListItem>
+            ))}
+          </StyledOl>
+        </StyledDetails>
+      ))}
 
-        <StyledText>
-          Remember, the <b>What a feeling</b> app is here to assist you in
-          understanding and managing your emotions. Feel free to explore its
-          features, utilize the graphs, highlight and filter specific entries,
-          and gain insights into the basic emotions.
-        </StyledText>
-        <StyledText>What a feeling!</StyledText>
-      </StyledSection>
-    </>
+      <StyledText>
+        Remember, the <b>What a feeling</b> app is here to assist you in
+        understanding and managing your emotions. Feel free to explore its
+        features, utilize the graphs, highlight and filter specific entries, and
+        gain insights into the basic emotions.
+      </StyledText>
+      <StyledText>What a feeling!</StyledText>
+    </StyledSection>
   );
 }
