@@ -3,7 +3,6 @@ import Chance from "chance";
 import useLocalStorageState from "use-local-storage-state";
 import { exampleData } from "@/lib/db";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import {
@@ -48,6 +47,17 @@ const StyledHighlightButton = styled(StyledButton)`
   padding: 0.3rem;
 `;
 
+const StyledDevButton = styled(StyledButton)`
+  font-size: 1rem;
+  width: fit-content;
+  margin: 0;
+  padding: 0.3rem;
+`;
+
+const StyledRedButton = styled(StyledDevButton)`
+  background-color: red;
+`;
+
 const StyledSubTitle = styled.h2`
   padding: 0.5rem;
   margin: 0.5rem;
@@ -64,7 +74,7 @@ const dateOptions = {
   day: "numeric",
 };
 
-// generating random tension entries for a day, feed with time  in hours and daysTimeStamp;
+// generating random emotion entries for a day, takes endhour and daysTimestamp as paramaters;
 // math model: sin
 function generateDaysTensionEntries(endHour, daysTimestamp) {
   const fullDate = new Date(daysTimestamp);
@@ -177,12 +187,13 @@ function generateCompleteData(daysGoingBack) {
 }
 
 export default function GenerateAndDisplay({
-  // onDeleteEmotionEntry,
   toggleHighlight,
+  setEmotionEntries,
+  emotionEntries,
 }) {
   const [daysGoingBack, setDaysGoingBack] = useState(1);
-  const [simulatedEntries, setSimulatedEntries] = useLocalStorageState(
-    "simulatedEntries",
+  const [backupEntries, setBackupEntries] = useLocalStorageState(
+    "backupEntries",
     {
       defaultValue: [],
     }
@@ -193,7 +204,6 @@ export default function GenerateAndDisplay({
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
-  const router = useRouter();
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
@@ -206,7 +216,9 @@ export default function GenerateAndDisplay({
     }));
   }
 
-  function nullishFunction() {}
+  function nullishFunction() {
+    //Yeah, it does nothing!
+  }
 
   return (
     <StyledFlexColumnWrapper>
@@ -226,16 +238,40 @@ export default function GenerateAndDisplay({
             />
             Days
           </label>
-          <button
+          <StyledDevButton
             type="button"
             onClick={() => setShownEntries(generateCompleteData(daysGoingBack))}
           >
             Generate
-          </button>
+          </StyledDevButton>
+          <StyledDevButton
+            type="button"
+            onClick={() => {
+              setBackupEntries(emotionEntries);
+              setEmotionEntries(generateCompleteData(daysGoingBack));
+            }}
+          >
+            Replace userdata
+          </StyledDevButton>
+          <StyledDevButton
+            type="button"
+            onClick={() => setEmotionEntries(backupEntries)}
+          >
+            Get backup
+          </StyledDevButton>
+          <StyledRedButton
+            type="button"
+            onClick={() => {
+              setEmotionEntries([]);
+              setShownEntries([]);
+            }}
+          >
+            Reset
+          </StyledRedButton>
         </StyledFlexWrapper>
         <StyledSubTitle>Recorded Emotions (generated)</StyledSubTitle>
 
-        {simulatedEntries.length !== 0 && (
+        {shownEntries.length !== 0 && (
           <>
             <StyledHighlightButton onClick={handleShowHighlighted}>
               {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
@@ -244,9 +280,9 @@ export default function GenerateAndDisplay({
         )}
       </StyledPageHeader>
       <StyledSpacer></StyledSpacer>
-      {simulatedEntries.length !== 0 && (
+      {shownEntries.length !== 0 && (
         <EmotionRecordsList
-          emotionEntries={simulatedEntries}
+          emotionEntries={shownEntries}
           onDeleteEmotionEntry={nullishFunction}
           shownEntries={
             isHighlighted

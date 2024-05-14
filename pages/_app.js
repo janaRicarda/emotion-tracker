@@ -89,6 +89,7 @@ export default function App({ Component, pageProps }) {
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
+          setEmotionEntries={setEmotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
           toggleHighlight={toggleHighlight}
