@@ -71,16 +71,25 @@ const StyledSummary = styled.summary`
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
-  align-items: start;
-  justify-content: none;
+  width: 100%;
+
   gap: 1px;
   border: 1px solid var(--text-on-bright);
 `;
 const ThemeButton = styled(StyledButton)`
-  color: var(--text-on-bright);
-  padding: 0.5rem;
-  margin: 0.2rem;
-  width: inherit;
+  text-align: left;
+  color: var(--text-on-dark);
+  background: var(--submit-button-background);
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid var(--text-on-bright);
+  padding: 0;
+  padding-left: 0.1rem;
+  margin: 0;
+  width: 100%;
+  &:last-child {
+    border-bottom: 0;
+  }
 `;
 
 export default function Navigation({
@@ -96,7 +105,7 @@ export default function Navigation({
     { title: "neutral", name: neutralTheme },
     { title: "high contrast", name: highContrastTheme },
   ];
-  console.log(colorSchemes[1].name);
+
   return (
     <>
       {isOpen ? (

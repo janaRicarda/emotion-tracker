@@ -17,8 +17,8 @@ export const lightTheme = {
 export const darkTheme = {
   background: "#030352",
   text: "#f1eaea",
-  textOnBright: "#030352",
-  textOnDark: "#f1eaea",
+  textOnBright: "#f1eaea",
+  textOnDark: "#030352",
   buttonBackground: "rebeccapurple",
   submitButtonBackground: "#030352",
   joy: "hsl(60, 80%, 70%)",
