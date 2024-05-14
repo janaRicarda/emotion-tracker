@@ -92,7 +92,7 @@ export default function EmotionForm({
   const router = useRouter();
 
   const {
-    date,
+    timeAndDate,
     emotion,
     tensionLevel,
     subemotion,
@@ -197,7 +197,7 @@ export default function EmotionForm({
       </StyledH1>
       <StyledForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
-          {editMode ? `Entry from:` : "Date: "} {date}
+          {editMode ? `Entry from:` : "Date: "} {timeAndDate}
         </p>
         <TensionLabelEdit htmlFor="tension-level">
           Choose a tension level between 0 and 100:

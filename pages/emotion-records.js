@@ -63,7 +63,39 @@ const StyledButtonGroup = styled.div`
   gap: 10px;
 `;
 
+// styles for DayPicker
+const StyledBackground = styled.div`
+  background-color: black;
+  opacity: 0.5;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+`;
+
+const WrapperForDayPicker = styled.section`
+  position: fixed;
+  right: calc(50% - 170px);
+  top: 9rem;
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  background-color: var(--main-bright);
+  border-radius: 6px;
+  padding: 1rem;
+`;
+
+const WrapperForNavigation = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+`;
+
 const StyledNavButton = styled.button`
+  width: 5rem;
   border: 1px solid var(--main-background);
   border-radius: 6px;
   margin: 0.5rem;
@@ -72,9 +104,9 @@ const StyledNavButton = styled.button`
   color: var(--main-dark);
 `;
 
-const WrapperForNavigation = styled.div`
-  display: flex;
-  flex-direction: row;
+const StyledParagraph = styled.p`
+  text-align: center;
+  padding: 0.5rem;
 `;
 
 export default function EmotionRecords({
@@ -111,7 +143,7 @@ export default function EmotionRecords({
     { name: "weekButton", label: " Last Week", daysAgo: 7 },
     { name: "monthButton", label: "Last Month", daysAgo: 30 },
     { name: "highlightedButton", label: "Highlighted" },
-    { name: "datePicker", label: "Custom 📅" },
+    { name: "datePicker", label: "Custom 📅", setShow: true },
   ];
 
   // sets filteredEntries depending on buttonState; reacts to changes of emotionEntrie in case of e.g. deletion
@@ -153,7 +185,6 @@ export default function EmotionRecords({
         buttonState.weekButton ||
         buttonState.monthButton
       ) {
-        setShowDayPicker(false);
         const todayOrEarlier = getDate(daysAgo);
         const today = getDate(0);
         return getFilteredEntries(singleComparison, todayOrEarlier, today);
@@ -166,7 +197,6 @@ export default function EmotionRecords({
         return highlightedEntries;
       }
       if (buttonState.datePicker) {
-        setShowDayPicker(true);
         if (!selectedTime) {
           return emotionEntries;
         } else {
@@ -187,7 +217,6 @@ export default function EmotionRecords({
           );
         }
       } else {
-        setShowDayPicker(false);
         return emotionEntries;
       }
     });
@@ -204,7 +233,7 @@ export default function EmotionRecords({
       includeScore: true,
       threshold: 0.4,
       keys: [
-        "date",
+        "timeAndDate",
         "tensionLevel",
         "trigger",
         "intensity",
@@ -238,92 +267,94 @@ export default function EmotionRecords({
     <StyledWrapper>
       <StyledPageHeader>
         <StyledTitle>Recorded Emotions</StyledTitle>
-
-        {emotionEntries.length !== 0 && (
-          <>
-            <SearchBar onSearch={handleSearch} />
-            <StyledButtonGroup>
-              {filterButtons.map(
-                ({ name, label, singleComparison, daysAgo }) => (
-                  <StyledFilterButton
-                    key={name}
-                    $active={buttonState[name] && true}
-                    onClick={() =>
-                      setButtonState({
-                        [name]: true,
-                        singleComparison,
-                        daysAgo,
-                      })
-                    }
-                  >
-                    {label}
-                  </StyledFilterButton>
-                )
-              )}
-            </StyledButtonGroup>
-          </>
-        )}
+        <SearchBar onSearch={handleSearch} />
+        <StyledButtonGroup>
+          {filterButtons.map(
+            ({ name, label, singleComparison, daysAgo, setShow }) => (
+              <StyledFilterButton
+                key={name}
+                $active={buttonState[name] && true}
+                onClick={() => {
+                  setButtonState({
+                    [name]: true,
+                    singleComparison,
+                    daysAgo,
+                  });
+                  setShow && setShowDayPicker(!showDayPicker);
+                }}
+              >
+                {label}
+              </StyledFilterButton>
+            )
+          )}
+        </StyledButtonGroup>
       </StyledPageHeader>
+      {emotionEntries.length !== 0 && (
+        <>
+          {showDayPicker && (
+            <>
+              <StyledBackground />
+              <WrapperForDayPicker>
+                <DayPicker
+                  mode="range"
+                  selected={selectedTime}
+                  onSelect={setSelectedTime}
+                  toDate={new Date()}
+                  month={month}
+                  onMonthChange={setMonth}
+                />
+                {selectedTime ? (
+                  <StyledParagraph>
+                    Your Selection:<br></br>
+                    {getFormattedDate(selectedTime.from)}
+                    {selectedTime.to &&
+                      selectedTime.from.toString() !==
+                        selectedTime.to.toString() &&
+                      " - " + getFormattedDate(selectedTime.to)}
+                  </StyledParagraph>
+                ) : (
+                  <StyledParagraph>
+                    Select a single date or a range of dates
+                  </StyledParagraph>
+                )}
+                <WrapperForNavigation>
+                  <StyledNavButton
+                    disabled={
+                      month.getMonth() === new Date().getMonth() ? true : false
+                    }
+                    onClick={() => setMonth(new Date())}
+                  >
+                    Today
+                  </StyledNavButton>
+                  <StyledNavButton
+                    disabled={selectedTime ? false : true}
+                    onClick={() => setSelectedTime()}
+                  >
+                    Reset
+                  </StyledNavButton>
+                  <StyledNavButton onClick={() => setShowDayPicker(false)}>
+                    Ok
+                  </StyledNavButton>
+                </WrapperForNavigation>
+              </WrapperForDayPicker>
+            </>
+          )}
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+            buttonState={buttonState}
+            searchTerm={searchTerm}
+            selectedTime={selectedTime}
+          />
+        </>
+      )}
       {emotionEntries.length === 0 && (
         <StyledTextMessage>
           You haven&apos;t made any Entries yet.<br></br>
           <StyledLink href="./">add Entry &rarr;</StyledLink>
         </StyledTextMessage>
-      )}
-
-      {emotionEntries.length !== 0 && (
-        <>
-          {showDayPicker && (
-            <div style={{ marginTop: "150px" }}>
-              <DayPicker
-                mode="range"
-                selected={selectedTime}
-                onSelect={setSelectedTime}
-                toDate={new Date()}
-                month={month}
-                onMonthChange={setMonth}
-              />
-              {selectedTime ? (
-                <p style={{ textAlign: "center" }}>
-                  Your Selection:<br></br>
-                  {getFormattedDate(selectedTime.from)}
-                  {selectedTime.to &&
-                    selectedTime.from.toString() !==
-                      selectedTime.to.toString() &&
-                    " - " + getFormattedDate(selectedTime.to)}
-                </p>
-              ) : (
-                <p>Select a single date or a range of dates</p>
-              )}
-              <WrapperForNavigation>
-                <StyledNavButton
-                  disabled={
-                    month.getMonth() === new Date().getMonth() ? true : false
-                  }
-                  onClick={() => setMonth(new Date())}
-                >
-                  Today
-                </StyledNavButton>
-                <StyledNavButton
-                  disabled={selectedTime ? false : true}
-                  onClick={() => setSelectedTime()}
-                >
-                  Reset
-                </StyledNavButton>
-                <StyledNavButton onClick={() => setShowDayPicker(false)}>
-                  Hide
-                </StyledNavButton>
-              </WrapperForNavigation>
-            </div>
-          )}
-          <EmotionRecordsList
-            filteredEntries={filteredEntries}
-            buttonState={buttonState}
-            onDeleteEmotionEntry={onDeleteEmotionEntry}
-            shownEntries={shownEntries}
-            toggleHighlight={toggleHighlight}
-          />
-        </>
       )}
     </StyledWrapper>
   );

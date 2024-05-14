@@ -22,7 +22,7 @@ export default function generateExampleData() {
     const isoDateString = currentDate.toISOString();
 
     const entry = {
-      date: dateString.replace(" at", ","),
+      timeAndDate: dateString.replace(" at", ","),
       id: generateRandomId(),
       isoDate: isoDateString,
       tensionLevel: getRandomTensionLevel(),

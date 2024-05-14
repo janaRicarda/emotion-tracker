@@ -104,12 +104,19 @@ const StyledHeartSymbol = styled(HeartOutlineIcon)`
   top: 5px;
 `;
 
+const StyledDateIndicator = styled.p`
+  text-align: center;
+  margin: 0 auto 0.7rem;
+`;
+
 export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
   filteredEntries,
   buttonState,
+  selectedTime,
+  searchTerm,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -129,6 +136,16 @@ export default function EmotionRecordsList({
       ...prevShow,
       [id]: !prevShow[id],
     }));
+  }
+
+  function getFormattedDate(selectedDate) {
+    const date = new Intl.DateTimeFormat(`de`, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(selectedDate);
+
+    return date;
   }
 
   return (
@@ -152,10 +169,26 @@ export default function EmotionRecordsList({
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
       <StyledUnorderedList>
+        {buttonState.datePicker && !searchTerm ? (
+          selectedTime ? (
+            <StyledDateIndicator>
+              Your Selection:<br></br>
+              {getFormattedDate(selectedTime.from)}
+              {selectedTime.to &&
+                selectedTime.from.toString() !== selectedTime.to.toString() &&
+                " - " + getFormattedDate(selectedTime.to)}
+            </StyledDateIndicator>
+          ) : (
+            <StyledDateIndicator>
+              Click the calendar and select a date
+            </StyledDateIndicator>
+          )
+        ) : null}
+        {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries.map(
           ({
             id,
-            date,
+            timeAndDate,
             tensionLevel,
             trigger,
             intensity,
@@ -166,10 +199,10 @@ export default function EmotionRecordsList({
             isHighlighted,
           }) => {
             return (
-              <>
-                <StyledListItem key={id}>
+              <section key={id}>
+                <StyledListItem>
                   <StyledParagraph onClick={() => handleShowDetails(id)}>
-                    {date}
+                    {timeAndDate}
                   </StyledParagraph>
                   <StyledEditButton
                     aria-label="Edit emotion entry"
@@ -192,7 +225,7 @@ export default function EmotionRecordsList({
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
                     itemId={id}
-                    itemText={date}
+                    itemText={timeAndDate}
                     confirmFunction={onDeleteEmotionEntry}
                     cancelButtonText={"Keep it!"}
                     confirmButtonText={"Delete it!"}
@@ -211,7 +244,7 @@ export default function EmotionRecordsList({
                   {trigger && <li>Trigger: {trigger}</li>}
                   {notes && <li>Notes: {notes}</li>}
                 </StyledDetails>
-              </>
+              </section>
             );
           }
         )}
