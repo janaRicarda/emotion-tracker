@@ -31,7 +31,7 @@ export const warmTheme = {
   text: "#24164a",
   textOnBright: "#24164a",
   buttonBackground: "orange",
-  joy: "#f2ed5c",
+  joy: "#FFE34D",
   surprise: "#f7c059",
   fear: "#f7a559",
   sadness: "#f78159",
@@ -41,10 +41,10 @@ export const warmTheme = {
 };
 
 export const coldTheme = {
-  background: "#cbf0f7",
+  background: "#B9FFFF",
   text: "#09343d",
   textOnBright: "#09343d",
-  buttonBackground: "lightskyblue",
+  buttonBackground: "#00EBCA",
   joy: "#b059f7",
   surprise: "#7159f7",
   fear: "#5971f7",
@@ -59,13 +59,13 @@ export const neutralTheme = {
   text: "black",
   textOnBright: "black",
   buttonBackground: "lightgrey",
-  joy: "grey",
-  surprise: "grey",
-  fear: "grey",
-  sadness: "grey",
-  contempt: "grey",
-  disgust: "grey",
-  anger: "grey",
+  joy: "lightgrey",
+  surprise: "lightgrey",
+  fear: "lightgrey",
+  sadness: "lightgrey",
+  contempt: "lightgrey",
+  disgust: "lightgrey",
+  anger: "lightgrey",
 };
 
 export const highContrastTheme = {

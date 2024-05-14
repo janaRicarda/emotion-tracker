@@ -3,14 +3,7 @@ import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
-import {
-  lightTheme,
-  darkTheme,
-  /*  warmTheme,
-  coldTheme,
-  neutralTheme,
-  highContrastTheme, */
-} from "@/components/Theme";
+import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 
@@ -22,13 +15,11 @@ const StyledToggleTheme = styled.button`
   border-radius: 50%;
   border: 1px solid var(--main-dark);
   background-color: transparent;
-  color: var(--main-dark);
   font-size: 1rem;
   margin: 1rem;
   position: fixed;
   top: 0.7rem;
   right: 4rem;
-
   z-index: 3;
 `;
 
@@ -42,9 +33,7 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
-  // const customTheme = [warmTheme, coldTheme, neutralTheme, highContrastTheme];
-  // const [theme, setTheme] = useState("light");
-  //const [theme, setTheme] = useState(lightTheme);
+
   const [theme, setTheme] = useState(defaultTheme);
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
@@ -54,18 +43,12 @@ export default function App({ Component, pageProps }) {
   );
 
   function toggleTheme() {
-    // theme === "light" ? setTheme("dark") : setTheme("light");
-    //theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme);
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
 
-  function switchWarmTheme() {
-    setTheme(warmTheme);
-  }
   function switchTheme(customTheme) {
     setTheme(customTheme);
   }
-  // const newTheme = [warmTheme, coldTheme, neutralTheme, highContrastTheme];
 
   function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
@@ -101,9 +84,12 @@ export default function App({ Component, pageProps }) {
   }
   return (
     <ThemeProvider theme={theme}>
-      <StyledToggleTheme type="button" onClick={toggleTheme}>
-        {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-      </StyledToggleTheme>
+      {theme === defaultTheme ? (
+        <StyledToggleTheme type="button" onClick={toggleTheme}>
+          {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+        </StyledToggleTheme>
+      ) : null}
+
       <GlobalStyle />
       <Layout switchTheme={switchTheme}>
         <Component

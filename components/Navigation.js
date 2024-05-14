@@ -2,7 +2,13 @@ import styled from "styled-components";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
 import { StyledStandardLink } from "@/SharedStyledComponents";
-import { warmTheme, coldTheme, neutralTheme, highContrastTheme } from "./Theme";
+import {
+  lightTheme,
+  warmTheme,
+  coldTheme,
+  neutralTheme,
+  highContrastTheme,
+} from "./Theme";
 import {
   StyledButton,
   StyledFlexColumnWrapper,
@@ -24,7 +30,7 @@ const StyledCloseButton = styled(Close)`
   width: 2rem;
 
   fill: var(--text-on-bright);
-  //background: var(--button-background);
+
   color: var(--main-dark);
   border-style: none;
   margin: 1rem;
@@ -52,7 +58,13 @@ const StyledArticle = styled.article`
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
   color: var(--text-on-bright);
-  background-color: var(--button-background);
+
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+`;
+const StyledSummary = styled.summary`
+  color: var(--text-on-bright);
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
@@ -71,7 +83,12 @@ const ThemeButton = styled(StyledButton)`
   width: inherit;
 `;
 
-export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
+export default function Navigation({
+  handleToggleMenu,
+  isOpen,
+
+  switchTheme,
+}) {
   return (
     <>
       {isOpen ? (
@@ -92,18 +109,46 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
             emotion records
           </StyledLink>
           <details>
-            <summary>Colorschemes</summary>
+            <StyledSummary>colorschemes</StyledSummary>
             <ThemeWrapper>
-              <ThemeButton onClick={() => switchTheme(warmTheme)}>
+              <ThemeButton
+                onClick={() => {
+                  switchTheme(lightTheme);
+                  handleToggleMenu();
+                }}
+              >
+                what a feeling
+              </ThemeButton>
+              <ThemeButton
+                onClick={() => {
+                  switchTheme(warmTheme);
+                  handleToggleMenu();
+                }}
+              >
                 warm
               </ThemeButton>
-              <ThemeButton onClick={() => switchTheme(coldTheme)}>
+              <ThemeButton
+                onClick={() => {
+                  switchTheme(coldTheme);
+                  handleToggleMenu();
+                }}
+              >
                 cold
               </ThemeButton>
-              <ThemeButton onClick={() => switchTheme(neutralTheme)}>
+              <ThemeButton
+                onClick={() => {
+                  switchTheme(neutralTheme);
+                  handleToggleMenu();
+                }}
+              >
                 neutral
               </ThemeButton>
-              <ThemeButton onClick={() => switchTheme(highContrastTheme)}>
+              <ThemeButton
+                onClick={() => {
+                  switchTheme(highContrastTheme);
+                  handleToggleMenu();
+                }}
+              >
                 high contrast
               </ThemeButton>
             </ThemeWrapper>

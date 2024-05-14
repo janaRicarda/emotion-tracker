@@ -4,7 +4,7 @@ import Link from "next/link";
 //buttons
 const StyledButton = styled.button`
   background-color: var(--button-background);
-  color: var(--main-dark);
+  color: var(--text-on-bright);
   width: 6rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
