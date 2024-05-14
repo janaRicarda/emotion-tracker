@@ -19,6 +19,7 @@ export default createGlobalStyle`
   --text-on-dark: ${({ theme }) => theme.textOnDark};
  --button-background: ${({ theme }) => theme.buttonBackground};
  --submit-button-background:  ${({ theme }) => theme.submitButtonBackground};
+ --section-background: ${({ theme }) => theme.sectionBackground};
   --joy: ${({ theme }) => theme.joy};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};

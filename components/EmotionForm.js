@@ -14,9 +14,9 @@ import {
 
 const StyledEmotionFormTitle = styled(StyledBasicTitle)`
   width: 100vw;
-  top: 120px;
+  top: 100px;
   left: 0;
-  background: linear-gradient(transparent, var(--main-bright) 20%);
+  background: var(--main-bright);
 `;
 
 const StyledEmotionForm = styled(StyledForm)`
