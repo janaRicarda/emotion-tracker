@@ -53,8 +53,8 @@ export const warmTheme = {
 export const coldTheme = {
   background: "#D3F6F8",
   text: "#0F1555",
-  textOnBright: "#09343d",
-  textOnDark: "#0F1555",
+  textOnBright: "#0F1555",
+  textOnDark: "#D3F6F8",
   buttonBackground: "#00EBCA",
   submitButtonBackground: "#09343d",
   sectionBackground: "#D7D5FB",
