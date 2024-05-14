@@ -11,7 +11,7 @@ const StyledArticle = styled.article`
   border-radius: 10px;
   margin: 1rem;
   padding: 2rem;
-  background-color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   color: var(--text-on-bright);
 `;
 
