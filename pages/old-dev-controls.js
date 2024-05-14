@@ -1,7 +1,7 @@
 import { uid } from "uid";
 import Chance from "chance";
 import useLocalStorageState from "use-local-storage-state";
-import { exampleData } from "@/lib/db";
+import { emotionData, exampleData } from "@/lib/db";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -64,32 +64,30 @@ const dateOptions = {
   day: "numeric",
 };
 
-// generating random tension entries for a day, feed with time  in hours and daysTimeStamp;
+const timeOptions = {
+  hour: "numeric",
+  hour12: false,
+  minute: "numeric",
+};
+
+// generating random tension entries for a day, feed with time  in hours for currentday;
 // math model: sin
-function generateDaysTensionEntries(endHour, daysTimestamp) {
-  const fullDate = new Date(daysTimestamp);
-
-  const date = new Intl.DateTimeFormat("en-US", dateOptions).format(fullDate);
-
+function simulateTensionData(time, daysTimestamp) {
+  const hours = [
+    5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+  ];
   //variables for sinus curve
   const a = chance.integer({ min: -50, max: 50 });
   const b = chance.floating({ min: -3, max: 3 });
   const c = chance.floating({ min: 4, max: 8 });
   const d = chance.integer({ min: 30, max: 60 });
 
-  const basicArray = [...Array(endHour + 1).keys()];
-  const hoursToFill = basicArray.slice(5);
-
-  const hourlyEntries = hoursToFill.map((hour) => {
+  const hourlyEntries = hours.slice(0, time - 5).map((hour) => {
     const minutes = chance.integer({ min: 0, max: 59 });
-    const time = hour + ":" + minutes.toString().padStart(2, "0");
-
-    const object = {
+    const container = {
       id: uid(),
-      date,
-      time,
-      timeAndDate: date + ", " + time,
       timeStamp: daysTimestamp + hour * 3600000 + minutes * 60000,
+      time: hour + ":" + minutes.toString().padStart(2, "0"),
       tensionLevel: Math.max(
         chance.integer({ min: 0, max: 15 }),
         Math.min(
@@ -106,27 +104,32 @@ function generateDaysTensionEntries(endHour, daysTimestamp) {
           ? chance.bool({ likelihood: 20 })
           : chance.bool({ likelihood: 5 }),
 
-      toBeDetailed: chance.bool({ likelihood: 20 }),
+      toBeDetailed: chance.bool({ likelihood: 15 }),
     };
 
-    return object;
+    return container;
   });
-
-  const daysTensionEntries = hourlyEntries
-    //elimination of elements according to probability
-    .filter((entry) => entry.toBeDeleted !== true)
-    //adding isoDatestring for Filters and add details to some entries
+  //adding date
+  const tensionEntries = hourlyEntries
     .map((entry) => {
-      const isoDate = new Date(entry.timeStamp).toISOString();
+      const objectDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
+        new Date(daysTimestamp)
+      );
+      const object = {
+        ...entry,
+        dateOfEntry: objectDate,
+        date: objectDate + ", " + entry.time,
+      };
+      return object;
+    })
+    .map((entry) =>
       entry.toBeDetailed === true
         ? (entry = { ...generateDetailedEntry(), ...entry })
-        : entry;
-      const object = { ...entry, isoDate };
-
-      return object;
-    });
-  console.log(daysTensionEntries);
-  return daysTensionEntries;
+        : entry
+    )
+    //elimination of elements according to probability
+    .filter((entry) => entry.toBeDeleted !== true);
+  return tensionEntries;
 }
 
 function generateDetailedEntry() {
@@ -138,11 +141,11 @@ function generateDetailedEntry() {
     tensionLevel:
       exampleData[randomEmotionNumber].stories[randomStory].tensionLevel,
     emotion: exampleData[randomEmotionNumber].emotion,
-    intensity: chance.integer({ min: 40, max: 100 }),
+    intensity: chance.integer({ min: 50, max: 100 }),
     category: exampleData[randomEmotionNumber].stories[randomStory].category,
     trigger: exampleData[randomEmotionNumber].stories[randomStory].trigger,
     notes: exampleData[randomEmotionNumber].stories[randomStory].notes,
-    isHighlighted: chance.bool({ likelihood: 90 }),
+    isHighlighted: chance.bool({ likelihood: 75 }),
   };
 
   return detailedEntry;
@@ -155,11 +158,34 @@ function generateCompleteData(daysGoingBack) {
   const daysToFill = [...Array(Number(daysGoingBack)).keys()];
   const tensionEntries = daysToFill.map((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
-    const array = [...generateDaysTensionEntries(23, timeStamp)];
+    const array = [...simulateTensionData(23, timeStamp)];
     return array;
   });
 
-  const unsortedEntries = tensionEntries.flat();
+  const completeTensionEntries = tensionEntries.flat();
+
+  const detailedEntries = daysToFill.map((day) => {
+    const object = {
+      timeStamp: daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000,
+      id: uid(),
+    };
+    const objectDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
+      new Date(object.timeStamp)
+    );
+    const objectTime = new Intl.DateTimeFormat("en-US", timeOptions).format(
+      new Date(object.timeStamp)
+    );
+    const objectDateAndTime = objectDate + ", " + objectTime;
+    const entry = {
+      ...object,
+      dateOfEntry: objectDate,
+      time: objectTime,
+      date: objectDateAndTime,
+      ...generateDetailedEntry(),
+    };
+    return entry;
+  });
+  detailedEntries.reverse();
 
   function compare(a, b) {
     if (a.timeStamp < b.timeStamp) {
@@ -171,13 +197,16 @@ function generateCompleteData(daysGoingBack) {
     return 0;
   }
 
-  const completeEntries = unsortedEntries.sort(compare).reverse();
+  const completeEntries = [...detailedEntries, ...completeTensionEntries]
+    .sort(compare)
+    .reverse();
   console.log(completeEntries);
   return completeEntries;
 }
 
 export default function GenerateAndDisplay({
-  // onDeleteEmotionEntry,
+  // emotionEntries,
+  onDeleteEmotionEntry,
   toggleHighlight,
 }) {
   const [daysGoingBack, setDaysGoingBack] = useState(1);
@@ -187,9 +216,7 @@ export default function GenerateAndDisplay({
       defaultValue: [],
     }
   );
-  const [shownEntries, setShownEntries] = useState(
-    generateCompleteData(daysGoingBack)
-  );
+  const [shownEntries, setShownEntries] = useState(simulatedEntries);
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
@@ -206,8 +233,6 @@ export default function GenerateAndDisplay({
     }));
   }
 
-  function nullishFunction() {}
-
   return (
     <StyledFlexColumnWrapper>
       <StyledPageHeader>
@@ -220,18 +245,20 @@ export default function GenerateAndDisplay({
               type="number"
               id="daysGoingback"
               value={daysGoingBack}
-              min={1}
-              max={150}
+              max={100}
               onChange={(event) => setDaysGoingBack(event.target.value)}
             />
             Days
           </label>
           <button
             type="button"
-            onClick={() => setShownEntries(generateCompleteData(daysGoingBack))}
+            onClick={() => {
+              setSimulatedEntries(generateCompleteData(daysGoingBack));
+              setShownEntries(simulatedEntries);
+            }}
           >
             Generate
-          </button>
+          </button>{" "}
         </StyledFlexWrapper>
         <StyledSubTitle>Recorded Emotions (generated)</StyledSubTitle>
 
@@ -247,7 +274,7 @@ export default function GenerateAndDisplay({
       {simulatedEntries.length !== 0 && (
         <EmotionRecordsList
           emotionEntries={simulatedEntries}
-          onDeleteEmotionEntry={nullishFunction}
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={
             isHighlighted
               ? shownEntries.filter((entry) => entry.isHighlighted)

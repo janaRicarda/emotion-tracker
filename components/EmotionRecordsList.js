@@ -117,7 +117,7 @@ export default function EmotionRecordsList({
         {shownEntries?.map(
           ({
             id,
-            date,
+            timeAndDate,
             tensionLevel,
             trigger,
             intensity,
@@ -131,7 +131,7 @@ export default function EmotionRecordsList({
               <>
                 <StyledRecordListItem key={id}>
                   <StyledParagraph onClick={() => handleShowDetails(id)}>
-                    {date}
+                    {timeAndDate}
                   </StyledParagraph>
                   <StyledEditButton
                     aria-label="Edit emotion entry"
@@ -154,7 +154,7 @@ export default function EmotionRecordsList({
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
                     itemId={id}
-                    itemText={date}
+                    itemText={timeAndDate}
                     confirmFunction={onDeleteEmotionEntry}
                     cancelButtonText={"Keep it!"}
                     confirmButtonText={"Delete it!"}
