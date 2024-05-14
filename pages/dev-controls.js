@@ -103,6 +103,8 @@ function simulateTensionData(time, daysTimestamp) {
         hour < 7
           ? chance.bool({ likelihood: 20 })
           : chance.bool({ likelihood: 5 }),
+
+      toBeDetailed: chance.bool({ likelihood: 9 }),
     };
 
     return container;
@@ -131,8 +133,11 @@ function generateDetailedEntry() {
   const randomStory = chance.integer({ min: 0, max: 2 });
   const detailedEntry = {
     id,
-    tensionLevel: chance.integer({ min: 0, max: 100 }),
+    tensionLevel:
+      exampleData[randomEmotionNumber].stories[randomStory].tensionLevel,
     emotion: exampleData[randomEmotionNumber].emotion,
+    intensity: chance.integer({ min: 50, max: 100 }),
+    category: exampleData[randomEmotionNumber].stories[randomStory].category,
     trigger: exampleData[randomEmotionNumber].stories[randomStory].trigger,
     notes: exampleData[randomEmotionNumber].stories[randomStory].notes,
     isHighlighted: chance.bool({ likelihood: 75 }),
