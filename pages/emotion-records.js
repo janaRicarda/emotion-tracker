@@ -3,7 +3,6 @@ import {
   StyledFlexColumnWrapper,
   StyledButton,
   StyledStandardLink,
-  StyledEmotionRecordsTitle,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
@@ -39,9 +38,13 @@ const StyledLink = styled(StyledStandardLink)`
 const StyledFilterButton = styled(StyledButton)`
   background-color: ${({ $active }) =>
     $active ? "var(--button-background)" : "var(--main-bright)"};
-    margin: 0;
-    padding: 0;
-    width: auto;
+  margin: 0;
+  padding: 0.2rem;
+  width: auto;
+`;
+
+const StyledEmotionRecordsTitle = styled.h1`
+  font-weight: 600;
 `;
 
 const StyledButtonGroup = styled.div`
@@ -86,6 +89,7 @@ const WrapperForNavigation = styled.div`
 
 const StyledNavButton = styled(StyledButton)`
   width: 5rem;
+  padding: 0.2rem;
   margin: 0.5rem;
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
 `;
