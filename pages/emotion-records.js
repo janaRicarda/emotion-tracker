@@ -1,16 +1,15 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
+import {
+  StyledFlexColumnWrapper,
+  StyledButton,
+  StyledStandardLink,
+  StyledEmotionRecordsTitle,
+} from "@/SharedStyledComponents";
 import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Fuse from "fuse.js";
 import { DayPicker } from "react-day-picker";
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const StyledPageHeader = styled.section`
   width: 100%;
@@ -26,32 +25,23 @@ const StyledPageHeader = styled.section`
   z-index: 1;
 `;
 
-const StyledTitle = styled.h1`
-  font-weight: 500;
-`;
 const StyledTextMessage = styled.p`
   margin-top: 150px;
   text-align: center;
   line-height: 3;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  border: 1px solid var(--main-dark);
+const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
-  border-radius: 6px;
-  color: var(--main-dark);
 `;
 
-const StyledFilterButton = styled.button`
-  font-size: 1rem;
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  background-color: var(--main-bright);
+const StyledFilterButton = styled(StyledButton)`
   background-color: ${({ $active }) =>
     $active ? "var(--button-background)" : "var(--main-bright)"};
-  color: var(--main-dark);
+    margin: 0;
+    padding: 0;
+    width: auto;
 `;
 
 const StyledButtonGroup = styled.div`
@@ -94,14 +84,10 @@ const WrapperForNavigation = styled.div`
   padding: 0.5rem;
 `;
 
-const StyledNavButton = styled.button`
+const StyledNavButton = styled(StyledButton)`
   width: 5rem;
-  border: 1px solid var(--main-background);
-  border-radius: 6px;
   margin: 0.5rem;
-  background-color: var(--button-background);
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
-  color: var(--main-dark);
 `;
 
 const StyledParagraph = styled.p`
@@ -264,9 +250,9 @@ export default function EmotionRecords({
   }
 
   return (
-    <StyledWrapper>
+    <StyledFlexColumnWrapper>
       <StyledPageHeader>
-        <StyledTitle>Recorded Emotions</StyledTitle>
+        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <SearchBar onSearch={handleSearch} />
         <StyledButtonGroup>
           {filterButtons.map(
@@ -356,6 +342,6 @@ export default function EmotionRecords({
           <StyledLink href="./">add Entry &rarr;</StyledLink>
         </StyledTextMessage>
       )}
-    </StyledWrapper>
+    </StyledFlexColumnWrapper>
   );
 }

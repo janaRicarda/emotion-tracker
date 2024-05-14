@@ -4,25 +4,25 @@ import TrashIcon from "../public/trash-icon.svg";
 import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
+import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 import Link from "next/link";
 
-const StyledUnorderedList = styled.ul`
-  list-style: none;
+const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 11rem auto 1rem;
   text-align: left;
 `;
 
-const StyledListItem = styled.li`
+const StyledRecordListItem = styled.li`
   position: relative;
 `;
 
 const StyledParagraph = styled.p`
-  margin: 0.5rem auto;
   border: 1px solid var(--main-dark);
-  border-radius: 0.5rem;
+  border-radius: 6px;
+  margin: 0.5rem auto;
   padding: 1rem;
   box-shadow: 0 0 3px 0;
   width: 80vw;
@@ -32,7 +32,7 @@ const StyledParagraph = styled.p`
   }
 `;
 
-const StyledDetails = styled.ul`
+const StyledDetails = styled(StyledList)`
   display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
   padding: 0 1rem;
   margin-bottom: 2rem;
@@ -168,7 +168,7 @@ export default function EmotionRecordsList({
         ) : (
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
-      <StyledUnorderedList>
+      <StyledRecordsList>
         {buttonState.datePicker && !searchTerm ? (
           selectedTime ? (
             <StyledDateIndicator>
@@ -200,7 +200,7 @@ export default function EmotionRecordsList({
           }) => {
             return (
               <section key={id}>
-                <StyledListItem>
+                <StyledRecordListItem>
                   <StyledParagraph onClick={() => handleShowDetails(id)}>
                     {timeAndDate}
                   </StyledParagraph>
@@ -220,7 +220,7 @@ export default function EmotionRecordsList({
                   ) : (
                     <StyledOutlineButton onClick={() => toggleHighlight(id)} />
                   )}
-                </StyledListItem>
+                </StyledRecordListItem>
                 {showConfirmMessage[id] && (
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
@@ -248,7 +248,7 @@ export default function EmotionRecordsList({
             );
           }
         )}
-      </StyledUnorderedList>
+      </StyledRecordsList>
     </>
   );
 }
