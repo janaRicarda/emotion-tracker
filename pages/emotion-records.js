@@ -94,15 +94,13 @@ export default function EmotionRecords({
 
   function DisplayDate() {
     return (
-      selectedTime && (
-        <StyledParagraph>
-          Your Selection:<br></br>
-          {getFormattedDate(selectedTime.from)}
-          {selectedTime.to &&
-            selectedTime.from.toString() !== selectedTime.to.toString() &&
-            " - " + getFormattedDate(selectedTime.to)}
-        </StyledParagraph>
-      )
+      <StyledParagraph>
+        Your Selection:<br></br>
+        {getFormattedDate(selectedTime.from)}
+        {selectedTime.to &&
+          selectedTime.from.toString() !== selectedTime.to.toString() &&
+          " - " + getFormattedDate(selectedTime.to)}
+      </StyledParagraph>
     );
   }
 
@@ -122,7 +120,7 @@ export default function EmotionRecords({
           changeSelectedTime={handleSetSelectedTime}
           DisplayDate={DisplayDate}
         />
-        {buttonState.datePicker && !searchTerm ? (
+        {buttonState.datePicker ? (
           selectedTime ? (
             <DisplayDate />
           ) : (
@@ -157,8 +155,6 @@ export default function EmotionRecords({
               toggleHighlight={toggleHighlight}
               shownEntries={shownEntries}
               filteredEntries={filteredEntries}
-              buttonState={buttonState}
-              searchTerm={searchTerm}
             />
           </>
         )}
