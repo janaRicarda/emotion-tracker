@@ -10,6 +10,7 @@ import {
   StyledBasicTitle,
   StyledButton,
   StyledForm,
+  StyledSelect,
 } from "@/SharedStyledComponents";
 
 const StyledEmotionFormTitle = styled(StyledBasicTitle)`
@@ -38,10 +39,19 @@ const StyledSpan = styled.span`
   font-size: 0.8rem;
 `;
 
-const StyledSelect = styled.select`
-  border-radius: 6px;
-  padding: 0.3rem 0;
+const StyledEmotionInput = styled(StyledInput)`
+  background-color: var(--main-bright);
+  border-color: var(--text-on-bright);
+  &::-webkit-slider-thumb {
+    background-color: ${({ $color }) => $color};
+    border: 2px solid var(--text-on-bright);
+  }
 `;
+
+// const StyledSelect = styled.select`
+//   border-radius: 6px;
+//   padding: 0.3rem 0;
+// `;
 
 const StyledTextarea = styled.textarea`
   border: 1px solid black;
@@ -193,11 +203,12 @@ export default function EmotionForm({
         <TensionLabelEdit htmlFor="tension-level">
           Choose a tension level between 0 and 100:
         </TensionLabelEdit>
-        <StyledInput
+        <StyledEmotionInput
           aria-label="Adjust tension level between 0 and 100"
           id="tension-level"
           name="tensionLevel"
           type="range"
+          $color={colorValue}
           value={tensionValue}
           max={100}
           onChange={(event) =>
@@ -265,11 +276,12 @@ export default function EmotionForm({
             </ToggleSwitch>
           )}
         </StyledLabel>
-        <input
+        <StyledEmotionInput
           disabled={emotionValue ? (toggleIntensity ? false : true) : true}
           type="range"
           id="intensity"
           name="intensity"
+          $color={colorValue}
           value={intensityValue}
           max={100}
           onChange={(event) =>
@@ -315,11 +327,12 @@ export default function EmotionForm({
             </ToggleSwitch>
           )}
         </StyledLabel>
-        <input
+        <StyledEmotionInput
           disabled={emotionValue ? (toggleCategory ? false : true) : true}
           type="range"
           id="category"
           name="category"
+          $color={colorValue}
           value={categoryValue}
           max={100}
           onChange={(event) =>

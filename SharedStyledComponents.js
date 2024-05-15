@@ -79,6 +79,25 @@ const StyledForm = styled.form`
 
 const StyledInput = styled.input`
   width: 100%;
+  height: 0.5rem;
+  -webkit-appearance: none;
+  border: 1px solid var(--main-dark);
+  border-radius: 12px;
+  background: transparent;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    border: 1px solid var(--main-dark);
+    background-color: var(--button-background);
+  }
+`;
+
+const StyledSelect = styled.select`
+  border-radius: 6px;
+  padding: 0.3rem 0;
 `;
 
 export {
@@ -92,5 +111,6 @@ export {
   StyledList,
   StyledInput,
   StyledForm,
+  StyledSelect,
   StyledListItem,
 };
