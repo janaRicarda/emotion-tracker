@@ -189,10 +189,15 @@ export default function EmotionRecords({
       ) {
         const todayOrEarlier = getDate(daysAgo);
         const today = getDate(0);
-        return getFilteredEntries(singleComparison, todayOrEarlier, today);
+
+        const buttonFilteredEntries = getFilteredEntries(
+          singleComparison,
+          todayOrEarlier,
+          today
+        );
+        return buttonFilteredEntries;
       }
       if (buttonState.highlightedButton) {
-        setShowDayPicker(false);
         const highlightedEntries = emotionEntries.filter(
           (entry) => entry.isHighlighted
         );
@@ -210,13 +215,15 @@ export default function EmotionRecords({
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
 
-          const isSecondDateSelected = !selectedEndDate;
+          const secondDateNotSelected = !selectedEndDate;
 
-          return getFilteredEntries(
-            isSecondDateSelected,
+          const customFilteredEntries = getFilteredEntries(
+            secondDateNotSelected,
             selectedStartDate,
             selectedEndDate
           );
+
+          return customFilteredEntries;
         }
       } else {
         return emotionEntries;
@@ -266,7 +273,7 @@ export default function EmotionRecords({
   }
 
   return (
-    <StyledFlexColumnWrapper>
+    <StyledFlexColumnWrapper suppressHydrationWarning={true}>
       <StyledFilterSection>
         <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <SearchBar onSearch={handleSearch} />
