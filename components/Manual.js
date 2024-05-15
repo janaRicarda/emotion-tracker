@@ -67,7 +67,7 @@ const StyledListItem = styled.li`
     width: 3rem;
     line-height: 3rem;
     background-color: ${({ $itemColor }) => $itemColor};
-    transition: background-color 1s ease-in-out;
+    transition: background-color 500ms ease-in-out;
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
@@ -84,7 +84,7 @@ const StyledListItem = styled.li`
     width: 3rem;
     line-height: 3rem;
     background-color: ${({ $itemColor }) => $itemColor};
-    transition: background-color 1s ease-in-out;
+    transition: background-color 500ms ease-in-out;
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
@@ -95,7 +95,7 @@ const StyledListItem = styled.li`
     border-bottom-right-radius: 30px;
     border-bottom: 3px dotted;
     border-color: ${({ $itemColor }) => $itemColor};
-    transition: border-color 1s ease-in-out;
+    transition: border-color 500ms ease-in-out;
     padding-right: 2rem;
   }
   &:nth-child(odd) {
@@ -104,7 +104,7 @@ const StyledListItem = styled.li`
     border-bottom-left-radius: 30px;
     border-bottom: 3px dotted;
     border-color: ${({ $itemColor }) => $itemColor};
-    transition: border-color 1s ease-in-out;
+    transition: border-color 500ms ease-in-out;
     padding-right: 2rem;
   }
 `;
@@ -113,35 +113,17 @@ export default function Manual() {
   const [itemColor, setItemColor] = useState("var(--joy)");
 
   function listenSrollEvent() {
-    window.scrollY === 0
-      ? setItemColor("var(--joy)")
-      : window.scrollY <= 500
-      ? setItemColor("var(--surprise)")
-      : window.scrollY <= 1000
-      ? setItemColor("var(--fear)")
-      : window.scrollY <= 1500
-      ? setItemColor("var(--sadness)")
-      : window.scrollY <= 2000
-      ? setItemColor("var(--contempt)")
-      : window.scrollY <= 2500
-      ? setItemColor("var(--disgust)")
-      : window.scrollY <= 3000
-      ? setItemColor("var(--anger)")
-      : window.scrollY <= 3500
-      ? setItemColor("var(--joy)")
-      : window.scrollY <= 4000
-      ? setItemColor("var(--surprise)")
-      : window.scrollY <= 4500
-      ? setItemColor("var(--fear)")
-      : window.scrollY <= 5000
-      ? setItemColor("var(--sadness)")
-      : window.scrollY <= 5500
-      ? setItemColor("var(--contempt)")
-      : window.scrollY <= 6000
-      ? setItemColor("var(--disgust)")
-      : window.scrollY <= 6500
-      ? setItemColor("var(--anger)")
-      : setItemColor("var(--joy)");
+    const colors = [
+      "var(--joy)",
+      "var(--surprise)",
+      "var(--fear)",
+      "var(--sadness)",
+      "var(--contempt)",
+      "var(--disgust)",
+      "var(--anger)",
+    ];
+    const index = Math.floor(window.scrollY / 100) % colors.length;
+    setItemColor(colors[index]);
   }
 
   useEffect(() => {
