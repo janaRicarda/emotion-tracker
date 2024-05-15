@@ -8,6 +8,7 @@ import {
   StyledInput,
   StyledForm,
 } from "@/SharedStyledComponents";
+import Tooltip from "@/components/Tooltip";
 
 const StyledAddDetailsLink = styled(StyledStandardLink)`
   margin: 1rem;
@@ -60,6 +61,9 @@ export default function HomePage({ onAddEmotionEntry }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
+  console.log(isTooltipOpen);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -73,53 +77,73 @@ export default function HomePage({ onAddEmotionEntry }) {
     setIsFormSubmitted(!isFormSubmitted);
   }
 
-  return (
-    <StyledTensionForm onSubmit={handleSubmit}>
-      <StyledTensionLabel htmlFor="tension-level">
-        On a scale from 0 to 100, how tense do you feel in this moment?
-      </StyledTensionLabel>
-      <StyledInput
-        aria-label="Adjust tension level between 0 and 100"
-        id="tension-level"
-        name="tensionLevel"
-        type="range"
-        value={tension}
-        max={100}
-        onChange={(event) => setTension(event.target.value)}
-      />
-      <StyledWrapper>
-        <StyledSpan>0</StyledSpan>
-        <StyledSpan>100</StyledSpan>
-      </StyledWrapper>
-      {!isFormSubmitted && (
-        <>
-          <p>{tension}</p>
-          <StyledButton type="submit">Save</StyledButton>
-        </>
-      )}
+  function handleToggleTooltip() {
+    setIsTooltipOpen(!isTooltipOpen);
+  }
 
-      {isFormSubmitted && (
-        <>
-          <StyledMessage>Your entry was successfully saved!</StyledMessage>
-          <StyledButtonWrapper>
-            <StyledBackButton
-              type="reset"
-              value={"Done"}
-              onClick={() => {
-                setIsFormSubmitted(!isFormSubmitted);
-                setTension("0");
-              }}
-            ></StyledBackButton>
-            <StyledAddDetailsLink
-              $actionButton
-              href={{ pathname: "/create", query: { id: id } }}
-              forwardedAs={`/create`}
-            >
-              Add more details
-            </StyledAddDetailsLink>
-          </StyledButtonWrapper>
-        </>
-      )}
-    </StyledTensionForm>
+  return (
+    <>
+      <Tooltip onToggleTooltip={handleToggleTooltip}>
+        {isTooltipOpen && (
+          <p>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua.
+          </p>
+        )}
+      </Tooltip>
+
+      <StyledTensionForm onSubmit={handleSubmit}>
+        <StyledTensionLabel htmlFor="tension-level">
+          On a scale from 0 to 100, how tense do you feel in this moment?
+        </StyledTensionLabel>
+        <StyledInput
+          aria-label="Adjust tension level between 0 and 100"
+          id="tension-level"
+          name="tensionLevel"
+          type="range"
+          value={tension}
+          max={100}
+          onChange={(event) => setTension(event.target.value)}
+        />
+        <StyledWrapper>
+          <StyledSpan>0</StyledSpan>
+          <StyledSpan>100</StyledSpan>
+        </StyledWrapper>
+        {!isFormSubmitted && (
+          <>
+            <p>{tension}</p>
+            <StyledButton type="submit">Save</StyledButton>
+          </>
+        )}
+
+        {isFormSubmitted && (
+          <>
+            <StyledMessage>Your entry was successfully saved!</StyledMessage>
+            <StyledButtonWrapper>
+              <StyledBackButton
+                type="reset"
+                value={"Done"}
+                onClick={() => {
+                  setIsFormSubmitted(!isFormSubmitted);
+                  setTension("0");
+                }}
+              ></StyledBackButton>
+              <StyledAddDetailsLink
+                $actionButton
+                href={{ pathname: "/create", query: { id: id } }}
+                forwardedAs={`/create`}
+              >
+                Add more details
+              </StyledAddDetailsLink>
+            </StyledButtonWrapper>
+          </>
+        )}
+      </StyledTensionForm>
+    </>
   );
 }

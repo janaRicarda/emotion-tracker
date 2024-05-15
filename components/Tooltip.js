@@ -1,7 +1,8 @@
-export default function Tooltip() {
+export default function Tooltip({ onToggleTooltip, children }) {
   return (
     <>
-      <p>Hello World!</p>
+      <button onClick={onToggleTooltip}>?</button>
+      {children}
     </>
   );
 }
