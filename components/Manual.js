@@ -101,6 +101,10 @@ const StyledListItem = styled.li`
 `;
 
 export default function Manual() {
+  function handleToggleTooltipWord() {
+    console.log("Ich zeige den Text");
+  }
+
   return (
     <>
       <StyledSection>
@@ -108,7 +112,10 @@ export default function Manual() {
           Welcome to the <b>What a feeling app</b>!
         </StyledWelcome>
         <StyledText>
-          This tool is designed to help you track and understand your emotions
+          This tool is designed to help you track and understand your{" "}
+          <span onClick={handleToggleTooltipWord} role="button">
+            emotions
+          </span>{" "}
           better. Below are some guidelines to help you navigate the app
           effectively:
         </StyledText>
