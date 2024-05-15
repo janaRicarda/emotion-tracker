@@ -2,21 +2,27 @@ import React from "react";
 
 import Plot from "react-plotly.js";
 
-export default function TensionChart() {
+export default function TensionChart({ xValues, yValues, title }) {
   return (
-    <Plot
-      data={[
-        {
-          x: [1, 2, 3],
-          y: [2, 6, 3],
-          type: "scatter",
-          mode: "lines+markers",
-          marker: { color: "red" },
-        },
-
-        // { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
-      ]}
-      layout={{ width: 320, height: 240, title: "A Fancy Tension Plot" }}
-    />
+    <>
+      <Plot
+        data={[
+          {
+            x: xValues,
+            y: yValues,
+            type: "scatter",
+            mode: "lines+markers",
+            marker: { color: "var(--main-dark)" },
+          },
+        ]}
+        layout={{
+          width: 320,
+          height: 240,
+          title: title,
+          setBackground: "transparent",
+        }}
+      />
+      {/* <button onClick={() => console.log(xValues)}>Console log data</button> */}
+    </>
   );
 }

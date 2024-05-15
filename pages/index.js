@@ -7,8 +7,13 @@ import {
   StyledStandardLink,
   StyledInput,
   StyledForm,
+  StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import TensionChart from "@/components/TensionChart";
+import dynamic from "next/dynamic";
+
+const TensionChart = dynamic(() => import("../components/TensionChart"), {
+  ssr: false,
+});
 
 const StyledAddDetailsLink = styled(StyledStandardLink)`
   margin: 1rem;
@@ -57,7 +62,7 @@ const StyledBackButton = styled.input`
   background-color: var(--button-background);
 `;
 
-export default function HomePage({ onAddEmotionEntry }) {
+export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
@@ -73,6 +78,12 @@ export default function HomePage({ onAddEmotionEntry }) {
     setId(newId);
     setIsFormSubmitted(!isFormSubmitted);
   }
+
+  const xValues = emotionEntries
+    .map((entry) => entry.timeAndDate.slice(-5))
+    .reverse();
+
+  const yValues = emotionEntries.map((entry) => entry.tensionLevel).reverse();
 
   return (
     <>
@@ -123,7 +134,14 @@ export default function HomePage({ onAddEmotionEntry }) {
           </>
         )}
       </StyledTensionForm>
-      <TensionChart />
+      <StyledFlexColumnWrapper>
+        <TensionChart
+          emotionEntries={emotionEntries}
+          xValues={xValues}
+          yValues={yValues}
+          title="Daily Tension Graph"
+        />
+      </StyledFlexColumnWrapper>
     </>
   );
 }
