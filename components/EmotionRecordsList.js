@@ -7,19 +7,11 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
-import Link from "next/link";
-import CalendarIcon from "/public/calendar.svg";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
-  margin: 11rem auto 1rem;
+  margin: 1rem auto;
   text-align: left;
-`;
-
-const StyledCalendarIcon = styled(CalendarIcon)`
-  width: 1.5rem;
-  display: inline;
-  vertical-align: bottom;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -66,10 +58,6 @@ const StyledEditButton = styled(PencilIcon)`
     cursor: pointer;
   }
 `;
-const StyledTextMessage = styled.p`
-  margin-top: 12rem;
-  text-align: center;
-`;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
   width: 1.6rem;
@@ -93,37 +81,10 @@ const StyledFilledButton = styled(HeartFilledIcon)`
   }
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  border: 1px solid var(--main-dark);
-  position: relative;
-  top: 1rem;
-  padding: 0.5rem;
-  background-color: var(--button-background);
-  border-radius: 6px;
-  color: var(--main-dark);
-`;
-
-const StyledHeartSymbol = styled(HeartOutlineIcon)`
-  width: 1.4rem;
-  display: inline;
-  position: relative;
-  top: 5px;
-`;
-
-const StyledDateIndicator = styled.p`
-  text-align: center;
-  margin: 0 auto 0.7rem;
-`;
-
 export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
-  filteredEntries,
-  buttonState,
-  selectedTime,
-  searchTerm,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -145,52 +106,9 @@ export default function EmotionRecordsList({
     }));
   }
 
-  function getFormattedDate(selectedDate) {
-    const date = new Intl.DateTimeFormat(`de`, {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(selectedDate);
-
-    return date;
-  }
-
   return (
     <>
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.`
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              You haven&apos;t made any Entries today.<br></br>
-              <StyledLink href="./">add Entry &rarr;</StyledLink>
-            </StyledTextMessage>
-          ) : (
-            <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-        ))}
       <StyledRecordsList>
-        {buttonState.datePicker && !searchTerm ? (
-          selectedTime ? (
-            <StyledDateIndicator>
-              Your Selection:<br></br>
-              {getFormattedDate(selectedTime.from)}
-              {selectedTime.to &&
-                selectedTime.from.toString() !== selectedTime.to.toString() &&
-                " - " + getFormattedDate(selectedTime.to)}
-            </StyledDateIndicator>
-          ) : (
-            <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
-            </StyledDateIndicator>
-          )
-        ) : null}
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries.map(
           ({
