@@ -23,12 +23,8 @@ const StyledParagraph = styled.p`
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  box-shadow: 0 0 3px 0;
   width: 80vw;
   cursor: pointer;
-  &:hover {
-    background-color: var(--button-background);
-  }
 `;
 
 const StyledDetails = styled(StyledList)`
