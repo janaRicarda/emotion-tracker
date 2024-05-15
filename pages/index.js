@@ -79,11 +79,18 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
     setIsFormSubmitted(!isFormSubmitted);
   }
 
+  //logic for Graph
+  const currentShortDate = new Date().toISOString().slice(0, 10);
+  console.log(emotionEntries);
   const xValues = emotionEntries
+    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
     .map((entry) => entry.timeAndDate.slice(-5))
     .reverse();
 
-  const yValues = emotionEntries.map((entry) => entry.tensionLevel).reverse();
+  const yValues = emotionEntries
+    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
+    .map((entry) => entry.tensionLevel)
+    .reverse();
 
   return (
     <>

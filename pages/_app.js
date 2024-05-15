@@ -53,7 +53,7 @@ export default function App({ Component, pageProps }) {
       ...data,
       id,
       timeAndDate,
-      isoDate: new Date().toISOString,
+      isoDate: new Date().toISOString(),
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
