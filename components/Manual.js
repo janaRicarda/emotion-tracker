@@ -18,7 +18,6 @@ const StyledWelcome = styled.h1`
 const StyledText = styled.p`
   margin-top: 2rem;
   margin-bottom: 3rem;
-
   &:last-child {
     text-align: center;
     font-size: 1.5rem;
@@ -27,7 +26,7 @@ const StyledText = styled.p`
 `;
 
 const StyledDetails = styled.details`
-  border: 1px solid var(--button-background);
+  border: 1px solid ${({ $itemColor }) => $itemColor};
   background: var(--section-background);
   border-radius: 30px;
   padding: 0.5rem;
@@ -67,8 +66,8 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    //background-color: var(--button-background);
     background-color: ${({ $itemColor }) => $itemColor};
+    transition: background-color 1s ease-in-out;
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
@@ -84,28 +83,28 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    //background-color: var(--button-background);
     background-color: ${({ $itemColor }) => $itemColor};
+    transition: background-color 1s ease-in-out;
     text-align: center;
     color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(even) {
-    //border-right: 2px dotted var(--button-background);
-    border-right: 2px dotted ${({ $itemColor }) => $itemColor};
+    border-right: 3px dotted;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-    //border-bottom: 2px dotted var(--button-background);
-    border-bottom: 2px dotted ${({ $itemColor }) => $itemColor};
+    border-bottom: 3px dotted;
+    border-color: ${({ $itemColor }) => $itemColor};
+    transition: border-color 1s ease-in-out;
     padding-right: 2rem;
   }
   &:nth-child(odd) {
-    //border-left: 2px dotted var(--button-background);
-    border-left: 2px dotted ${({ $itemColor }) => $itemColor};
+    border-left: 3px dotted;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    //border-bottom: 2px dotted var(--button-background);
-    border-bottom: 2px dotted ${({ $itemColor }) => $itemColor};
+    border-bottom: 3px dotted;
+    border-color: ${({ $itemColor }) => $itemColor};
+    transition: border-color 1s ease-in-out;
     padding-right: 2rem;
   }
 `;
@@ -161,7 +160,7 @@ export default function Manual() {
       </StyledText>
 
       {manualData.map(({ question, text, answers }) => (
-        <StyledDetails key={question}>
+        <StyledDetails key={question} $itemColor={itemColor}>
           <StyledSummary>{question}</StyledSummary>
           <StyledText>{text}</StyledText>
           <StyledOl>

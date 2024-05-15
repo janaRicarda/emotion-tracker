@@ -51,6 +51,7 @@ const StyledTextarea = styled.textarea`
 const StyledSubmitButton = styled(StyledButton)`
   background-color: var(--submit-button-background);
   color: var(--text-on-dark);
+  border: 0;
   padding: 0.5rem;
   margin: 0;
   width: inherit;
@@ -367,8 +368,8 @@ export default function EmotionForm({
             }}
             cancelButtonText={"Keep editing"}
             confirmButtonText={"Go to emotion records"}
-            cancelButtonColor={"#cc0100"}
-            confirmButtonColor={"#00b400"}
+            cancelButtonColor={"var(--red)"}
+            confirmButtonColor={"var(--green)"}
           >
             Your changes were saved successfully!
           </ConfirmMessage>
