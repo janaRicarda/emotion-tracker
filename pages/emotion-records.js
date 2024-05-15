@@ -148,8 +148,6 @@ export default function EmotionRecords({
     },
   ];
 
-  console.log(CalendarIcon);
-
   // sets filteredEntries depending on buttonState; reacts to changes of emotionEntrie in case of e.g. deletion
 
   useEffect(() => {
