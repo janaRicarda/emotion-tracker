@@ -8,6 +8,7 @@ import {
   StyledInput,
   StyledForm,
 } from "@/SharedStyledComponents";
+import TensionChart from "@/components/TensionChart";
 
 const StyledAddDetailsLink = styled(StyledStandardLink)`
   margin: 1rem;
@@ -74,52 +75,55 @@ export default function HomePage({ onAddEmotionEntry }) {
   }
 
   return (
-    <StyledTensionForm onSubmit={handleSubmit}>
-      <StyledTensionLabel htmlFor="tension-level">
-        On a scale from 0 to 100, how tense do you feel in this moment?
-      </StyledTensionLabel>
-      <StyledInput
-        aria-label="Adjust tension level between 0 and 100"
-        id="tension-level"
-        name="tensionLevel"
-        type="range"
-        value={tension}
-        max={100}
-        onChange={(event) => setTension(event.target.value)}
-      />
-      <StyledWrapper>
-        <StyledSpan>0</StyledSpan>
-        <StyledSpan>100</StyledSpan>
-      </StyledWrapper>
-      {!isFormSubmitted && (
-        <>
-          <p>{tension}</p>
-          <StyledButton type="submit">Save</StyledButton>
-        </>
-      )}
+    <>
+      <StyledTensionForm onSubmit={handleSubmit}>
+        <StyledTensionLabel htmlFor="tension-level">
+          On a scale from 0 to 100, how tense do you feel in this moment?
+        </StyledTensionLabel>
+        <StyledInput
+          aria-label="Adjust tension level between 0 and 100"
+          id="tension-level"
+          name="tensionLevel"
+          type="range"
+          value={tension}
+          max={100}
+          onChange={(event) => setTension(event.target.value)}
+        />
+        <StyledWrapper>
+          <StyledSpan>0</StyledSpan>
+          <StyledSpan>100</StyledSpan>
+        </StyledWrapper>
+        {!isFormSubmitted && (
+          <>
+            <p>{tension}</p>
+            <StyledButton type="submit">Save</StyledButton>
+          </>
+        )}
 
-      {isFormSubmitted && (
-        <>
-          <StyledMessage>Your entry was successfully saved!</StyledMessage>
-          <StyledButtonWrapper>
-            <StyledBackButton
-              type="reset"
-              value={"Done"}
-              onClick={() => {
-                setIsFormSubmitted(!isFormSubmitted);
-                setTension("0");
-              }}
-            ></StyledBackButton>
-            <StyledAddDetailsLink
-              $actionButton
-              href={{ pathname: "/create", query: { id: id } }}
-              forwardedAs={`/create`}
-            >
-              Add more details
-            </StyledAddDetailsLink>
-          </StyledButtonWrapper>
-        </>
-      )}
-    </StyledTensionForm>
+        {isFormSubmitted && (
+          <>
+            <StyledMessage>Your entry was successfully saved!</StyledMessage>
+            <StyledButtonWrapper>
+              <StyledBackButton
+                type="reset"
+                value={"Done"}
+                onClick={() => {
+                  setIsFormSubmitted(!isFormSubmitted);
+                  setTension("0");
+                }}
+              ></StyledBackButton>
+              <StyledAddDetailsLink
+                $actionButton
+                href={{ pathname: "/create", query: { id: id } }}
+                forwardedAs={`/create`}
+              >
+                Add more details
+              </StyledAddDetailsLink>
+            </StyledButtonWrapper>
+          </>
+        )}
+      </StyledTensionForm>
+      <TensionChart />
+    </>
   );
 }
