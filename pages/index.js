@@ -81,7 +81,6 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
 
   //logic for Graph
   const currentShortDate = new Date().toISOString().slice(0, 10);
-  console.log(emotionEntries);
   const xValues = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
     .map((entry) => entry.timeAndDate.slice(-5))
