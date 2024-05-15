@@ -1,5 +1,6 @@
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import {
+  StyledTitle,
   StyledFlexColumnWrapper,
   StyledButton,
   StyledStandardLink,
@@ -8,12 +9,6 @@ import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
-
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const StyledPageHeader = styled.section`
   width: 100%;
@@ -25,7 +20,7 @@ const StyledPageHeader = styled.section`
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 100px;
+  top: 80px;
   z-index: 1;
 `;
 
@@ -45,10 +40,6 @@ const StyledHighlightButton = styled(StyledButton)`
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
-`;
-
-const StyledEmotionRecordsTitle = styled.h1`
-  font-weight: 600;
 `;
 
 export default function EmotionRecords({
@@ -97,7 +88,7 @@ export default function EmotionRecords({
   return (
     <StyledFlexColumnWrapper>
       <StyledPageHeader>
-        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
+        <StyledTitle>Recorded Emotions</StyledTitle>
 
         {emotionEntries.length !== 0 && (
           <>

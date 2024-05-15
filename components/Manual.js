@@ -2,17 +2,12 @@ import styled from "styled-components";
 import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
+import { StyledTitle } from "@/SharedStyledComponents";
 
 const StyledSection = styled.section`
   width: 100%;
   height: auto;
   padding: 1rem;
-`;
-
-const StyledWelcome = styled.h1`
-  text-align: center;
-  line-height: 2rem;
-  font-weight: 600;
 `;
 
 const StyledText = styled.p`
@@ -132,9 +127,9 @@ export default function Manual() {
 
   return (
     <StyledSection>
-      <StyledWelcome>
+      <StyledTitle>
         Welcome to the <b>What a feeling app</b>!
-      </StyledWelcome>
+      </StyledTitle>
       <StyledText>
         This tool is designed to help you track and understand your emotions
         better. Below are some guidelines to help you navigate the app

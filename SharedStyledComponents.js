@@ -4,7 +4,8 @@ import Link from "next/link";
 //buttons
 const StyledButton = styled.button`
   background-color: var(--button-background);
-  color: var(--text-on-bright);
+
+  color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
@@ -13,23 +14,35 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background-color: var(--main-dark);
-  color: var(--text-on-bright);
+  background-color: var(--submit-button-background);
+  color: var(--text-on-dark);
+  border: 0;
+  padding: 0.5rem;
+  margin: 0;
+  width: inherit;
+  //&:hover {
+  //     background-color: darkslateblue;
+  //     color: ${({ $color }) => $color};
+  //   }
 `;
 
 //headlines
-const StyledBasicTitle = styled.h1`
+const StyledTitle = styled.h1`
   text-align: center;
-  position: fixed;
-  z-index: 1;
   font-weight: 600;
+  line-height: 2rem;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
 `;
 
-const StyledTitle = styled(StyledBasicTitle)`
+const StyledFixedTitle = styled(StyledTitle)`
   width: 100%;
-  top: 100px;
+  position: fixed;
+  top: 80px;
+  left: 0;
   padding: 1rem;
   background-color: var(--main-bright);
+  z-index: 1;
 `;
 
 //links
@@ -105,12 +118,13 @@ export {
   StyledWrapper,
   StyledFlexColumnWrapper,
   StyledTitle,
-  StyledBasicTitle,
+  StyledFixedTitle,
   StyledFixedLink,
   StyledStandardLink,
   StyledList,
   StyledInput,
   StyledForm,
   StyledSelect,
+  StyledSubmitButton,
   StyledListItem,
 };

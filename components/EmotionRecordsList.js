@@ -11,7 +11,7 @@ import HeartFilledIcon from "../public/heart-filled.svg";
 const StyledRecordsList = styled(StyledList)`
   list-style: none;
   padding: 0;
-  margin: 8rem auto 1rem;
+  margin: 10rem auto 1rem;
 `;
 
 const StyledRecordListItem = styled.li`

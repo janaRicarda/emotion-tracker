@@ -9,7 +9,6 @@ export default function CreateIndexPage({ onAddEmotionDetails }) {
   return (
     <StyledFlexColumnWrapper>
       <EmotionList
-        form
         title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
         createMode
         id={id}

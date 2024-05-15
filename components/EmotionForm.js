@@ -7,18 +7,11 @@ import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,
   StyledWrapper,
-  StyledBasicTitle,
-  StyledButton,
+  StyledFixedTitle,
   StyledForm,
   StyledSelect,
+  StyledSubmitButton,
 } from "@/SharedStyledComponents";
-
-const StyledEmotionFormTitle = styled(StyledBasicTitle)`
-  width: 100vw;
-  top: 100px;
-  left: 0;
-  background: var(--main-bright);
-`;
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
@@ -48,27 +41,9 @@ const StyledEmotionInput = styled(StyledInput)`
   }
 `;
 
-// const StyledSelect = styled.select`
-//   border-radius: 6px;
-//   padding: 0.3rem 0;
-// `;
-
 const StyledTextarea = styled.textarea`
   border: 1px solid black;
   border-radius: 6px;
-`;
-
-const StyledSubmitButton = styled(StyledButton)`
-  background-color: var(--submit-button-background);
-  color: var(--text-on-dark);
-  border: 0;
-  padding: 0.5rem;
-  margin: 0;
-  width: inherit;
-  &:hover {
-    background-color: darkslateblue;
-    color: ${({ $color }) => $color};
-  }
 `;
 
 const StyledLabel = styled.label`
@@ -187,7 +162,7 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledEmotionFormTitle>
+      <StyledFixedTitle>
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -195,7 +170,7 @@ export default function EmotionForm({
           : emotionValue
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
-      </StyledEmotionFormTitle>
+      </StyledFixedTitle>
       <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {date}
