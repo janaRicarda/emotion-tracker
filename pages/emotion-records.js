@@ -273,7 +273,7 @@ export default function EmotionRecords({
   }
 
   return (
-    <StyledFlexColumnWrapper suppressHydrationWarning={true}>
+    <StyledFlexColumnWrapper>
       <StyledFilterSection>
         <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <SearchBar onSearch={handleSearch} />
