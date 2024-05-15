@@ -17,9 +17,6 @@ import {
 const StyledMenuButton = styled(Menu)`
   width: 3rem;
   fill: var(--main-dark);
-
-  background: transparent;
-  color: var(--main-dark);
   border-style: none;
   margin: 1rem;
   position: absolute;
@@ -29,9 +26,7 @@ const StyledMenuButton = styled(Menu)`
 const StyledCloseButton = styled(Close)`
   width: 2rem;
 
-  fill: var(--text-on-bright);
-
-  color: var(--main-dark);
+  fill: var(--contrast-text);
   border-style: none;
   margin: 1rem;
   position: absolute;
@@ -57,14 +52,14 @@ const StyledArticle = styled.article`
 
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
-  color: var(--text-on-bright);
+  color: var(--contrast-text);
 
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
 `;
 const StyledSummary = styled.summary`
-  color: var(--text-on-bright);
+  color: var(--contrast-text);
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;

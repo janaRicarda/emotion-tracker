@@ -15,11 +15,14 @@ export default createGlobalStyle`
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
+  --contrast-text: ${({ theme }) => theme.contrastText};
   --text-on-bright: ${({ theme }) => theme.textOnBright};
   --text-on-dark: ${({ theme }) => theme.textOnDark};
  --button-background: ${({ theme }) => theme.buttonBackground};
  --submit-button-background:  ${({ theme }) => theme.submitButtonBackground};
  --section-background: ${({ theme }) => theme.sectionBackground};
+ --green: ${({ theme }) => theme.green};
+ --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};

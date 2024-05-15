@@ -35,6 +35,7 @@ const StyledListItem = styled.li`
 const EmotionLink = styled(StyledStandardLink)`
   display: block;
   padding: 0.8rem;
+  color: var(--text-on-bright);
 `;
 
 export default function EmotionList({

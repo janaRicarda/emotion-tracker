@@ -158,8 +158,8 @@ export default function EmotionRecordsList({
                     confirmFunction={onDeleteEmotionEntry}
                     cancelButtonText={"Keep it!"}
                     confirmButtonText={"Delete it!"}
-                    cancelButtonColor={"#00b400"}
-                    confirmButtonColor={"#cc0100"}
+                    cancelButtonColor={"var(--green)"}
+                    confirmButtonColor={"var(--red)"}
                   >
                     Do you want to delete this entry?
                   </ConfirmMessage>

@@ -40,7 +40,7 @@ const StyledButtonWrapper = styled(StyledWrapper)`
 const StyledBackButton = styled.input`
   width: 10rem;
   text-decoration: none;
-  color: var(--text-on-bright);
+  color: var(--contrast-text);
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 8.5px;
@@ -49,6 +49,7 @@ const StyledBackButton = styled.input`
   background-color: var(--button-background);
 `;
 const StyledAddDetailsLink = styled(StyledStandardLink)`
+  color: var(--contrast-text);
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
