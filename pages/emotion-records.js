@@ -17,7 +17,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   vertical-align: bottom;
 `;
 
-const StyledPageHeader = styled.section`
+const StyledFilterSection = styled.section`
   width: 100%;
   background-color: var(--main-bright);
   padding: 0.5rem;
@@ -267,7 +267,7 @@ export default function EmotionRecords({
 
   return (
     <StyledFlexColumnWrapper>
-      <StyledPageHeader>
+      <StyledFilterSection>
         <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <SearchBar onSearch={handleSearch} />
         <StyledButtonGroup>
@@ -291,7 +291,7 @@ export default function EmotionRecords({
             )
           )}
         </StyledButtonGroup>
-      </StyledPageHeader>
+      </StyledFilterSection>
       {emotionEntries.length !== 0 && (
         <>
           {showDayPicker && (
