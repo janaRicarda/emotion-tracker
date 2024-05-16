@@ -33,6 +33,7 @@ const StyledTextMessage = styled.p`
 const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
+  color: var(--contrast-text);
 `;
 
 const StyledHighlightButton = styled(StyledButton)`
