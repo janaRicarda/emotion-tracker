@@ -16,6 +16,7 @@ export default createGlobalStyle`
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
   --contrast-text: ${({ theme }) => theme.contrastText};
+  --contrast-bright: ${({ theme }) => theme.contrastBright};
   --text-on-bright: ${({ theme }) => theme.textOnBright};
   --text-on-dark: ${({ theme }) => theme.textOnDark};
  --button-background: ${({ theme }) => theme.buttonBackground};

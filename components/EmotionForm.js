@@ -34,10 +34,39 @@ const StyledSpan = styled.span`
 
 const StyledEmotionInput = styled(StyledInput)`
   background-color: var(--main-bright);
-  border-color: var(--text-on-bright);
+  border: 2px solid var(--text-on-bright);
+
+  background: linear-gradient(
+    to right,
+    ${({ $color }) => $color} 0%,
+    ${({ $color }) => $color} ${({ $value }) => $value}%,
+    var(--contrast-bright) ${({ $value }) => $value}%,
+    var(--contrast-bright) 100%
+  );
   &::-webkit-slider-thumb {
-    background-color: ${({ $color }) => $color};
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
     border: 2px solid var(--text-on-bright);
+    background-image: radial-gradient(
+      circle,
+      var(--text-on-bright) 40%,
+      ${({ $color }) => $color} 45%
+    );
+  }
+
+  &::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid var(--text-on-bright);
+    background-image: radial-gradient(
+      circle,
+      var(--text-on-bright) 40%,
+      ${({ $color }) => $color} 45%
+    );
   }
 `;
 
@@ -185,6 +214,7 @@ export default function EmotionForm({
           type="range"
           $color={colorValue}
           value={tensionValue}
+          $value={tensionValue}
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -258,6 +288,7 @@ export default function EmotionForm({
           name="intensity"
           $color={colorValue}
           value={intensityValue}
+          $value={intensityValue}
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -309,6 +340,7 @@ export default function EmotionForm({
           name="category"
           $color={colorValue}
           value={categoryValue}
+          $value={categoryValue}
           max={100}
           onChange={(event) =>
             setFormValues({

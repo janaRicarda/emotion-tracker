@@ -87,6 +87,7 @@ export default function HomePage({ onAddEmotionEntry }) {
         name="tensionLevel"
         type="range"
         value={tension}
+        $value={tension}
         max={100}
         onChange={(event) => setTension(event.target.value)}
       />

@@ -91,20 +91,43 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: 0;
   width: 100%;
   height: 0.5rem;
-  -webkit-appearance: none;
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--button-background);
   border-radius: 12px;
-  background: transparent;
+  background: linear-gradient(
+    to right,
+    var(--button-background) 0%,
+    var(--button-background) ${({ $value }) => $value}%,
+    var(--section-background) ${({ $value }) => $value}%,
+    var(--section-background) 100%
+  );
 
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    border: 1px solid var(--main-dark);
-    background-color: var(--button-background);
+    background-image: radial-gradient(
+      circle,
+      var(--contrast-text) 40%,
+      var(--button-background) 45%
+    );
+  }
+
+  &::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-image: radial-gradient(
+      circle,
+      var(--main-bright) 40%,
+      var(--button-background) 45%
+    );
   }
 `;
 
