@@ -29,18 +29,30 @@ const StyledRedButton = styled(StyledDevButton)`
 `;
 
 const StyledSubTitle = styled.h2`
-  padding: 0.5rem;
-  margin: 0.5rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
   font-size: 1.3rem;
   font-weight: 600;
 `;
 
-const StyledSmallMessage = styled.p`
+const StyledNote = styled.p`
+  font-size: 0.8rem;
+  padding: 0.8rem;
+`;
+
+const StyledSmallMessage = styled(StyledNote)`
   font-weight: 500;
+  text-align: center;
+
   color: red;
+  width: 90vw;
   border-radius: 6px;
+  background-color: var(--main-bright);
   border: 1px solid var(--main-dark);
-  padding: 1rem;
+  position: fixed;
+  right: calc(50% - 45vw);
+  top: 15rem;
+  z-index: 2;
 `;
 
 const chance = new Chance();
@@ -163,23 +175,28 @@ function generateCompleteData(daysGoingBack) {
 }
 
 export default function DataGenerator({
-  backupEntries,
   shownEntries,
-  setShownEntries,
-  daysGoingBack,
-  setDaysGoingBack,
+  onGenerate,
   onDeleteAll,
   onReplaceUserData,
   onRestore,
 }) {
+  const [daysGoingBack, setDaysGoingBack] = useState(1);
   const [smallMessage, setSmallMessage] = useState(null);
 
   setTimeout(() => {
     setSmallMessage(null);
   }, 3500);
 
+  function handleGenerate() {
+    const newData = generateCompleteData(daysGoingBack);
+    onGenerate(newData);
+
+    const dayZ = daysGoingBack === 1 ? "day" : "days";
+    setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
+  }
+
   function handleDeleteAll() {
-    setShownEntries([]);
     onDeleteAll();
     setSmallMessage("Deleted all user Data. No Backup, no pity.");
   }
@@ -187,13 +204,12 @@ export default function DataGenerator({
   function handleReplaceUserData(generatedData) {
     onReplaceUserData(generatedData);
     setSmallMessage(
-      "Replaced user data with randomly generated data.You can restore the user data with 'Get backup'."
+      "Replaced user data with randomly generated data. You can restore the user data with 'Get backup'."
     );
   }
 
   function handleRestore() {
     onRestore();
-    setShownEntries(backupEntries);
     setSmallMessage("Restored previous backup.");
   }
 
@@ -203,10 +219,10 @@ export default function DataGenerator({
 
       <StyledFlexWrapper>
         <p>Generate data for</p>
-        <label htmlFor="daysback">
+        <label htmlFor="daysGoingBack">
           <input
             type="number"
-            id="daysGoingback"
+            id="daysGoingBack"
             value={daysGoingBack}
             min={1}
             max={150}
@@ -214,17 +230,7 @@ export default function DataGenerator({
           />
           Days
         </label>
-        <StyledDevButton
-          type="button"
-          onClick={() => {
-            setShownEntries(generateCompleteData(daysGoingBack));
-            setSmallMessage(
-              daysGoingBack === 1
-                ? `Generated data for ${daysGoingBack} day`
-                : `Generated data for ${daysGoingBack} days`
-            );
-          }}
-        >
+        <StyledDevButton type="button" onClick={handleGenerate}>
           Generate
         </StyledDevButton>
         <StyledDevButton
@@ -240,7 +246,10 @@ export default function DataGenerator({
           Reset
         </StyledRedButton>
       </StyledFlexWrapper>
-
+      <StyledNote>
+        Note: Delete and edit will only work if you replace userdata with
+        generated data!
+      </StyledNote>
       {smallMessage && <StyledSmallMessage>{smallMessage}</StyledSmallMessage>}
       <StyledSubTitle>Recorded Emotions (generated)</StyledSubTitle>
     </>

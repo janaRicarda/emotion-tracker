@@ -1,4 +1,3 @@
-import useLocalStorageState from "use-local-storage-state";
 import styled from "styled-components";
 import { useState } from "react";
 import EmotionRecordsList from "@/components/EmotionRecordsList";
@@ -25,7 +24,7 @@ const StyledPageHeader = styled.section`
 `;
 
 const StyledSpacer = styled.p`
-  margin: 4rem;
+  margin: 5rem;
 `;
 
 const StyledHighlightButton = styled(StyledButton)`
@@ -38,14 +37,12 @@ const StyledHighlightButton = styled(StyledButton)`
 export default function GenerateAndDisplay({
   toggleHighlight,
   emotionEntries,
-  setEmotionEntries,
   onDeleteAll,
   onReplaceUserData,
-  onRestore,
   backupEntries,
+  onDeleteEmotionEntry,
 }) {
-  const [daysGoingBack, setDaysGoingBack] = useState(1);
-  const [shownEntries, setShownEntries] = useState([]);
+  const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
@@ -60,28 +57,31 @@ export default function GenerateAndDisplay({
       [id]: !prevShow[id],
     }));
   }
+  function updateWithGeneratedData(newData) {
+    setShownEntries(newData);
+  }
+
   function handleRestoreShown() {
     setShownEntries(backupEntries);
   }
-  function nullishFunction() {
-    //Yeah, it does nothing!
+
+  function handleDeleteShown() {
+    onDeleteAll();
+    setShownEntries([]);
   }
 
   return (
     <StyledFlexColumnWrapper>
       <StyledPageHeader>
         <DataGenerator
-          onDeleteAll={onDeleteAll}
+          onGenerate={updateWithGeneratedData}
+          onDeleteAll={handleDeleteShown}
           onReplaceUserData={onReplaceUserData}
-          onRestore={onRestore}
-          restoreShown={handleRestoreShown}
-          daysGoingBack={daysGoingBack}
-          setDaysGoingBack={setDaysGoingBack}
+          onRestore={handleRestoreShown}
           backupEntries={backupEntries}
           shownEntries={shownEntries}
-          setShownEntries={setShownEntries}
           emotionEntries={emotionEntries}
-          setEmotionEntries={setEmotionEntries}
+          // setEmotionEntries={setEmotionEntries}
         />
 
         {shownEntries.length !== 0 && (
@@ -96,7 +96,7 @@ export default function GenerateAndDisplay({
       {shownEntries.length !== 0 && (
         <EmotionRecordsList
           emotionEntries={shownEntries}
-          onDeleteEmotionEntry={nullishFunction}
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
           shownEntries={
             isHighlighted
               ? shownEntries.filter((entry) => entry.isHighlighted)
