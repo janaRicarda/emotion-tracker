@@ -3,6 +3,7 @@ import Image from "next/image";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Logo from ".//../public/images/logo.png";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -31,7 +32,9 @@ export default function Header() {
 
   return (
     <StyledHeader $isOpen={isOpen}>
-      <StyledLogo src={Logo} />
+      <StyledStandardLink href="/">
+        <StyledLogo src={Logo} />
+      </StyledStandardLink>
       <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
     </StyledHeader>
   );

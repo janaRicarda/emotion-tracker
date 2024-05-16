@@ -113,13 +113,17 @@ export default function Manual() {
           effectively:
         </StyledText>
 
-        {manualData.map(({ question, text, answers }) => (
+        {manualData.map(({ question, text, answers, titles }) => (
           <StyledDetails key={question}>
             <StyledSummary>{question}</StyledSummary>
             <StyledText>{text}</StyledText>
             <StyledOl>
               {answers.map((answer) => (
-                <StyledListItem key={answer}>{answer}</StyledListItem>
+                <StyledListItem key={answer}>
+                  {/* {titles && titles.map((title) => <p key={title}>{title} </p>)} */}
+
+                  {answer}
+                </StyledListItem>
               ))}
             </StyledOl>
           </StyledDetails>
