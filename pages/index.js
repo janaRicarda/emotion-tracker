@@ -63,8 +63,6 @@ export default function HomePage({ onAddEmotionEntry }) {
   const [tension, setTension] = useState(0);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
-  console.log(isTooltipOpen);
-
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -80,21 +78,19 @@ export default function HomePage({ onAddEmotionEntry }) {
   function handleToggleTooltip() {
     setIsTooltipOpen(!isTooltipOpen);
   }
-
+  console.log(isTooltipOpen);
   return (
     <>
-      <Tooltip onToggleTooltip={handleToggleTooltip}>
-        {isTooltipOpen && (
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua.
-          </p>
-        )}
+      <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
+        <>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+          sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua.
+        </>
       </Tooltip>
 
       <StyledTensionForm onSubmit={handleSubmit}>
