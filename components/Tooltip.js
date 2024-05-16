@@ -23,6 +23,7 @@ const StyledTooltipWrapper = styled.div`
 
 const StyledTooltipInfo = styled.p`
   padding: 1rem;
+  color: var(--main-dark);
 `;
 
 export default function Tooltip({ onToggleTooltip, children, show }) {

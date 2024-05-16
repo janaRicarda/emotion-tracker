@@ -83,13 +83,9 @@ export default function HomePage({ onAddEmotionEntry }) {
     <>
       <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
         <>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-          sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-          dolore magna aliquyam erat, sed diam voluptua.
+          On this page, you can indicate your level of tension on a range scale
+          from 0 to 100. Afterward, simply press the Save-button to record your
+          input.
         </>
       </Tooltip>
 
