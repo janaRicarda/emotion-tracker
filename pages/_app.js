@@ -86,14 +86,12 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
 
-  function handleDeleteAllEntries() {
-    console.log("delete");
+  function handleDeleteAll() {
     setEmotionEntries([]);
   }
 
   function handleReplaceAndBackup(generatedData) {
     setBackupEntries(emotionEntries);
-    console.log("backup made");
     setEmotionEntries(generatedData);
   }
   function restoreFromBackup() {
@@ -110,12 +108,15 @@ export default function App({ Component, pageProps }) {
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
+          //do we need this?
           setEmotionEntries={setEmotionEntries}
+          //
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
-          // shownEntries={shownEntries}
           onReplaceUserData={handleReplaceAndBackup}
-          onDeleteAll={handleDeleteAllEntries}
+          onDeleteAll={handleDeleteAll}
+          onRestore={restoreFromBackup}
+          backupEntries={backupEntries}
           toggleHighlight={toggleHighlight}
           {...pageProps}
         />

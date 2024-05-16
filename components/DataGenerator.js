@@ -164,21 +164,19 @@ function generateCompleteData(daysGoingBack) {
 
 export default function DataGenerator({
   backupEntries,
-  setBackupEntries,
   shownEntries,
   setShownEntries,
   daysGoingBack,
   setDaysGoingBack,
-  emotionEntries,
-  setEmotionEntries,
   onDeleteAll,
   onReplaceUserData,
+  onRestore,
 }) {
   const [smallMessage, setSmallMessage] = useState(null);
 
   setTimeout(() => {
     setSmallMessage(null);
-  }, 4000);
+  }, 3500);
 
   function handleDeleteAll() {
     setShownEntries([]);
@@ -191,6 +189,12 @@ export default function DataGenerator({
     setSmallMessage(
       "Replaced user data with randomly generated data.You can restore the user data with 'Get backup'."
     );
+  }
+
+  function handleRestore() {
+    onRestore();
+    setShownEntries(backupEntries);
+    setSmallMessage("Restored previous backup.");
   }
 
   return (
@@ -214,28 +218,22 @@ export default function DataGenerator({
           type="button"
           onClick={() => {
             setShownEntries(generateCompleteData(daysGoingBack));
-            setSmallMessage(`Generated data for ${daysGoingBack} days`);
+            setSmallMessage(
+              daysGoingBack === 1
+                ? `Generated data for ${daysGoingBack} day`
+                : `Generated data for ${daysGoingBack} days`
+            );
           }}
         >
           Generate
         </StyledDevButton>
         <StyledDevButton
           type="button"
-          // onClick={() => {
-          //   setBackupEntries(emotionEntries);
-          //   setEmotionEntries(generateCompleteData(daysGoingBack));
-          // }}
           onClick={() => handleReplaceUserData(shownEntries)}
         >
           Replace userdata
         </StyledDevButton>
-        <StyledDevButton
-          type="button"
-          onClick={() => {
-            setEmotionEntries(backupEntries);
-            setShownEntries(backupEntries);
-          }}
-        >
+        <StyledDevButton type="button" onClick={handleRestore}>
           Get backup
         </StyledDevButton>
         <StyledRedButton type="button" onClick={handleDeleteAll}>

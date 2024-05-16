@@ -41,14 +41,10 @@ export default function GenerateAndDisplay({
   setEmotionEntries,
   onDeleteAll,
   onReplaceUserData,
+  onRestore,
+  backupEntries,
 }) {
   const [daysGoingBack, setDaysGoingBack] = useState(1);
-  // const [backupEntries, setBackupEntries] = useLocalStorageState(
-  //   "backupEntries",
-  //   {
-  //     defaultValue: [],
-  //   }
-  // );
   const [shownEntries, setShownEntries] = useState([]);
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
@@ -64,7 +60,9 @@ export default function GenerateAndDisplay({
       [id]: !prevShow[id],
     }));
   }
-
+  function handleRestoreShown() {
+    setShownEntries(backupEntries);
+  }
   function nullishFunction() {
     //Yeah, it does nothing!
   }
@@ -75,8 +73,11 @@ export default function GenerateAndDisplay({
         <DataGenerator
           onDeleteAll={onDeleteAll}
           onReplaceUserData={onReplaceUserData}
+          onRestore={onRestore}
+          restoreShown={handleRestoreShown}
           daysGoingBack={daysGoingBack}
           setDaysGoingBack={setDaysGoingBack}
+          backupEntries={backupEntries}
           shownEntries={shownEntries}
           setShownEntries={setShownEntries}
           emotionEntries={emotionEntries}
