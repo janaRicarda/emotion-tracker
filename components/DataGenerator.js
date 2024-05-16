@@ -6,6 +6,7 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import { useState } from "react";
 
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;
@@ -32,6 +33,14 @@ const StyledSubTitle = styled.h2`
   margin: 0.5rem;
   font-size: 1.3rem;
   font-weight: 600;
+`;
+
+const StyledSmallMessage = styled.p`
+  font-weight: 500;
+  color: red;
+  border-radius: 6px;
+  border: 1px solid var(--main-dark);
+  padding: 1rem;
 `;
 
 const chance = new Chance();
@@ -156,12 +165,34 @@ function generateCompleteData(daysGoingBack) {
 export default function DataGenerator({
   backupEntries,
   setBackupEntries,
+  shownEntries,
   setShownEntries,
   daysGoingBack,
   setDaysGoingBack,
   emotionEntries,
   setEmotionEntries,
+  onDeleteAll,
+  onReplaceUserData,
 }) {
+  const [smallMessage, setSmallMessage] = useState(null);
+
+  setTimeout(() => {
+    setSmallMessage(null);
+  }, 4000);
+
+  function handleDeleteAll() {
+    setShownEntries([]);
+    onDeleteAll();
+    setSmallMessage("Deleted all user Data. No Backup, no pity.");
+  }
+
+  function handleReplaceUserData(generatedData) {
+    onReplaceUserData(generatedData);
+    setSmallMessage(
+      "Replaced user data with randomly generated data.You can restore the user data with 'Get backup'."
+    );
+  }
+
   return (
     <>
       <StyledGeneratorTitle>Data Generator</StyledGeneratorTitle>
@@ -181,16 +212,20 @@ export default function DataGenerator({
         </label>
         <StyledDevButton
           type="button"
-          onClick={() => setShownEntries(generateCompleteData(daysGoingBack))}
+          onClick={() => {
+            setShownEntries(generateCompleteData(daysGoingBack));
+            setSmallMessage(`Generated data for ${daysGoingBack} days`);
+          }}
         >
           Generate
         </StyledDevButton>
         <StyledDevButton
           type="button"
-          onClick={() => {
-            setBackupEntries(emotionEntries);
-            setEmotionEntries(generateCompleteData(daysGoingBack));
-          }}
+          // onClick={() => {
+          //   setBackupEntries(emotionEntries);
+          //   setEmotionEntries(generateCompleteData(daysGoingBack));
+          // }}
+          onClick={() => handleReplaceUserData(shownEntries)}
         >
           Replace userdata
         </StyledDevButton>
@@ -203,16 +238,12 @@ export default function DataGenerator({
         >
           Get backup
         </StyledDevButton>
-        <StyledRedButton
-          type="button"
-          onClick={() => {
-            setEmotionEntries([]);
-            setShownEntries([]);
-          }}
-        >
+        <StyledRedButton type="button" onClick={handleDeleteAll}>
           Reset
         </StyledRedButton>
       </StyledFlexWrapper>
+
+      {smallMessage && <StyledSmallMessage>{smallMessage}</StyledSmallMessage>}
       <StyledSubTitle>Recorded Emotions (generated)</StyledSubTitle>
     </>
   );

@@ -39,14 +39,16 @@ export default function GenerateAndDisplay({
   toggleHighlight,
   emotionEntries,
   setEmotionEntries,
+  onDeleteAll,
+  onReplaceUserData,
 }) {
   const [daysGoingBack, setDaysGoingBack] = useState(1);
-  const [backupEntries, setBackupEntries] = useLocalStorageState(
-    "backupEntries",
-    {
-      defaultValue: [],
-    }
-  );
+  // const [backupEntries, setBackupEntries] = useLocalStorageState(
+  //   "backupEntries",
+  //   {
+  //     defaultValue: [],
+  //   }
+  // );
   const [shownEntries, setShownEntries] = useState([]);
   const [showDetails, setShowDetails] = useState({});
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
@@ -71,10 +73,10 @@ export default function GenerateAndDisplay({
     <StyledFlexColumnWrapper>
       <StyledPageHeader>
         <DataGenerator
+          onDeleteAll={onDeleteAll}
+          onReplaceUserData={onReplaceUserData}
           daysGoingBack={daysGoingBack}
           setDaysGoingBack={setDaysGoingBack}
-          backupEntries={backupEntries}
-          setBackupEntries={setBackupEntries}
           shownEntries={shownEntries}
           setShownEntries={setShownEntries}
           emotionEntries={emotionEntries}

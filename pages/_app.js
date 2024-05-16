@@ -41,6 +41,12 @@ export default function App({ Component, pageProps }) {
       defaultValue: [],
     }
   );
+  const [backupEntries, setBackupEntries] = useLocalStorageState(
+    "backupEntries",
+    {
+      defaultValue: [],
+    }
+  );
 
   function toggleTheme() {
     theme === "light" ? setTheme("dark") : setTheme("light");
@@ -53,7 +59,7 @@ export default function App({ Component, pageProps }) {
       ...data,
       id,
       timeAndDate,
-      isoDate: new Date().toISOString,
+      isoDate: new Date().toISOString(),
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
@@ -79,6 +85,21 @@ export default function App({ Component, pageProps }) {
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
+
+  function handleDeleteAllEntries() {
+    console.log("delete");
+    setEmotionEntries([]);
+  }
+
+  function handleReplaceAndBackup(generatedData) {
+    setBackupEntries(emotionEntries);
+    console.log("backup made");
+    setEmotionEntries(generatedData);
+  }
+  function restoreFromBackup() {
+    setEmotionEntries(backupEntries);
+  }
+
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <StyledToggleTheme type="button" onClick={toggleTheme}>
@@ -92,6 +113,9 @@ export default function App({ Component, pageProps }) {
           setEmotionEntries={setEmotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          // shownEntries={shownEntries}
+          onReplaceUserData={handleReplaceAndBackup}
+          onDeleteAll={handleDeleteAllEntries}
           toggleHighlight={toggleHighlight}
           {...pageProps}
         />
