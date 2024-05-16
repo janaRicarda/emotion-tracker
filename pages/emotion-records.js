@@ -9,6 +9,16 @@ import { useState, useCallback } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 
+const StyledTopSection = styled(StyledFlexColumnWrapper)`
+  position: sticky;
+  top: 100px;
+  background-color: var(--main-bright);
+  z-index: 1;
+`;
+
+const StyledEmotionRecordsTitle = styled.h1`
+  font-weight: 600;
+`;
 const StyledTextMessage = styled.p`
   margin-top: 4rem;
   text-align: center;
@@ -105,8 +115,9 @@ export default function EmotionRecords({
   }
 
   return (
-    <>
-      <StyledFlexColumnWrapper>
+    <StyledFlexColumnWrapper>
+      <StyledTopSection>
+        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <FilterEmotionEntries
           emotionEntries={emotionEntries}
           filteredEntries={filteredEntries}
@@ -120,51 +131,51 @@ export default function EmotionRecords({
           changeSelectedTime={handleSetSelectedTime}
           DisplayDate={DisplayDate}
         />
-        {buttonState.datePicker ? (
-          selectedTime ? (
-            <DisplayDate />
-          ) : (
-            <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
-            </StyledDateIndicator>
-          )
-        ) : null}
-        {shownEntries.length === 0 &&
-          (filteredEntries.length === 0 ? (
-            buttonState.highlightedButton ? (
-              <StyledTextMessage>
-                You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.`
-              </StyledTextMessage>
-            ) : buttonState.todayButton ? (
-              <StyledTextMessage>
-                You haven&apos;t made any Entries today.<br></br>
-                <StyledLink href="./">add Entry &rarr;</StyledLink>
-              </StyledTextMessage>
-            ) : (
-              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-            )
+      </StyledTopSection>
+      {buttonState.datePicker ? (
+        selectedTime ? (
+          <DisplayDate />
+        ) : (
+          <StyledDateIndicator>
+            Click the calendar <StyledCalendarIcon /> and select a date
+          </StyledDateIndicator>
+        )
+      ) : null}
+      {shownEntries.length === 0 &&
+        (filteredEntries.length === 0 ? (
+          buttonState.highlightedButton ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.`
+            </StyledTextMessage>
+          ) : buttonState.todayButton ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          ))}
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
 
-        {shownEntries && (
-          <>
-            <EmotionRecordsList
-              onDeleteEmotionEntry={onDeleteEmotionEntry}
-              toggleHighlight={toggleHighlight}
-              shownEntries={shownEntries}
-              filteredEntries={filteredEntries}
-            />
-          </>
-        )}
-        {emotionEntries.length === 0 && (
-          <StyledTextMessage>
-            You haven&apos;t made any Entries yet.<br></br>
-            <StyledLink href="./">add Entry &rarr;</StyledLink>
-          </StyledTextMessage>
-        )}
-      </StyledFlexColumnWrapper>
-    </>
+      {shownEntries && (
+        <>
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+          />
+        </>
+      )}
+      {emotionEntries.length === 0 && (
+        <StyledTextMessage>
+          You haven&apos;t made any Entries yet.<br></br>
+          <StyledLink href="./">add Entry &rarr;</StyledLink>
+        </StyledTextMessage>
+      )}
+    </StyledFlexColumnWrapper>
   );
 }

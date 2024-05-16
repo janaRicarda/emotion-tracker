@@ -10,6 +10,7 @@ const StyledContainer = styled.div`
   height: auto;
   display: flex;
   position: relative;
+  margin: 0.5rem;
 `;
 
 const StyledMagnifier = styled(Magnifier)`
@@ -34,17 +35,11 @@ const StyledInput = styled.input`
 
 // Styles for Filter-Buttons
 const StyledFilterSection = styled.section`
-  /* width: 100%; */
-  background-color: var(--main-bright);
-  /* padding: 0.5rem; */
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  top: 100px;
-  z-index: 1;
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -53,10 +48,6 @@ const StyledFilterButton = styled(StyledButton)`
   margin: 0;
   padding: 0.2rem;
   width: auto;
-`;
-
-const StyledEmotionRecordsTitle = styled.h1`
-  font-weight: 600;
 `;
 
 const StyledButtonGroup = styled.div`
@@ -270,7 +261,6 @@ export default function FilterEmotionEntries({
   return (
     <>
       <StyledFilterSection>
-        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
         <StyledContainer>
           <StyledInput
             $showSearchBar={showSearchBar}
