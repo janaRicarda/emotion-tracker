@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import TooltipQuestionmark from "../public/images/chat-question.svg";
+import TooltipQuestionmark from "../public/images/help.svg";
 
 const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: var(--main-dark);
   position: absolute;
-  top: calc(6% - 0.8rem);
+  top: calc(6% - 0.7rem);
   right: 8rem;
   z-index: 2;
 `;
