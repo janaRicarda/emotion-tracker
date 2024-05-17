@@ -7,8 +7,8 @@ import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 
 const StyledToggleTheme = styled.button`
-  width: 2rem;
-  height: 2rem;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   border: 1px solid var(--main-dark);
   background-color: transparent;
@@ -18,6 +18,7 @@ const StyledToggleTheme = styled.button`
   top: 0.7rem;
   right: 4rem;
   z-index: 3;
+  aspect-ratio: 1/1;
 `;
 
 const StyledMoon = styled(Moon)`
