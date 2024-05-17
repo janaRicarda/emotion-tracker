@@ -25,12 +25,12 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
             y: yValues,
             type: "scatter",
             mode: "lines+markers",
-            marker: { color: themeForChart.buttonBackground },
+            marker: { color: themeForChart.text },
           },
         ]}
         layout={{
           font: { color: themeForChart.text },
-          paper_bgcolor: themeForChart.background,
+          paper_bgcolor: themeForChart.sectionBackground,
           border_radius: 6,
           plot_bgcolor: themeForChart.background,
           width: 320,
@@ -46,7 +46,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           title: title,
         }}
       />
-      <button onClick={() => console.log(theme)}>log theme</button>
+      {/* <button onClick={() => console.log(theme)}>log theme</button> */}
     </>
   );
 }
