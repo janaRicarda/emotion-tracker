@@ -22,7 +22,7 @@ const StyledToggleTheme = styled.button`
   top: 0.7rem;
   right: 4rem;
 
-  z-index: 3;
+  z-index: 4;
 `;
 
 const StyledMoon = styled(Moon)`
