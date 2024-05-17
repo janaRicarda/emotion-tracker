@@ -19,6 +19,7 @@ const StyledRecordListItem = styled.li`
 `;
 
 const StyledParagraph = styled.p`
+  color: var(--main-dark);
   border: 1px solid var(--main-dark);
   border-radius: 6px;
   margin: 0.5rem auto;

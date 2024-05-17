@@ -42,8 +42,8 @@ const StyledConfirmButtonWrapper = styled(StyledWrapper)`
 `;
 
 const StyledConfirmOrCancelButton = styled(StyledButton)`
-  //color: var(--contrast-text);
   color: var(--text-on-dark);
+
   border-color: var(--text-on-dark);
   background-color: ${({ $color }) => $color};
   width: 14rem;

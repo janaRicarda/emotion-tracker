@@ -4,11 +4,9 @@ import Link from "next/link";
 //buttons
 const StyledButton = styled.button`
   background-color: var(--button-background);
-
   color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
-
   border-radius: 6px;
   margin: 1rem;
   padding: 1rem;
@@ -21,10 +19,6 @@ const StyledSubmitButton = styled(StyledButton)`
   padding: 0.5rem;
   margin: 0;
   width: inherit;
-  //&:hover {
-  //     background-color: darkslateblue;
-  //     color: ${({ $color }) => $color};
-  //   }
 `;
 
 //headlines
