@@ -195,7 +195,9 @@ export default function DataGenerator({
   setTimeout(() => {
     setSmallMessage(null);
   }, 4000);
+
   const dayZ = daysGoingBack === 1 ? "day" : "days";
+
   function handleGenerate() {
     const newData = generateCompleteData(daysGoingBack);
     onGenerate(newData);

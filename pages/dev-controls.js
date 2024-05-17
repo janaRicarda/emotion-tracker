@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import EmotionRecordsList from "@/components/EmotionRecordsList";
 import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import DataGenerator from "../components/DataGenerator";
+import dynamic from "next/dynamic";
+const EmotionRecordsList = dynamic(
+  () => import("../components/EmotionRecordsList"),
+  { ssr: false }
+);
 
 const StyledDevSection = styled.section`
   width: 85vw;
