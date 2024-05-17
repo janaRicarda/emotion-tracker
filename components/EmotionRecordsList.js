@@ -9,9 +9,9 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledRecordsList = styled(StyledList)`
-  list-style: none;
   padding: 0;
-  margin: 8rem auto 1rem;
+  margin: 1rem auto;
+  text-align: left;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -57,9 +57,6 @@ const StyledEditButton = styled(PencilIcon)`
   &:hover {
     cursor: pointer;
   }
-`;
-const StyledTextMessage = styled.p`
-  margin-top: 150px;
 `;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
@@ -109,13 +106,12 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
   return (
     <>
-      {shownEntries.length === 0 && (
-        <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
-      )}
       <StyledRecordsList>
-        {shownEntries?.map(
+        {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
+        {shownEntries.map(
           ({
             id,
             timeAndDate,
@@ -129,8 +125,8 @@ export default function EmotionRecordsList({
             isHighlighted,
           }) => {
             return (
-              <>
-                <StyledRecordListItem key={id}>
+              <section key={id}>
+                <StyledRecordListItem>
                   <StyledParagraph onClick={() => handleShowDetails(id)}>
                     {timeAndDate}
                   </StyledParagraph>
@@ -178,7 +174,7 @@ export default function EmotionRecordsList({
                   {trigger && <li>Trigger: {trigger}</li>}
                   {notes && <li>Notes: {notes}</li>}
                 </StyledDetails>
-              </>
+              </section>
             );
           }
         )}

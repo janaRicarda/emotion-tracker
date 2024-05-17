@@ -6,7 +6,7 @@ import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
-
+import generateExampleData from "@/utils/exampleData";
 import Layout from "@/components/Layout";
 
 const StyledToggleTheme = styled.button`
@@ -35,10 +35,12 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
+  const data = generateExampleData();
+
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [],
+      defaultValue: [...data],
     }
   );
   const [backupEntries, setBackupEntries] = useLocalStorageState(
