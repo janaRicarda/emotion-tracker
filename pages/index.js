@@ -10,7 +10,7 @@ import {
 } from "@/SharedStyledComponents";
 
 const StyledTensionForm = styled(StyledForm)`
-  margin: 2rem auto;
+  margin: 4rem auto;
   align-items: center;
   width: 80vw;
 `;
@@ -21,7 +21,8 @@ const StyledTensionLabel = styled.label`
 `;
 
 const StyledSpan = styled.span`
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  margin: 1rem 0 0 0;
 `;
 
 const StyledMessage = styled.p`
@@ -93,6 +94,7 @@ export default function HomePage({ onAddEmotionEntry }) {
       />
       <StyledWrapper>
         <StyledSpan>0</StyledSpan>
+
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
       {!isFormSubmitted && (

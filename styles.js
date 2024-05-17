@@ -35,7 +35,7 @@ export default createGlobalStyle`
 }
   body {
     margin: 0;
-    padding: 80px 2rem 75px 2rem;
+    padding: 100px 2rem 75px 2rem;
    
     background-color: var(--main-bright);
     color: var(--main-dark);
