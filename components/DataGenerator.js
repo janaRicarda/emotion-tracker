@@ -24,7 +24,7 @@ const StyledDevButton = styled(StyledButton)`
   padding: 0.3rem;
 `;
 
-const StyledRedButton = styled(StyledDevButton)`
+const StyledRedDevButton = styled(StyledDevButton)`
   background-color: red;
 `;
 
@@ -186,12 +186,13 @@ export default function DataGenerator({
 
   setTimeout(() => {
     setSmallMessage(null);
-  }, 3500);
+  }, 4000);
 
   function handleGenerate() {
     const newData = generateCompleteData(daysGoingBack);
     onGenerate(newData);
-
+    if (daysGoingBack > 365)
+      return setSmallMessage("Please use a number below 366!");
     const dayZ = daysGoingBack === 1 ? "day" : "days";
     setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
   }
@@ -225,7 +226,7 @@ export default function DataGenerator({
             id="daysGoingBack"
             value={daysGoingBack}
             min={1}
-            max={150}
+            max={365}
             onChange={(event) => setDaysGoingBack(event.target.value)}
           />
           Days
@@ -242,12 +243,12 @@ export default function DataGenerator({
         <StyledDevButton type="button" onClick={handleRestore}>
           Get backup
         </StyledDevButton>
-        <StyledRedButton type="button" onClick={handleDeleteAll}>
+        <StyledRedDevButton type="button" onClick={handleDeleteAll}>
           Reset
-        </StyledRedButton>
+        </StyledRedDevButton>
       </StyledFlexWrapper>
       <StyledNote>
-        Note: Delete and edit will only work if you replace userdata with
+        Note: Delete and edit will only work after you replaced userdata with
         generated data!
       </StyledNote>
       {smallMessage && <StyledSmallMessage>{smallMessage}</StyledSmallMessage>}
@@ -255,4 +256,3 @@ export default function DataGenerator({
     </>
   );
 }
-export { generateCompleteData };

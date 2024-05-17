@@ -108,9 +108,6 @@ export default function App({ Component, pageProps }) {
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
-          //do we need this?
-          setEmotionEntries={setEmotionEntries}
-          //
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
           onReplaceUserData={handleReplaceAndBackup}

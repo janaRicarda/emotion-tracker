@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EmotionRecordsList from "@/components/EmotionRecordsList";
 import {
   StyledButton,
@@ -47,6 +47,10 @@ export default function GenerateAndDisplay({
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
 
+  useEffect(() => {
+    setShownEntries(emotionEntries);
+  }, [emotionEntries]);
+
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
   }
@@ -81,7 +85,6 @@ export default function GenerateAndDisplay({
           backupEntries={backupEntries}
           shownEntries={shownEntries}
           emotionEntries={emotionEntries}
-          // setEmotionEntries={setEmotionEntries}
         />
 
         {shownEntries.length !== 0 && (
@@ -97,6 +100,7 @@ export default function GenerateAndDisplay({
         <EmotionRecordsList
           emotionEntries={shownEntries}
           onDeleteEmotionEntry={onDeleteEmotionEntry}
+          editFromDevControls={true}
           shownEntries={
             isHighlighted
               ? shownEntries.filter((entry) => entry.isHighlighted)
