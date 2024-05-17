@@ -8,6 +8,7 @@ import styled from "styled-components";
 import SearchBar from "@/components/SearchBar";
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
+import Tooltip from "@/components/Tooltip";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ export default function EmotionRecords({
   const [searchTerm, setSearchTerm] = useState();
   const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -94,8 +96,21 @@ export default function EmotionRecords({
     setSearchTerm(input);
   }
 
+  function handleToggleTooltip() {
+    setIsTooltipOpen(!isTooltipOpen);
+  }
+
   return (
     <StyledFlexColumnWrapper>
+      <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
+        <>
+          Navigate through your emotion records list, a comprehensive
+          compilation of all your added emotion entries. You can easily search
+          for specific entries, edit or delete them, and even highlight
+          important moments. Also, you can search through your entries or filter
+          them by the following options: today, last week, or last month.
+        </>
+      </Tooltip>
       <StyledPageHeader>
         <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
 

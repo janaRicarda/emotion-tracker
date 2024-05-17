@@ -23,15 +23,12 @@ export default function CreateIndexPage({ onAddEmotionDetails }) {
           id={id}
           onAddEmotionDetails={onAddEmotionDetails}
         />
-        <Tooltip onToggleTooltip={handleToggleTooltip}>
-          {isTooltipOpen && (
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum.
-            </p>
-          )}
+        <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
+          <>
+            Select the emotion that best represents how you are feeling right
+            now. Use the provided visual cues, brief descriptions, and examples
+            to guide your choice.
+          </>
         </Tooltip>
       </StyledFlexColumnWrapper>
     </>

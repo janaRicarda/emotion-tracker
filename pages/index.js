@@ -78,7 +78,7 @@ export default function HomePage({ onAddEmotionEntry }) {
   function handleToggleTooltip() {
     setIsTooltipOpen(!isTooltipOpen);
   }
-  console.log(isTooltipOpen);
+
   return (
     <>
       <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
