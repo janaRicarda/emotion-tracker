@@ -48,6 +48,7 @@ const StyledFilterButton = styled(StyledButton)`
   margin: 0;
   padding: 0.2rem;
   width: auto;
+  color: var(--main-dark);
 `;
 
 const StyledButtonGroup = styled.div`
@@ -94,6 +95,7 @@ const StyledNavButton = styled(StyledButton)`
   width: 5rem;
   padding: 0.2rem;
   margin: 0.5rem;
+
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
 `;
 
@@ -106,6 +108,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
   display: inline;
   vertical-align: bottom;
+  fill: var(--main-dark);
 `;
 
 export default function FilterEmotionEntries({

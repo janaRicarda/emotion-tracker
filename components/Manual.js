@@ -90,7 +90,7 @@ const StyledListItem = styled.li`
     border-bottom-right-radius: 30px;
     border-bottom: 3px dotted;
     border-color: ${({ $itemColor }) => $itemColor};
-    transition: border-color 500ms ease-in-out;
+    transition: border-color 100ms ease-in-out;
     padding-right: 2rem;
   }
   &:nth-child(odd) {
@@ -117,7 +117,7 @@ export default function Manual() {
       "var(--disgust)",
       "var(--anger)",
     ];
-    const index = Math.floor(window.scrollY / 100) % colors.length;
+    const index = Math.floor(window.scrollY / 300) % colors.length;
     setItemColor(colors[index]);
   }
 

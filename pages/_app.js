@@ -1,39 +1,11 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
-import Moon from "../public/moon.svg";
-import Sun from "../public/sun.svg";
 import generateExampleData from "@/utils/exampleData";
 import Layout from "@/components/Layout";
-
-const StyledToggleTheme = styled.button`
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  border: 1px solid var(--main-dark);
-  background-color: transparent;
-  font-size: 1rem;
-  margin: 1rem;
-  position: fixed;
-  top: 0.7rem;
-  right: 4rem;
-  z-index: 3;
-`;
-
-const StyledMoon = styled(Moon)`
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: var(--main-dark);
-`;
-
-const StyledSun = styled(Sun)`
-  width: 1.5rem;
-  height.1.5rem;
-  fill: var(--main-dark);
-`;
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
@@ -92,14 +64,8 @@ export default function App({ Component, pageProps }) {
   }
   return (
     <ThemeProvider theme={theme}>
-      {theme === lightTheme || theme === darkTheme ? (
-        <StyledToggleTheme type="button" onClick={toggleTheme}>
-          {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-        </StyledToggleTheme>
-      ) : null}
-
       <GlobalStyle />
-      <Layout switchTheme={switchTheme}>
+      <Layout theme={theme} toggleTheme={toggleTheme} switchTheme={switchTheme}>
         <Component
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}

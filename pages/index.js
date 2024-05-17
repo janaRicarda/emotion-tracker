@@ -32,9 +32,11 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
+const StyledSaveButton = styled(StyledButton)`
+  border-style: none;
+`;
+
 const StyledButtonWrapper = styled(StyledWrapper)`
-  //width: inherit;
-  width: 100%;
   justify-content: center;
 `;
 
@@ -45,7 +47,8 @@ const StyledBackButton = styled.input`
   margin: 0.5rem;
   padding: 0.5rem;
   border-radius: 8.5px;
-  border: 1px solid black;
+  border-style: none;
+
   text-align: center;
   background-color: var(--button-background);
 `;
@@ -54,10 +57,7 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
+  background-color: var(--button-background);
 `;
 
 export default function HomePage({ onAddEmotionEntry }) {
@@ -100,7 +100,7 @@ export default function HomePage({ onAddEmotionEntry }) {
       {!isFormSubmitted && (
         <>
           <p>{tension}</p>
-          <StyledButton type="submit">Save</StyledButton>
+          <StyledSaveButton type="submit">Save</StyledSaveButton>
         </>
       )}
 
@@ -117,7 +117,6 @@ export default function HomePage({ onAddEmotionEntry }) {
               }}
             ></StyledBackButton>
             <StyledAddDetailsLink
-              $actionButton
               href={{ pathname: "/create", query: { id: id } }}
               forwardedAs={`/create`}
             >

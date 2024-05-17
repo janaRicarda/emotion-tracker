@@ -8,6 +8,7 @@ const StyledButton = styled.button`
   color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
+
   border-radius: 6px;
   margin: 1rem;
   padding: 1rem;

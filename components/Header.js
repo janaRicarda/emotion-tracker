@@ -2,6 +2,35 @@ import styled from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Logo from "../public/logo2.svg";
+import Moon from "../public/moon.svg";
+import Sun from "../public/sun.svg";
+import { lightTheme, darkTheme } from "../components/Theme";
+
+const StyledToggleTheme = styled.button`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--main-dark);
+  background-color: transparent;
+  font-size: 1rem;
+  margin: 1rem;
+  position: fixed;
+  top: 0.7rem;
+  right: 4rem;
+  z-index: 3;
+`;
+
+const StyledMoon = styled(Moon)`
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: var(--main-dark);
+`;
+
+const StyledSun = styled(Sun)`
+  width: 1.5rem;
+  height.1.5rem;
+  fill: var(--main-dark);
+`;
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -10,19 +39,8 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: ${({ $isOpen }) => ($isOpen ? "2" : "1")};
 `;
-
-// const StyledLogo = styled(Logo)`
-//   width: 3.5rem;
-//   height: 3.5rem;
-//   fill: red;
-//   color: red;
-//   stroke: red;
-//   position: absolute;
-//   top: 1rem;
-//   left: 1rem;
-// `;
 
 const StyledLogo = styled(Logo)`
   width: 9rem;
@@ -35,7 +53,7 @@ const StyledLogo = styled(Logo)`
   left: 1rem;
 `;
 
-export default function Header({ switchTheme }) {
+export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleToggleMenu() {
@@ -45,6 +63,11 @@ export default function Header({ switchTheme }) {
   return (
     <StyledHeader $isOpen={isOpen}>
       <StyledLogo />
+      {theme === lightTheme || theme === darkTheme ? (
+        <StyledToggleTheme type="button" onClick={toggleTheme}>
+          {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+        </StyledToggleTheme>
+      ) : null}
       <Navigation
         isOpen={isOpen}
         handleToggleMenu={handleToggleMenu}
