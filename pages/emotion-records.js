@@ -1,4 +1,8 @@
-import EmotionRecordsList from "@/components/EmotionRecordsList";
+import dynamic from "next/dynamic";
+const EmotionRecordsList = dynamic(
+  () => import("../components/EmotionRecordsList"),
+  { ssr: false }
+);
 import {
   StyledTitle,
   StyledFlexColumnWrapper,

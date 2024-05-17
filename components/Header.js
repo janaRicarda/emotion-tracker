@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logo from "../public/logo2.svg";
+import Logo from "../public/logo.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
@@ -34,7 +34,7 @@ const StyledSun = styled(Sun)`
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: 80px;
+  height: 100px;
   background: var(--main-bright);
   position: fixed;
   top: 0;

@@ -39,7 +39,7 @@ const StyledTitle = styled.h1`
 const StyledFixedTitle = styled(StyledTitle)`
   width: 100%;
   position: fixed;
-  top: 80px;
+  top: 100px;
   left: 0;
   padding: 1rem;
   background-color: var(--main-bright);

@@ -47,8 +47,11 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--button-background)" : "var(--main-bright)"};
   margin: 0;
   padding: 0.2rem;
+  border-color: ${({ $active }) =>
+    $active ? "var(--button-background)" : "var(--main-dark)"};
   width: auto;
-  color: var(--main-dark);
+  color: ${({ $active }) =>
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
 `;
 
 const StyledButtonGroup = styled.div`
