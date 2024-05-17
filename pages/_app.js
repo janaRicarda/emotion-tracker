@@ -25,11 +25,13 @@ const StyledToggleTheme = styled.button`
 
 const StyledMoon = styled(Moon)`
   width: 1.5rem;
+  height: 1.5rem;
   fill: var(--main-dark);
 `;
 
 const StyledSun = styled(Sun)`
   width: 1.5rem;
+  height.1.5rem;
   fill: var(--main-dark);
 `;
 
