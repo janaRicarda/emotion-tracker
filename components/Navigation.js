@@ -24,7 +24,7 @@ const StyledCloseButton = styled(Close)`
   position: absolute;
   top: 0.5rem;
   right: 0;
-  z-index: 2;
+  z-index: 3;
 `;
 
 const StyledArticle = styled.article`
@@ -39,6 +39,7 @@ const StyledArticle = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 `;
 
 const StyledLink = styled(StyledStandardLink)`
