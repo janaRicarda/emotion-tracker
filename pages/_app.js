@@ -93,6 +93,7 @@ export default function App({ Component, pageProps }) {
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
           toggleHighlight={toggleHighlight}
+          theme={theme}
           {...pageProps}
         />
       </Layout>

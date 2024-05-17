@@ -3,15 +3,15 @@ import React from "react";
 import Plot from "react-plotly.js";
 
 //testing ways to work with the color themes
-import { lightTheme } from "./Theme";
+import { darkTheme, lightTheme } from "./Theme";
 
 const lightThemeBgColor = "#f1eaea";
 
 function convertThemeColors(theme) {
   const themeColors = "test";
 }
-
-export default function TensionChart({ xValues, yValues, title }) {
+// console.log(theme);
+export default function TensionChart({ xValues, yValues, title, theme }) {
   return (
     <>
       <Plot
@@ -39,7 +39,7 @@ export default function TensionChart({ xValues, yValues, title }) {
           title: title,
         }}
       />
-      {/* <button onClick={() => console.log(xValues)}>Console log data</button> */}
+      <button onClick={() => console.log(theme)}>log theme</button>
     </>
   );
 }

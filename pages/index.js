@@ -62,7 +62,7 @@ const StyledBackButton = styled.input`
   background-color: var(--button-background);
 `;
 
-export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
+export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
@@ -143,6 +143,7 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries }) {
       <StyledFlexColumnWrapper>
         <TensionChart
           emotionEntries={emotionEntries}
+          theme={theme}
           xValues={xValues}
           yValues={yValues}
           title="Daily Tension Graph"
