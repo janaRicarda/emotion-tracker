@@ -10,18 +10,26 @@ import { useState } from "react";
 
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;
-  gap: 1rem;
-  margin: 1rem;
+  gap: 0.5rem;
+  margin: 0.5rem;
 `;
 
 const StyledGeneratorTitle = styled.h1`
   font-weight: 600;
 `;
 
+const StyledDaysInput = styled.input`
+  width: fit-content;
+  height: 2rem;
+  padding: 0.5rem;
+  text-align: right;
+`;
+
 const StyledDevButton = styled(StyledButton)`
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
+  font-size: 0.8rem;
 `;
 
 const StyledRedDevButton = styled(StyledDevButton)`
@@ -187,13 +195,13 @@ export default function DataGenerator({
   setTimeout(() => {
     setSmallMessage(null);
   }, 4000);
-
+  const dayZ = daysGoingBack === 1 ? "day" : "days";
   function handleGenerate() {
     const newData = generateCompleteData(daysGoingBack);
     onGenerate(newData);
     if (daysGoingBack > 365)
       return setSmallMessage("Please use a number below 366!");
-    const dayZ = daysGoingBack === 1 ? "day" : "days";
+
     setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
   }
 
@@ -221,7 +229,7 @@ export default function DataGenerator({
       <StyledFlexWrapper>
         <p>Generate data for</p>
         <label htmlFor="daysGoingBack">
-          <input
+          <StyledDaysInput
             type="number"
             id="daysGoingBack"
             value={daysGoingBack}
@@ -229,7 +237,8 @@ export default function DataGenerator({
             max={365}
             onChange={(event) => setDaysGoingBack(event.target.value)}
           />
-          Days
+          <span>{"  "}</span>
+          {dayZ}
         </label>
         <StyledDevButton type="button" onClick={handleGenerate}>
           Generate

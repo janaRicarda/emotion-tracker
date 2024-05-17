@@ -7,28 +7,30 @@ import {
 } from "@/SharedStyledComponents";
 import DataGenerator from "../components/DataGenerator";
 
-const StyledPageHeader = styled.section`
-  width: 100%;
+const StyledDevSection = styled.section`
+  width: 85vw;
   background-color: var(--main-bright);
-  padding: 2rem 0.5rem 0.5rem;
-  margin: 1rem 1rem 8rem;
+  padding: 1rem 1rem 1rem;
+  margin: 1rem 1rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 80px;
+  top: 60px;
   height: fit-content;
   z-index: 1;
 `;
 
-const StyledSpacer = styled.p`
-  margin: 5rem;
+const StyledSpacer = styled.div`
+  width: 100%;
+  margin: 2rem 2rem 7rem;
+  padding: 2rem 2rem 3rem;
 `;
 
 const StyledHighlightButton = styled(StyledButton)`
-  font-size: 1rem;
+  font-size: 0.8rem;
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
@@ -76,7 +78,7 @@ export default function GenerateAndDisplay({
 
   return (
     <StyledFlexColumnWrapper>
-      <StyledPageHeader>
+      <StyledDevSection>
         <DataGenerator
           onGenerate={updateWithGeneratedData}
           onDeleteAll={handleDeleteShown}
@@ -94,8 +96,8 @@ export default function GenerateAndDisplay({
             </StyledHighlightButton>
           </>
         )}
-      </StyledPageHeader>
-      <StyledSpacer></StyledSpacer>
+      </StyledDevSection>
+      <StyledSpacer />
       {shownEntries.length !== 0 && (
         <EmotionRecordsList
           emotionEntries={shownEntries}
