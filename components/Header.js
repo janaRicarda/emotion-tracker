@@ -7,8 +7,8 @@ import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 
 const StyledToggleTheme = styled.button`
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: 1px solid var(--main-dark);
   background-color: transparent;
