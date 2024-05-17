@@ -6,7 +6,7 @@ import { useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
-
+import generateExampleData from "@/utils/exampleData";
 import Layout from "@/components/Layout";
 
 const StyledToggleTheme = styled.button`
@@ -39,10 +39,13 @@ export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
 
   const [theme, setTheme] = useState(defaultTheme);
+
+  const data = generateExampleData();
+
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [],
+      defaultValue: [...data],
     }
   );
 
@@ -60,7 +63,8 @@ export default function App({ Component, pageProps }) {
     const newEntry = {
       ...data,
       id,
-      date: timeAndDate,
+      timeAndDate,
+      isoDate: new Date().toISOString(),
     };
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
