@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Menu from "./../public/menu.svg";
-import Close from "./../public/close.svg";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import {
   lightTheme,
@@ -13,27 +11,6 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
-
-const StyledMenuButton = styled(Menu)`
-  width: 3rem;
-  fill: var(--main-dark);
-  border-style: none;
-  margin: 1rem;
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-const StyledCloseButton = styled(Close)`
-  width: 2rem;
-
-  fill: var(--contrast-text);
-  border-style: none;
-  margin: 1rem;
-  position: absolute;
-  top: 0.5rem;
-  right: 0;
-  z-index: 2;
-`;
 
 const StyledArticle = styled.article`
   width: 100vw;
@@ -103,12 +80,6 @@ export default function Navigation({
 
   return (
     <>
-      {isOpen ? (
-        <StyledCloseButton type="button" onClick={handleToggleMenu} />
-      ) : (
-        <StyledMenuButton type="button" onClick={handleToggleMenu} />
-      )}
-
       {isOpen && (
         <StyledArticle>
           <StyledLink onClick={handleToggleMenu} href="/app-manual">

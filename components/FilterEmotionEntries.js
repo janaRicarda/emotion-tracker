@@ -52,6 +52,8 @@ const StyledFilterButton = styled(StyledButton)`
   width: auto;
   color: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
+  fill: ${({ $active }) =>
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
 `;
 
 const StyledButtonGroup = styled.div`
@@ -111,7 +113,6 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
   display: inline;
   vertical-align: bottom;
-  fill: var(--main-dark);
 `;
 
 export default function FilterEmotionEntries({
