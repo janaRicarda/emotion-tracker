@@ -14,6 +14,7 @@ const StyledToggleTheme = styled.button`
   border: 1px solid var(--main-dark);
   background-color: transparent;
   z-index: 2;
+  padding: 0.3rem;
   aspect-ratio: 1/1;
 `;
 
@@ -45,6 +46,7 @@ const StyledHeader = styled.header`
   align-items: center;
   background: var(--main-bright);
   position: fixed;
+  padding: 0 1rem;
   top: 0;
   left: 0;
   z-index: ${({ $isOpen }) => ($isOpen ? "2" : "1")};
@@ -54,15 +56,12 @@ const StyledIconWrapper = styled(StyledWrapper)`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-
   width: auto;
-  padding: 1rem;
 `;
 
 const StyledLogo = styled(Logo)`
   width: 9rem;
   height: 9rem;
-  padding-left: 0.5rem;
   stroke: var(--main-dark);
 `;
 

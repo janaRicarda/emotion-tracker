@@ -13,8 +13,7 @@ import {
 } from "../SharedStyledComponents";
 
 const StyledArticle = styled.article`
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background-color: var(--button-background);
   padding: 3rem 1rem;
   position: fixed;
@@ -43,8 +42,6 @@ const StyledSummary = styled.summary`
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
-  width: 100%;
-
   gap: 1px;
   border: 1px solid var(--text-on-bright);
 `;
@@ -52,16 +49,12 @@ const ThemeButton = styled(StyledButton)`
   text-align: left;
   color: var(--text-on-dark);
   background: var(--submit-button-background);
-  border: 0;
+  border: 0 0 1px solid var(--text-on-bright) 0;
   border-radius: 0;
-  border-bottom: 1px solid var(--text-on-bright);
   padding: 0;
   padding-left: 0.1rem;
   margin: 0;
   width: 100%;
-  &:last-child {
-    border-bottom: 0;
-  }
 `;
 
 export default function Navigation({
