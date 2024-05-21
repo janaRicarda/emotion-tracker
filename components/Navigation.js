@@ -1,29 +1,16 @@
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
-
-const StyledMenuButton = styled(Menu)`
-  width: 3rem;
-  fill: var(--main-dark);
-  background: transparent;
-  color: var(--main-dark);
-  border-style: none;
-  margin: 1rem;
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-const StyledCloseButton = styled(Close)`
-  width: 2rem;
-  fill: var(--main-dark);
-  background: var(--button-background);
-  color: var(--main-dark);
-  border-style: none;
-  margin: 1rem;
-  position: absolute;
-  top: 0.5rem;
-  right: 0;
-  z-index: 3;
-`;
+import {
+  lightTheme,
+  warmTheme,
+  coldTheme,
+  neutralTheme,
+  highContrastTheme,
+} from "./Theme";
+import {
+  StyledButton,
+  StyledFlexColumnWrapper,
+} from "../SharedStyledComponents";
 
 const StyledArticle = styled.article`
   inset: 0;

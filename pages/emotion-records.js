@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-
 const EmotionRecordsList = dynamic(
   () => import("../components/EmotionRecordsList"),
   { ssr: false }
@@ -10,9 +9,10 @@ import {
   StyledStandardLink,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
-import SearchBar from "@/components/SearchBar";
-import { useState, useEffect } from "react";
-import Fuse from "fuse.js";
+import FilterEmotionEntries from "@/components/FilterEmotionEntries";
+import { useState, useCallback } from "react";
+import HeartOutlineIcon from "../public/heart-outline.svg";
+import CalendarIcon from "../public/calendar.svg";
 import Tooltip from "@/components/Tooltip";
 
 const StyledWrapper = styled.div`
@@ -72,34 +72,29 @@ export default function EmotionRecords({
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
-  const [isHighlighted, setIsHighlighted] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [selectedTime, setSelectedTime] = useState();
+  const [buttonState, setButtonState] = useState({
+    todayButton: true,
+    name: "todayButton",
+    label: "Today",
+    singleComparison: true,
+    daysAgo: 0,
+  });
 
-  useEffect(() => {
-    if (!searchTerm) {
-      setShownEntries(emotionEntries);
-      return;
-    }
+  // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
-    const fuse = new Fuse(emotionEntries, {
-      includeScore: true,
-      threshold: 0.4,
-      keys: [
-        "date",
-        "tensionLevel",
-        "trigger",
-        "intensity",
-        "notes",
-        "category",
-        "emotion",
-        "subemotion",
-      ],
-    });
+  const handleSetFilterEntries = useCallback((filteredObject) => {
+    setFilteredEntries(filteredObject);
+  }, []);
 
-    const results = fuse.search(searchTerm);
-    const items = results.map((result) => result.item);
-    setShownEntries(items);
-  }, [emotionEntries, searchTerm]);
+  const handleSetShownEntries = useCallback((entriesObjectAfterSearch) => {
+    setShownEntries(entriesObjectAfterSearch);
+  }, []);
+
+  function handleSetButtonState(buttonObject) {
+    setButtonState(buttonObject);
+  }
 
   function handleSetSelectedTime(time) {
     setSelectedTime(time);
@@ -111,6 +106,28 @@ export default function EmotionRecords({
 
   function handleToggleTooltip() {
     setIsTooltipOpen(!isTooltipOpen);
+  }
+
+  function getFormattedDate(selectedDate) {
+    const date = new Intl.DateTimeFormat(`de`, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(selectedDate);
+
+    return date;
+  }
+
+  function DisplayDate() {
+    return (
+      <StyledParagraph>
+        Your Selection:<br></br>
+        {getFormattedDate(selectedTime.from)}
+        {selectedTime.to &&
+          selectedTime.from.toString() !== selectedTime.to.toString() &&
+          " - " + getFormattedDate(selectedTime.to)}
+      </StyledParagraph>
+    );
   }
 
   return (
@@ -126,23 +143,47 @@ export default function EmotionRecords({
       </Tooltip>
       <StyledTopSection>
         <StyledTitle>Recorded Emotions</StyledTitle>
-
-        {emotionEntries.length !== 0 && (
-          <>
-            <SearchBar onSearch={handleSearch} />
-
-            <StyledHeartSymbol onClick={handleShowHighlighted}>
-              {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-            </StyledHeartSymbol>
-          </>
-        )}
+        <FilterEmotionEntries
+          emotionEntries={emotionEntries}
+          filteredEntries={filteredEntries}
+          buttonState={buttonState}
+          searchTerm={searchTerm}
+          selectedTime={selectedTime}
+          onSearch={handleSearch}
+          changeShownEntries={handleSetShownEntries}
+          changeButtonState={handleSetButtonState}
+          changeFilterEntries={handleSetFilterEntries}
+          changeSelectedTime={handleSetSelectedTime}
+          DisplayDate={DisplayDate}
+        />
       </StyledTopSection>
-      {emotionEntries.length === 0 && (
-        <StyledTextMessage>
-          You haven&apos;t made any Entries yet.<br></br>
-          <StyledLink href="./">add Entry &rarr;</StyledLink>
-        </StyledTextMessage>
-      )}
+      {buttonState.datePicker ? (
+        selectedTime ? (
+          <DisplayDate />
+        ) : (
+          <StyledDateIndicator>
+            Click the calendar <StyledCalendarIcon /> and select a date
+          </StyledDateIndicator>
+        )
+      ) : null}
+      {shownEntries.length === 0 &&
+        (filteredEntries.length === 0 ? (
+          buttonState.highlightedButton ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.
+            </StyledTextMessage>
+          ) : buttonState.todayButton ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
+          ) : (
+            <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
 
       {shownEntries.length !== 0 && (
         <>

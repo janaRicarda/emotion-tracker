@@ -1,7 +1,42 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logo from ".//../public/images/logo.png";
+import Logo from "../public/logo.svg";
+import Menu from "./../public/menu.svg";
+import Close from "./../public/close.svg";
+import Moon from "../public/moon.svg";
+import Sun from "../public/sun.svg";
+import { lightTheme, darkTheme } from "../components/Theme";
+import { StyledWrapper } from "@/SharedStyledComponents";
+
+const StyledToggleTheme = styled.button`
+  border-radius: 50%;
+  border: 1px solid var(--main-dark);
+  background-color: transparent;
+  z-index: 2;
+  padding: 0.3rem;
+  aspect-ratio: 1/1;
+`;
+
+const StyledMoon = styled(Moon)`
+  fill: var(--main-dark);
+`;
+
+const StyledSun = styled(Sun)`
+  fill: var(--main-dark);
+`;
+
+const StyledMenuButton = styled(Menu)`
+  width: 2.5rem;
+  fill: var(--main-dark);
+  border-style: none;
+`;
+const StyledCloseButton = styled(Close)`
+  width: 2.5rem;
+  fill: var(--contrast-text);
+  border-style: none;
+  z-index: 2;
+`;
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -14,7 +49,7 @@ const StyledHeader = styled.header`
   padding: 0 1rem;
   top: 0;
   left: 0;
-  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
+  z-index: ${({ $isOpen }) => ($isOpen ? "2" : "1")};
 `;
 
 const StyledIconWrapper = styled(StyledWrapper)`
@@ -39,10 +74,24 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
 
   return (
     <StyledHeader $isOpen={isOpen}>
-      <StyledStandardLink href="/">
-        <StyledLogo src={Logo} />
-      </StyledStandardLink>
-      <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
+      <StyledLogo />
+      <StyledIconWrapper>
+        {theme === lightTheme || theme === darkTheme ? (
+          <StyledToggleTheme type="button" onClick={toggleTheme}>
+            {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+          </StyledToggleTheme>
+        ) : null}
+        {isOpen ? (
+          <StyledCloseButton type="button" onClick={handleToggleMenu} />
+        ) : (
+          <StyledMenuButton type="button" onClick={handleToggleMenu} />
+        )}
+        <Navigation
+          isOpen={isOpen}
+          handleToggleMenu={handleToggleMenu}
+          switchTheme={switchTheme}
+        />
+      </StyledIconWrapper>
     </StyledHeader>
   );
 }
