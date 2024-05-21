@@ -1,29 +1,36 @@
 import styled from "styled-components";
-import Image from "next/image";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Logo from ".//../public/images/logo.png";
-import { StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledHeader = styled.header`
   width: 100%;
   height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: var(--main-bright);
   position: fixed;
+  padding: 0 1rem;
   top: 0;
   left: 0;
   z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
 `;
 
-const StyledLogo = styled(Image)`
-  height: 100px;
-  width: 200px;
-  position: absolute;
-  top: 0;
-  left: 0;
+const StyledIconWrapper = styled(StyledWrapper)`
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
 `;
 
-export default function Header() {
+const StyledLogo = styled(Logo)`
+  width: 9rem;
+  height: 9rem;
+  stroke: var(--main-dark);
+`;
+
+export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleToggleMenu() {

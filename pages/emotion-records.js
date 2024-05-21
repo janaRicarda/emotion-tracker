@@ -1,7 +1,12 @@
-import EmotionRecordsList from "@/components/EmotionRecordsList";
+import dynamic from "next/dynamic";
+
+const EmotionRecordsList = dynamic(
+  () => import("../components/EmotionRecordsList"),
+  { ssr: false }
+);
 import {
+  StyledTitle,
   StyledFlexColumnWrapper,
-  StyledButton,
   StyledStandardLink,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
@@ -16,22 +21,15 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledPageHeader = styled.section`
-  width: 100%;
-  background-color: var(--main-bright);
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
+const StyledTopSection = styled(StyledFlexColumnWrapper)`
+  position: sticky;
   top: 100px;
+  background-color: var(--main-bright);
   z-index: 1;
 `;
 
 const StyledTextMessage = styled.p`
-  margin-top: 150px;
+  margin-top: 4rem;
   text-align: center;
   line-height: 3;
 `;
@@ -39,17 +37,31 @@ const StyledTextMessage = styled.p`
 const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
+  color: var(--contrast-text);
 `;
 
-const StyledHighlightButton = styled(StyledButton)`
-  font-size: 1rem;
-  width: fit-content;
-  margin: 0;
-  padding: 0.3rem;
+const StyledHeartSymbol = styled(HeartOutlineIcon)`
+  width: 1.4rem;
+  display: inline;
+  position: relative;
+  top: 5px;
 `;
 
-const StyledEmotionRecordsTitle = styled.h1`
-  font-weight: 600;
+const StyledCalendarIcon = styled(CalendarIcon)`
+  width: 1.5rem;
+  display: inline;
+  vertical-align: bottom;
+  fill: var(--main-dark);
+`;
+
+const StyledDateIndicator = styled.p`
+  text-align: center;
+  margin: 2rem auto 1rem;
+`;
+
+const StyledParagraph = styled.p`
+  text-align: center;
+  padding: 0.5rem;
 `;
 
 export default function EmotionRecords({
@@ -58,6 +70,7 @@ export default function EmotionRecords({
   toggleHighlight,
 }) {
   const [searchTerm, setSearchTerm] = useState();
+  const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
@@ -88,8 +101,8 @@ export default function EmotionRecords({
     setShownEntries(items);
   }, [emotionEntries, searchTerm]);
 
-  function handleShowHighlighted() {
-    setIsHighlighted(!isHighlighted);
+  function handleSetSelectedTime(time) {
+    setSelectedTime(time);
   }
 
   function handleSearch(input) {
@@ -111,19 +124,19 @@ export default function EmotionRecords({
           them by the following options: today, last week, or last month.
         </>
       </Tooltip>
-      <StyledPageHeader>
-        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
+      <StyledTopSection>
+        <StyledTitle>Recorded Emotions</StyledTitle>
 
         {emotionEntries.length !== 0 && (
           <>
             <SearchBar onSearch={handleSearch} />
 
-            <StyledHighlightButton onClick={handleShowHighlighted}>
+            <StyledHeartSymbol onClick={handleShowHighlighted}>
               {isHighlighted ? "Show all Entries" : "Show highlighted Entries"}
-            </StyledHighlightButton>
+            </StyledHeartSymbol>
           </>
         )}
-      </StyledPageHeader>
+      </StyledTopSection>
       {emotionEntries.length === 0 && (
         <StyledTextMessage>
           You haven&apos;t made any Entries yet.<br></br>
@@ -131,17 +144,15 @@ export default function EmotionRecords({
         </StyledTextMessage>
       )}
 
-      {emotionEntries.length !== 0 && (
-        <EmotionRecordsList
-          onDeleteEmotionEntry={onDeleteEmotionEntry}
-          shownEntries={
-            isHighlighted
-              ? shownEntries.filter((entry) => entry.isHighlighted)
-              : shownEntries
-          }
-          toggleHighlight={toggleHighlight}
-          isHighlighted={isHighlighted}
-        />
+      {shownEntries.length !== 0 && (
+        <>
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+          />
+        </>
       )}
     </StyledFlexColumnWrapper>
   );

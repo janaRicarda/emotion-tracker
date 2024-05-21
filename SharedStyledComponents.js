@@ -4,7 +4,7 @@ import Link from "next/link";
 //buttons
 const StyledButton = styled.button`
   background-color: var(--button-background);
-  color: var(--main-dark);
+  color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
@@ -12,19 +12,32 @@ const StyledButton = styled.button`
   padding: 1rem;
 `;
 
-//headlines
-const StyledBasicTitle = styled.h1`
-  text-align: center;
-  position: fixed;
-  z-index: 1;
-  font-weight: 600;
+const StyledSubmitButton = styled(StyledButton)`
+  background-color: var(--submit-button-background);
+  color: var(--text-on-dark);
+  border: 0;
+  padding: 0.5rem;
+  margin: 0;
+  width: inherit;
 `;
 
-const StyledTitle = styled(StyledBasicTitle)`
+//headlines
+const StyledTitle = styled.h1`
+  text-align: center;
+  font-weight: 600;
+  line-height: 2rem;
+  font-size: 1.5rem;
+  padding-bottom: 1rem;
+`;
+
+const StyledFixedTitle = styled(StyledTitle)`
   width: 100%;
+  position: fixed;
   top: 100px;
+  left: 0;
   padding: 1rem;
   background-color: var(--main-bright);
+  z-index: 1;
 `;
 
 //links
@@ -32,7 +45,7 @@ const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border-radius: 6px;
-  color: var(--main-dark);
+  color: var(--text);
 `;
 
 const StyledFixedLink = styled(Link)`
@@ -73,7 +86,49 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: 0;
   width: 100%;
+  height: 0.5rem;
+  border: 1px solid var(--button-background);
+  border-radius: 12px;
+  background: linear-gradient(
+    to right,
+    var(--button-background) 0%,
+    var(--button-background) ${({ $value }) => $value}%,
+    var(--section-background) ${({ $value }) => $value}%,
+    var(--section-background) 100%
+  );
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-image: radial-gradient(
+      circle,
+      var(--contrast-text) 40%,
+      var(--button-background) 45%
+    );
+  }
+
+  &::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-image: radial-gradient(
+      circle,
+      var(--main-bright) 40%,
+      var(--button-background) 45%
+    );
+  }
+`;
+
+const StyledSelect = styled.select`
+  border-radius: 6px;
+  padding: 0.3rem 0;
 `;
 
 export {
@@ -81,11 +136,13 @@ export {
   StyledWrapper,
   StyledFlexColumnWrapper,
   StyledTitle,
-  StyledBasicTitle,
+  StyledFixedTitle,
   StyledFixedLink,
   StyledStandardLink,
   StyledList,
   StyledInput,
   StyledForm,
+  StyledSelect,
+  StyledSubmitButton,
   StyledListItem,
 };

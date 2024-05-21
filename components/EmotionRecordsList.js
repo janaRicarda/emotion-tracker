@@ -9,9 +9,9 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
 
 const StyledRecordsList = styled(StyledList)`
-  list-style: none;
   padding: 0;
-  margin: 8rem auto 1rem;
+  margin: 1rem auto;
+  text-align: left;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -19,16 +19,13 @@ const StyledRecordListItem = styled.li`
 `;
 
 const StyledParagraph = styled.p`
+  color: var(--main-dark);
   border: 1px solid var(--main-dark);
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  box-shadow: 0 0 3px 0;
   width: 80vw;
   cursor: pointer;
-  &:hover {
-    background-color: var(--button-background);
-  }
 `;
 
 const StyledDetails = styled(StyledList)`
@@ -57,9 +54,6 @@ const StyledEditButton = styled(PencilIcon)`
   &:hover {
     cursor: pointer;
   }
-`;
-const StyledTextMessage = styled.p`
-  margin-top: 150px;
 `;
 
 const StyledOutlineButton = styled(HeartOutlineIcon)`
@@ -108,16 +102,15 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
   return (
     <>
-      {shownEntries.length === 0 && (
-        <StyledTextMessage>Sorry, nothing found</StyledTextMessage>
-      )}
       <StyledRecordsList>
-        {shownEntries?.map(
+        {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
+        {shownEntries.map(
           ({
             id,
-            date,
+            timeAndDate,
             tensionLevel,
             trigger,
             intensity,
@@ -128,10 +121,10 @@ export default function EmotionRecordsList({
             isHighlighted,
           }) => {
             return (
-              <>
-                <StyledRecordListItem key={id}>
+              <section key={id}>
+                <StyledRecordListItem>
                   <StyledParagraph onClick={() => handleShowDetails(id)}>
-                    {date}
+                    {timeAndDate}
                   </StyledParagraph>
                   <StyledEditButton
                     aria-label="Edit emotion entry"
@@ -154,12 +147,12 @@ export default function EmotionRecordsList({
                   <ConfirmMessage
                     toggleMessage={handleShowConfirmMessage}
                     itemId={id}
-                    itemText={date}
+                    itemText={timeAndDate}
                     confirmFunction={onDeleteEmotionEntry}
                     cancelButtonText={"Keep it!"}
                     confirmButtonText={"Delete it!"}
-                    cancelButtonColor={"#00b400"}
-                    confirmButtonColor={"#cc0100"}
+                    cancelButtonColor={"var(--green)"}
+                    confirmButtonColor={"var(--red)"}
                   >
                     Do you want to delete this entry?
                   </ConfirmMessage>
@@ -173,7 +166,7 @@ export default function EmotionRecordsList({
                   {trigger && <li>Trigger: {trigger}</li>}
                   {notes && <li>Notes: {notes}</li>}
                 </StyledDetails>
-              </>
+              </section>
             );
           }
         )}

@@ -7,24 +7,19 @@ import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,
   StyledWrapper,
-  StyledBasicTitle,
-  StyledButton,
+  StyledFixedTitle,
   StyledForm,
+  StyledSelect,
+  StyledSubmitButton,
 } from "@/SharedStyledComponents";
-
-const StyledEmotionFormTitle = styled(StyledBasicTitle)`
-  width: 100vw;
-  top: 100px;
-  left: 0;
-  background: var(--main-bright);
-`;
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
   margin: 1rem;
-  margin-top: 50px;
+  margin-top: 4rem;
   padding: 1rem;
   background-color: ${({ $color }) => $color};
+  color: var(--text-on-bright);
   gap: 1rem;
 `;
 
@@ -37,25 +32,47 @@ const StyledSpan = styled.span`
   font-size: 0.8rem;
 `;
 
-const StyledSelect = styled.select`
-  border-radius: 6px;
-  padding: 0.3rem 0;
+const StyledEmotionInput = styled(StyledInput)`
+  background-color: var(--main-bright);
+  border: 2px solid var(--text-on-bright);
+
+  background: linear-gradient(
+    to right,
+    ${({ $color }) => $color} 0%,
+    ${({ $color }) => $color} ${({ $value }) => $value}%,
+    var(--contrast-bright) ${({ $value }) => $value}%,
+    var(--contrast-bright) 100%
+  );
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid var(--text-on-bright);
+    background-image: radial-gradient(
+      circle,
+      var(--text-on-bright) 40%,
+      ${({ $color }) => $color} 45%
+    );
+  }
+
+  &::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 2px solid var(--text-on-bright);
+    background-image: radial-gradient(
+      circle,
+      var(--text-on-bright) 40%,
+      ${({ $color }) => $color} 45%
+    );
+  }
 `;
 
 const StyledTextarea = styled.textarea`
   border: 1px solid black;
   border-radius: 6px;
-`;
-
-const StyledSubmitButton = styled(StyledButton)`
-  background-color: white;
-  padding: 0.5rem;
-  margin: 0;
-  width: inherit;
-  &:hover {
-    background-color: darkslateblue;
-    color: ${({ $color }) => $color};
-  }
 `;
 
 const StyledLabel = styled.label`
@@ -80,7 +97,7 @@ export default function EmotionForm({
   const router = useRouter();
 
   const {
-    date,
+    timeAndDate,
     emotion,
     tensionLevel,
     subemotion,
@@ -174,7 +191,7 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledEmotionFormTitle>
+      <StyledFixedTitle>
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -182,20 +199,22 @@ export default function EmotionForm({
           : emotionValue
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
-      </StyledEmotionFormTitle>
+      </StyledFixedTitle>
       <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
         <p aria-label="Date and time">
-          {editMode ? `Entry from:` : "Date: "} {date}
+          {editMode ? `Entry from:` : "Date: "} {timeAndDate}
         </p>
         <TensionLabelEdit htmlFor="tension-level">
           Choose a tension level between 0 and 100:
         </TensionLabelEdit>
-        <StyledInput
+        <StyledEmotionInput
           aria-label="Adjust tension level between 0 and 100"
           id="tension-level"
           name="tensionLevel"
           type="range"
+          $color={colorValue}
           value={tensionValue}
+          $value={tensionValue}
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -262,12 +281,14 @@ export default function EmotionForm({
             </ToggleSwitch>
           )}
         </StyledLabel>
-        <input
+        <StyledEmotionInput
           disabled={emotionValue ? (toggleIntensity ? false : true) : true}
           type="range"
           id="intensity"
           name="intensity"
+          $color={colorValue}
           value={intensityValue}
+          $value={intensityValue}
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -312,12 +333,14 @@ export default function EmotionForm({
             </ToggleSwitch>
           )}
         </StyledLabel>
-        <input
+        <StyledEmotionInput
           disabled={emotionValue ? (toggleCategory ? false : true) : true}
           type="range"
           id="category"
           name="category"
+          $color={colorValue}
           value={categoryValue}
+          $value={categoryValue}
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -365,8 +388,8 @@ export default function EmotionForm({
             }}
             cancelButtonText={"Keep editing"}
             confirmButtonText={"Go to emotion records"}
-            cancelButtonColor={"#cc0100"}
-            confirmButtonColor={"#00b400"}
+            cancelButtonColor={"var(--red)"}
+            confirmButtonColor={"var(--green)"}
           >
             Your changes were saved successfully!
           </ConfirmMessage>
