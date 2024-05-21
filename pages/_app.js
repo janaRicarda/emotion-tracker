@@ -35,16 +35,19 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
+  const initialData = generateExampleData();
 
-  const handleInitialData = useCallback(() => {}, []);
-  // const [tempEntries, setTempEntries] = useState([]);
+  // erase empty dependency array to let app evaluate on every re-render instead of hard-reload
+  // without dependency-array: clicking "reset" on dev-controls calls generateExampleData
+  // with empty dependency-array: generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
+  useEffect(() => {
+    const storageState = localStorage.getItem("emotionEntries");
 
-  // useEffect(() => {
-  //   const initialData = generateExampleData();
-  //   setTempEntries(initialData);
-  // }, []);
-  // console.log(tempEntries);
-  // emotionEntries.length === 0 && setEmotionEntries(tempEntries);
+    // note: the length of an existing but empty localStorageState is equal to 2 and not 0
+    if (storageState.length === 2) {
+      setEmotionEntries(initialData);
+    }
+  }, []);
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
