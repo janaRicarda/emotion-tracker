@@ -17,6 +17,8 @@ export const lightTheme = {
   contempt: "hsl(265, 80%, 80%)",
   disgust: "hsl(310, 80%, 70%)",
   anger: "hsl(10, 80%, 70%)",
+  boxShadow:
+    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
 };
 
 export const darkTheme = {
@@ -38,6 +40,8 @@ export const darkTheme = {
   contempt: "hsl(265, 80%, 80%)",
   disgust: "hsl(310, 70%, 70%)",
   anger: "hsl(10, 70%, 70%)",
+  boxShadow:
+    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
 };
 
 export const warmTheme = {
@@ -59,6 +63,8 @@ export const warmTheme = {
   contempt: "#F673A4",
   disgust: "#F673A4",
   anger: "#F673A4",
+  boxShadow:
+    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
 };
 
 export const coldTheme = {
@@ -80,6 +86,8 @@ export const coldTheme = {
   contempt: "#BAB5F7",
   disgust: "#BAB5F7",
   anger: "#BAB5F7",
+  boxShadow:
+    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
 };
 
 export const neutralTheme = {
