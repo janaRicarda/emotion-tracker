@@ -6,8 +6,8 @@ const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
   height: 1.5rem;
   fill: var(--main-dark);
   position: fixed;
-  top: calc(6% - 0.7rem);
-  right: 8rem;
+  top: calc(6% - 0.25rem);
+  right: 7rem;
   z-index: 2;
 `;
 
@@ -20,7 +20,9 @@ const StyledTooltipWrapper = styled.div`
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
   border: 1px solid var(--main-dark);
-  height: 50vh;
+  // height: 50vh;
+  margin: 0 1rem;
+  padding: 1rem;
 `;
 
 const StyledTooltipInfo = styled.p`

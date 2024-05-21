@@ -13,7 +13,7 @@ const StyledToggleTheme = styled.button`
   border-radius: 50%;
   border: 1px solid var(--main-dark);
   background-color: transparent;
-  z-index: 2;
+  z-index: 3;
   padding: 0.3rem;
   aspect-ratio: 1/1;
 `;
@@ -35,7 +35,7 @@ const StyledCloseButton = styled(Close)`
   width: 2.5rem;
   fill: var(--contrast-text);
   border-style: none;
-  z-index: 2;
+  z-index: 3;
 `;
 
 const StyledHeader = styled.header`
@@ -49,7 +49,7 @@ const StyledHeader = styled.header`
   padding: 0 1rem;
   top: 0;
   left: 0;
-  z-index: ${({ $isOpen }) => ($isOpen ? "2" : "1")};
+  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
 `;
 
 const StyledIconWrapper = styled(StyledWrapper)`

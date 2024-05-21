@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import { StyledButton, StyledWrapper } from "@/SharedStyledComponents";
 
 const StyledBackground = styled.div`
-  background-color: black;
-  opacity: 0.5;
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.42);
   position: fixed;
   inset: 0;
   z-index: 2;
