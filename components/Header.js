@@ -73,27 +73,25 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
   }
 
   return (
-    <>
-      <StyledHeader $isOpen={isOpen}>
-        <StyledLogo />
-        <StyledIconWrapper>
-          {theme === lightTheme || theme === darkTheme ? (
-            <StyledToggleTheme type="button" onClick={toggleTheme}>
-              {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-            </StyledToggleTheme>
-          ) : null}
-          {isOpen ? (
-            <StyledCloseButton type="button" onClick={handleToggleMenu} />
-          ) : (
-            <StyledMenuButton type="button" onClick={handleToggleMenu} />
-          )}
-          <Navigation
-            isOpen={isOpen}
-            handleToggleMenu={handleToggleMenu}
-            switchTheme={switchTheme}
-          />
-        </StyledIconWrapper>
-      </StyledHeader>
-    </>
+    <StyledHeader $isOpen={isOpen}>
+      <StyledLogo />
+      <StyledIconWrapper>
+        {theme === lightTheme || theme === darkTheme ? (
+          <StyledToggleTheme type="button" onClick={toggleTheme}>
+            {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+          </StyledToggleTheme>
+        ) : null}
+        {isOpen ? (
+          <StyledCloseButton type="button" onClick={handleToggleMenu} />
+        ) : (
+          <StyledMenuButton type="button" onClick={handleToggleMenu} />
+        )}
+        <Navigation
+          isOpen={isOpen}
+          handleToggleMenu={handleToggleMenu}
+          switchTheme={switchTheme}
+        />
+      </StyledIconWrapper>
+    </StyledHeader>
   );
 }
