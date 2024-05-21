@@ -20,9 +20,8 @@ const StyledTooltipWrapper = styled.div`
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
   border: 1px solid var(--main-dark);
-  // height: 50vh;
-  margin: 0 1rem;
-  padding: 1rem;
+  height: 50vh;
+  top: 100px;
 `;
 
 const StyledTooltipInfo = styled.p`

@@ -10,7 +10,7 @@ export default function EmotionListPage() {
     setIsTooltipOpen(!isTooltipOpen);
   }
   return (
-    <StyledFlexColumnWrapper>
+    <>
       <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
         <>
           Explore the list of seven fundamental emotions, each offering a unique
@@ -22,7 +22,9 @@ export default function EmotionListPage() {
           and clarity into your state of being.
         </>
       </Tooltip>
-      <EmotionList title="The seven basic emotions" />
-    </StyledFlexColumnWrapper>
+      <StyledFlexColumnWrapper>
+        <EmotionList title="The seven basic emotions" />
+      </StyledFlexColumnWrapper>
+    </>
   );
 }
