@@ -13,8 +13,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background-color: var(--submit-button-background);
+  //background-color: var(--submit-button-background);
+  background: var(--text-on-bright);
   color: var(--text-on-dark);
+  //color: ${({ $color }) => $color};
   border: 0;
   padding: 0.5rem;
   margin: 0;
@@ -35,7 +37,7 @@ const StyledFixedTitle = styled(StyledTitle)`
   position: fixed;
   top: 100px;
   left: 0;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
 `;

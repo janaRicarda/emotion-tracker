@@ -52,7 +52,8 @@ const StyledHeader = styled.header`
   z-index: ${({ $isOpen }) => ($isOpen ? "2" : "1")};
 `;
 
-const StyledIconWrapper = styled(StyledWrapper)`
+const StyledIconWrapper = styled.article`
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;

@@ -105,17 +105,17 @@ const StyledListItem = styled.li`
 `;
 
 export default function Manual() {
-  const [itemColor, setItemColor] = useState("var(--joy)");
+  const [itemColor, setItemColor] = useState("var(--manual1)");
 
   function listenSrollEvent() {
     const colors = [
-      "var(--joy)",
-      "var(--surprise)",
-      "var(--fear)",
-      "var(--sadness)",
-      "var(--contempt)",
-      "var(--disgust)",
-      "var(--anger)",
+      "var(--manual1)",
+      "var(--manual2",
+      "var(--manual3",
+      "var(--manual4)",
+      "var(--manual5)",
+      "var(--manual6)",
+      "var(--manual7)",
     ];
     const index = Math.floor(window.scrollY / 300) % colors.length;
     setItemColor(colors[index]);

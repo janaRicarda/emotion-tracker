@@ -11,16 +11,24 @@ const StyledCircle = styled.article`
   width: 90vw;
   height: 90vw;
   border-radius: 50%;
+  border: var(--circle-border);
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: var(--box-shadow);
   position: fixed;
   //top: calc(100vh - 70%);
-  top: 240px;
+  top: 210px;
+  @media (orientation: landscape) {
+    width: 50vw;
+    height: 50vw;
+    top: 50px;
+  }
 `;
 
 const StyledEmotionList = styled.ul`
+  background: var(--emotion-list-background);
+  border: var(--emotion-border);
   padding: 0;
   position: relative;
   width: 80vw;
@@ -28,6 +36,10 @@ const StyledEmotionList = styled.ul`
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
+  @media (orientation: landscape) {
+    width: 40vw;
+    height: 40vw;
+  }
 `;
 
 const StyledListItem = styled.li`

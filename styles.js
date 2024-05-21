@@ -32,8 +32,17 @@ export default createGlobalStyle`
   --contempt: ${({ theme }) => theme.contempt};
   --disgust: ${({ theme }) => theme.disgust};
   --anger: ${({ theme }) => theme.anger};
+  --manual1: ${({ theme }) => theme.manual1};
+  --manual2: ${({ theme }) => theme.manual2};
+  --manual3: ${({ theme }) => theme.manual3};
+  --manual4: ${({ theme }) => theme.manual4};
+  --manual5: ${({ theme }) => theme.manual5};
+  --manual6: ${({ theme }) => theme.manual6};
+  --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
+  --emotion-list-background:  ${({ theme }) => theme.emotionListBackground};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
+  --circle-border: ${({ theme }) => theme.circleBorder};
   body {
     margin: 0;
     padding: 100px 2rem 75px 2rem;

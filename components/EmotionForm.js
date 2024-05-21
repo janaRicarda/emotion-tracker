@@ -35,28 +35,34 @@ const StyledSpan = styled.span`
 const StyledEmotionInput = styled(StyledInput)`
   background-color: var(--main-bright);
   border: 2px solid var(--text-on-bright);
-
+  // background: linear-gradient(
+  //   to right,
+  //   ${({ $color }) => $color} 0%,
+  //   ${({ $color }) => $color} ${({ $value }) => $value}%,
+  //   var(--contrast-bright) ${({ $value }) => $value}%,
+  //   var(--contrast-bright) 100%
+  // );
   background: linear-gradient(
     to right,
-    ${({ $color }) => $color} 0%,
-    ${({ $color }) => $color} ${({ $value }) => $value}%,
+    var(--text-on-bright) 0%,
+    var(--text-on-bright) ${({ $value }) => $value}%,
     var(--contrast-bright) ${({ $value }) => $value}%,
     var(--contrast-bright) 100%
   );
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    border: 2px solid var(--text-on-bright);
-    background: radial-gradient(
-      circle,
-      var(--text-on-bright) 40%,
-      ${({ $color }) => $color} 45%
-    );
-  }
 
-  &::-moz-range-thumb {
+  // &::-webkit-slider-thumb {
+  //   -webkit-appearance: none;
+  //   width: 2rem;
+  //   height: 2rem;
+  //   border-radius: 50%;
+  //   border: 2px solid var(--text-on-bright);
+  //   background-image: radial-gradient(
+  //     circle,
+  //     var(--text-on-bright) 40%,
+  //     ${({ $color }) => $color} 45%
+  //   );
+  // }
+  &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 2rem;
     height: 2rem;
@@ -65,9 +71,22 @@ const StyledEmotionInput = styled(StyledInput)`
     background-image: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
-      ${({ $color }) => $color} 45%
+      var(--text-on-dark) 45%
     );
   }
+
+  // &::-moz-range-thumb {
+  //   -webkit-appearance: none;
+  //   width: 2rem;
+  //   height: 2rem;
+  //   border-radius: 50%;
+  //   border: 2px solid var(--text-on-bright);
+  //   background-image: radial-gradient(
+  //     circle,
+  //     var(--text-on-bright) 40%,
+  //     ${({ $color }) => $color} 45%
+  //   );
+  // }
 `;
 
 const StyledTextarea = styled.textarea`
@@ -85,6 +104,7 @@ const ToggleSwitch = styled(Circle)`
   display: inline;
   fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
   margin-left: 0.5rem;
+  right: 0;
   bottom: calc(50% - 0.85rem);
 `;
 
