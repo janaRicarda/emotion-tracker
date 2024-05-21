@@ -1,6 +1,7 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import { useState } from "react";
 
 const StyledCircle = styled.article`
   width: 90vw;
@@ -9,8 +10,9 @@ const StyledCircle = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  //border: 1px solid black;
   box-shadow: var(--box-shadow);
+  position: fixed;
+  top: calc(100vh - 70%);
 `;
 
 const StyledEmotionList = styled.ul`
@@ -94,6 +96,8 @@ export default function EmotionList({
   id,
   onAddEmotionDetails,
 }) {
+  const [rotation, setRotation] = useState(0);
+
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
@@ -101,11 +105,21 @@ export default function EmotionList({
     const emotion = { emotion: data };
     onAddEmotionDetails(emotion, id);
   }
+
+  function handleScroll(event) {
+    const { deltaY } = event;
+    const newRotation = deltaY > 0 ? rotation - 5 : rotation + 5;
+    setRotation(newRotation);
+  }
+
   return (
     <>
       <StyledTitle>{title}</StyledTitle>
       <StyledCircle>
-        <StyledEmotionList>
+        <StyledEmotionList
+          onWheel={handleScroll}
+          style={{ transform: `rotate(${rotation}deg)` }}
+        >
           {emotionData.map(({ slug, name }) => (
             <StyledListItem
               onClick={createMode && (() => handleAddDetails(name, id))}

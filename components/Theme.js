@@ -109,6 +109,7 @@ export const neutralTheme = {
   contempt: "lightgrey",
   disgust: "lightgrey",
   anger: "lightgrey",
+  boxShadow: "none",
 };
 
 export const highContrastTheme = {
@@ -130,4 +131,5 @@ export const highContrastTheme = {
   contempt: "yellow",
   disgust: "yellow",
   anger: "yellow",
+  boxShadow: "none",
 };
