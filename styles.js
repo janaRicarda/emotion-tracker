@@ -33,7 +33,7 @@ export default createGlobalStyle`
   --disgust: ${({ theme }) => theme.disgust};
   --anger: ${({ theme }) => theme.anger};
   --box-shadow: ${({ theme }) => theme.boxShadow};
-}
+  --emotion-border: ${({ theme }) => theme.emotionBorder};
   body {
     margin: 0;
     padding: 100px 2rem 75px 2rem;

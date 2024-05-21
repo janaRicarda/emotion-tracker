@@ -1,6 +1,10 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
-import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import {
+  StyledTitle,
+  StyledFixedTitle,
+  StyledStandardLink,
+} from "@/SharedStyledComponents";
 import { useState } from "react";
 
 const StyledCircle = styled.article`
@@ -16,17 +20,6 @@ const StyledCircle = styled.article`
 `;
 
 const StyledEmotionList = styled.ul`
-  // border-radius: 12px;
-  // list-style: none;
-  // padding: 0;
-  // display: flex;
-  // flex-flow: column;
-  // justify-content: start;
-  // align-items: center;
-  // text-align: center;
-  // gap: 0.5rem;
-  // margin: 1rem;
-
   padding: 0;
   position: relative;
   width: 80vw;
@@ -37,14 +30,8 @@ const StyledEmotionList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  // text-align: center;
   background: ${({ $color }) => $color};
-  // border-radius: 0.5rem;
-  // width: 80vw;
-  // max-width: 800px;
-  // font-weight: 600;
-  // font-size: 1.3rem;
-
+  border: var(--emotion-border);
   overflow: hidden;
   position: absolute;
   top: -50%;
@@ -76,9 +63,7 @@ const StyledListItem = styled.li`
 `;
 
 const EmotionLink = styled(StyledStandardLink)`
-  // display: block;
-  // padding: 0.8rem;
-  // color: var(--text-on-bright);
+  color: var(--text-on-bright);
   position: absolute;
   border-radius: 50%;
   left: 1rem;
@@ -114,7 +99,7 @@ export default function EmotionList({
 
   return (
     <>
-      <StyledTitle>{title}</StyledTitle>
+      <StyledFixedTitle>{title}</StyledFixedTitle>
       <StyledCircle>
         <StyledEmotionList
           onWheel={handleScroll}

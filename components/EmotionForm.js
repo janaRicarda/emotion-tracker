@@ -18,7 +18,7 @@ const StyledEmotionForm = styled(StyledForm)`
   margin: 1rem;
   margin-top: 4rem;
   padding: 1rem;
-  background-color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   color: var(--text-on-bright);
   gap: 1rem;
 `;
@@ -49,7 +49,7 @@ const StyledEmotionInput = styled(StyledInput)`
     height: 2rem;
     border-radius: 50%;
     border: 2px solid var(--text-on-bright);
-    background-image: radial-gradient(
+    background: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
       ${({ $color }) => $color} 45%

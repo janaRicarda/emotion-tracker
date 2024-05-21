@@ -19,6 +19,7 @@ export const lightTheme = {
   anger: "hsl(10, 80%, 70%)",
   boxShadow:
     "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
+  emotionBorder: "none",
 };
 
 export const darkTheme = {
@@ -41,7 +42,8 @@ export const darkTheme = {
   disgust: "hsl(310, 70%, 70%)",
   anger: "hsl(10, 70%, 70%)",
   boxShadow:
-    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
+    "-5px -5px 15px 0 #13136c, 5px 5px 15px 0 #000000, inset -5px -5px 5px 0 #000000, inset 5px 5px 5px 0 #13136c",
+  emotionBorder: "none",
 };
 
 export const warmTheme = {
@@ -56,15 +58,17 @@ export const warmTheme = {
   contrastBright: "#f7e9cb",
   red: "#D23406",
   green: "#75C52F",
-  joy: "#F673A4",
-  surprise: "#F673A4",
-  fear: "#F673A4",
-  sadness: "#F673A4",
-  contempt: "#F673A4",
-  disgust: "#F673A4",
-  anger: "#F673A4",
+  //joy: "#F673A4",
+  joy: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  surprise: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  fear: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  sadness: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  contempt: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  disgust: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
+  anger: "linear-gradient(#fbe050, #fbbd50, #f673a4)",
   boxShadow:
-    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
+    "-5px -5px 15px 0 #fbf5e7, 5px 5px 15px 0 #d8c89f, inset -5px -5px 5px 0 #d8c89f, inset 5px 5px 5px 0 #fbf5e7",
+  emotionBorder: "none",
 };
 
 export const coldTheme = {
@@ -79,15 +83,17 @@ export const coldTheme = {
   contrastBright: "#D3F6F8",
   red: "#CB0566",
   green: "#2FC565",
-  joy: "#BAB5F7",
-  surprise: "#BAB5F7",
-  fear: "#BAB5F7",
-  sadness: "#BAB5F7",
-  contempt: "#BAB5F7",
-  disgust: "#BAB5F7",
-  anger: "#BAB5F7",
+  //joy: "#BAB5F7",
+  joy: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  surprise: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  fear: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  sadness: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  contempt: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  disgust: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
+  anger: "linear-gradient(#50cfe2, #90c8f9, #a390f9)",
   boxShadow:
-    "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #cdc7c7, inset -5px -5px 5px 0 #cdc7c7, inset 5px 5px 5px 0 #ffffff",
+    "-5px -5px 15px 0 #ebf9fa, 5px 5px 15px 0 #ade0e3, inset -5px -5px 5px 0 #ade0e3, inset 5px 5px 5px 0 #ebf9fa",
+  emotionBorder: "none",
 };
 
 export const neutralTheme = {
@@ -110,6 +116,7 @@ export const neutralTheme = {
   disgust: "lightgrey",
   anger: "lightgrey",
   boxShadow: "none",
+  emotionBorder: "1px solid black",
 };
 
 export const highContrastTheme = {
@@ -132,4 +139,5 @@ export const highContrastTheme = {
   disgust: "yellow",
   anger: "yellow",
   boxShadow: "none",
+  emotionBorder: "1px solid black",
 };
