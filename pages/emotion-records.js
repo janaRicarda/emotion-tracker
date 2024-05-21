@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
-const EmotionRecordsList = dynamic(
-  () => import("../components/EmotionRecordsList"),
-  { ssr: false }
-);
+// import dynamic from "next/dynamic";
+// const EmotionRecordsList = dynamic(
+//   () => import("../components/EmotionRecordsList"),
+//   { ssr: false }
+// );
 
 import {
   StyledFlexColumnWrapper,
@@ -13,6 +13,7 @@ import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import { useState, useCallback } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
+import EmotionRecordsList from "../components/EmotionRecordsList";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;

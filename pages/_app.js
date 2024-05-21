@@ -2,7 +2,7 @@ import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
@@ -35,14 +35,22 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
-  const data = generateExampleData();
+  const [tempEntries, setTempEntries] = useState([]);
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [...data],
+      defaultValue: [...tempEntries],
     }
   );
+
+  useEffect(() => {
+    const initialData = generateExampleData();
+    setTempEntries(initialData);
+  }, []);
+
+  emotionEntries.length === 0 && setEmotionEntries(tempEntries);
+
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
     {

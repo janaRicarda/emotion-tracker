@@ -5,11 +5,15 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import DataGenerator from "../components/DataGenerator";
-import dynamic from "next/dynamic";
-const EmotionRecordsList = dynamic(
-  () => import("../components/EmotionRecordsList"),
-  { ssr: false }
-);
+import EmotionRecordsList from "@/components/EmotionRecordsList";
+// import dynamic from "next/dynamic";
+
+// const EmotionRecordsList = dynamic(
+//   () => import("../components/EmotionRecordsList"),
+//   { ssr: false }
+// );
+
+EmotionRecordsList;
 
 const StyledDevSection = styled.section`
   width: 85vw;
@@ -49,8 +53,7 @@ export default function GenerateAndDisplay({
   onDeleteEmotionEntry,
 }) {
   const [shownEntries, setShownEntries] = useState(emotionEntries);
-  const [showDetails, setShowDetails] = useState({});
-  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+
   const [isHighlighted, setIsHighlighted] = useState(false);
 
   useEffect(() => {
