@@ -33,9 +33,7 @@ const StyledTooltipInfo = styled.p`
 export default function Tooltip({ onToggleTooltip, children, show }) {
   return (
     <>
-      <StyledTooltipQuestionmark onClick={onToggleTooltip}>
-        ?
-      </StyledTooltipQuestionmark>
+      <StyledTooltipQuestionmark onClick={onToggleTooltip} />
       <StyledTooltipWrapper $show={show}>
         <StyledTooltipInfo>{children}</StyledTooltipInfo>
       </StyledTooltipWrapper>
