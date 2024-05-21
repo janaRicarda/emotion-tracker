@@ -1,5 +1,10 @@
-import EmotionRecordsList from "@/components/EmotionRecordsList";
+import dynamic from "next/dynamic";
+const EmotionRecordsList = dynamic(
+  () => import("../components/EmotionRecordsList"),
+  { ssr: false }
+);
 import {
+  StyledTitle,
   StyledFlexColumnWrapper,
   StyledStandardLink,
 } from "@/SharedStyledComponents";
@@ -16,9 +21,6 @@ const StyledTopSection = styled(StyledFlexColumnWrapper)`
   z-index: 1;
 `;
 
-const StyledEmotionRecordsTitle = styled.h1`
-  font-weight: 600;
-`;
 const StyledTextMessage = styled.p`
   margin-top: 4rem;
   text-align: center;
@@ -28,6 +30,7 @@ const StyledTextMessage = styled.p`
 const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
+  color: var(--contrast-text);
 `;
 
 const StyledHeartSymbol = styled(HeartOutlineIcon)`
@@ -41,6 +44,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
   display: inline;
   vertical-align: bottom;
+  fill: var(--main-dark);
 `;
 
 const StyledDateIndicator = styled.p`
@@ -117,7 +121,7 @@ export default function EmotionRecords({
   return (
     <StyledFlexColumnWrapper>
       <StyledTopSection>
-        <StyledEmotionRecordsTitle>Recorded Emotions</StyledEmotionRecordsTitle>
+        <StyledTitle>Recorded Emotions</StyledTitle>
         <FilterEmotionEntries
           emotionEntries={emotionEntries}
           filteredEntries={filteredEntries}
@@ -146,7 +150,7 @@ export default function EmotionRecords({
           buttonState.highlightedButton ? (
             <StyledTextMessage>
               You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.`
+              <StyledHeartSymbol /> on a Entry to highlight it.
             </StyledTextMessage>
           ) : buttonState.todayButton ? (
             <StyledTextMessage>
@@ -160,7 +164,7 @@ export default function EmotionRecords({
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
 
-      {shownEntries && (
+      {shownEntries.length !== 0 && (
         <>
           <EmotionRecordsList
             onDeleteEmotionEntry={onDeleteEmotionEntry}
@@ -169,12 +173,6 @@ export default function EmotionRecords({
             filteredEntries={filteredEntries}
           />
         </>
-      )}
-      {emotionEntries.length === 0 && (
-        <StyledTextMessage>
-          You haven&apos;t made any Entries yet.<br></br>
-          <StyledLink href="./">add Entry &rarr;</StyledLink>
-        </StyledTextMessage>
       )}
     </StyledFlexColumnWrapper>
   );

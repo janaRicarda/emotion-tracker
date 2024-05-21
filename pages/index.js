@@ -9,17 +9,8 @@ import {
   StyledForm,
 } from "@/SharedStyledComponents";
 
-const StyledAddDetailsLink = styled(StyledStandardLink)`
-  margin: 1rem;
-  padding: 1rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
-`;
-
 const StyledTensionForm = styled(StyledForm)`
-  margin: 2rem auto;
+  margin: 4rem auto;
   align-items: center;
   width: 80vw;
 `;
@@ -30,7 +21,8 @@ const StyledTensionLabel = styled.label`
 `;
 
 const StyledSpan = styled.span`
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  margin: 1rem 0 0 0;
 `;
 
 const StyledMessage = styled.p`
@@ -40,19 +32,31 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
+const StyledSaveButton = styled(StyledButton)`
+  border-style: none;
+`;
+
 const StyledButtonWrapper = styled(StyledWrapper)`
-  width: inherit;
   justify-content: center;
 `;
 
 const StyledBackButton = styled.input`
+  width: 10rem;
   text-decoration: none;
-  color: var(--main-dark);
-  margin: 1rem;
-  padding: 1rem;
+  color: var(--contrast-text);
+  margin: 0.5rem;
+  padding: 0.5rem;
   border-radius: 8.5px;
-  border: 1px solid black;
+  border-style: none;
+
   text-align: center;
+  background-color: var(--button-background);
+`;
+const StyledAddDetailsLink = styled(StyledStandardLink)`
+  color: var(--contrast-text);
+  width: 10rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
   background-color: var(--button-background);
 `;
 
@@ -84,17 +88,19 @@ export default function HomePage({ onAddEmotionEntry }) {
         name="tensionLevel"
         type="range"
         value={tension}
+        $value={tension}
         max={100}
         onChange={(event) => setTension(event.target.value)}
       />
       <StyledWrapper>
         <StyledSpan>0</StyledSpan>
+
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
       {!isFormSubmitted && (
         <>
           <p>{tension}</p>
-          <StyledButton type="submit">Save</StyledButton>
+          <StyledSaveButton type="submit">Save</StyledSaveButton>
         </>
       )}
 
@@ -111,7 +117,6 @@ export default function HomePage({ onAddEmotionEntry }) {
               }}
             ></StyledBackButton>
             <StyledAddDetailsLink
-              $actionButton
               href={{ pathname: "/create", query: { id: id } }}
               forwardedAs={`/create`}
             >

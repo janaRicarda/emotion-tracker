@@ -47,7 +47,13 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--button-background)" : "var(--main-bright)"};
   margin: 0;
   padding: 0.2rem;
+  border-color: ${({ $active }) =>
+    $active ? "var(--button-background)" : "var(--main-dark)"};
   width: auto;
+  color: ${({ $active }) =>
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
+  fill: ${({ $active }) =>
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
 `;
 
 const StyledButtonGroup = styled.div`
@@ -94,6 +100,7 @@ const StyledNavButton = styled(StyledButton)`
   width: 5rem;
   padding: 0.2rem;
   margin: 0.5rem;
+
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
 `;
 
