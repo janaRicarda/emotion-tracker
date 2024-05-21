@@ -105,17 +105,17 @@ const StyledListItem = styled.li`
 `;
 
 export default function Manual() {
-  const [itemColor, setItemColor] = useState("var(--manual1)");
+  const [itemColor, setItemColor] = useState("var(--joy)");
 
   function listenSrollEvent() {
     const colors = [
-      "var(--manual1)",
-      "var(--manual2",
-      "var(--manual3",
-      "var(--manual4)",
-      "var(--manual5)",
-      "var(--manual6)",
-      "var(--manual7)",
+      "var(--joy)",
+      "var(--surprise",
+      "var(--fear",
+      "var(--sadness)",
+      "var(--contempt)",
+      "var(--disgust)",
+      "var(--anger)",
     ];
     const index = Math.floor(window.scrollY / 300) % colors.length;
     setItemColor(colors[index]);
@@ -124,6 +124,24 @@ export default function Manual() {
   useEffect(() => {
     window.addEventListener("scroll", listenSrollEvent);
   });
+
+  // useEffect(() => {
+  //   function listenSrollEvent() {
+  //     const colors = [
+  //       "var(--manual1)",
+  //       "var(--manual2",
+  //       "var(--manual3",
+  //       "var(--manual4)",
+  //       "var(--manual5)",
+  //       "var(--manual6)",
+  //       "var(--manual7)",
+  //     ];
+  //     const index = Math.floor(window.scrollY / 300) % colors.length;
+  //     setItemColor(colors[index]);
+  //   }
+
+  //   window.addEventListener("scroll", listenSrollEvent);
+  // }, []);
 
   return (
     <StyledSection>
