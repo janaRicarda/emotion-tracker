@@ -1,19 +1,14 @@
-// import dynamic from "next/dynamic";
-// const EmotionRecordsList = dynamic(
-//   () => import("../components/EmotionRecordsList"),
-//   { ssr: false }
-// );
-
 import {
   StyledFlexColumnWrapper,
   StyledStandardLink,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
+import generateExampleData from "@/utils/exampleData";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
@@ -75,7 +70,16 @@ export default function EmotionRecords({
     singleComparison: true,
     daysAgo: 0,
   });
+  // console.log(emotionEntries.length);
+  // useEffect(() => {
+  //   // Check if emotionEntries is empty before setting initial data
+  //   if (emotionEntries.length === 0) {
+  //     const initialData = generateExampleData();
+  //     setShownEntries(initialData);
+  //   }
+  // }, []); // Empty dependency array to run only once, on mount
 
+  // console.log(shownEntries);
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
   const handleSetFilterEntries = useCallback((filteredObject) => {

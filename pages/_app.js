@@ -35,21 +35,23 @@ const StyledSun = styled(Sun)`
 
 export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState("light");
-  const [tempEntries, setTempEntries] = useState([]);
+
+  const handleInitialData = useCallback(() => {}, []);
+  // const [tempEntries, setTempEntries] = useState([]);
+
+  // useEffect(() => {
+  //   const initialData = generateExampleData();
+  //   setTempEntries(initialData);
+  // }, []);
+  // console.log(tempEntries);
+  // emotionEntries.length === 0 && setEmotionEntries(tempEntries);
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [...tempEntries],
+      defaultValue: [],
     }
   );
-
-  useEffect(() => {
-    const initialData = generateExampleData();
-    setTempEntries(initialData);
-  }, []);
-
-  emotionEntries.length === 0 && setEmotionEntries(tempEntries);
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",

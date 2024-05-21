@@ -6,14 +6,6 @@ import {
 } from "@/SharedStyledComponents";
 import DataGenerator from "../components/DataGenerator";
 import EmotionRecordsList from "@/components/EmotionRecordsList";
-// import dynamic from "next/dynamic";
-
-// const EmotionRecordsList = dynamic(
-//   () => import("../components/EmotionRecordsList"),
-//   { ssr: false }
-// );
-
-EmotionRecordsList;
 
 const StyledDevSection = styled.section`
   width: 85vw;
@@ -64,12 +56,6 @@ export default function GenerateAndDisplay({
     setIsHighlighted(!isHighlighted);
   }
 
-  function handleShowDetails(id) {
-    setShowDetails((prevShow) => ({
-      ...prevShow,
-      [id]: !prevShow[id],
-    }));
-  }
   function updateWithGeneratedData(newData) {
     setShownEntries(newData);
   }
