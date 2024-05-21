@@ -16,7 +16,8 @@ const StyledCircle = styled.article`
   align-items: center;
   box-shadow: var(--box-shadow);
   position: fixed;
-  top: calc(100vh - 70%);
+  //top: calc(100vh - 70%);
+  top: 240px;
 `;
 
 const StyledEmotionList = styled.ul`

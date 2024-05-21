@@ -57,6 +57,7 @@ const StyledIconWrapper = styled(StyledWrapper)`
   align-items: center;
   gap: 0.5rem;
   width: auto;
+  //border: 1px solid transparent;
 `;
 
 const StyledLogo = styled(Logo)`

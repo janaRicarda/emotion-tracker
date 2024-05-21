@@ -71,7 +71,7 @@ const StyledEmotionInput = styled(StyledInput)`
 `;
 
 const StyledTextarea = styled.textarea`
-  border: 1px solid black;
+  border: 2px solid var(--text-on-bright);
   border-radius: 6px;
 `;
 
