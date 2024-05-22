@@ -4,6 +4,7 @@ import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 
 const StyledCircle = styled.article`
+  overscroll-behavior: none;
   width: 90vw;
   height: 90vw;
   border-radius: 50%;
@@ -73,7 +74,7 @@ const EmotionLink = styled(StyledStandardLink)`
   bottom: 3.5rem;
   font-weight: 500;
   width: 5rem;
-  height: aut0;
+  height: auto;
   text-align: center;
   transform: skewY(-141deg) rotate(25deg);
 `;
