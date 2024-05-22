@@ -33,7 +33,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   // for triggering an animation
   const [scrollPosition, setScrollPosition] = useState();
 
-  function listenSrollEvent() {
+  function listenScrollEvent() {
     const colors = [
       "var(--joy)",
       "var(--surprise)",
@@ -47,12 +47,17 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
     setColor(colors[index]);
   }
 
-  useEffect(() => {
-    window.addEventListener("scroll", listenSrollEvent);
-    setScrollPosition(window.scrollY);
-  });
+  function getScrollPosition(value) {
+    setScrollPosition(value);
+  }
 
-  console.log(scrollPosition);
+  useEffect(() => {
+    window.addEventListener(
+      "scroll",
+      listenScrollEvent,
+      getScrollPosition(window.scrollY)
+    );
+  });
 
   const router = useRouter();
 
