@@ -2,29 +2,22 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 
-const StyledEmotionListTitle = styled(StyledTitle)`
-  font-size: 1.5rem;
-  line-height: 1.6rem;
-  padding: 0 1rem 1rem 1rem;
-`;
-
 const StyledEmotionList = styled.ul`
   border-radius: 12px;
   list-style: none;
   padding: 0;
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   text-align: center;
   gap: 0.5rem;
-  margin: 2rem;
-  padding: ${({ $form }) => ($form ? "4rem" : "1rem")} 1rem 1rem;
+  margin: 1rem;
 `;
 
 const StyledListItem = styled.li`
   text-align: center;
-  background-color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   border-radius: 0.5rem;
   width: 80vw;
   max-width: 800px;
@@ -35,10 +28,10 @@ const StyledListItem = styled.li`
 const EmotionLink = styled(StyledStandardLink)`
   display: block;
   padding: 0.8rem;
+  color: var(--text-on-bright);
 `;
 
 export default function EmotionList({
-  form,
   title,
   createMode,
   id,
@@ -53,8 +46,8 @@ export default function EmotionList({
   }
   return (
     <>
-      <StyledEmotionListTitle>{title}</StyledEmotionListTitle>
-      <StyledEmotionList $form={form}>
+      <StyledTitle>{title}</StyledTitle>
+      <StyledEmotionList>
         {emotionData.map(({ slug, name }) => (
           <StyledListItem
             onClick={createMode && (() => handleAddDetails(name, id))}
