@@ -91,16 +91,19 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   function handleScroll(event) {
+    event.preventDefault();
     const { deltaY } = event;
     const newRotation = deltaY > 0 ? rotation - 5 : rotation + 5;
     setRotation(newRotation);
   }
 
   function handleTouchStart(event) {
+    event.preventDefault();
     setTouchStart(event.touches[0].clientY);
   }
 
   function handleTouchMove(event) {
+    event.preventDefault();
     if (touchStart !== null) {
       const touchCurrent = event.touches[0].clientY;
       const delta = touchCurrent - touchStart;
@@ -111,6 +114,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   function handleTouchEnd() {
+    event.preventDefault();
     setTouchStart(null);
   }
 
