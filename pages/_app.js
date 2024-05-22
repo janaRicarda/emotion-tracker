@@ -9,7 +9,6 @@ import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
-
   const [theme, setTheme] = useState(defaultTheme);
 
   const initialData = generateExampleData();

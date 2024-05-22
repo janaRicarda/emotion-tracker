@@ -25,7 +25,7 @@ const StyledDevSection = styled.section`
 
 const StyledSpacer = styled.div`
   width: 100%;
-  margin: 2rem 2rem 7rem;
+  margin: 2rem 2rem 8rem;
   padding: 2rem 2rem 3rem;
 `;
 
