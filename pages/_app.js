@@ -13,9 +13,14 @@ export default function App({ Component, pageProps }) {
 
   const initialData = generateExampleData();
 
-  // erase empty dependency array to let app evaluate on every re-render instead of hard-reload
-  // without dependency-array: clicking "reset" on dev-controls calls generateExampleData
-  // with empty dependency-array: generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
+  const [emotionEntries, setEmotionEntries] = useLocalStorageState(
+    "emotionEntries",
+    {
+      defaultValue: [],
+    }
+  );
+
+  // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
 
@@ -24,13 +29,6 @@ export default function App({ Component, pageProps }) {
       setEmotionEntries(initialData);
     }
   }, []);
-
-  const [emotionEntries, setEmotionEntries] = useLocalStorageState(
-    "emotionEntries",
-    {
-      defaultValue: [],
-    }
-  );
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
