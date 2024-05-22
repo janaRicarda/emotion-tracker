@@ -1,6 +1,6 @@
 import { uid } from "uid";
 import Chance from "chance";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   StyledButton,
@@ -192,9 +192,13 @@ export default function DataGenerator({
   const [daysGoingBack, setDaysGoingBack] = useState(1);
   const [smallMessage, setSmallMessage] = useState(null);
 
-  setTimeout(() => {
-    setSmallMessage(null);
-  }, 4000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSmallMessage(null);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [smallMessage]);
 
   const dayZ = daysGoingBack === 1 ? "day" : "days";
 
