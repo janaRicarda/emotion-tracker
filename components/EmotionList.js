@@ -81,6 +81,7 @@ const EmotionLink = styled(StyledStandardLink)`
 export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   const [rotation, setRotation] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
@@ -100,22 +101,32 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   function handleTouchStart(event) {
     event.preventDefault();
     setTouchStart(event.touches[0].clientY);
+    setIsDragging(false);
   }
 
   function handleTouchMove(event) {
-    event.preventDefault();
     if (touchStart !== null) {
       const touchCurrent = event.touches[0].clientY;
       const delta = touchCurrent - touchStart;
       const newRotation = delta > 0 ? rotation + 5 : rotation - 5;
+      if (Math.abs(delta) > 5) {
+        setIsDragging(true);
+        event.preventDefault();
+      }
       setRotation(newRotation);
       setTouchStart(touchCurrent);
     }
   }
 
   function handleTouchEnd() {
-    event.preventDefault();
     setTouchStart(null);
+    setIsDragging(false);
+  }
+
+  function handleClickLink(event) {
+    if (isDragging) {
+      event.preventDefault();
+    }
   }
 
   return (
@@ -134,6 +145,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
             key={slug}
           >
             <EmotionLink
+              onClick={handleClickLink}
               slug={slug}
               href={
                 createMode
