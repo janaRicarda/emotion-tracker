@@ -1,12 +1,12 @@
 import { uid } from "uid";
 import Chance from "chance";
+import { useState } from "react";
 import styled from "styled-components";
-import { exampleData } from "@/lib/db";
 import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import { useState } from "react";
+import { exampleData } from "@/lib/db";
 
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;

@@ -1,12 +1,12 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import styled, { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import generateExampleData from "@/utils/exampleData";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 
 const StyledToggleTheme = styled.button`
