@@ -1,16 +1,13 @@
 import styled from "styled-components";
 import { manualData } from "@/lib/db";
+import { useState } from "react";
+import { useEffect } from "react";
+import { StyledTitle } from "@/SharedStyledComponents";
 
 const StyledSection = styled.section`
   width: 100%;
   height: auto;
   padding: 1rem;
-`;
-
-const StyledWelcome = styled.h1`
-  text-align: center;
-  line-height: 2rem;
-  font-weight: 600;
 `;
 
 const StyledText = styled.p`
@@ -24,7 +21,7 @@ const StyledText = styled.p`
 `;
 
 const StyledDetails = styled.details`
-  border: 1px solid var(--button-background);
+  border: 1px solid ${({ $itemColor }) => $itemColor};
   background: var(--section-background);
   border-radius: 30px;
   padding: 0.5rem;
@@ -52,6 +49,7 @@ const StyledListItem = styled.li`
   margin: 0;
   padding: 2rem;
   position: relative;
+
   &:nth-child(even):before {
     content: counter(item);
     position: absolute;
@@ -63,9 +61,10 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    background-color: var(--button-background);
+    background-color: ${({ $itemColor }) => $itemColor};
+    transition: background-color 500ms ease-in-out;
     text-align: center;
-    color: var(--main-dark);
+    color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(odd):before {
@@ -79,60 +78,85 @@ const StyledListItem = styled.li`
     height: 3rem;
     width: 3rem;
     line-height: 3rem;
-    background-color: var(--button-background);
+    background-color: ${({ $itemColor }) => $itemColor};
+    transition: background-color 500ms ease-in-out;
     text-align: center;
-    color: var(--main-dark);
+    color: var(--text-on-bright);
     font-size: 1.5rem;
   }
   &:nth-child(even) {
-    border-right: 2px dotted var(--button-background);
+    border-right: 3px dotted;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-    border-bottom: 2px dotted var(--button-background);
+    border-bottom: 3px dotted;
+    border-color: ${({ $itemColor }) => $itemColor};
+    transition: border-color 100ms ease-in-out;
     padding-right: 2rem;
   }
   &:nth-child(odd) {
-    border-left: 2px dotted var(--button-background);
+    border-left: 3px dotted;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    border-bottom: 2px dotted var(--button-background);
+    border-bottom: 3px dotted;
+    border-color: ${({ $itemColor }) => $itemColor};
+    transition: border-color 500ms ease-in-out;
     padding-right: 2rem;
   }
 `;
 
 export default function Manual() {
+  const [itemColor, setItemColor] = useState("var(--joy)");
+
+  function listenSrollEvent() {
+    const colors = [
+      "var(--joy)",
+      "var(--surprise)",
+      "var(--fear)",
+      "var(--sadness)",
+      "var(--contempt)",
+      "var(--disgust)",
+      "var(--anger)",
+    ];
+    const index = Math.floor(window.scrollY / 300) % colors.length;
+    setItemColor(colors[index]);
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", listenSrollEvent);
+  });
+
   return (
-    <>
-      <StyledSection>
-        <StyledWelcome>
-          Welcome to the <b>What a feeling app</b>!
-        </StyledWelcome>
-        <StyledText>
-          This tool is designed to help you track and understand your emotions
-          better. Below are some guidelines to help you navigate the app
-          effectively:
-        </StyledText>
+    <StyledSection>
+      <StyledTitle>
+        Welcome to the <b>What a feeling app</b>!
+      </StyledTitle>
+      <StyledText>
+        This tool is designed to help you track and understand your emotions
+        better. Below are some guidelines to help you navigate the app
+        effectively:
+      </StyledText>
 
-        {manualData.map(({ question, text, answers }) => (
-          <StyledDetails key={question}>
-            <StyledSummary>{question}</StyledSummary>
-            <StyledText>{text}</StyledText>
-            <StyledOl>
-              {answers.map((answer) => (
-                <StyledListItem key={answer}>{answer}</StyledListItem>
-              ))}
-            </StyledOl>
-          </StyledDetails>
-        ))}
+      {manualData.map(({ question, text, answers }) => (
+        <StyledDetails key={question} $itemColor={itemColor}>
+          <StyledSummary>{question}</StyledSummary>
+          <StyledText>{text}</StyledText>
+          <StyledOl>
+            {answers.map((answer) => (
+              <StyledListItem key={answer} $itemColor={itemColor}>
+                {answer}
+              </StyledListItem>
+            ))}
+          </StyledOl>
+        </StyledDetails>
+      ))}
 
-        <StyledText>
-          Remember, the <b>What a feeling</b> app is here to assist you in
-          understanding and managing your emotions. Feel free to explore its
-          features, utilize the graphs, highlight and filter specific entries,
-          and gain insights into the basic emotions.
-        </StyledText>
-        <StyledText>What a feeling!</StyledText>
-      </StyledSection>
-    </>
+      <StyledText>
+        Remember, the <b>What a feeling</b> app is here to assist you in
+        understanding and managing your emotions. Feel free to explore its
+        features, utilize the graphs, highlight and filter specific entries, and
+        gain insights into the basic emotions.
+      </StyledText>
+      <StyledText>What a feeling!</StyledText>
+    </StyledSection>
   );
 }

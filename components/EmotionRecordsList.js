@@ -19,16 +19,13 @@ const StyledRecordListItem = styled.li`
 `;
 
 const StyledParagraph = styled.p`
+  color: var(--main-dark);
   border: 1px solid var(--main-dark);
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  box-shadow: 0 0 3px 0;
   width: 80vw;
   cursor: pointer;
-  &:hover {
-    background-color: var(--button-background);
-  }
 `;
 
 const StyledDetails = styled(StyledList)`
@@ -159,8 +156,8 @@ export default function EmotionRecordsList({
                     confirmFunction={onDeleteEmotionEntry}
                     cancelButtonText={"Keep it!"}
                     confirmButtonText={"Delete it!"}
-                    cancelButtonColor={"#00b400"}
-                    confirmButtonColor={"#cc0100"}
+                    cancelButtonColor={"var(--green)"}
+                    confirmButtonColor={"var(--red)"}
                   >
                     Do you want to delete this entry?
                   </ConfirmMessage>

@@ -16,8 +16,15 @@ export default createGlobalStyle`
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
+  --contrast-text: ${({ theme }) => theme.contrastText};
+  --contrast-bright: ${({ theme }) => theme.contrastBright};
+  --text-on-bright: ${({ theme }) => theme.textOnBright};
+  --text-on-dark: ${({ theme }) => theme.textOnDark};
  --button-background: ${({ theme }) => theme.buttonBackground};
+ --submit-button-background:  ${({ theme }) => theme.submitButtonBackground};
  --section-background: ${({ theme }) => theme.sectionBackground};
+ --green: ${({ theme }) => theme.green};
+ --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
@@ -29,7 +36,7 @@ export default createGlobalStyle`
 }
   body {
     margin: 0;
-    padding: 120px 2rem 75px 2rem;
+    padding: 100px 2rem 75px 2rem;
    
     background-color: var(--main-bright);
     color: var(--main-dark);
