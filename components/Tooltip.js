@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import TooltipQuestionmark from "../public/images/help.svg";
+import { useState } from "react";
 
 const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
   width: 1.5rem;
@@ -30,11 +31,17 @@ const StyledTooltipInfo = styled.p`
   margin: 8rem 1 rem 8 rem 1 rem;
 `;
 
-export default function Tooltip({ onToggleTooltip, children, show }) {
+export default function Tooltip({ children }) {
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
+  function handleToggleTooltip() {
+    setIsTooltipOpen(!isTooltipOpen);
+  }
+
   return (
     <>
-      <StyledTooltipQuestionmark onClick={onToggleTooltip} />
-      <StyledTooltipWrapper $show={show}>
+      <StyledTooltipQuestionmark onClick={handleToggleTooltip} />
+      <StyledTooltipWrapper $show={isTooltipOpen}>
         <StyledTooltipInfo>{children}</StyledTooltipInfo>
       </StyledTooltipWrapper>
     </>

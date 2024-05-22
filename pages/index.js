@@ -61,11 +61,10 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 
-export default function HomePage({ onAddEmotionEntry }) {
+export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -79,18 +78,12 @@ export default function HomePage({ onAddEmotionEntry }) {
     setIsFormSubmitted(!isFormSubmitted);
   }
 
-  function handleToggleTooltip() {
-    setIsTooltipOpen(!isTooltipOpen);
-  }
-
   return (
     <>
-      <Tooltip onToggleTooltip={handleToggleTooltip} show={isTooltipOpen}>
-        <>
-          On this page, you can indicate your level of tension on a range scale
-          from 0 to 100. Afterward, simply press the Save-button to record your
-          input.
-        </>
+      <Tooltip onClick={handleToggleTooltip}>
+        On this page, you can indicate your level of tension on a range scale
+        from 0 to 100. Afterward, simply press the Save-button to record your
+        input.
       </Tooltip>
 
       <StyledTensionForm onSubmit={handleSubmit}>
@@ -113,7 +106,7 @@ export default function HomePage({ onAddEmotionEntry }) {
         {!isFormSubmitted && (
           <>
             <p>{tension}</p>
-            <StyledButton type="submit">Save</StyledButton>
+            <StyledSaveButton type="submit">Save</StyledSaveButton>
           </>
         )}
 
@@ -128,7 +121,7 @@ export default function HomePage({ onAddEmotionEntry }) {
                   setIsFormSubmitted(!isFormSubmitted);
                   setTension("0");
                 }}
-              ></StyledBackButton>
+              />
               <StyledAddDetailsLink
                 $actionButton
                 href={{ pathname: "/create", query: { id: id } }}
