@@ -7,7 +7,7 @@ import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
-import { StyledWrapper } from "@/SharedStyledComponents";
+import { StyledWrapper, StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -74,7 +74,9 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
 
   return (
     <StyledHeader $isOpen={isOpen}>
-      <StyledLogo />
+      <StyledStandardLink href="/">
+        <StyledLogo />
+      </StyledStandardLink>
       <StyledIconWrapper>
         {theme === lightTheme || theme === darkTheme ? (
           <StyledToggleTheme type="button" onClick={toggleTheme}>
