@@ -1,10 +1,16 @@
 import EmotionList from "@/components/EmotionList";
-import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledFixedTitle,
+} from "@/SharedStyledComponents";
 
 export default function EmotionListPage() {
   return (
-    <StyledFlexColumnWrapper>
-      <EmotionList title="The seven basic emotions" />
-    </StyledFlexColumnWrapper>
+    <>
+      <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
+      <StyledFlexColumnWrapper>
+        <EmotionList />
+      </StyledFlexColumnWrapper>
+    </>
   );
 }

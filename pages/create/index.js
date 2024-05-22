@@ -1,19 +1,24 @@
 import EmotionList from "@/components/EmotionList.js";
 import { useRouter } from "next/router";
-import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledFixedTitle,
+} from "@/SharedStyledComponents";
 
 export default function CreateIndexPage({ onAddEmotionDetails }) {
   const router = useRouter();
   const id = router.query.id;
 
   return (
-    <StyledFlexColumnWrapper>
-      <EmotionList
-        title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
-        createMode
-        id={id}
-        onAddEmotionDetails={onAddEmotionDetails}
-      />
-    </StyledFlexColumnWrapper>
+    <>
+      <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
+      <StyledFlexColumnWrapper>
+        <EmotionList
+          createMode
+          id={id}
+          onAddEmotionDetails={onAddEmotionDetails}
+        />
+      </StyledFlexColumnWrapper>
+    </>
   );
 }

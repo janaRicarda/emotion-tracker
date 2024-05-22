@@ -1,6 +1,6 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
-import { StyledFixedTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 
 const StyledCircle = styled.article`
@@ -14,12 +14,6 @@ const StyledCircle = styled.article`
   box-shadow: var(--box-shadow);
   position: fixed;
   top: calc(100vh - 70%);
-  //top: 210px;
-  @media (orientation: landscape) {
-    width: 50vw;
-    height: 50vw;
-    top: 50px;
-  }
 `;
 
 const StyledEmotionList = styled.ul`
@@ -84,12 +78,7 @@ const EmotionLink = styled(StyledStandardLink)`
   transform: skewY(-141deg) rotate(25deg);
 `;
 
-export default function EmotionList({
-  title,
-  createMode,
-  id,
-  onAddEmotionDetails,
-}) {
+export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   const [rotation, setRotation] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
 
@@ -126,36 +115,33 @@ export default function EmotionList({
   }
 
   return (
-    <>
-      <StyledFixedTitle>{title}</StyledFixedTitle>
-      <StyledCircle>
-        <StyledEmotionList
-          onWheel={handleScroll}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          $rotation={rotation}
-        >
-          {emotionData.map(({ slug, name }) => (
-            <StyledListItem
-              onClick={createMode && (() => handleAddDetails(name, id))}
-              $color={`var(--${slug})`}
-              key={slug}
+    <StyledCircle>
+      <StyledEmotionList
+        onWheel={handleScroll}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        $rotation={rotation}
+      >
+        {emotionData.map(({ slug, name }) => (
+          <StyledListItem
+            onClick={createMode && (() => handleAddDetails(name, id))}
+            $color={`var(--${slug})`}
+            key={slug}
+          >
+            <EmotionLink
+              slug={slug}
+              href={
+                createMode
+                  ? { pathname: `/create/${slug}`, query: { id } }
+                  : `/emotions/${slug}`
+              }
             >
-              <EmotionLink
-                slug={slug}
-                href={
-                  createMode
-                    ? { pathname: `/create/${slug}`, query: { id } }
-                    : `/emotions/${slug}`
-                }
-              >
-                {name}
-              </EmotionLink>
-            </StyledListItem>
-          ))}
-        </StyledEmotionList>
-      </StyledCircle>
-    </>
+              {name}
+            </EmotionLink>
+          </StyledListItem>
+        ))}
+      </StyledEmotionList>
+    </StyledCircle>
   );
 }
