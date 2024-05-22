@@ -33,8 +33,9 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           paper_bgcolor: themeForChart.sectionBackground,
           border_radius: 6,
           plot_bgcolor: themeForChart.background,
-          width: 320,
-          height: 300,
+          xaxis: { gridcolor: themeForChart.text },
+          yaxis: { gridcolor: themeForChart.text },
+          width: 340,
           title: {
             font: {
               family: "system-ui",
