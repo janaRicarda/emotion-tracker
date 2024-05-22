@@ -32,6 +32,7 @@ const StyledEmotionList = styled.ul`
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
+  transform: rotate(${({ $rotation }) => $rotation}deg);
   @media (orientation: landscape) {
     width: 40vw;
     height: 40vw;
@@ -91,6 +92,7 @@ export default function EmotionList({
   onAddEmotionDetails,
 }) {
   const [rotation, setRotation] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
 
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
@@ -106,13 +108,34 @@ export default function EmotionList({
     setRotation(newRotation);
   }
 
+  function handleTouchStart(event) {
+    setTouchStart(event.touches[0].clientY);
+  }
+
+  function handleTouchMove(event) {
+    if (touchStart !== null) {
+      const touchCurrent = event.touches[0].clientY;
+      const delta = touchCurrent - touchStart;
+      const newRotation = delta > 0 ? rotation - 5 : rotation + 5;
+      setRotation(newRotation);
+      setTouchStart(touchCurrent);
+    }
+  }
+
+  function handleTouchEnd() {
+    setTouchStart(null);
+  }
+
   return (
     <>
       <StyledFixedTitle>{title}</StyledFixedTitle>
       <StyledCircle>
         <StyledEmotionList
           onWheel={handleScroll}
-          style={{ transform: `rotate(${rotation}deg)` }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          $rotation={rotation}
         >
           {emotionData.map(({ slug, name }) => (
             <StyledListItem
