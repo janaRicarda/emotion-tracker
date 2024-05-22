@@ -118,7 +118,8 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
     }
   }
 
-  function handleTouchEnd() {
+  function handleTouchEnd(event) {
+    event.preventDefault();
     setTouchStart(null);
     setIsDragging(false);
   }
