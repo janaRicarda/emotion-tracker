@@ -1,10 +1,6 @@
 import { emotionData } from "@/lib/db";
 import styled from "styled-components";
-import {
-  StyledTitle,
-  StyledFixedTitle,
-  StyledStandardLink,
-} from "@/SharedStyledComponents";
+import { StyledFixedTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 
 const StyledCircle = styled.article`
@@ -27,7 +23,7 @@ const StyledCircle = styled.article`
 `;
 
 const StyledEmotionList = styled.ul`
-  background: var(--emotion-list-background);
+  //background: var(--emotion-list-background);
   border: var(--emotion-border);
   padding: 0;
   position: relative;
