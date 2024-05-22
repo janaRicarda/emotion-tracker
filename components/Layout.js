@@ -7,12 +7,13 @@ import { useRouter } from "next/router";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
-  // note: svg color width/height is to be specifically named in component Props
+  // note: svg color, width/height is to be specifically defined in component Props
 
   &&& {
+    border-radius: 50%;
     z-index: 1;
-    background-color: ${({ $isAppManual, $itemColor }) =>
-      $isAppManual ? $itemColor : "var(--button-background)"};
+    background-color: ${({ $isAppManual, $color }) =>
+      $isAppManual ? $color : "var(--button-background)"};
     color: var(--contrast-text);
     left: 10px;
     display: flex;
@@ -24,7 +25,8 @@ const StyledToTopButton = styled(ScrollToTop)`
 `;
 
 export default function Layout({ children, theme, toggleTheme, switchTheme }) {
-  const [itemColor, setItemColor] = useState("var(--joy)");
+  // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
+  const [color, setColor] = useState("var(--joy)");
 
   function listenSrollEvent() {
     const colors = [
@@ -37,7 +39,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       "var(--anger)",
     ];
     const index = Math.floor(window.scrollY / 300) % colors.length;
-    setItemColor(colors[index]);
+    setColor(colors[index]);
   }
 
   useEffect(() => {
@@ -58,11 +60,11 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       {children}
       <Footer />
       <StyledToTopButton
-        $itemColor={itemColor}
+        $color={color}
         $isAppManual={isAppManual}
         width="20"
         height="20"
-        top={200}
+        top={400}
         smooth
       />
     </>
