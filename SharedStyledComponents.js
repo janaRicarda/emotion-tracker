@@ -13,10 +13,8 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  //background-color: var(--submit-button-background);
   background: var(--text-on-bright);
   color: var(--text-on-dark);
-  //color: ${({ $color }) => $color};
   border: 0;
   padding: 0.5rem;
   margin: 0;
@@ -133,21 +131,6 @@ const StyledSelect = styled.select`
   border: 2px solid var(--text-on-bright);
   border-radius: 6px;
   padding: 0.3rem 0;
-  // appearence: none;
-  // border: 2px solid var(--text-on-bright);
-  // border-radius: 6px;
-  // width: 100%;
-  // padding: 0.3rem 0;
-  // &::-ms-expand {
-  //   display: none;
-  // }
-  // &::after {
-  //   content: "";
-  //   width: 1rem;
-  //   height: 1rem;
-  //   background: var(--text-on-bright);
-  //   clip-path: polygon(55% 100%, 0 0, 100% 0);
-  // }
 `;
 
 export {
