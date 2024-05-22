@@ -21,12 +21,17 @@ const StyledToTopButton = styled(ScrollToTop)`
     justify-content: center;
     padding: 0;
     transition: background-color 500ms ease-in-out;
+    opacity: ${({ $animationStart }) => ($animationStart ? "1" : "0")};
+    transition: all 500ms ease-in-out;
   }
 `;
 
 export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
+
+  // for triggering an animation
+  const [scrollPosition, setScrollPosition] = useState();
 
   function listenSrollEvent() {
     const colors = [
@@ -44,7 +49,10 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
 
   useEffect(() => {
     window.addEventListener("scroll", listenSrollEvent);
+    setScrollPosition(window.scrollY);
   });
+
+  console.log(scrollPosition);
 
   const router = useRouter();
 
@@ -65,6 +73,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
         width="20"
         height="20"
         top={400}
+        $animationStart={scrollPosition > 400}
         smooth
       />
     </>
