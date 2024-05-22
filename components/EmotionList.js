@@ -114,8 +114,8 @@ export default function EmotionList({
   function handleTouchMove(event) {
     if (touchStart !== null) {
       const touchCurrent = event.touches[0].clientY;
-      const delta = touchCurrent + touchStart;
-      const newRotation = delta > 0 ? rotation - 5 : rotation + 5;
+      const delta = touchCurrent - touchStart;
+      const newRotation = delta > 0 ? rotation + 5 : rotation - 5;
       setRotation(newRotation);
       setTouchStart(touchCurrent);
     }
