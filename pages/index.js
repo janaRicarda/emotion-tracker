@@ -15,23 +15,14 @@ const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
 });
 
-const StyledAddDetailsLink = styled(StyledStandardLink)`
-  margin: 1rem;
-  padding: 1rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
-`;
-
 const StyledTensionForm = styled(StyledForm)`
-  margin: 4rem auto;
+  margin: 1rem 1rem 2rem;
   align-items: center;
   width: 80vw;
 `;
 
 const StyledTensionLabel = styled.label`
-  padding: 2rem;
+  padding: 1rem 1rem 1rem;
   text-align: center;
 `;
 
@@ -49,6 +40,11 @@ const StyledMessage = styled.p`
 
 const StyledSaveButton = styled(StyledButton)`
   border-style: none;
+`;
+
+const StyledGraphButton = styled(StyledButton)`
+  width: fit-content;
+  padding: 0.5rem;
 `;
 
 const StyledButtonWrapper = styled(StyledWrapper)`
@@ -72,13 +68,20 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: var(--button-background);
+  /* background-color: var(--button-background);
+  margin: 1rem;
+  padding: 1rem; */
+  background-color: ${({ $actionButton }) =>
+    $actionButton ? "var(--button-background)" : "white"};
+  border: ${({ $actionButton }) =>
+    $actionButton ? "1px solid black" : "none"};
 `;
 
 export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
+  const [chartIsShown, setChartIsShown] = useState(true);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -104,30 +107,36 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
     .map((entry) => entry.tensionLevel)
     .reverse();
 
+  function handleChart() {
+    setChartIsShown(!chartIsShown);
+  }
+
   return (
-    <StyledTensionForm onSubmit={handleSubmit}>
-      <StyledTensionLabel htmlFor="tension-level">
-        On a scale from 0 to 100, how tense do you feel in this moment?
-      </StyledTensionLabel>
-      <StyledInput
-        aria-label="Adjust tension level between 0 and 100"
-        id="tension-level"
-        name="tensionLevel"
-        type="range"
-        value={tension}
-        max={100}
-        onChange={(event) => setTension(event.target.value)}
-      />
-      <StyledWrapper>
-        <StyledSpan>0</StyledSpan>
-        <StyledSpan>100</StyledSpan>
-      </StyledWrapper>
-      {!isFormSubmitted && (
-        <>
-          <p>{tension}</p>
-          <StyledButton type="submit">Save</StyledButton>
-        </>
-      )}
+    <>
+      <StyledTensionForm onSubmit={handleSubmit}>
+        <StyledTensionLabel htmlFor="tension-level">
+          On a scale from 0 to 100, how tense do you feel in this moment?
+        </StyledTensionLabel>
+        <StyledInput
+          aria-label="Adjust tension level between 0 and 100"
+          id="tension-level"
+          name="tensionLevel"
+          type="range"
+          value={tension}
+          max={100}
+          onChange={(event) => setTension(event.target.value)}
+        />
+        <StyledWrapper>
+          <StyledSpan>0</StyledSpan>
+          <StyledSpan>100</StyledSpan>
+        </StyledWrapper>
+
+        {!isFormSubmitted && (
+          <>
+            <p>{tension}</p>
+            <StyledButton type="submit">Save</StyledButton>
+          </>
+        )}
 
         {isFormSubmitted && (
           <>
@@ -142,7 +151,7 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
                 }}
               ></StyledBackButton>
               <StyledAddDetailsLink
-                  href={{ pathname: "/create", query: { id: id } }}
+                href={{ pathname: "/create", query: { id: id } }}
                 forwardedAs={`/create`}
               >
                 Add more details
@@ -151,14 +160,20 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
           </>
         )}
       </StyledTensionForm>
+
       <StyledFlexColumnWrapper>
-        <TensionChart
-          emotionEntries={emotionEntries}
-          theme={theme}
-          xValues={xValues}
-          yValues={yValues}
-          title="Daily Tension Graph"
-        />
+        {chartIsShown && (
+          <TensionChart
+            emotionEntries={emotionEntries}
+            theme={theme}
+            xValues={xValues}
+            yValues={yValues}
+            title="Daily Tension Graph"
+          />
+        )}
+        <StyledGraphButton type="button" onClick={handleChart}>
+          {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
+        </StyledGraphButton>
       </StyledFlexColumnWrapper>
     </>
   );
