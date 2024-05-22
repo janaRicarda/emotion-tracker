@@ -20,7 +20,6 @@ const StyledToTopButton = styled(ScrollToTop)`
     align-items: center;
     justify-content: center;
     padding: 0;
-    transition: background-color 500ms ease-in-out;
     opacity: ${({ $animationStart }) => ($animationStart ? "1" : "0")};
     transition: all 500ms ease-in-out;
   }
