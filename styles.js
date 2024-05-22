@@ -21,7 +21,6 @@ export default createGlobalStyle`
   --text-on-bright: ${({ theme }) => theme.textOnBright};
   --text-on-dark: ${({ theme }) => theme.textOnDark};
  --button-background: ${({ theme }) => theme.buttonBackground};
- --submit-button-background:  ${({ theme }) => theme.submitButtonBackground};
  --section-background: ${({ theme }) => theme.sectionBackground};
  --green: ${({ theme }) => theme.green};
  --red: ${({ theme }) => theme.red};

@@ -13,8 +13,8 @@ const StyledCircle = styled.article`
   align-items: center;
   box-shadow: var(--box-shadow);
   position: fixed;
-  //top: calc(100vh - 70%);
-  top: 210px;
+  top: calc(100vh - 70%);
+  //top: 210px;
   @media (orientation: landscape) {
     width: 50vw;
     height: 50vw;
@@ -23,7 +23,6 @@ const StyledCircle = styled.article`
 `;
 
 const StyledEmotionList = styled.ul`
-  //background: var(--emotion-list-background);
   border: var(--emotion-border);
   padding: 0;
   position: relative;

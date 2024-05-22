@@ -101,7 +101,6 @@ const StyledInput = styled.input`
     var(--section-background) ${({ $value }) => $value}%,
     var(--section-background) 100%
   );
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 2rem;
