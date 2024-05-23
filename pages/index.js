@@ -16,19 +16,24 @@ const TensionChart = dynamic(() => import("../components/TensionChart"), {
 });
 
 const StyledTensionForm = styled(StyledForm)`
-  margin: 1rem 1rem 2rem;
+  margin: 1rem;
   align-items: center;
   width: 80vw;
 `;
 
 const StyledTensionLabel = styled.label`
-  padding: 1rem 1rem 1rem;
+  padding: 1rem 1rem 2rem;
   text-align: center;
 `;
 
 const StyledSpan = styled.span`
+  padding: 0.6rem 0 0;
   font-size: 1.2rem;
-  margin: 1rem 0 0 0;
+`;
+
+const StyledTensionDisplay = styled.p`
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
 `;
 
 const StyledMessage = styled.p`
@@ -38,13 +43,10 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
-const StyledSaveButton = styled(StyledButton)`
-  border-style: none;
-`;
-
 const StyledGraphButton = styled(StyledButton)`
   width: fit-content;
   padding: 0.5rem;
+  border-style: none;
 `;
 
 const StyledButtonWrapper = styled(StyledWrapper)`
@@ -68,9 +70,6 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  /* background-color: var(--button-background);
-  margin: 1rem;
-  padding: 1rem; */
   background-color: ${({ $actionButton }) =>
     $actionButton ? "var(--button-background)" : "white"};
   border: ${({ $actionButton }) =>
@@ -97,22 +96,46 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
 
   //logic for Graph
   const currentShortDate = new Date().toISOString().slice(0, 10);
+  function compare(a, b) {
+    if (a.isoDate < b.isoDate) {
+      return -1;
+    }
+    if (a.isoDate > b.isoDate) {
+      return 1;
+    }
+    return 0;
+  }
+  console.log(emotionEntries);
   const xValues = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .map((entry) => entry.timeAndDate.slice(-5))
-    .reverse();
+    .sort(compare)
+    .map((entry) => entry.timeAndDate.slice(-5));
 
   const yValues = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .map((entry) => entry.tensionLevel)
-    .reverse();
+    .sort(compare)
+    .map((entry) => entry.tensionLevel);
+
+  const tensionChartData = emotionEntries
+    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
+    .sort(compare)
+    .map((entry) => {
+      const object = {
+        x: entry.timeAndDate.slice(-5),
+        y: entry.tensionLevel,
+        isoDate: entry.isoDate,
+      };
+      return object;
+    });
+
+  console.log(tensionChartData);
 
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
 
   return (
-    <>
+    <StyledFlexColumnWrapper>
       <StyledTensionForm onSubmit={handleSubmit}>
         <StyledTensionLabel htmlFor="tension-level">
           On a scale from 0 to 100, how tense do you feel in this moment?
@@ -133,7 +156,7 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
 
         {!isFormSubmitted && (
           <>
-            <p>{tension}</p>
+            <StyledTensionDisplay>{tension}</StyledTensionDisplay>
             <StyledButton type="submit">Save</StyledButton>
           </>
         )}
@@ -161,20 +184,19 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
         )}
       </StyledTensionForm>
 
-      <StyledFlexColumnWrapper>
-        {chartIsShown && (
-          <TensionChart
-            emotionEntries={emotionEntries}
-            theme={theme}
-            xValues={xValues}
-            yValues={yValues}
-            title="Daily Tension Graph"
-          />
-        )}
-        <StyledGraphButton type="button" onClick={handleChart}>
-          {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
-        </StyledGraphButton>
-      </StyledFlexColumnWrapper>
-    </>
+      {chartIsShown && (
+        <TensionChart
+          emotionEntries={emotionEntries}
+          theme={theme}
+          xValues={xValues}
+          yValues={yValues}
+          title="Daily Tension Graph"
+        />
+      )}
+
+      <StyledGraphButton type="button" onClick={handleChart}>
+        {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
+      </StyledGraphButton>
+    </StyledFlexColumnWrapper>
   );
 }

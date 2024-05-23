@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from "react";
-
 import Plot from "react-plotly.js";
+import styled from "styled-components";
+
+const StyledChartSection = styled.section`
+  background-color: var(--section-background);
+  align-self: center;
+  color: var(--contrast-text);
+  width: fit-content;
+  border-radius: 6px;
+  margin: 2.5rem 1rem 1rem;
+  padding: 0.5rem;
+`;
 
 export default function TensionChart({ xValues, yValues, title, theme }) {
   return (
-    <>
+    <StyledChartSection>
       <Plot
         data={[
           {
@@ -17,7 +26,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
         ]}
         layout={{
           font: { color: theme.text },
-          paper_bgcolor: theme.buttonBackground,
+          paper_bgcolor: theme.sectionBackground,
           border_radius: 6,
           plot_bgcolor: theme.background,
           xaxis: { gridcolor: theme.text },
@@ -34,7 +43,6 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           title: title,
         }}
       />
-      {/* <button onClick={() => console.log(theme)}>log theme</button> */}
-    </>
+    </StyledChartSection>
   );
 }
