@@ -77,8 +77,12 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
     $actionButton ? "1px solid black" : "none"};
 `;
 
-export default function HomePage({ onAddEmotionEntry, handleToggleTooltip, emotionEntries, theme }) 
-{
+export default function HomePage({
+  onAddEmotionEntry,
+  handleToggleTooltip,
+  emotionEntries,
+  theme,
+}) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
@@ -107,7 +111,7 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip, emoti
     }
     return 0;
   }
-  console.log(emotionEntries);
+  // console.log(emotionEntries);
   const xValues = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
     .sort(compare)
@@ -130,83 +134,82 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip, emoti
       return object;
     });
 
-  console.log(tensionChartData);
+  // console.log(tensionChartData);
 
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
 
   return (
-<><Tooltip onClick={handleToggleTooltip}>
+    <>
+      <Tooltip onClick={handleToggleTooltip}>
         On this page, you can indicate your level of tension on a range scale
         from 0 to 100. Afterward, simply press the Save-button to record your
         input.
       </Tooltip>
-    <StyledFlexColumnWrapper>
-      <StyledTensionForm onSubmit={handleSubmit}>
-        <StyledTensionLabel htmlFor="tension-level">
-          On a scale from 0 to 100, how tense do you feel in this moment?
-        </StyledTensionLabel>
-        <StyledInput
-          aria-label="Adjust tension level between 0 and 100"
-          id="tension-level"
-          name="tensionLevel"
-          type="range"
-          value={tension}
-          max={100}
-          onChange={(event) => setTension(event.target.value)}
-        />
-        <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </StyledWrapper>
+      <StyledFlexColumnWrapper>
+        <StyledTensionForm onSubmit={handleSubmit}>
+          <StyledTensionLabel htmlFor="tension-level">
+            On a scale from 0 to 100, how tense do you feel in this moment?
+          </StyledTensionLabel>
+          <StyledInput
+            aria-label="Adjust tension level between 0 and 100"
+            id="tension-level"
+            name="tensionLevel"
+            type="range"
+            value={tension}
+            max={100}
+            onChange={(event) => setTension(event.target.value)}
+          />
+          <StyledWrapper>
+            <StyledSpan>0</StyledSpan>
+            <StyledSpan>100</StyledSpan>
+          </StyledWrapper>
 
-        {!isFormSubmitted && (
-          <>
-            <StyledTensionDisplay>{tension}</StyledTensionDisplay>
-            <StyledButton type="submit">Save</StyledButton>
-          </>
+          {!isFormSubmitted && (
+            <>
+              <StyledTensionDisplay>{tension}</StyledTensionDisplay>
+              <StyledButton type="submit">Save</StyledButton>
+            </>
+          )}
+
+          {isFormSubmitted && (
+            <>
+              <StyledMessage>Your entry was successfully saved!</StyledMessage>
+              <StyledButtonWrapper>
+                <StyledBackButton
+                  type="reset"
+                  value={"Done"}
+                  onClick={() => {
+                    setIsFormSubmitted(!isFormSubmitted);
+                    setTension("0");
+                  }}
+                ></StyledBackButton>
+                <StyledAddDetailsLink
+                  href={{ pathname: "/create", query: { id: id } }}
+                  forwardedAs={`/create`}
+                >
+                  Add more details
+                </StyledAddDetailsLink>
+              </StyledButtonWrapper>
+            </>
+          )}
+        </StyledTensionForm>
+
+        {chartIsShown && (
+          <TensionChart
+            emotionEntries={emotionEntries}
+            theme={theme}
+            xValues={xValues}
+            yValues={yValues}
+            title="Daily Tension Graph"
+          />
         )}
 
-        {isFormSubmitted && (
-          <>
-            <StyledMessage>Your entry was successfully saved!</StyledMessage>
-            <StyledButtonWrapper>
-              <StyledBackButton
-                type="reset"
-                value={"Done"}
-                onClick={() => {
-                  setIsFormSubmitted(!isFormSubmitted);
-                  setTension("0");
-                }}
-              ></StyledBackButton>
-              <StyledAddDetailsLink
-                href={{ pathname: "/create", query: { id: id } }}
-                forwardedAs={`/create`}
-              >
-                Add more details
-              </StyledAddDetailsLink>
-            </StyledButtonWrapper>
-          </>
-        )}
-      </StyledTensionForm>
-
-      {chartIsShown && (
-        <TensionChart
-          emotionEntries={emotionEntries}
-          theme={theme}
-          xValues={xValues}
-          yValues={yValues}
-          title="Daily Tension Graph"
-        />
-      )}
-
-      <StyledGraphButton type="button" onClick={handleChart}>
-        {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
-      </StyledGraphButton>
-    </StyledFlexColumnWrapper>
-
-   </>
-
+        <StyledGraphButton type="button" onClick={handleChart}>
+          {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
+        </StyledGraphButton>
+      </StyledFlexColumnWrapper>
+    </>
   );
 }

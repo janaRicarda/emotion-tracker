@@ -49,11 +49,12 @@ export default function App({ Component, pageProps }) {
     const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
-      ...data,
+      tensionLevel: Number(data.tensionLevel),
       id,
       timeAndDate,
       isoDate: new Date().toISOString(),
     };
+
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 
