@@ -13,6 +13,9 @@ export default createGlobalStyle`
   * {
   margin: 0;
 }
+html {
+  overscroll-behavior: none;
+}
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
@@ -20,10 +23,10 @@ export default createGlobalStyle`
   --contrast-bright: ${({ theme }) => theme.contrastBright};
   --text-on-bright: ${({ theme }) => theme.textOnBright};
   --text-on-dark: ${({ theme }) => theme.textOnDark};
- --button-background: ${({ theme }) => theme.buttonBackground};
- --section-background: ${({ theme }) => theme.sectionBackground};
- --green: ${({ theme }) => theme.green};
- --red: ${({ theme }) => theme.red};
+  --button-background: ${({ theme }) => theme.buttonBackground};
+  --section-background: ${({ theme }) => theme.sectionBackground};
+  --green: ${({ theme }) => theme.green};
+  --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
@@ -39,7 +42,6 @@ export default createGlobalStyle`
   --manual6: ${({ theme }) => theme.manual6};
   --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
-
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
   body {

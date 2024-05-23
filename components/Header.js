@@ -7,7 +7,7 @@ import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
-import { StyledWrapper, StyledStandardLink } from "@/SharedStyledComponents";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -58,7 +58,6 @@ const StyledIconWrapper = styled.article`
   align-items: center;
   gap: 0.5rem;
   width: auto;
-  //border: 1px solid transparent;
 `;
 
 const StyledLogo = styled(Logo)`
