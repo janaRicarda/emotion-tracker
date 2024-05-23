@@ -13,10 +13,18 @@ const StyledToTopButton = styled(ScrollToTop)`
   &&& {
     border-radius: 50%;
     z-index: 1;
-    background-color: ${({ $isAppManual, $color }) =>
-      $isAppManual ? $color : "var(--button-background)"};
-    ${({ $isEmotionDetail, $EmotionColor }) =>
-      $isEmotionDetail && $EmotionColor};
+
+    background-color: ${({
+      $isAppManual,
+      $color,
+      $isEmotionDetail,
+      $emotionColor,
+    }) =>
+      $isAppManual
+        ? $color
+        : $isEmotionDetail
+        ? $emotionColor
+        : "var(--button-background)"};
 
     color: var(--contrast-text);
     left: 10px;
@@ -65,7 +73,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   const router = useRouter();
 
   const isAppManual = router.pathname === "/app-manual";
-  const isEmotionDetail = router.pathname === "/emotions[slug].index";
+  const isEmotionDetail = router.pathname === "/emotions[slug]";
   const [{ slug }] = emotionData;
   console.log(slug);
   return (
