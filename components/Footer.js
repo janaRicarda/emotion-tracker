@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 const StyledFooter = styled.footer`
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  width: 100vw;
+  margin-top: auto;
+  align-content: flex-end;
   padding: 0.5rem;
   font-size: 0.8rem;
   text-align: center;

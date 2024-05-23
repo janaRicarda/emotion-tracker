@@ -34,15 +34,12 @@ export default createGlobalStyle`
   --anger: ${({ theme }) => theme.anger};
   --box-shadow: -5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #aeaec0, inset -5px -5px 5px 0 #aeaec0, inset 5px 5px 5px 0 #ffffff;
 }
-  body {
-    margin: 0;
-    padding: 100px 2rem 75px 2rem;
-   
+  body {   
     background-color: var(--main-bright);
     color: var(--main-dark);
     font-family: ${manrope.style.fontFamily}, system-ui;
     line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
   }
   img, picture, video, canvas, svg {
   display: block;
@@ -57,6 +54,12 @@ p, h1, h2, h3, h4, h5, h6 {
 
 #root, #__next {
   isolation: isolate;
+  margin: 0 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 // DayPicker className for color-styles; more styles under node-modules/react-day-picker

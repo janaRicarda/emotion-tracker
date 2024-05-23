@@ -45,8 +45,8 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   background: var(--main-bright);
-  position: fixed;
-  padding: 0 1rem;
+  flex: flex-start;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
