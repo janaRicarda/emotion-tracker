@@ -6,13 +6,15 @@ import {
   StyledListItem,
   StyledList,
 } from "@/SharedStyledComponents";
+import { darkTheme } from "./Theme";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
   margin: 1rem;
   padding: 2rem;
   background: ${({ $color }) => $color};
-  color: var(--text-on-bright);
+  //color: var(--text-on-bright);
+  color: ${({ $text }) => $text};
 `;
 
 const EmotionDetailsTitle = styled.h1`
@@ -45,16 +47,19 @@ const NextLink = styled(StyledFixedLink)`
 const StyledChevronPrev = styled(ChevronPrev)`
   width: 3.5rem;
   height: 3.5rem;
-  fill: var(--main-dark);
+  //fill: var(--main-dark);
+  fill: ${({ $text }) => $text};
 `;
 
 const StyledChevronNext = styled(ChevronNext)`
   width: 3.5rem;
   height: 3.5rem;
-  fill: var(--main-dark);
+  //fill: var(--main-dark);
+  fill: ${({ $text }) => $text};
 `;
 
 export default function EmotionDetails({
+  theme,
   name,
   description,
   emotionfunction,
@@ -65,7 +70,12 @@ export default function EmotionDetails({
   nextEmotion,
 }) {
   return (
-    <StyledArticle $color={`var(--${slug})`}>
+    <StyledArticle
+      $color={
+        theme === darkTheme ? `var(--section-background)` : `var(--${slug})`
+      }
+      $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
+    >
       <EmotionDetailsTitle>{name}</EmotionDetailsTitle>
       <p>{description}</p>
       <SubTitle>The function of {name}</SubTitle>
@@ -75,14 +85,29 @@ export default function EmotionDetails({
       <SubTitle>Subemotions</SubTitle>
       <StyledSubemotionsList>
         {subemotions.map((sub) => (
-          <StyledListItem key={sub}>{sub}</StyledListItem>
+          <StyledListItem
+            $text={
+              theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+            }
+            key={sub}
+          >
+            {sub}
+          </StyledListItem>
         ))}
       </StyledSubemotionsList>
       <PrevLink href={`/emotions/${prevEmotion.slug}`}>
-        <StyledChevronPrev />
+        <StyledChevronPrev
+          $text={
+            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+          }
+        />
       </PrevLink>
       <NextLink href={`/emotions/${nextEmotion.slug}`}>
-        <StyledChevronNext />
+        <StyledChevronNext
+          $text={
+            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+          }
+        />
       </NextLink>
     </StyledArticle>
   );

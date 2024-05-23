@@ -2,7 +2,7 @@ import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 
-export default function EmotionDetailsPage() {
+export default function EmotionDetailsPage({ theme }) {
   const router = useRouter();
   if (!router.query) {
     return null;
@@ -23,6 +23,7 @@ export default function EmotionDetailsPage() {
   if (!emotion) return <h1>emotion not found</h1>;
   return (
     <EmotionDetails
+      theme={theme}
       name={emotion.name}
       description={emotion.description}
       emotionfunction={emotion.emotionfunction}

@@ -119,6 +119,7 @@ export default function App({ Component, pageProps }) {
       <GlobalStyle />
       <Layout theme={theme} toggleTheme={toggleTheme} switchTheme={switchTheme}>
         <Component
+          theme={theme}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}

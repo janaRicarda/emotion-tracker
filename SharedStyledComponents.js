@@ -59,7 +59,8 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid var(--main-dark);
+  //border: 1px solid var(--main-dark);
+  border: 1px solid ${({ $text }) => $text};
   padding: 0.5rem;
   border-radius: 6px;
 `;
