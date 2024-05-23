@@ -6,7 +6,7 @@ import {
 import styled from "styled-components";
 
 const StyledListWrapper = styled(StyledFlexColumnWrapper)`
-  overscoll-bahavior: none;
+  overscroll-bahavior: none;
 `;
 
 export default function EmotionListPage() {
