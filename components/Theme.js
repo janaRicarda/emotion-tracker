@@ -25,7 +25,6 @@ export const lightTheme = {
   manual7: "hsl(10, 80%, 70%)",
   boxShadow:
     "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #a6a1a1, inset -5px -5px 5px 0 #a6a1a1, inset 5px 5px 5px 0 #ffffff",
-  emotionListBackground: "none",
   emotionBorder: "none",
   circleBorder: "none",
 };
@@ -57,7 +56,6 @@ export const darkTheme = {
   manual7: "hsl(10, 80%, 70%)",
   boxShadow:
     "-3px -3px 15px 0 #050583, 5px 5px 15px 0 #010121, inset -5px -5px 5px 0 #010121, inset 5px 5px 5px 0 #050583",
-  emotionListBackground: "none",
   emotionBorder: "none",
   circleBorder: "none",
 };
@@ -89,7 +87,6 @@ export const warmTheme = {
   manual7: "hsl(40, 80%, 60%)",
   boxShadow:
     "-5px -5px 15px 0 #fbf5e7, 5px 5px 15px 0 #aaa18c, inset -5px -5px 5px 0 #aaa18c, inset 5px 5px 5px 0 #fbf5e7",
-  emotionListBackground: "radial-gradient(#f673a4, #fbe050)",
   emotionBorder: "0.5px solid #471343",
   circleBorder: "none",
 };
@@ -105,13 +102,22 @@ export const coldTheme = {
   contrastBright: "#D3F6F8",
   red: "#CB0566",
   green: "#2FC565",
-  joy: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  surprise: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  fear: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  sadness: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  contempt: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  disgust: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
-  anger: "linear-gradient(to bottom left, #50cfe2, #a390f9, #7593f4)",
+  // joy: "linear-gradient(to bottom left,#50cfe2, #9996fa)",
+  // surprise: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+  // fear: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+  // sadness: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+  // contempt: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+  // disgust: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+  // anger: "linear-gradient(to bottom left, #50cfe2, #9996fa)",
+
+  joy: "hsl(180, 70%, 60%)",
+  surprise: "hsl(200, 70%, 60%)",
+  fear: "hsl(220, 70%, 70%)",
+  sadness: "hsl(240, 70%, 80%)",
+  contempt: "hsl(220, 70%, 70%)",
+  disgust: "hsl(200, 70%, 60%)",
+  anger: "hsl(190, 70%, 60%)",
+
   manual1: "hsl(180, 70%, 60%)",
   manual2: "hsl(200, 70%, 60%)",
   manual3: "hsl(220, 70%, 70%)",
@@ -121,7 +127,6 @@ export const coldTheme = {
   manual7: "hsl(190, 70%, 60%)",
   boxShadow:
     "-5px -5px 15px 0 #ebf9fa, 5px 5px 15px 0 #92aaab, inset -5px -5px 5px 0 #92aaab, inset 5px 5px 5px 0 #ebf9fa",
-  emotionListBackground: "radial-gradient(#a390f9, #50cfe2)",
   emotionBorder: "0.5px solid #0F1555",
   circleBorder: "none",
 };
@@ -152,7 +157,6 @@ export const neutralTheme = {
   manual6: "lightgrey",
   manual7: "lightgrey",
   boxShadow: "none",
-  emotionListBackground: "lightgrey",
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
 };
@@ -183,7 +187,6 @@ export const highContrastTheme = {
   manual6: "yellow",
   manual7: "yellow",
   boxShadow: "none",
-  emotionListBackground: "yellow",
   emotionBorder: "1px solid black",
   circleBorder: "1px solid yellow",
 };

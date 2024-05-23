@@ -39,7 +39,7 @@ export default createGlobalStyle`
   --manual6: ${({ theme }) => theme.manual6};
   --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
-  --emotion-list-background:  ${({ theme }) => theme.emotionListBackground};
+
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
   body {

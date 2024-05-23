@@ -3,14 +3,19 @@ import {
   StyledFlexColumnWrapper,
   StyledFixedTitle,
 } from "@/SharedStyledComponents";
+import styled from "styled-components";
+
+const StyledListWrapper = styled(StyledFlexColumnWrapper)`
+  overscoll-bahavior: none;
+`;
 
 export default function EmotionListPage() {
   return (
     <>
       <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
-      <StyledFlexColumnWrapper>
+      <StyledListWrapper>
         <EmotionList />
-      </StyledFlexColumnWrapper>
+      </StyledListWrapper>
     </>
   );
 }
