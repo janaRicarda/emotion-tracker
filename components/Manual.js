@@ -135,20 +135,19 @@ export default function Manual() {
         effectively:
       </StyledText>
 
-      {manualData.map(({ question, text, answers, icon1, icon2, icon3 }) => (
+      {manualData.map(({ question, text, answers }) => (
         <StyledDetails key={question} $itemColor={itemColor}>
           <StyledSummary>{question}</StyledSummary>
           <StyledText>{text}</StyledText>
           <StyledOl>
             {answers.map((answer) => (
               <StyledListItem key={answer} $itemColor={itemColor}>
-                {icon1} {answer}
+                {answer}
               </StyledListItem>
             ))}
           </StyledOl>
         </StyledDetails>
       ))}
-
       <StyledText>
         Remember, the <b>What a feeling</b> app is here to assist you in
         understanding and managing your emotions. Feel free to explore its
