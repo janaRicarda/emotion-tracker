@@ -135,14 +135,14 @@ export default function Manual() {
         effectively:
       </StyledText>
 
-      {manualData.map(({ question, text, answers }) => (
+      {manualData.map(({ question, text, answers, icon1, icon2, icon3 }) => (
         <StyledDetails key={question} $itemColor={itemColor}>
           <StyledSummary>{question}</StyledSummary>
           <StyledText>{text}</StyledText>
           <StyledOl>
             {answers.map((answer) => (
               <StyledListItem key={answer} $itemColor={itemColor}>
-                {answer}
+                {icon1} {answer}
               </StyledListItem>
             ))}
           </StyledOl>
