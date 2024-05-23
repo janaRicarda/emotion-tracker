@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../public/logo.svg";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
@@ -40,7 +40,8 @@ const StyledCloseButton = styled(Close)`
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: 100px;
+  /* height: 100px; */
+  height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,20 +61,31 @@ const StyledIconWrapper = styled(StyledWrapper)`
 `;
 
 const StyledLogo = styled(Logo)`
-  width: 9rem;
-  height: 9rem;
+  width: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
+  height: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
   stroke: var(--main-dark);
 `;
 
 export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState();
+
+  function getScrollPosition(value) {
+    setScrollPosition(value);
+  }
+
+  useEffect(() => {
+    getScrollPosition(window.scrollY);
+  });
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
 
+  console.log(scrollPosition > 400);
+
   return (
-    <StyledHeader $isOpen={isOpen}>
+    <StyledHeader $shrink={scrollPosition > 400} $isOpen={isOpen}>
       <StyledStandardLink href="/">
         <StyledLogo />
       </StyledStandardLink>
