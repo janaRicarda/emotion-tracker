@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
-import { useEffect, useState, useRef, useLayoutEffect, use } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../public/logo.svg";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
@@ -40,91 +40,87 @@ const StyledCloseButton = styled(Close)`
 
 const StyledHeader = styled.header`
   width: 100%;
-  /* height: 100px; */
-  height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: var(--main-bright);
-  flex: flex-start;
-  position: sticky;
+  position: fixed;
+  padding: 0 1rem;
   top: 0;
   left: 0;
   z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
 `;
 
+const PlaceholderHeader = styled.div`
+  width: 100vw;
+  height: 110px;
+`;
+
 const StyledIconWrapper = styled(StyledWrapper)`
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: auto;
+  transform: ${({ $shrink }) => $shrink && "scale(0.7)"};
+  transition: transform 400ms ease;
+  z-index: 3;
 `;
 
 const StyledLogo = styled(Logo)`
-  width: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
-  height: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
+  width: ${({ $shrink }) => ($shrink ? "4rem" : "8rem")};
+  height: ${({ $shrink }) => ($shrink ? "4rem" : "8rem")};
   stroke: var(--main-dark);
-  transition: 300ms ease-in-out;
+  transition: all 400ms ease;
 `;
 
 export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState();
-  // const [scrollDirection, setScrollDirection] = useState();
-
-  // const ref = useRef();
-
-  // console.log(ref.current);
-
-  // function getScrollPosition(newScrollPosition) {
-  //   if (newScrollPosition > scrollPosition) setScrollDirection(true);
-  //   if (newScrollPosition < scrollPosition) setScrollDirection(false);
-  //   if ((newScrollPosition = scrollPosition)) setScrollDirection("test");
-  // }
-
-  // useEffect(() => {
-  //   // setScrollPosition(window.scrollY);
-  //   window.addEventListener("scroll", setScrollPosition(window.scrollY));
-  // });
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollDown, setScrollDown] = useState(false);
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
 
   useEffect(() => {
-    function getScroll() {
+    function handleScroll() {
+      const currentScroll = document.documentElement.scrollTop;
+      if (currentScroll < scrollPosition) {
+        setScrollDown(false);
+      } else if (currentScroll > scrollPosition) {
+        setScrollDown(true);
+      }
       setScrollPosition(document.documentElement.scrollTop);
     }
-    document.addEventListener("scroll", getScroll);
-    return function () {
-      return document.removeEventListener("scroll", getScroll);
-    };
+
+    window.addEventListener("scroll", handleScroll);
   });
 
-  console.log(scrollPosition);
-
   return (
-    <StyledHeader $isOpen={isOpen}>
-      <StyledStandardLink href="/">
-        <StyledLogo />
-      </StyledStandardLink>
-      <StyledIconWrapper>
-        {theme === lightTheme || theme === darkTheme ? (
-          <StyledToggleTheme type="button" onClick={toggleTheme}>
-            {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-          </StyledToggleTheme>
-        ) : null}
-        {isOpen ? (
-          <StyledCloseButton type="button" onClick={handleToggleMenu} />
-        ) : (
-          <StyledMenuButton type="button" onClick={handleToggleMenu} />
-        )}
+    <>
+      <StyledHeader $shrink={scrollDown} $isOpen={isOpen}>
+        <StyledStandardLink href="/">
+          <StyledLogo $shrink={scrollDown} />
+        </StyledStandardLink>
+        <StyledIconWrapper $shrink={scrollDown}>
+          {theme === lightTheme || theme === darkTheme ? (
+            <StyledToggleTheme type="button" onClick={toggleTheme}>
+              {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+            </StyledToggleTheme>
+          ) : null}
+          {isOpen ? (
+            <StyledCloseButton type="button" onClick={handleToggleMenu} />
+          ) : (
+            <StyledMenuButton type="button" onClick={handleToggleMenu} />
+          )}
+        </StyledIconWrapper>
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}
           switchTheme={switchTheme}
         />
-      </StyledIconWrapper>
-    </StyledHeader>
+      </StyledHeader>
+      <PlaceholderHeader />
+    </>
   );
 }
