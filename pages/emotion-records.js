@@ -13,7 +13,7 @@ import Tooltip from "@/components/Tooltip";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
-  top: 100px;
+  top: 99px;
   background-color: var(--main-bright);
   z-index: 1;
 `;
