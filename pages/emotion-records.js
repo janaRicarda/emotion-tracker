@@ -5,7 +5,7 @@ import {
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
