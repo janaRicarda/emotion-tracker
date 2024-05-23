@@ -21,6 +21,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-plotly.js": "^2.6.0",
+    "react-scroll-to-top": "^3.0.0",
     "styled-components": "^6.0.2",
     "uid": "^2.0.2",
     "use-local-storage-state": "^19.2.0"

@@ -44,6 +44,7 @@ export default function EmotionList({
     const emotion = { emotion: data };
     onAddEmotionDetails(emotion, id);
   }
+
   return (
     <>
       <StyledTitle>{title}</StyledTitle>

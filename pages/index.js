@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
 });
+import Tooltip from "@/components/Tooltip";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -76,7 +77,8 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
     $actionButton ? "1px solid black" : "none"};
 `;
 
-export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
+export default function HomePage({ onAddEmotionEntry, handleToggleTooltip, emotionEntries, theme }) 
+{
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
@@ -135,6 +137,11 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
   }
 
   return (
+<><Tooltip onClick={handleToggleTooltip}>
+        On this page, you can indicate your level of tension on a range scale
+        from 0 to 100. Afterward, simply press the Save-button to record your
+        input.
+      </Tooltip>
     <StyledFlexColumnWrapper>
       <StyledTensionForm onSubmit={handleSubmit}>
         <StyledTensionLabel htmlFor="tension-level">
@@ -198,5 +205,8 @@ export default function HomePage({ onAddEmotionEntry, emotionEntries, theme }) {
         {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
       </StyledGraphButton>
     </StyledFlexColumnWrapper>
+
+   </>
+
   );
 }

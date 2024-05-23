@@ -1,35 +1,36 @@
-import useLocalStorageState from "use-local-storage-state";
 import styled from "styled-components";
-import { useState } from "react";
-import EmotionRecordsList from "@/components/EmotionRecordsList";
+import { useEffect, useState } from "react";
 import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import DataGenerator from "../components/DataGenerator";
+import EmotionRecordsList from "@/components/EmotionRecordsList";
 
-const StyledPageHeader = styled.section`
-  width: 100%;
+const StyledDevSection = styled.section`
+  width: 85vw;
   background-color: var(--main-bright);
-  padding: 2rem 0.5rem 0.5rem;
-  margin: 1rem 1rem 8rem;
+  padding: 1rem 1rem 1rem;
+  margin: 1rem 1rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 80px;
+  top: 60px;
   height: fit-content;
   z-index: 1;
 `;
 
-const StyledSpacer = styled.p`
-  margin: 4rem;
+const StyledSpacer = styled.div`
+  width: 100%;
+  margin: 2rem 2rem 8rem;
+  padding: 2rem 2rem 3rem;
 `;
 
 const StyledHighlightButton = styled(StyledButton)`
-  font-size: 1rem;
+  font-size: 0.8rem;
   width: fit-content;
   margin: 0;
   padding: 0.3rem;
@@ -38,47 +39,47 @@ const StyledHighlightButton = styled(StyledButton)`
 export default function GenerateAndDisplay({
   toggleHighlight,
   emotionEntries,
-  setEmotionEntries,
+  onDeleteAll,
+  onReplaceUserData,
+  backupEntries,
+  onDeleteEmotionEntry,
 }) {
-  const [daysGoingBack, setDaysGoingBack] = useState(1);
-  const [backupEntries, setBackupEntries] = useLocalStorageState(
-    "backupEntries",
-    {
-      defaultValue: [],
-    }
-  );
-  const [shownEntries, setShownEntries] = useState([]);
-  const [showDetails, setShowDetails] = useState({});
-  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+  const [shownEntries, setShownEntries] = useState(emotionEntries);
+
   const [isHighlighted, setIsHighlighted] = useState(false);
+
+  useEffect(() => {
+    setShownEntries(emotionEntries);
+  }, [emotionEntries]);
 
   function handleShowHighlighted() {
     setIsHighlighted(!isHighlighted);
   }
 
-  function handleShowDetails(id) {
-    setShowDetails((prevShow) => ({
-      ...prevShow,
-      [id]: !prevShow[id],
-    }));
+  function updateWithGeneratedData(newData) {
+    setShownEntries(newData);
   }
 
-  function nullishFunction() {
-    //Yeah, it does nothing!
+  function handleRestoreShown() {
+    setShownEntries(backupEntries);
+  }
+
+  function handleDeleteShown() {
+    onDeleteAll();
+    setShownEntries([]);
   }
 
   return (
     <StyledFlexColumnWrapper>
-      <StyledPageHeader>
+      <StyledDevSection>
         <DataGenerator
-          daysGoingBack={daysGoingBack}
-          setDaysGoingBack={setDaysGoingBack}
+          onGenerate={updateWithGeneratedData}
+          onDeleteAll={handleDeleteShown}
+          onReplaceUserData={onReplaceUserData}
+          onRestore={handleRestoreShown}
           backupEntries={backupEntries}
-          setBackupEntries={setBackupEntries}
           shownEntries={shownEntries}
-          setShownEntries={setShownEntries}
           emotionEntries={emotionEntries}
-          setEmotionEntries={setEmotionEntries}
         />
 
         {shownEntries.length !== 0 && (
@@ -88,12 +89,13 @@ export default function GenerateAndDisplay({
             </StyledHighlightButton>
           </>
         )}
-      </StyledPageHeader>
-      <StyledSpacer></StyledSpacer>
+      </StyledDevSection>
+      <StyledSpacer />
       {shownEntries.length !== 0 && (
         <EmotionRecordsList
           emotionEntries={shownEntries}
-          onDeleteEmotionEntry={nullishFunction}
+          onDeleteEmotionEntry={onDeleteEmotionEntry}
+          editFromDevControls={true}
           shownEntries={
             isHighlighted
               ? shownEntries.filter((entry) => entry.isHighlighted)
