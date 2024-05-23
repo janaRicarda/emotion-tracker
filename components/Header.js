@@ -69,7 +69,7 @@ const StyledLogo = styled(Logo)`
 
 export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
-  // const [scrollPosition, setScrollPosition] = useState();
+  const [scrollPosition, setScrollPosition] = useState();
   // const [scrollDirection, setScrollDirection] = useState();
 
   // const ref = useRef();
@@ -91,9 +91,17 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
     setIsOpen(!isOpen);
   }
 
-  // useEffect(() => console.log(window.scrollY));
+  useEffect(() => {
+    function getScroll() {
+      setScrollPosition(document.documentElement.scrollTop);
+    }
+    document.addEventListener("scroll", getScroll);
+    return function () {
+      return document.removeEventListener("scroll", getScroll);
+    };
+  });
 
-  // console.log(scrollPosition);
+  console.log(scrollPosition);
 
   return (
     <StyledHeader $isOpen={isOpen}>
