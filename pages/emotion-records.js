@@ -9,6 +9,7 @@ import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
+import Tooltip from "@/components/Tooltip";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
@@ -57,6 +58,7 @@ export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
+  handleToggleTooltip,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -115,61 +117,70 @@ export default function EmotionRecords({
   }
 
   return (
-    <StyledFlexColumnWrapper>
-      <StyledTopSection>
-        <StyledTitle>Recorded Emotions</StyledTitle>
-        <FilterEmotionEntries
-          emotionEntries={emotionEntries}
-          filteredEntries={filteredEntries}
-          buttonState={buttonState}
-          searchTerm={searchTerm}
-          selectedTime={selectedTime}
-          onSearch={handleSearch}
-          changeShownEntries={handleSetShownEntries}
-          changeButtonState={handleSetButtonState}
-          changeFilterEntries={handleSetFilterEntries}
-          changeSelectedTime={handleSetSelectedTime}
-          DisplayDate={DisplayDate}
-        />
-      </StyledTopSection>
-      {buttonState.datePicker ? (
-        selectedTime ? (
-          <DisplayDate />
-        ) : (
-          <StyledDateIndicator>
-            Click the calendar <StyledCalendarIcon /> and select a date
-          </StyledDateIndicator>
-        )
-      ) : null}
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              You haven&apos;t made any Entries today.<br></br>
-              <StyledLink href="./">add Entry &rarr;</StyledLink>
-            </StyledTextMessage>
+    <>
+      <Tooltip onClick={handleToggleTooltip}>
+        Navigate through your emotion records list, a comprehensive compilation
+        of all your added emotion entries. You can easily search for specific
+        entries, edit or delete them, and even highlight important moments.
+        Also, you can search through your entries or filter them by the
+        following options: today, last week, or last month.
+      </Tooltip>
+      <StyledFlexColumnWrapper>
+        <StyledTopSection>
+          <StyledTitle>Recorded Emotions</StyledTitle>
+          <FilterEmotionEntries
+            emotionEntries={emotionEntries}
+            filteredEntries={filteredEntries}
+            buttonState={buttonState}
+            searchTerm={searchTerm}
+            selectedTime={selectedTime}
+            onSearch={handleSearch}
+            changeShownEntries={handleSetShownEntries}
+            changeButtonState={handleSetButtonState}
+            changeFilterEntries={handleSetFilterEntries}
+            changeSelectedTime={handleSetSelectedTime}
+            DisplayDate={DisplayDate}
+          />
+        </StyledTopSection>
+        {buttonState.datePicker ? (
+          selectedTime ? (
+            <DisplayDate />
+          ) : (
+            <StyledDateIndicator>
+              Click the calendar <StyledCalendarIcon /> and select a date
+            </StyledDateIndicator>
+          )
+        ) : null}
+        {shownEntries.length === 0 &&
+          (filteredEntries.length === 0 ? (
+            buttonState.highlightedButton ? (
+              <StyledTextMessage>
+                You haven&apos;t highlighted any Entries yet. Click the{" "}
+                <StyledHeartSymbol /> on a Entry to highlight it.
+              </StyledTextMessage>
+            ) : buttonState.todayButton ? (
+              <StyledTextMessage>
+                You haven&apos;t made any Entries today.<br></br>
+                <StyledLink href="./">add Entry &rarr;</StyledLink>
+              </StyledTextMessage>
+            ) : (
+              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+            )
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-        ))}
+          ))}
 
-      {shownEntries.length !== 0 && (
-        <>
-          <EmotionRecordsList
-            onDeleteEmotionEntry={onDeleteEmotionEntry}
-            toggleHighlight={toggleHighlight}
-            shownEntries={shownEntries}
-            filteredEntries={filteredEntries}
-          />
-        </>
-      )}
-    </StyledFlexColumnWrapper>
+        {shownEntries.length !== 0 && (
+          <>
+            <EmotionRecordsList
+              onDeleteEmotionEntry={onDeleteEmotionEntry}
+              toggleHighlight={toggleHighlight}
+              shownEntries={shownEntries}
+              filteredEntries={filteredEntries}
+            />
+          </>
+        )}
+      </StyledFlexColumnWrapper>
+    </>
   );
 }
