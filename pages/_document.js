@@ -25,7 +25,7 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html style={(overscrollBehavior = "none")} lang="en">
         <Head />
         <body>
           <Main />
