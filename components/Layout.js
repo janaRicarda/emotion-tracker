@@ -4,6 +4,7 @@ import ScrollToTop from "react-scroll-to-top";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { emotionData } from "@/lib/db";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -14,6 +15,9 @@ const StyledToTopButton = styled(ScrollToTop)`
     z-index: 1;
     background-color: ${({ $isAppManual, $color }) =>
       $isAppManual ? $color : "var(--button-background)"};
+    ${({ $isEmotionDetail, $EmotionColor }) =>
+      $isEmotionDetail && $EmotionColor};
+
     color: var(--contrast-text);
     left: 10px;
     display: flex;
@@ -61,7 +65,9 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   const router = useRouter();
 
   const isAppManual = router.pathname === "/app-manual";
-
+  const isEmotionDetail = router.pathname === "/emotions[slug].index";
+  const [{ slug }] = emotionData;
+  console.log(slug);
   return (
     <>
       <Header
@@ -74,6 +80,8 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       <StyledToTopButton
         $color={color}
         $isAppManual={isAppManual}
+        $isEmotionDetail={isEmotionDetail}
+        $emotionColor={`var(--${slug})`}
         width="20"
         height="20"
         top={400}
