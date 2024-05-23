@@ -19,11 +19,11 @@ const StyledArticle = styled.article`
   position: fixed;
   top: 0;
   right: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 `;
 
 const StyledLink = styled(StyledStandardLink)`

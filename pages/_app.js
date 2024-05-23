@@ -1,23 +1,39 @@
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import { ThemeProvider } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
-
   const [theme, setTheme] = useState(defaultTheme);
 
-  const data = generateExampleData();
+  const initialData = generateExampleData();
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
-      defaultValue: [...data],
+      defaultValue: [],
+    }
+  );
+
+  // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
+  useEffect(() => {
+    const storageState = localStorage.getItem("emotionEntries");
+
+    // note: the length of an existing but empty localStorageState is equal to 2 and not 0
+    if (storageState.length === 2) {
+      setEmotionEntries(initialData);
+    }
+  }, []);
+
+  const [backupEntries, setBackupEntries] = useLocalStorageState(
+    "backupEntries",
+    {
+      defaultValue: [],
     }
   );
 
@@ -62,6 +78,19 @@ export default function App({ Component, pageProps }) {
   function handleDeleteEmotionEntry(id) {
     setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
   }
+
+  function handleDeleteAll() {
+    setEmotionEntries([]);
+  }
+
+  function handleReplaceAndBackup(generatedData) {
+    setBackupEntries(emotionEntries);
+    setEmotionEntries(generatedData);
+  }
+  function restoreFromBackup() {
+    setEmotionEntries(backupEntries);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -71,6 +100,10 @@ export default function App({ Component, pageProps }) {
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
+          onReplaceUserData={handleReplaceAndBackup}
+          onDeleteAll={handleDeleteAll}
+          onRestore={restoreFromBackup}
+          backupEntries={backupEntries}
           toggleHighlight={toggleHighlight}
           {...pageProps}
         />
