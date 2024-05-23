@@ -9,12 +9,12 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import Tooltip from "@/components/Tooltip";
 import dynamic from "next/dynamic";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
 });
-import Tooltip from "@/components/Tooltip";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -111,7 +111,7 @@ export default function HomePage({
     }
     return 0;
   }
-  // console.log(emotionEntries);
+
   const xValues = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
     .sort(compare)
@@ -122,17 +122,18 @@ export default function HomePage({
     .sort(compare)
     .map((entry) => entry.tensionLevel);
 
-  const tensionChartData = emotionEntries
-    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .sort(compare)
-    .map((entry) => {
-      const object = {
-        x: entry.timeAndDate.slice(-5),
-        y: entry.tensionLevel,
-        isoDate: entry.isoDate,
-      };
-      return object;
-    });
+  // alternative
+  // const tensionChartData = emotionEntries
+  //   .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
+  //   .sort(compare)
+  //   .map((entry) => {
+  //     const object = {
+  //       x: entry.timeAndDate.slice(-5),
+  //       y: entry.tensionLevel,
+  //       isoDate: entry.isoDate,
+  //     };
+  //     return object;
+  //   });
 
   // console.log(tensionChartData);
 

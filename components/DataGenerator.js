@@ -159,8 +159,10 @@ function generateDetailedEntry() {
 function generateCompleteData(daysGoingBack) {
   const currentFullDate = new Date();
   currentFullDate.setHours(0);
-  const daysTimestamp = currentFullDate.valueOf();
-
+  currentFullDate.setMinutes(0);
+  currentFullDate.setSeconds(0);
+  const resetDate = new Date(currentFullDate);
+  const daysTimestamp = resetDate.valueOf();
   const daysToFill = [...Array(Number(daysGoingBack)).keys()];
   const dailyEntries = daysToFill.flatMap((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
@@ -209,6 +211,7 @@ export default function DataGenerator({
       return setSmallMessage("Please use a number below 366!");
 
     setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
+    console.log(newData);
   }
 
   function handleDeleteAll() {

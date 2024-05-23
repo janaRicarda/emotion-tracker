@@ -24,6 +24,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
             marker: { color: theme.text },
           },
         ]}
+        config={{ displayModeBar: false }}
         layout={{
           font: { color: theme.text },
           paper_bgcolor: theme.sectionBackground,
