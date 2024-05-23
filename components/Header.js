@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useLayoutEffect, use } from "react";
 import Logo from "../public/logo.svg";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
@@ -64,28 +64,39 @@ const StyledLogo = styled(Logo)`
   width: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
   height: ${({ $shrink }) => ($shrink ? "5rem" : "9rem")};
   stroke: var(--main-dark);
+  transition: 300ms ease-in-out;
 `;
 
 export default function Header({ theme, toggleTheme, switchTheme }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState();
+  // const [scrollPosition, setScrollPosition] = useState();
+  // const [scrollDirection, setScrollDirection] = useState();
 
-  function getScrollPosition(value) {
-    setScrollPosition(value);
-  }
+  // const ref = useRef();
 
-  useEffect(() => {
-    getScrollPosition(window.scrollY);
-  });
+  // console.log(ref.current);
+
+  // function getScrollPosition(newScrollPosition) {
+  //   if (newScrollPosition > scrollPosition) setScrollDirection(true);
+  //   if (newScrollPosition < scrollPosition) setScrollDirection(false);
+  //   if ((newScrollPosition = scrollPosition)) setScrollDirection("test");
+  // }
+
+  // useEffect(() => {
+  //   // setScrollPosition(window.scrollY);
+  //   window.addEventListener("scroll", setScrollPosition(window.scrollY));
+  // });
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
 
-  console.log(scrollPosition > 400);
+  // useEffect(() => console.log(window.scrollY));
+
+  // console.log(scrollPosition);
 
   return (
-    <StyledHeader $shrink={scrollPosition > 400} $isOpen={isOpen}>
+    <StyledHeader $isOpen={isOpen}>
       <StyledStandardLink href="/">
         <StyledLogo />
       </StyledStandardLink>
