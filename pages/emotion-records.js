@@ -55,7 +55,7 @@ const StyledDateIndicator = styled.p`
 `;
 
 const StyledParagraph = styled.p`
-  text-align: center;
+  text-align: ${({ $textAlign }) => $textAlign};
   padding: 0.5rem;
 `;
 
@@ -110,10 +110,10 @@ export default function EmotionRecords({
     return date;
   }
 
-  function DisplayDate() {
+  function DisplayDate({ textAlign }) {
     return (
-      <StyledParagraph>
-        Your Selection:<br></br>
+      <StyledParagraph $textAlign={textAlign}>
+        Date selected:<br></br>
         {getFormattedDate(selectedTime.from)}
         {selectedTime.to &&
           selectedTime.from.toString() !== selectedTime.to.toString() &&
@@ -151,7 +151,7 @@ export default function EmotionRecords({
         />
         {buttonState.datePicker ? (
           selectedTime ? (
-            <DisplayDate />
+            <DisplayDate textAlign="center" />
           ) : (
             <StyledDateIndicator>
               Click the calendar <StyledCalendarIcon /> and select a date
