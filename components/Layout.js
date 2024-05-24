@@ -71,11 +71,12 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
 
   const isAppManual = router.pathname === "/app-manual";
   const isEmotionDetail =
-    router.pathname === `/emotions/${slug}` || `/create/${slug}`;
+    router.pathname === `/emotions/${slug}` ||
+    router.pathname === `/create/${slug}`;
 
   //const [slug] = emotionData;
   //const slug = emotionData.map(({ slug }) => slug);
-  console.log(slug);
+  console.log(isEmotionDetail);
   return (
     <>
       <Header
