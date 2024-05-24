@@ -22,7 +22,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
             y: yValues,
             type: "scatter",
             mode: "lines+markers",
-            marker: { color: theme.text },
+            marker: { color: theme.buttonBackground },
           },
         ]}
         config={{ displayModeBar: false }}
