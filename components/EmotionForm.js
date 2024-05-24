@@ -83,7 +83,7 @@ const ToggleSwitch = styled(Circle)`
   position: absolute;
   display: inline;
   fill: ${({ $color }) => ($color ? "var(--disabled)" : "var(--enabled)")};
-  border: 1px solid black;
+  border: 1px solid var(--text-on-bright);
   background: var(--contrast-bright);
   padding: 0.2rem;
   border-radius: 50%;
