@@ -84,6 +84,8 @@ const ToggleSwitch = styled(Circle)`
   position: absolute;
   display: inline;
   fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
+  border: 1px solid black;
+  border-radius: 50%;
   margin-left: 0.5rem;
   right: 0;
   bottom: calc(50% - 0.85rem);
@@ -194,7 +196,9 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledFixedTitle>
+      <StyledFixedTitle
+        $color={theme === darkTheme ? `var(--${slug})` : `var(--main-dark)`}
+      >
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -221,7 +225,7 @@ export default function EmotionForm({
           id="tension-level"
           name="tensionLevel"
           type="range"
-          // $color={colorValue}
+          $color={colorValue}
           $inputColor={
             theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
           }

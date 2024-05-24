@@ -31,6 +31,7 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledFixedTitle = styled(StyledTitle)`
+  color: ${({ $color }) => $color};
   width: 100%;
   position: fixed;
   top: 100px;

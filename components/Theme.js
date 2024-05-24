@@ -30,20 +30,15 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  //background: "#030352",
   background: "#2B2C34",
   text: "#f1eaea",
   contrastText: "#f1eaea",
-  //textOnBright: "#030352",
   textOnBright: "#2B2C34",
   textOnDark: "#f1eaea",
-  //buttonBackground: "rebeccapurple",
   buttonBackground: "#8e60d0",
   contrastBright: "#f1eaea",
   red: "#cc0100",
   green: "#00b400",
-  //sectionBackground: "#252569",
-  //sectionBackground: "#5F6065",
   sectionBackground: "#3b3e4c",
   joy: "hsl(60, 70%, 70%)",
   surprise: "hsl(105, 70%, 80%)",
