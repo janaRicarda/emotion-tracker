@@ -13,7 +13,6 @@ const StyledArticle = styled.article`
   margin: 1rem;
   padding: 2rem;
   background: ${({ $color }) => $color};
-  //color: var(--text-on-bright);
   color: ${({ $text }) => $text};
 `;
 
@@ -47,14 +46,12 @@ const NextLink = styled(StyledFixedLink)`
 const StyledChevronPrev = styled(ChevronPrev)`
   width: 3.5rem;
   height: 3.5rem;
-  //fill: var(--main-dark);
   fill: ${({ $text }) => $text};
 `;
 
 const StyledChevronNext = styled(ChevronNext)`
   width: 3.5rem;
   height: 3.5rem;
-  //fill: var(--main-dark);
   fill: ${({ $text }) => $text};
 `;
 

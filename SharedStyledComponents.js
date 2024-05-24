@@ -13,8 +13,8 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background: var(--text-on-bright);
-  color: var(--text-on-dark);
+  background: ${({ $submitBackground }) => $submitBackground};
+  color: ${({ $submit }) => $submit};
   border: 0;
   padding: 0.5rem;
   margin: 0;

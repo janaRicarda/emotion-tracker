@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Tooltip from "@/components/Tooltip";
 
 export default function EmotionEntry({
+  theme,
   onAddEmotionDetails,
   emotionEntries,
   handleToggleTooltip,
@@ -11,6 +12,7 @@ export default function EmotionEntry({
   if (!router.query) {
     return null;
   }
+  const { slug } = router.query;
 
   const { id } = router.query;
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
@@ -27,6 +29,8 @@ export default function EmotionEntry({
         triggers and notes to enhance your emotional insight and reflection.
       </Tooltip>
       <EmotionForm
+        slug={slug}
+        theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
