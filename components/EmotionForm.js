@@ -18,7 +18,7 @@ const StyledEmotionForm = styled(StyledForm)`
   margin: 1rem;
   margin-top: 4rem;
   padding: 1rem;
-  background-color: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   color: var(--text-on-bright);
   gap: 1rem;
 `;
@@ -35,11 +35,10 @@ const StyledSpan = styled.span`
 const StyledEmotionInput = styled(StyledInput)`
   background-color: var(--main-bright);
   border: 2px solid var(--text-on-bright);
-
   background: linear-gradient(
     to right,
-    ${({ $color }) => $color} 0%,
-    ${({ $color }) => $color} ${({ $value }) => $value}%,
+    var(--text-on-bright) 0%,
+    var(--text-on-bright) ${({ $value }) => $value}%,
     var(--contrast-bright) ${({ $value }) => $value}%,
     var(--contrast-bright) 100%
   );
@@ -52,10 +51,9 @@ const StyledEmotionInput = styled(StyledInput)`
     background-image: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
-      ${({ $color }) => $color} 45%
+      var(--text-on-dark) 45%
     );
   }
-
   &::-moz-range-thumb {
     -webkit-appearance: none;
     width: 2rem;
@@ -65,13 +63,13 @@ const StyledEmotionInput = styled(StyledInput)`
     background-image: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
-      ${({ $color }) => $color} 45%
+      var(--text-on-dark) 45%
     );
   }
 `;
 
 const StyledTextarea = styled.textarea`
-  border: 1px solid black;
+  border: 2px solid var(--text-on-bright);
   border-radius: 6px;
 `;
 
@@ -85,6 +83,7 @@ const ToggleSwitch = styled(Circle)`
   display: inline;
   fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
   margin-left: 0.5rem;
+  right: 0;
   bottom: calc(50% - 0.85rem);
 `;
 

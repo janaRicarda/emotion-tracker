@@ -7,7 +7,7 @@ import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
-import { StyledWrapper, StyledStandardLink } from "@/SharedStyledComponents";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -52,7 +52,8 @@ const StyledHeader = styled.header`
   z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
 `;
 
-const StyledIconWrapper = styled(StyledWrapper)`
+const StyledIconWrapper = styled.article`
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
