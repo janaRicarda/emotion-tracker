@@ -14,17 +14,7 @@ const StyledToTopButton = styled(ScrollToTop)`
     border-radius: 50%;
     z-index: 1;
 
-    background-color: ${({
-      $isAppManual,
-      $color,
-      $isEmotionDetail,
-      $emotionColor,
-    }) =>
-      $isAppManual
-        ? $color
-        : $isEmotionDetail
-        ? $emotionColor
-        : "var(--button-background)"};
+    background-color: ${({ $background }) => $background};
 
     color: var(--contrast-text);
     left: 10px;
@@ -40,6 +30,7 @@ const StyledToTopButton = styled(ScrollToTop)`
 export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
+  //const [emotionColor, setEmotionColor] = useState(`var(--${slug})`);
 
   // for triggering an animation
   const [scrollPosition, setScrollPosition] = useState();
@@ -70,12 +61,23 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
     );
   });
 
+  //const router = useRouter();
   const router = useRouter();
+  //if (!router.query) {
+  //return null;
+  //}
+  const { slug } = router.query;
+  //const emotion = emotionData.find((emotion) => emotion.slug === slug);
+  //const emotionIndex = emotionData.findIndex(
+  // (emotion) => emotion.slug === slug
+  //);
 
   const isAppManual = router.pathname === "/app-manual";
-  const isEmotionDetail = router.pathname === "/emotions[slug]";
-  const [{ slug }] = emotionData;
-  console.log(slug);
+  const isEmotionDetail = router.pathname === `/emotions/${slug}`;
+
+  //const [slug] = emotionData;
+  //const slug = emotionData.map(({ slug }) => slug);
+  console.log(`var(--${slug})`);
   return (
     <>
       <Header
@@ -86,10 +88,13 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       {children}
       <Footer />
       <StyledToTopButton
-        $color={color}
-        $isAppManual={isAppManual}
-        $isEmotionDetail={isEmotionDetail}
-        $emotionColor={`var(--${slug})`}
+        $background={
+          isAppManual
+            ? color
+            : isEmotionDetail
+            ? `var(--${slug})`
+            : `var(--button-background)`
+        }
         width="20"
         height="20"
         top={400}

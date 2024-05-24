@@ -96,6 +96,7 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
           name="tensionLevel"
           type="range"
           value={tension}
+          $value={tension}
           max={100}
           onChange={(event) => setTension(event.target.value)}
         />

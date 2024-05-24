@@ -6,7 +6,7 @@ const StyledButton = styled.button`
   background-color: var(--button-background);
   color: var(--contrast-text);
   width: 6rem;
-  border: 1px solid var(--main-dark);
+  //border: 1px solid var(--main-dark);
   border-radius: 6px;
   margin: 1rem;
   padding: 1rem;
@@ -59,7 +59,6 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  //border: 1px solid var(--main-dark);
   border: 1px solid ${({ $text }) => $text};
   padding: 0.5rem;
   border-radius: 6px;
@@ -101,7 +100,6 @@ const StyledInput = styled.input`
     var(--section-background) ${({ $value }) => $value}%,
     var(--section-background) 100%
   );
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 2rem;
@@ -113,7 +111,6 @@ const StyledInput = styled.input`
       var(--button-background) 45%
     );
   }
-
   &::-moz-range-thumb {
     -moz-appearance: none;
     width: 2rem;
@@ -121,7 +118,7 @@ const StyledInput = styled.input`
     border-radius: 50%;
     background-image: radial-gradient(
       circle,
-      var(--main-bright) 40%,
+      var(--contrast-text) 40%,
       var(--button-background) 45%
     );
   }
