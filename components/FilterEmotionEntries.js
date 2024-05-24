@@ -35,11 +35,18 @@ const StyledInput = styled.input`
 
 // Styles for Filter-Buttons
 const StyledFilterSection = styled.section`
+  position: sticky;
+  top: 155px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
+  background-color: var(--main-bright);
+  transform: translateY(
+    ${({ $isScrollDown }) => ($isScrollDown ? "-400px" : "0")}
+  );
+  transition: transform 700ms ease-in-out;
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -127,6 +134,7 @@ export default function FilterEmotionEntries({
   DisplayDate,
   changeSelectedTime,
   selectedTime,
+  isScrollDown,
 }) {
   const [showSearchBar, SetShowSearchBar] = useState(false);
   const [showDayPicker, setShowDayPicker] = useState(false);
@@ -151,6 +159,8 @@ export default function FilterEmotionEntries({
       setShow: true,
     },
   ];
+
+  console.log(buttonState);
 
   // sets filteredEntries useState in emotion-records.js according to buttonState; reacts to changes of emotionEntries e.g. deletion
   useEffect(() => {
@@ -267,7 +277,7 @@ export default function FilterEmotionEntries({
 
   return (
     <>
-      <StyledFilterSection>
+      <StyledFilterSection $isScrollDown={isScrollDown}>
         <StyledContainer>
           <StyledInput
             $showSearchBar={showSearchBar}
@@ -302,6 +312,11 @@ export default function FilterEmotionEntries({
             )
           )}
         </StyledButtonGroup>
+        <div>
+          <StyledFilterButton $active={true}>
+            {buttonState.label}
+          </StyledFilterButton>
+        </div>
       </StyledFilterSection>
 
       {showDayPicker && (

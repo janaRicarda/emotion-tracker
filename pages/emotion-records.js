@@ -11,11 +11,16 @@ import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import Tooltip from "@/components/Tooltip";
 
-const StyledTopSection = styled(StyledFlexColumnWrapper)`
-  position: sticky;
-  top: 100px;
+const StyledAnimatedTitle = styled(StyledTitle)`
   background-color: var(--main-bright);
-  z-index: 1;
+  padding: 0;
+  width: 100%;
+  position: sticky;
+  top: 125px;
+  transform: translateY(
+    ${({ $isScrollDown }) => ($isScrollDown ? "-300px" : "0")}
+  );
+  transition: transform 700ms ease-in-out;
 `;
 
 const StyledTextMessage = styled.p`
@@ -59,6 +64,7 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
   handleToggleTooltip,
+  isScrollDown,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -125,23 +131,24 @@ export default function EmotionRecords({
         Also, you can search through your entries or filter them by the
         following options: today, last week, or last month.
       </Tooltip>
-      <StyledFlexColumnWrapper>
-        <StyledTopSection>
-          <StyledTitle>Recorded Emotions</StyledTitle>
-          <FilterEmotionEntries
-            emotionEntries={emotionEntries}
-            filteredEntries={filteredEntries}
-            buttonState={buttonState}
-            searchTerm={searchTerm}
-            selectedTime={selectedTime}
-            onSearch={handleSearch}
-            changeShownEntries={handleSetShownEntries}
-            changeButtonState={handleSetButtonState}
-            changeFilterEntries={handleSetFilterEntries}
-            changeSelectedTime={handleSetSelectedTime}
-            DisplayDate={DisplayDate}
-          />
-        </StyledTopSection>
+      <>
+        <StyledAnimatedTitle $isScrollDown={isScrollDown}>
+          Recorded Emotions
+        </StyledAnimatedTitle>
+        <FilterEmotionEntries
+          emotionEntries={emotionEntries}
+          filteredEntries={filteredEntries}
+          buttonState={buttonState}
+          searchTerm={searchTerm}
+          selectedTime={selectedTime}
+          onSearch={handleSearch}
+          changeShownEntries={handleSetShownEntries}
+          changeButtonState={handleSetButtonState}
+          changeFilterEntries={handleSetFilterEntries}
+          changeSelectedTime={handleSetSelectedTime}
+          DisplayDate={DisplayDate}
+          isScrollDown={isScrollDown}
+        />
         {buttonState.datePicker ? (
           selectedTime ? (
             <DisplayDate />
@@ -180,7 +187,7 @@ export default function EmotionRecords({
             />
           </>
         )}
-      </StyledFlexColumnWrapper>
+      </>
     </>
   );
 }

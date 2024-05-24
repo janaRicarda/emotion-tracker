@@ -11,7 +11,8 @@ export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
-  const initialData = generateExampleData();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isScrollDown, setIsScrollDown] = useState(false);
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }) {
     }
   );
 
+  const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
@@ -29,6 +31,21 @@ export default function App({ Component, pageProps }) {
       setEmotionEntries(initialData);
     }
   }, []);
+
+  // detect scroll-direction
+  useEffect(() => {
+    function handleScroll() {
+      const currentScroll = document.documentElement.scrollTop;
+      if (currentScroll < scrollPosition) {
+        setIsScrollDown(false);
+      } else if (currentScroll > scrollPosition) {
+        setIsScrollDown(true);
+      }
+      setScrollPosition(document.documentElement.scrollTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+  });
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
@@ -94,8 +111,15 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Layout theme={theme} toggleTheme={toggleTheme} switchTheme={switchTheme}>
+      <Layout
+        isScrollDown={isScrollDown}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        switchTheme={switchTheme}
+        scrollPosition={scrollPosition}
+      >
         <Component
+          isScrollDown={isScrollDown}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}

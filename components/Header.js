@@ -62,7 +62,7 @@ const StyledIconWrapper = styled(StyledWrapper)`
   gap: 1rem;
   width: auto;
   transform: ${({ $shrink }) => $shrink && "scale(0.7)"};
-  transition: transform 400ms ease;
+  transition: transform 700ms ease-in-out;
   z-index: 3;
 `;
 
@@ -73,36 +73,25 @@ const StyledLogo = styled(Logo)`
   transition: all 400ms ease;
 `;
 
-export default function Header({ theme, toggleTheme, switchTheme }) {
+export default function Header({
+  theme,
+  toggleTheme,
+  switchTheme,
+  isScrollDown,
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [scrollDown, setScrollDown] = useState(false);
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
 
-  useEffect(() => {
-    function handleScroll() {
-      const currentScroll = document.documentElement.scrollTop;
-      if (currentScroll < scrollPosition) {
-        setScrollDown(false);
-      } else if (currentScroll > scrollPosition) {
-        setScrollDown(true);
-      }
-      setScrollPosition(document.documentElement.scrollTop);
-    }
-
-    window.addEventListener("scroll", handleScroll);
-  });
-
   return (
     <>
-      <StyledHeader $shrink={scrollDown} $isOpen={isOpen}>
+      <StyledHeader $shrink={isScrollDown} $isOpen={isOpen}>
         <StyledStandardLink href="/">
-          <StyledLogo $shrink={scrollDown} />
+          <StyledLogo $shrink={isScrollDown} />
         </StyledStandardLink>
-        <StyledIconWrapper $shrink={scrollDown}>
+        <StyledIconWrapper $shrink={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (
             <StyledToggleTheme type="button" onClick={toggleTheme}>
               {theme === lightTheme ? <StyledMoon /> : <StyledSun />}

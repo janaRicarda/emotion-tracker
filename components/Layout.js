@@ -25,14 +25,18 @@ const StyledToTopButton = styled(ScrollToTop)`
   }
 `;
 
-export default function Layout({ children, theme, toggleTheme, switchTheme }) {
+export default function Layout({
+  children,
+  theme,
+  toggleTheme,
+  switchTheme,
+  isScrollDown,
+  scrollPosition,
+}) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
 
-  // for triggering an animation
-  const [scrollPosition, setScrollPosition] = useState();
-
-  function listenScrollEvent() {
+  function listenScrollEvent(position) {
     const colors = [
       "var(--joy)",
       "var(--surprise)",
@@ -42,20 +46,12 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       "var(--disgust)",
       "var(--anger)",
     ];
-    const index = Math.floor(window.scrollY / 300) % colors.length;
+    const index = Math.floor(position / 300) % colors.length;
     setColor(colors[index]);
   }
 
-  function getScrollPosition(value) {
-    setScrollPosition(value);
-  }
-
   useEffect(() => {
-    window.addEventListener(
-      "scroll",
-      listenScrollEvent,
-      getScrollPosition(window.scrollY)
-    );
+    window.addEventListener("scroll", listenScrollEvent(scrollPosition));
   });
 
   const router = useRouter();
@@ -65,6 +61,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   return (
     <>
       <Header
+        isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
