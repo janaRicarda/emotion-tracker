@@ -54,6 +54,10 @@ const StyledButtonWrapper = styled(StyledWrapper)`
   justify-content: center;
 `;
 
+const SaveButton = styled(StyledButton)`
+  border: none;
+`;
+
 const StyledBackButton = styled.input`
   width: 10rem;
   text-decoration: none;
@@ -154,7 +158,7 @@ export default function HomePage({
           {!isFormSubmitted && (
             <>
               <StyledTensionDisplay>{tension}</StyledTensionDisplay>
-              <StyledButton type="submit">Save</StyledButton>
+              <SaveButton type="submit">Save</SaveButton>
             </>
           )}
 
