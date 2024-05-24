@@ -1,6 +1,9 @@
 import EmotionList from "@/components/EmotionList.js";
 import { useRouter } from "next/router";
-import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledFixedTitle,
+} from "@/SharedStyledComponents";
 import Tooltip from "@/components/Tooltip";
 
 export default function CreateIndexPage({
@@ -17,10 +20,9 @@ export default function CreateIndexPage({
         Use the provided visual cues, brief descriptions, and examples to guide
         your choice.
       </Tooltip>
+      <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
       <StyledFlexColumnWrapper>
         <EmotionList
-          form
-          title="Which of the 7 basic emotions comes closest to your actual felt emotion?"
           createMode
           id={id}
           onAddEmotionDetails={onAddEmotionDetails}

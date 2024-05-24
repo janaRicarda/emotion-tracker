@@ -48,7 +48,7 @@ const ThemeWrapper = styled(StyledFlexColumnWrapper)`
 const ThemeButton = styled(StyledButton)`
   text-align: left;
   color: var(--text-on-dark);
-  background: var(--submit-button-background);
+  background: var(--text-on-bright);
   border: 0 0 1px solid var(--text-on-bright) 0;
   border-radius: 0;
   padding: 0;
