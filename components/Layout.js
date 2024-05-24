@@ -60,23 +60,12 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   });
 
   const router = useRouter();
-  //if (!router.query) {
-  //return null;
-  //}
+
   const { slug } = router.query;
-  //const emotion = emotionData.find((emotion) => emotion.slug === slug);
-  //const emotionIndex = emotionData.findIndex(
-  // (emotion) => emotion.slug === slug
-  //);
 
   const isAppManual = router.pathname === "/app-manual";
-  const isEmotionDetail =
-    router.pathname === `/emotions/${slug}` ||
-    router.pathname === `/create/${slug}`;
+  const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
 
-  //const [slug] = emotionData;
-  //const slug = emotionData.map(({ slug }) => slug);
-  console.log(isEmotionDetail);
   return (
     <>
       <Header
