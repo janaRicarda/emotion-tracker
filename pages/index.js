@@ -114,17 +114,11 @@ export default function HomePage({
     }
     return 0;
   }
-
-  const xValues = emotionEntries
+  const filteredData = emotionEntries
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .sort(compare)
-    .map((entry) => entry.timeAndDate.slice(-5));
-
-  const yValues = emotionEntries
-    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .sort(compare)
-    .map((entry) => entry.tensionLevel);
-
+    .sort(compare);
+  const xValues = filteredData.map((entry) => entry.timeAndDate.slice(-5));
+  const yValues = filteredData.map((entry) => entry.tensionLevel);
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
@@ -173,7 +167,7 @@ export default function HomePage({
                     setIsFormSubmitted(!isFormSubmitted);
                     setTension("0");
                   }}
-                ></StyledBackButton>
+                />
                 <StyledAddDetailsLink
                   href={{ pathname: "/create", query: { id: id } }}
                   forwardedAs={`/create`}
