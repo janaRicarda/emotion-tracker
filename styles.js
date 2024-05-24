@@ -28,6 +28,8 @@ html {
   --green: ${({ theme }) => theme.green};
   --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
+  --enabled:  ${({ theme }) => theme.enabled};
+  --disabled: ${({ theme }) => theme.disabled};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
   --sadness: ${({ theme }) => theme.sadness};

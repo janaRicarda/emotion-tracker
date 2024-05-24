@@ -82,8 +82,10 @@ const ToggleSwitch = styled(Circle)`
   width: 1.7rem;
   position: absolute;
   display: inline;
-  fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
+  fill: ${({ $color }) => ($color ? "var(--disabled)" : "var(--enabled)")};
   border: 1px solid black;
+  background: var(--contrast-bright);
+  padding: 0.2rem;
   border-radius: 50%;
   margin-left: 0.5rem;
   right: 0;
