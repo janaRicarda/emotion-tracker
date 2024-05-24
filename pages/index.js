@@ -60,9 +60,8 @@ const StyledBackButton = styled.input`
   color: var(--contrast-text);
   margin: 0.5rem;
   padding: 0.5rem;
-  border-radius: 8.5px;
+  border-radius: 6px;
   border-style: none;
-
   text-align: center;
   background-color: var(--button-background);
 `;
@@ -121,21 +120,6 @@ export default function HomePage({
     .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
     .sort(compare)
     .map((entry) => entry.tensionLevel);
-
-  // alternative
-  // const tensionChartData = emotionEntries
-  //   .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-  //   .sort(compare)
-  //   .map((entry) => {
-  //     const object = {
-  //       x: entry.timeAndDate.slice(-5),
-  //       y: entry.tensionLevel,
-  //       isoDate: entry.isoDate,
-  //     };
-  //     return object;
-  //   });
-
-  // console.log(tensionChartData);
 
   function handleChart() {
     setChartIsShown(!chartIsShown);
@@ -208,7 +192,7 @@ export default function HomePage({
         )}
 
         <StyledGraphButton type="button" onClick={handleChart}>
-          {chartIsShown === true ? "Hide tension chart" : "Show Tension chart"}
+          {chartIsShown === true ? "Hide chart" : "Show chart"}
         </StyledGraphButton>
       </StyledFlexColumnWrapper>
     </>

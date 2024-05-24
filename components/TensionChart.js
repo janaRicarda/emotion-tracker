@@ -30,8 +30,23 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           paper_bgcolor: theme.sectionBackground,
           border_radius: 6,
           plot_bgcolor: theme.background,
-          xaxis: { gridcolor: theme.text },
-          yaxis: { gridcolor: theme.text },
+          xaxis: {
+            gridcolor: theme.text,
+            title: { text: "time" },
+            font: {
+              size: 15,
+              color: theme.text,
+            },
+            automargin: true,
+          },
+          yaxis: {
+            gridcolor: theme.text,
+            title: { text: "tension" },
+            font: {
+              size: 15,
+              color: theme.text,
+            },
+          },
           width: 340,
           title: {
             font: {
@@ -40,7 +55,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
             },
           },
           autosize: true,
-          margin: { b: 50, l: 30, r: 30, t: 50 },
+          margin: { autoexpand: true, b: 50, l: 30, r: 30, t: 50 },
           title: title,
         }}
       />
