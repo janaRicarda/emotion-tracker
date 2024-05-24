@@ -13,7 +13,7 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background-color: var(--submit-button-background);
+  background: var(--text-on-bright);
   color: var(--text-on-dark);
   border: 0;
   padding: 0.5rem;
@@ -35,7 +35,7 @@ const StyledFixedTitle = styled(StyledTitle)`
   position: fixed;
   top: 100px;
   left: 0;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
 `;
@@ -59,7 +59,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--text-on-bright);
   padding: 0.5rem;
   border-radius: 6px;
 `;
@@ -100,7 +100,6 @@ const StyledInput = styled.input`
     var(--section-background) ${({ $value }) => $value}%,
     var(--section-background) 100%
   );
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 2rem;
@@ -127,6 +126,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledSelect = styled.select`
+  border: 2px solid var(--text-on-bright);
   border-radius: 6px;
   padding: 0.3rem 0;
 `;

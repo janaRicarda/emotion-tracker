@@ -1,5 +1,8 @@
 import EmotionList from "@/components/EmotionList";
-import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledFixedTitle,
+} from "@/SharedStyledComponents";
 import Tooltip from "@/components/Tooltip";
 
 export default function EmotionListPage({ handleToggleTooltip }) {
@@ -14,8 +17,9 @@ export default function EmotionListPage({ handleToggleTooltip }) {
         emotion serves as a gateway to further exploration, providing insight
         and clarity into your state of being.
       </Tooltip>
+      <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
       <StyledFlexColumnWrapper>
-        <EmotionList title="The seven basic emotions" />
+        <EmotionList />
       </StyledFlexColumnWrapper>
     </>
   );
