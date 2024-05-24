@@ -93,6 +93,13 @@ const StyledMinimalPanel = styled.section`
 
 const StyledPanelItem = styled.span`
   margin: 0 0.5rem;
+  padding: 0.5rem 0;
+`;
+
+const StyledPanelSpan = styled.span`
+  background-color: var(--button-background);
+  border-radius: 50px;
+  padding: 0 0.3rem;
 `;
 
 // styles for DayPicker
@@ -339,11 +346,12 @@ export default function FilterEmotionEntries({
       </StyledFilterSection>
       <StyledMinimalPanel $isScrollDown={isScrollDown}>
         <StyledPanelItem>
-          Filter:<br></br> {buttonState.label}
+          Filter:<br></br>{" "}
+          <StyledPanelSpan>{buttonState.label}</StyledPanelSpan>
         </StyledPanelItem>
         {searchTerm && (
           <StyledPanelItem>
-            Search:<br></br> {searchTerm}
+            Search:<br></br> <StyledPanelSpan>{searchTerm}</StyledPanelSpan>
           </StyledPanelItem>
         )}
         {selectedTime && buttonState.datePicker && (
@@ -366,7 +374,7 @@ export default function FilterEmotionEntries({
               onMonthChange={setMonth}
             />
             {selectedTime ? (
-              <DisplayDate />
+              <DisplayDate textAlign="center" />
             ) : (
               <StyledParagraph>
                 Select a single date or a range of dates

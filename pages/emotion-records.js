@@ -59,6 +59,12 @@ const StyledParagraph = styled.p`
   padding: 0.5rem;
 `;
 
+const StyledDateSpan = styled.span`
+  background-color: var(--button-background);
+  border-radius: 50px;
+  padding: 0 0.5rem;
+`;
+
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
@@ -114,10 +120,12 @@ export default function EmotionRecords({
     return (
       <StyledParagraph $textAlign={textAlign}>
         Date selected:<br></br>
-        {getFormattedDate(selectedTime.from)}
-        {selectedTime.to &&
-          selectedTime.from.toString() !== selectedTime.to.toString() &&
-          " - " + getFormattedDate(selectedTime.to)}
+        <StyledDateSpan>
+          {getFormattedDate(selectedTime.from)}
+          {selectedTime.to &&
+            selectedTime.from.toString() !== selectedTime.to.toString() &&
+            " - " + getFormattedDate(selectedTime.to)}
+        </StyledDateSpan>
       </StyledParagraph>
     );
   }
