@@ -7,6 +7,7 @@ const StyledChartSection = styled.section`
   color: var(--contrast-text);
   width: fit-content;
   border-radius: 6px;
+  border: var(--circle-border);
   margin: 2.5rem 1rem 1rem;
   padding: 0.5rem;
 `;
