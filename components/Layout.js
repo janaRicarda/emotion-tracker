@@ -13,9 +13,7 @@ const StyledToTopButton = styled(ScrollToTop)`
   &&& {
     border-radius: 50%;
     z-index: 1;
-
-    background-color: ${({ $background }) => $background};
-
+    background: ${({ $background }) => $background};
     color: var(--contrast-text);
     left: 10px;
     display: flex;
@@ -61,7 +59,6 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
     );
   });
 
-  //const router = useRouter();
   const router = useRouter();
   //if (!router.query) {
   //return null;
@@ -73,11 +70,12 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   //);
 
   const isAppManual = router.pathname === "/app-manual";
-  const isEmotionDetail = router.pathname === `/emotions/${slug}`;
+  const isEmotionDetail =
+    router.pathname === `/emotions/${slug}` || `/create/${slug}`;
 
   //const [slug] = emotionData;
   //const slug = emotionData.map(({ slug }) => slug);
-  console.log(`var(--${slug})`);
+  console.log(slug);
   return (
     <>
       <Header
@@ -93,7 +91,7 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
             ? color
             : isEmotionDetail
             ? `var(--${slug})`
-            : `var(--button-background)`
+            : "var(--button-background)"
         }
         width="20"
         height="20"
