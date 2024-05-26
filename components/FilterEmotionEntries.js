@@ -35,18 +35,12 @@ const StyledInput = styled.input`
 
 // Styles for Filter-Buttons
 const StyledFilterSection = styled.section`
-  position: sticky;
-  top: 155px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   justify-content: center;
   align-items: center;
   background-color: var(--main-bright);
-  transform: translateY(
-    ${({ $isScrollDown }) => ($isScrollDown ? "-400px" : "0")}
-  );
-  transition: transform 700ms ease-in-out;
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -72,34 +66,6 @@ const StyledButtonGroup = styled.div`
   padding: 0.6rem;
   width: 90vw;
   gap: 10px;
-`;
-
-const StyledMinimalPanel = styled.section`
-  width: 100%;
-  background-color: var(--main-bright);
-  transform: translateY(
-    ${({ $isScrollDown }) => ($isScrollDown ? "0" : "-100px")}
-  );
-  transition: all 300ms ease-in-out 400ms;
-  position: fixed;
-  top: 60px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 0.8rem;
-  padding: 0 0.6rem;
-`;
-
-const StyledPanelItem = styled.span`
-  margin: 0 0.5rem;
-  padding: 0.5rem 0;
-`;
-
-const StyledPanelSpan = styled.span`
-  background-color: var(--button-background);
-  border-radius: 50px;
-  padding: 0 0.3rem;
 `;
 
 // styles for DayPicker
@@ -164,7 +130,6 @@ export default function FilterEmotionEntries({
   DisplayDate,
   changeSelectedTime,
   selectedTime,
-  isScrollDown,
 }) {
   const [showSearchBar, SetShowSearchBar] = useState(false);
   const [showDayPicker, setShowDayPicker] = useState(false);
@@ -305,7 +270,7 @@ export default function FilterEmotionEntries({
 
   return (
     <>
-      <StyledFilterSection $isScrollDown={isScrollDown}>
+      <StyledFilterSection>
         <StyledContainer>
           <StyledInput
             $showSearchBar={showSearchBar}
@@ -344,22 +309,6 @@ export default function FilterEmotionEntries({
           )}
         </StyledButtonGroup>
       </StyledFilterSection>
-      <StyledMinimalPanel $isScrollDown={isScrollDown}>
-        <StyledPanelItem>
-          Filter:<br></br>{" "}
-          <StyledPanelSpan>{buttonState.label}</StyledPanelSpan>
-        </StyledPanelItem>
-        {searchTerm && (
-          <StyledPanelItem>
-            Search:<br></br> <StyledPanelSpan>{searchTerm}</StyledPanelSpan>
-          </StyledPanelItem>
-        )}
-        {selectedTime && buttonState.datePicker && (
-          <StyledPanelItem>
-            <DisplayDate textAlign="left" />
-          </StyledPanelItem>
-        )}
-      </StyledMinimalPanel>
 
       {showDayPicker && (
         <>

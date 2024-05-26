@@ -1,26 +1,29 @@
-import {
-  StyledTitle,
-  StyledFlexColumnWrapper,
-  StyledStandardLink,
-} from "@/SharedStyledComponents";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import Tooltip from "@/components/Tooltip";
+import SmallFilterPanel from "@/components/SmallFilterPanel";
 
-const StyledAnimatedTitle = styled(StyledTitle)`
+const GridWrapper = styled.section`
+  position: fixed;
+  top: 128px;
+  display: grid;
+  grid-template-rows: ${({ $isScrollDown }) => ($isScrollDown ? "0fr" : "1fr")};
+  transition: all 300ms ease-in-out;
   background-color: var(--main-bright);
-  padding: 0;
-  width: 100%;
-  position: sticky;
-  top: 125px;
-  transform: translateY(
-    ${({ $isScrollDown }) => ($isScrollDown ? "-300px" : "0")}
-  );
-  transition: transform 700ms ease-in-out;
+  z-index: 1;
+`;
+
+const ControllOverflow = styled.div`
+  overflow: hidden;
+`;
+
+const ControllPadding = styled.div`
+  padding-top: ${({ $paddingTop }) => `${$paddingTop}px`};
 `;
 
 const StyledTextMessage = styled.p`
@@ -84,7 +87,21 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
-  // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
+  // refering to size/height of responsible container holding the page-heading and FilterEmotionEntries-component dynamically and responsive
+  const [paddingOfFilterSection, setPaddingOfFilterSection] = useState();
+  const filterSectionElement = useRef();
+
+  useEffect(() => {
+    if (!filterSectionElement.current) return;
+    const height = filterSectionElement.current.getBoundingClientRect().height;
+    const resizeObserver = new ResizeObserver(() => {
+      setPaddingOfFilterSection(height);
+    });
+
+    resizeObserver.observe(filterSectionElement.current);
+    return () => resizeObserver.disconnect();
+  });
+  ////
 
   const handleSetFilterEntries = useCallback((filteredObject) => {
     setFilteredEntries(filteredObject);
@@ -139,63 +156,72 @@ export default function EmotionRecords({
         Also, you can search through your entries or filter them by the
         following options: today, last week, or last month.
       </Tooltip>
-      <>
-        <StyledAnimatedTitle $isScrollDown={isScrollDown}>
-          Recorded Emotions
-        </StyledAnimatedTitle>
-        <FilterEmotionEntries
-          emotionEntries={emotionEntries}
-          filteredEntries={filteredEntries}
-          buttonState={buttonState}
-          searchTerm={searchTerm}
-          selectedTime={selectedTime}
-          onSearch={handleSearch}
-          changeShownEntries={handleSetShownEntries}
-          changeButtonState={handleSetButtonState}
-          changeFilterEntries={handleSetFilterEntries}
-          changeSelectedTime={handleSetSelectedTime}
-          DisplayDate={DisplayDate}
-          isScrollDown={isScrollDown}
-        />
-        {buttonState.datePicker ? (
-          selectedTime ? (
-            <DisplayDate textAlign="center" />
-          ) : (
-            <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
-            </StyledDateIndicator>
-          )
-        ) : null}
-        {shownEntries.length === 0 &&
-          (filteredEntries.length === 0 ? (
-            buttonState.highlightedButton ? (
-              <StyledTextMessage>
-                You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.
-              </StyledTextMessage>
-            ) : buttonState.todayButton ? (
-              <StyledTextMessage>
-                You haven&apos;t made any Entries today.<br></br>
-                <StyledLink href="./">add Entry &rarr;</StyledLink>
-              </StyledTextMessage>
-            ) : (
-              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-            )
+      <GridWrapper ref={filterSectionElement} $isScrollDown={isScrollDown}>
+        <ControllOverflow>
+          <StyledTitle $isScrollDown={isScrollDown}>
+            Recorded Emotions
+          </StyledTitle>
+          <FilterEmotionEntries
+            emotionEntries={emotionEntries}
+            filteredEntries={filteredEntries}
+            buttonState={buttonState}
+            searchTerm={searchTerm}
+            selectedTime={selectedTime}
+            onSearch={handleSearch}
+            changeShownEntries={handleSetShownEntries}
+            changeButtonState={handleSetButtonState}
+            changeFilterEntries={handleSetFilterEntries}
+            changeSelectedTime={handleSetSelectedTime}
+            DisplayDate={DisplayDate}
+            isScrollDown={isScrollDown}
+          />
+        </ControllOverflow>
+      </GridWrapper>
+      <SmallFilterPanel
+        isScrollDown={isScrollDown}
+        buttonState={buttonState}
+        searchTerm={searchTerm}
+        DisplayDate={DisplayDate}
+        selectedTime={selectedTime}
+      />
+      {buttonState.datePicker ? (
+        selectedTime ? (
+          <DisplayDate textAlign="center" />
+        ) : (
+          <StyledDateIndicator>
+            Click the calendar <StyledCalendarIcon /> and select a date
+          </StyledDateIndicator>
+        )
+      ) : null}
+      {shownEntries.length === 0 &&
+        (filteredEntries.length === 0 ? (
+          buttonState.highlightedButton ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.
+            </StyledTextMessage>
+          ) : buttonState.todayButton ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          ))}
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
 
-        {shownEntries.length !== 0 && (
-          <>
-            <EmotionRecordsList
-              onDeleteEmotionEntry={onDeleteEmotionEntry}
-              toggleHighlight={toggleHighlight}
-              shownEntries={shownEntries}
-              filteredEntries={filteredEntries}
-            />
-          </>
-        )}
-      </>
+      {shownEntries.length !== 0 && (
+        <ControllPadding $paddingTop={paddingOfFilterSection + 32}>
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+          />
+        </ControllPadding>
+      )}
     </>
   );
 }

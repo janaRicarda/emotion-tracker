@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
     }
   }, []);
 
-  // detect scroll-direction
+  // detect scroll-direction && scroll-position
   useEffect(() => {
     function handleScroll() {
       const currentScroll = document.documentElement.scrollTop;
@@ -43,8 +43,10 @@ export default function App({ Component, pageProps }) {
       }
       setScrollPosition(document.documentElement.scrollTop);
     }
-
+   
     window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   });
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
@@ -120,6 +122,7 @@ export default function App({ Component, pageProps }) {
       >
         <Component
           isScrollDown={isScrollDown}
+          scrollPosition={scrollPosition}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}

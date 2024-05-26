@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Navigation from "./Navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from "../public/logo.svg";
 import Menu from "./../public/menu.svg";
 import Close from "./../public/close.svg";
@@ -48,7 +48,7 @@ const StyledHeader = styled.header`
   padding: 0 1rem;
   top: 0;
   left: 0;
-  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
+  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "2")};
 `;
 
 const PlaceholderHeader = styled.div`
