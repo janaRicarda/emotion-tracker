@@ -9,6 +9,7 @@ import {
   StyledForm,
 } from "@/SharedStyledComponents";
 import Tooltip from "@/components/Tooltip";
+import Loader from "@/components/Loader";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 4rem auto;
@@ -133,6 +134,7 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
           </>
         )}
       </StyledTensionForm>
+      <Loader itemText="... loading" />
     </>
   );
 }
