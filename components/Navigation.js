@@ -11,6 +11,10 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
+import keyframes from "styled-components";
+
+const animation = keyframes`
+`;
 
 const StyledArticle = styled.article`
   inset: 0;
