@@ -12,6 +12,7 @@ import {
   StyledSelect,
   StyledSubmitButton,
 } from "@/SharedStyledComponents";
+import { darkTheme } from "./Theme";
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
@@ -19,7 +20,7 @@ const StyledEmotionForm = styled(StyledForm)`
   margin-top: 4rem;
   padding: 1rem;
   background: ${({ $color }) => $color};
-  color: var(--text-on-bright);
+  color: ${({ $text }) => $text};
   gap: 1rem;
 `;
 
@@ -37,8 +38,8 @@ const StyledEmotionInput = styled(StyledInput)`
   border: 2px solid var(--text-on-bright);
   background: linear-gradient(
     to right,
-    var(--text-on-bright) 0%,
-    var(--text-on-bright) ${({ $value }) => $value}%,
+    ${({ $inputColor }) => $inputColor} 0%,
+    ${({ $inputColor }) => $inputColor} ${({ $value }) => $value}%,
     var(--contrast-bright) ${({ $value }) => $value}%,
     var(--contrast-bright) 100%
   );
@@ -51,7 +52,7 @@ const StyledEmotionInput = styled(StyledInput)`
     background-image: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
-      var(--text-on-dark) 45%
+      ${({ $inputCircle }) => $inputCircle} 45%
     );
   }
   &::-moz-range-thumb {
@@ -63,7 +64,7 @@ const StyledEmotionInput = styled(StyledInput)`
     background-image: radial-gradient(
       circle,
       var(--text-on-bright) 40%,
-      var(--text-on-dark) 45%
+      ${({ $inputCircle }) => $inputCircle} 45%
     );
   }
 `;
@@ -81,13 +82,19 @@ const ToggleSwitch = styled(Circle)`
   width: 1.7rem;
   position: absolute;
   display: inline;
-  fill: ${({ $color }) => ($color ? "#00b400" : "#cc0100")};
+  fill: ${({ $color }) => ($color ? "var(--disabled)" : "var(--enabled)")};
+  border: 1px solid var(--text-on-bright);
+  background: var(--contrast-bright);
+  padding: 0.2rem;
+  border-radius: 50%;
   margin-left: 0.5rem;
   right: 0;
   bottom: calc(50% - 0.85rem);
 `;
 
 export default function EmotionForm({
+  slug,
+  theme,
   editMode,
   onSubmit,
   id,
@@ -190,7 +197,9 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledFixedTitle>
+      <StyledFixedTitle
+        $color={theme === darkTheme ? `var(--${slug})` : `var(--main-dark)`}
+      >
         {editMode
           ? emotionValue
             ? `Edit your ${emotionValue}`
@@ -199,7 +208,13 @@ export default function EmotionForm({
           ? `Record your ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledFixedTitle>
-      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
+      <StyledEmotionForm
+        $color={
+          theme === darkTheme ? `var(--section-background)` : `${colorValue}`
+        }
+        $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
+        onSubmit={handleSubmit}
+      >
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {timeAndDate}
         </p>
@@ -211,7 +226,12 @@ export default function EmotionForm({
           id="tension-level"
           name="tensionLevel"
           type="range"
-          $color={colorValue}
+          $inputColor={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+          }
+          $inputCircle={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+          }
           value={tensionValue}
           $value={tensionValue}
           max={100}
@@ -285,9 +305,14 @@ export default function EmotionForm({
           type="range"
           id="intensity"
           name="intensity"
-          $color={colorValue}
           value={intensityValue}
           $value={intensityValue}
+          $inputColor={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+          }
+          $inputCircle={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+          }
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -337,9 +362,14 @@ export default function EmotionForm({
           type="range"
           id="category"
           name="category"
-          $color={colorValue}
           value={categoryValue}
           $value={categoryValue}
+          $inputColor={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+          }
+          $inputCircle={
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+          }
           max={100}
           onChange={(event) =>
             setFormValues({
@@ -376,7 +406,15 @@ export default function EmotionForm({
           defaultValue={notesValue}
         ></StyledTextarea>
 
-        <StyledSubmitButton type="submit" $color={colorValue}>
+        <StyledSubmitButton
+          type="submit"
+          $submit={
+            theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`
+          }
+          $submitBackground={
+            theme === darkTheme ? `black` : `var(--text-on-bright)`
+          }
+        >
           Submit
         </StyledSubmitButton>
         {showConfirmMessage && (

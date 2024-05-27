@@ -12,8 +12,7 @@ const StyledToTopButton = styled(ScrollToTop)`
   &&& {
     border-radius: 50%;
     z-index: 1;
-    background-color: ${({ $isAppManual, $color }) =>
-      $isAppManual ? $color : "var(--button-background)"};
+    background: ${({ $background }) => $background};
     color: var(--contrast-text);
     left: 10px;
     display: flex;
@@ -28,6 +27,7 @@ const StyledToTopButton = styled(ScrollToTop)`
 export default function Layout({ children, theme, toggleTheme, switchTheme }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
+  //const [emotionColor, setEmotionColor] = useState(`var(--${slug})`);
 
   // for triggering an animation
   const [scrollPosition, setScrollPosition] = useState();
@@ -60,7 +60,10 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
 
   const router = useRouter();
 
+  const { slug } = router.query;
+
   const isAppManual = router.pathname === "/app-manual";
+  const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
 
   return (
     <>
@@ -72,8 +75,13 @@ export default function Layout({ children, theme, toggleTheme, switchTheme }) {
       {children}
       <Footer />
       <StyledToTopButton
-        $color={color}
-        $isAppManual={isAppManual}
+        $background={
+          isAppManual
+            ? color
+            : isEmotionDetail
+            ? `var(--${slug})`
+            : "var(--button-background)"
+        }
         width="20"
         height="20"
         top={400}

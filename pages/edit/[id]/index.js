@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Tooltip from "@/components/Tooltip";
 
 export default function EditPage({
+  theme,
   emotionEntries,
   onAddEmotionDetails,
   handleToggleTooltip,
@@ -24,6 +25,7 @@ export default function EditPage({
         record.
       </Tooltip>
       <EmotionForm
+        theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
