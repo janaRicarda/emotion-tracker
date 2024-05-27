@@ -57,7 +57,7 @@ const StyledHeader = styled.header`
   padding: 0 1rem;
   top: 0;
   left: 0;
-  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
+  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "2")};
 `;
 
 const PlaceholderHeader = styled.div`
@@ -81,8 +81,6 @@ const ToolTipWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  /* width: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2rem")}; */
-  /* ${transition} */
 `;
 
 const StyledLogo = styled(Logo)`

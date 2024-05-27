@@ -5,7 +5,6 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
-import Tooltip from "@/components/Tooltip";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
 
 // used for all transitions
@@ -14,15 +13,18 @@ const transition = css`
 `;
 
 const GridWrapper = styled.section`
-  width: 100%;
+  box-shadow: ${({ $show }) =>
+    $show ? "0px 0px 10px 10px rgba(0, 0, 0, 0.2)" : null};
   position: fixed;
-  top: 155px;
+  padding: ${({ $show }) => ($show ? "1rem" : "0")};
+  border-radius: 1rem;
+  top: 200px;
+  max-width: 500px;
   display: grid;
-  grid-template-rows: ${({ $scrollPosition }) =>
-    $scrollPosition === 0 ? "1fr" : "0fr"};
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
   background-color: var(--main-bright);
-  z-index: 1;
+  z-index: 2;
 `;
 
 const ControllOverflow = styled.div`
@@ -30,15 +32,13 @@ const ControllOverflow = styled.div`
 `;
 
 const ControlPadding = styled.div`
-  margin-top: 2rem;
-  padding-top: ${({ $paddingTop, $scrollPosition }) =>
-    $scrollPosition === 0 ? `${$paddingTop}px` : "2rem"};
-  ${transition}
+  margin-top: 5rem;
+  /* z-index: -1; */
 `;
 
 const StyledHeading = styled(StyledTitle)`
   width: 100%;
-  padding: 1rem 0 0;
+  padding: 1rem 0;
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "110px")};
   ${transition}
@@ -46,20 +46,26 @@ const StyledHeading = styled(StyledTitle)`
   z-index: 1;
 `;
 
+const Background = styled.div`
+  inset: 0;
+  position: absolute;
+  background: transparent;
+  display: ${({ $show }) => ($show ? "block" : "none")};
+  z-index: 2;
+`;
 const AnimatedPanel = styled.div`
-  width: 100vw;
+  width: 90vw;
+  margin: 0.5rem;
+  border-top: 1px solid black;
   background-color: var(--main-bright);
   position: fixed;
-  overflow: hidden;
-  height: ${({ $scrollPosition }) => ($scrollPosition === 0 ? "0" : "55px")};
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "110px" : "155px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
   ${transition}
-  box-shadow: 0px 5px 5px -1px rgba(0, 0, 0, 0.2);
   z-index: 1;
 `;
 
 const StyledTextMessage = styled.p`
-  margin-top: 4rem;
+  margin-top: 8rem;
   text-align: center;
   line-height: 3;
 `;
@@ -90,10 +96,7 @@ const StyledDateIndicator = styled.p`
 `;
 
 const StyledParagraph = styled.p`
-  text-align: ${({ $textAlign }) => $textAlign};
-  padding: 0.5rem;
-  display: ${({ $scrollPosition }) =>
-    $scrollPosition === 0 ? "block" : "none"};
+  text-align: center;
 `;
 
 const StyledDateSpan = styled.span`
@@ -123,19 +126,12 @@ export default function EmotionRecords({
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
 
-  const [paddingTop, setPaddingTop] = useState();
-
-  const filterSection = useRef();
+  const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
     handleToolTip({
       text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
     });
-  }, []);
-
-  useEffect(() => {
-    const height = filterSection.current.getBoundingClientRect().height;
-    setPaddingTop(height);
   }, []);
 
   useEffect(() => {
@@ -146,7 +142,6 @@ export default function EmotionRecords({
       // stops resizing of elements and prevents resizing-loops when there is not enough space on the page
       const enoughSpace = pageHeight - windowHeight > 400;
 
-      console.log(enoughSpace);
       const currentScroll = document.documentElement.scrollTop;
 
       if (!enoughSpace) {
@@ -196,10 +191,9 @@ export default function EmotionRecords({
     return date;
   }
 
-  function DisplayDate({ textAlign, scrollPosition }) {
+  function DisplayDate() {
     return (
-      <StyledParagraph $scrollPosition={scrollPosition} $textAlign={textAlign}>
-        Date selected:<br></br>
+      <StyledParagraph aria-label="Selected Date">
         <StyledDateSpan>
           {getFormattedDate(selectedTime.from)}
           {selectedTime.to &&
@@ -210,22 +204,14 @@ export default function EmotionRecords({
     );
   }
 
-  // Navigate through your emotion records list, a comprehensive compilation
-  // of all your added emotion entries. You can easily search for specific
-  // entries, edit or delete them, and even highlight important moments.
-  // Also, you can search through your entries or filter them by the
-  // following options: today, last week, or last month.
-
   return (
     <>
+      <Background $show={showFilter} onClick={() => setShowFilter(false)} />
       <StyledHeading $isScrollDown={isScrollDown}>
         Recorded Emotions
       </StyledHeading>
-      <GridWrapper
-        $isScrollDown={isScrollDown}
-        $scrollPosition={scrollPosition}
-      >
-        <ControllOverflow ref={filterSection}>
+      <GridWrapper $show={showFilter}>
+        <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
             filteredEntries={filteredEntries}
@@ -238,16 +224,14 @@ export default function EmotionRecords({
             changeFilterEntries={handleSetFilterEntries}
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
-            isScrollDown={isScrollDown}
           />
         </ControllOverflow>
       </GridWrapper>
       <AnimatedPanel
-        $scrollPosition={scrollPosition}
+        onClick={() => setShowFilter(!showFilter)}
         $isScrollDown={isScrollDown}
       >
         <SmallFilterPanel
-          isScrollDown={isScrollDown}
           buttonState={buttonState}
           searchTerm={searchTerm}
           DisplayDate={DisplayDate}
@@ -256,7 +240,7 @@ export default function EmotionRecords({
       </AnimatedPanel>
       {buttonState.datePicker ? (
         selectedTime ? (
-          <DisplayDate scrollPosition={scrollPosition} textAlign="center" />
+          <DisplayDate textAlign="center" />
         ) : (
           <StyledDateIndicator>
             Click the calendar <StyledCalendarIcon /> and select a date
@@ -283,10 +267,7 @@ export default function EmotionRecords({
         ))}
 
       {shownEntries.length !== 0 && (
-        <ControlPadding
-          $scrollPosition={scrollPosition}
-          $paddingTop={paddingTop}
-        >
+        <ControlPadding>
           <EmotionRecordsList
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}

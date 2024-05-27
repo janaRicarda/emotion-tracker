@@ -12,7 +12,6 @@ const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
-  z-index: -1;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -107,7 +106,7 @@ export default function EmotionRecordsList({
 
   return (
     <>
-      <StyledRecordsList>
+      <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries.map(
           ({

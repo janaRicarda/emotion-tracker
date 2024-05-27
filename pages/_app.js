@@ -96,8 +96,6 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(backupEntries);
   }
 
-  console.log(toolTip);
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

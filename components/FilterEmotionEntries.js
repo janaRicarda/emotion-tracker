@@ -131,7 +131,7 @@ export default function FilterEmotionEntries({
   changeSelectedTime,
   selectedTime,
 }) {
-  const [showSearchBar, SetShowSearchBar] = useState(false);
+  const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
   const [month, setMonth] = useState(new Date());
 
@@ -323,7 +323,7 @@ export default function FilterEmotionEntries({
               onMonthChange={setMonth}
             />
             {selectedTime ? (
-              <DisplayDate textAlign="center" />
+              <DisplayDate />
             ) : (
               <StyledParagraph>
                 Select a single date or a range of dates
