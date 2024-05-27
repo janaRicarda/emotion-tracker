@@ -1,3 +1,4 @@
+import styles from "@/styles";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
@@ -25,13 +26,13 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Htmls lang="en">
         <Head />
         <body>
           <Main />
           <NextScript />
         </body>
-      </Html>
+      </Htmls>
     );
   }
 }

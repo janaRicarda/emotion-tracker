@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uid } from "uid";
 import {
   StyledWrapper,
@@ -8,7 +8,6 @@ import {
   StyledInput,
   StyledForm,
 } from "@/SharedStyledComponents";
-import Tooltip from "@/components/Tooltip";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 4rem auto;
@@ -61,10 +60,16 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 
-export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
+export default function HomePage({ onAddEmotionEntry, handleToolTip }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
+
+  useEffect(() => {
+    handleToolTip({
+      text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
+    });
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -78,14 +83,12 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
     setIsFormSubmitted(!isFormSubmitted);
   }
 
+  // On this page, you can indicate your level of tension on a range scale
+  // from 0 to 100. Afterward, simply press the Save-button to record your
+  // input.
+
   return (
     <>
-      <Tooltip onClick={handleToggleTooltip}>
-        On this page, you can indicate your level of tension on a range scale
-        from 0 to 100. Afterward, simply press the Save-button to record your
-        input.
-      </Tooltip>
-
       <StyledTensionForm onSubmit={handleSubmit}>
         <StyledTensionLabel htmlFor="tension-level">
           On a scale from 0 to 100, how tense do you feel in this moment?

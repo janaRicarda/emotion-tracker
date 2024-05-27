@@ -30,11 +30,12 @@ export default function Layout({
   theme,
   toggleTheme,
   switchTheme,
-  isScrollDown,
-  scrollPosition,
+  toolTip,
 }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isScrollDown, setIsScrollDown] = useState(false);
 
   function listenScrollEvent(position) {
     const colors = [
@@ -54,6 +55,32 @@ export default function Layout({
     window.addEventListener("scroll", listenScrollEvent(scrollPosition));
   });
 
+  useEffect(() => {
+    function handleScroll() {
+      const pageHeight = document.documentElement.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // stops resizing of elements and prevents resizing-loops when there is not enough space on the page
+      const enoughSpace = pageHeight - windowHeight > 400;
+      const currentScroll = document.documentElement.scrollTop;
+
+      if (!enoughSpace) {
+        setIsScrollDown(false);
+        return;
+      }
+      if (currentScroll < scrollPosition) {
+        setIsScrollDown(false);
+      } else if (currentScroll > scrollPosition) {
+        setIsScrollDown(true);
+      }
+      setScrollPosition(document.documentElement.scrollTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   const router = useRouter();
 
   const isAppManual = router.pathname === "/app-manual";
@@ -65,6 +92,7 @@ export default function Layout({
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
+        toolTip={toolTip}
       />
       {children}
       <Footer />

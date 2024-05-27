@@ -3,12 +3,6 @@ import styled from "styled-components";
 const StyledMinimalPanel = styled.section`
   width: 100%;
   background-color: var(--main-bright);
-  transform: translateY(
-    ${({ $isScrollDown }) => ($isScrollDown ? "0" : "-100px")}
-  );
-  transition: all 300ms ease-in-out 400ms;
-  position: fixed;
-  top: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;

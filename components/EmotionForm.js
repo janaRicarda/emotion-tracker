@@ -7,7 +7,7 @@ import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,
   StyledWrapper,
-  StyledFixedTitle,
+  StyledTitle,
   StyledForm,
   StyledSelect,
   StyledSubmitButton,
@@ -191,16 +191,16 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledFixedTitle>
-        {editMode
-          ? emotionValue
-            ? `Edit your ${emotionValue}`
-            : `Edit your Emotion-Entry`
-          : emotionValue
-          ? `Record your ${emotionValue}`
-          : `Record your Emotion-Entry`}
-      </StyledFixedTitle>
       <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
+        <StyledTitle>
+          {editMode
+            ? emotionValue
+              ? `Edit your ${emotionValue}`
+              : `Edit your Emotion-Entry`
+            : emotionValue
+            ? `Record your ${emotionValue}`
+            : `Record your Emotion-Entry`}
+        </StyledTitle>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {timeAndDate}
         </p>

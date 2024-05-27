@@ -6,9 +6,6 @@ const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
   width: 1.5rem;
   height: 1.5rem;
   fill: var(--main-dark);
-  position: fixed;
-  top: calc(6% - 0.25rem);
-  right: 7rem;
   z-index: 2;
 `;
 
@@ -31,7 +28,7 @@ const StyledTooltipInfo = styled.p`
   margin: 8rem 1 rem 8 rem 1 rem;
 `;
 
-export default function Tooltip({ children }) {
+export default function Tooltip({ toolTip }) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   function handleToggleTooltip() {
@@ -42,7 +39,7 @@ export default function Tooltip({ children }) {
     <>
       <StyledTooltipQuestionmark onClick={handleToggleTooltip} />
       <StyledTooltipWrapper $show={isTooltipOpen}>
-        <StyledTooltipInfo>{children}</StyledTooltipInfo>
+        <StyledTooltipInfo>{toolTip.text}</StyledTooltipInfo>
       </StyledTooltipWrapper>
     </>
   );

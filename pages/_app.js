@@ -11,15 +11,14 @@ export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isScrollDown, setIsScrollDown] = useState(false);
-
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
       defaultValue: [],
     }
   );
+
+  const [toolTip, setToolTip] = useState();
 
   const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
@@ -31,23 +30,6 @@ export default function App({ Component, pageProps }) {
       setEmotionEntries(initialData);
     }
   }, []);
-
-  // detect scroll-direction && scroll-position
-  useEffect(() => {
-    function handleScroll() {
-      const currentScroll = document.documentElement.scrollTop;
-      if (currentScroll < scrollPosition) {
-        setIsScrollDown(false);
-      } else if (currentScroll > scrollPosition) {
-        setIsScrollDown(true);
-      }
-      setScrollPosition(document.documentElement.scrollTop);
-    }
-   
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
@@ -62,6 +44,10 @@ export default function App({ Component, pageProps }) {
 
   function switchTheme(customTheme) {
     setTheme(customTheme);
+  }
+
+  function handleToolTip(toolTipData) {
+    setToolTip(toolTipData);
   }
 
   function handleAddEmotionEntry(data, id) {
@@ -110,19 +96,19 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(backupEntries);
   }
 
+  console.log(toolTip);
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Layout
-        isScrollDown={isScrollDown}
+        toolTip={toolTip}
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
-        scrollPosition={scrollPosition}
       >
         <Component
-          isScrollDown={isScrollDown}
-          scrollPosition={scrollPosition}
+          handleToolTip={handleToolTip}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}
