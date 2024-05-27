@@ -210,7 +210,7 @@ export default function EmotionForm({
       </StyledFixedTitle>
       <StyledEmotionForm
         $color={
-          theme === darkTheme ? `var(--section-background)` : `var(--${slug})`
+          theme === darkTheme ? `var(--section-background)` : `${colorValue}`
         }
         $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
         onSubmit={handleSubmit}
@@ -226,12 +226,11 @@ export default function EmotionForm({
           id="tension-level"
           name="tensionLevel"
           type="range"
-          $color={colorValue}
           $inputColor={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
           }
           $inputCircle={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
           }
           value={tensionValue}
           $value={tensionValue}
@@ -306,14 +305,13 @@ export default function EmotionForm({
           type="range"
           id="intensity"
           name="intensity"
-          $color={colorValue}
           value={intensityValue}
           $value={intensityValue}
           $inputColor={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
           }
           $inputCircle={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
           }
           max={100}
           onChange={(event) =>
@@ -364,14 +362,13 @@ export default function EmotionForm({
           type="range"
           id="category"
           name="category"
-          $color={colorValue}
           value={categoryValue}
           $value={categoryValue}
           $inputColor={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
           }
           $inputCircle={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`
+            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
           }
           max={100}
           onChange={(event) =>
