@@ -8,6 +8,7 @@ import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
+  const { t } = useTranslation();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
