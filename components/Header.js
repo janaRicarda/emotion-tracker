@@ -8,6 +8,8 @@ import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
+import Hamburger from "hamburger-react";
+import styles from "@/styles";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -35,6 +37,11 @@ const StyledCloseButton = styled(Close)`
   width: 2.5rem;
   fill: var(--contrast-text);
   border-style: none;
+  z-index: 3;
+`;
+
+const StyledMenu = styled(Hamburger)`
+  width: 2.5rem;
   z-index: 3;
 `;
 
@@ -84,11 +91,16 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
             {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
           </StyledToggleTheme>
         ) : null}
-        {isOpen ? (
+        {/* {isOpen ? (
           <StyledCloseButton type="button" onClick={handleToggleMenu} />
         ) : (
           <StyledMenuButton type="button" onClick={handleToggleMenu} />
-        )}
+        )} */}
+        <Hamburger
+          toggled={isOpen}
+          toggle={setIsOpen}
+          style={{ zIndex: "3" }}
+        />
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}

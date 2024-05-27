@@ -46,11 +46,11 @@ html {
   --box-shadow: ${({ theme }) => theme.boxShadow};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
+}
   body {
     margin: 0;
     padding: 100px 2rem 75px 2rem;
-   
-    background-color: var(--main-bright);
+   background-color: var(--main-bright);
     color: var(--main-dark);
     font-family: ${manrope.style.fontFamily}, system-ui;
     line-height: 1.5;
