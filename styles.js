@@ -45,7 +45,7 @@ html {
   --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
-  --circle-border: ${({ theme }) => theme.circleBorder};
+  --circle-border: ${({ theme }) => theme.circleBorder};}
   body {
     margin: 0;
     padding: 100px 2rem 75px 2rem;
