@@ -9,7 +9,6 @@ import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import Hamburger from "hamburger-react";
-import styles from "@/styles";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -28,20 +27,8 @@ const StyledSun = styled(Sun)`
   fill: var(--main-dark);
 `;
 
-const StyledMenuButton = styled(Menu)`
-  width: 2.5rem;
-  fill: var(--main-dark);
-  border-style: none;
-`;
-const StyledCloseButton = styled(Close)`
-  width: 2.5rem;
-  fill: var(--contrast-text);
-  border-style: none;
-  z-index: 3;
-`;
-
-const StyledMenu = styled(Hamburger)`
-  width: 2.5rem;
+const StyledMenu = styled.div`
+  color: ${({ $isOpen }) => $isOpen};
   z-index: 3;
 `;
 
@@ -51,9 +38,7 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //background: var(--main-bright);
-  background: ${({ $isOpen }) =>
-    $isOpen ? "var(--button-background)" : "var(--main-bright)"};
+  background: var(--main-bright);
   position: fixed;
   padding: 0 1rem;
   top: 0;
@@ -93,16 +78,11 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
             {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
           </StyledToggleTheme>
         ) : null}
-        {/* {isOpen ? (
-          <StyledCloseButton type="button" onClick={handleToggleMenu} />
-        ) : (
-          <StyledMenuButton type="button" onClick={handleToggleMenu} />
-        )} */}
-        <Hamburger
-          toggled={isOpen}
-          toggle={setIsOpen}
-          style={{ zIndex: "3" }}
-        />
+        <StyledMenu
+          $isOpen={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+        >
+          <Hamburger toggled={isOpen} toggle={setIsOpen} />
+        </StyledMenu>
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}

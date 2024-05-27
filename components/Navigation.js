@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import {
   lightTheme,
@@ -11,7 +11,6 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
-import { keyframes } from "styled-components";
 
 const slideIn = keyframes`
 0% {width: 0}
@@ -19,7 +18,6 @@ const slideIn = keyframes`
 `;
 
 const StyledArticle = styled.article`
-  margin-top: 100px;
   inset: 0;
   background-color: var(--button-background);
   padding: 3rem 1rem;
@@ -29,8 +27,6 @@ const StyledArticle = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //justify-content: space-evenly;
-  //align-items: flex-end;
   align-items: center;
   z-index: 2;
   animation: ${slideIn} 300ms alternate;
@@ -39,7 +35,6 @@ const StyledArticle = styled.article`
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
   color: var(--contrast-text);
-  //text-align: right;
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
@@ -67,12 +62,7 @@ const ThemeButton = styled(StyledButton)`
   width: 100%;
 `;
 
-export default function Navigation({
-  handleToggleMenu,
-  isOpen,
-
-  switchTheme,
-}) {
+export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
   const colorSchemes = [
     { title: "what a feeling", name: lightTheme },
     { title: "warm", name: warmTheme },

@@ -74,10 +74,7 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
+  background-color: var(--button-background);
 `;
 
 export default function HomePage({
