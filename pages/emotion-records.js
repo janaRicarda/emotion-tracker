@@ -208,13 +208,28 @@ export default function EmotionRecords({
     );
   }
 
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === "Escape") {
+        setShowFilter(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscapeKey);
+  });
+
+  function closeOnKey(event) {
+    if (event.code === "Enter") {
+      setShowFilter(false);
+    }
+  }
+
   return (
     <>
       <Background $show={showFilter} onClick={() => setShowFilter(false)} />
       <StyledHeading $isScrollDown={isScrollDown}>
         Recorded Emotions
       </StyledHeading>
-      <GridWrapper $show={showFilter}>
+      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
         <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
