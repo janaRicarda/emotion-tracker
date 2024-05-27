@@ -135,6 +135,10 @@ export default function EmotionRecords({
   }, []);
 
   useEffect(() => {
+    setShowFilter(false);
+  }, [buttonState]);
+
+  useEffect(() => {
     function handleScroll() {
       const pageHeight = document.documentElement.offsetHeight;
       const windowHeight = window.innerHeight;
