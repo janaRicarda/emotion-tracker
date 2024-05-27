@@ -11,9 +11,11 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
-import keyframes from "styled-components";
+import { keyframes } from "styled-components";
 
-const animation = keyframes`
+const slideIn = keyframes`
+0% {width: 0}
+100% {width: 100%}
 `;
 
 const StyledArticle = styled.article`
@@ -26,14 +28,17 @@ const StyledArticle = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  //justify-content: space-evenly;
+  //align-items: flex-end;
   align-items: center;
   z-index: 2;
+  animation: ${slideIn} 300ms alternate;
 `;
 
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
   color: var(--contrast-text);
-
+  //text-align: right;
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
