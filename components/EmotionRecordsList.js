@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
-import ErrorMessage from "./ErrorMessage";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -106,7 +105,6 @@ export default function EmotionRecordsList({
   }
   return (
     <>
-      <ErrorMessage itemText="Sorry, file not found (404)" />
       <StyledRecordsList>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries.map(

@@ -12,6 +12,7 @@ import {
 import Tooltip from "@/components/Tooltip";
 import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
+import ErrorMessage from "@/components/ErrorMessage";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -180,11 +181,8 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-        {/* {chartIsShown === true && TensionChart ? (
-          <Loader itemText="... loading" />
-        ) : null} */}
 
-        {chartIsShown && (
+        {chartIsShown && xValues.length != 0 ? (
           <TensionChart
             emotionEntries={emotionEntries}
             theme={theme}
@@ -192,6 +190,8 @@ export default function HomePage({
             yValues={yValues}
             title="Daily Tension Graph"
           />
+        ) : (
+          <ErrorMessage itemText="No Data for Graph" />
         )}
 
         <StyledGraphButton type="button" onClick={handleChart}>
