@@ -110,6 +110,7 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
   handleToolTip,
+  isScrollDown,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -123,9 +124,6 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isScrollDown, setIsScrollDown] = useState(false);
-
   const [showFilter, setShowFilter] = useState(false);
 
   useEffect(() => {
@@ -137,33 +135,6 @@ export default function EmotionRecords({
   useEffect(() => {
     setShowFilter(false);
   }, [buttonState]);
-
-  useEffect(() => {
-    function handleScroll() {
-      const pageHeight = document.documentElement.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      // stops resizing of elements and prevents resizing-loops when there is not enough space on the page
-      const enoughSpace = pageHeight - windowHeight > 400;
-
-      const currentScroll = document.documentElement.scrollTop;
-
-      if (!enoughSpace) {
-        setIsScrollDown(false);
-        return;
-      }
-      if (currentScroll < scrollPosition) {
-        setIsScrollDown(false);
-      } else if (currentScroll > scrollPosition) {
-        setIsScrollDown(true);
-      }
-      setScrollPosition(document.documentElement.scrollTop);
-    }
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
 
   const handleSetFilterEntries = useCallback((filteredObject) => {
     setFilteredEntries(filteredObject);
