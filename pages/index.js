@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
+  loading: () => <Loader itemText="... loading" />,
 });
 
 const StyledTensionForm = styled(StyledForm)`
@@ -179,7 +180,9 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-        <Loader itemText="... loading" />
+        {/* {chartIsShown === true && TensionChart ? (
+          <Loader itemText="... loading" />
+        ) : null} */}
 
         {chartIsShown && (
           <TensionChart
