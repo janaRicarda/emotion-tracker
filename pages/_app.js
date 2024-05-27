@@ -130,7 +130,6 @@ export default function App({ Component, pageProps }) {
           onRestore={restoreFromBackup}
           backupEntries={backupEntries}
           toggleHighlight={toggleHighlight}
-          theme={theme}
           {...pageProps}
         />
       </Layout>
