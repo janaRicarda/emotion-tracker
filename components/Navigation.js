@@ -19,6 +19,7 @@ const slideIn = keyframes`
 `;
 
 const StyledArticle = styled.article`
+  margin-top: 100px;
   inset: 0;
   background-color: var(--button-background);
   padding: 3rem 1rem;

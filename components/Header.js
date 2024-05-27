@@ -51,7 +51,9 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--main-bright);
+  //background: var(--main-bright);
+  background: ${({ $isOpen }) =>
+    $isOpen ? "var(--button-background)" : "var(--main-bright)"};
   position: fixed;
   padding: 0 1rem;
   top: 0;
