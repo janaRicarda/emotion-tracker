@@ -18,10 +18,14 @@ const StyledTopSection = styled(StyledFlexColumnWrapper)`
   z-index: 1;
 `;
 
-const StyledTextMessage = styled.p`
+const StyledTextMessage = styled.article`
   margin-top: 4rem;
   text-align: center;
   line-height: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -34,6 +38,7 @@ const StyledHeartSymbol = styled(HeartOutlineIcon)`
   width: 1.4rem;
   display: inline;
   position: relative;
+  fill: var(--main-dark);
   top: 5px;
 `;
 
@@ -44,9 +49,12 @@ const StyledCalendarIcon = styled(CalendarIcon)`
   fill: var(--main-dark);
 `;
 
-const StyledDateIndicator = styled.p`
-  text-align: center;
+const StyledDateIndicator = styled.article`
   margin: 2rem auto 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledParagraph = styled.p`

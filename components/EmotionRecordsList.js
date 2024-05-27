@@ -104,7 +104,6 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-
   return (
     <>
       <ErrorMessage itemText="Sorry, file not found (404)" />

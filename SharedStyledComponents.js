@@ -13,8 +13,8 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background: var(--text-on-bright);
-  color: var(--text-on-dark);
+  background: ${({ $submitBackground }) => $submitBackground};
+  color: ${({ $submit }) => $submit};
   border: 0;
   padding: 0.5rem;
   margin: 0;
@@ -31,6 +31,7 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledFixedTitle = styled(StyledTitle)`
+  color: ${({ $color }) => $color};
   width: 100%;
   position: fixed;
   top: 100px;
@@ -59,7 +60,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid var(--text-on-bright);
+  border: 1px solid ${({ $text }) => $text};
   padding: 0.5rem;
   border-radius: 6px;
 `;
@@ -111,7 +112,6 @@ const StyledInput = styled.input`
       var(--button-background) 45%
     );
   }
-
   &::-moz-range-thumb {
     -moz-appearance: none;
     width: 2rem;
@@ -119,7 +119,7 @@ const StyledInput = styled.input`
     border-radius: 50%;
     background-image: radial-gradient(
       circle,
-      var(--main-bright) 40%,
+      var(--contrast-text) 40%,
       var(--button-background) 45%
     );
   }
