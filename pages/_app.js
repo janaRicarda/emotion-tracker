@@ -49,11 +49,12 @@ export default function App({ Component, pageProps }) {
     const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
-      ...data,
+      tensionLevel: Number(data.tensionLevel),
       id,
       timeAndDate,
       isoDate: new Date().toISOString(),
     };
+
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 
@@ -105,6 +106,7 @@ export default function App({ Component, pageProps }) {
           onRestore={restoreFromBackup}
           backupEntries={backupEntries}
           toggleHighlight={toggleHighlight}
+          theme={theme}
           {...pageProps}
         />
       </Layout>
