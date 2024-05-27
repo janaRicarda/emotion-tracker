@@ -3,10 +3,10 @@ import TooltipQuestionmark from "../public/images/help.svg";
 import { useState } from "react";
 
 const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
-  width: 1.8rem;
-  height: 1.8rem;
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "1.3rem" : "1.8rem")};
   fill: var(--main-dark);
   z-index: 2;
+  transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
@@ -28,7 +28,7 @@ const StyledTooltipInfo = styled.p`
   margin: 8rem 1 rem 8 rem 1 rem;
 `;
 
-export default function Tooltip({ toolTip }) {
+export default function Tooltip({ toolTip, isScrollDown }) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   function handleToggleTooltip() {
@@ -37,7 +37,10 @@ export default function Tooltip({ toolTip }) {
 
   return (
     <>
-      <StyledTooltipQuestionmark onClick={handleToggleTooltip} />
+      <StyledTooltipQuestionmark
+        $isScrollDown={isScrollDown}
+        onClick={handleToggleTooltip}
+      />
       <StyledTooltipWrapper $show={isTooltipOpen}>
         <StyledTooltipInfo>{toolTip.text}</StyledTooltipInfo>
       </StyledTooltipWrapper>

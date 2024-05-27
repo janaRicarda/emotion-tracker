@@ -72,14 +72,15 @@ const StyledIconWrapper = styled(StyledWrapper)`
   gap: 1rem;
   width: auto;
   z-index: 3;
+  transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
+  ${transition}
 `;
 
 const ToolTipWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
+  justify-content: space-evenly;
+  gap: ${({ $isScrollDown }) => ($isScrollDown ? "0.7rem" : "1rem")};
   ${transition}
 `;
 
@@ -112,7 +113,7 @@ export default function Header({
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledStandardLink>
         <ToolTipWrapper $isScrollDown={isScrollDown}>
-          {toolTip && <Tooltip toolTip={toolTip} />}
+          {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
           <StyledIconWrapper $isScrollDown={isScrollDown}>
             {theme === lightTheme || theme === darkTheme ? (
               <StyledToggleTheme type="button" onClick={toggleTheme}>
