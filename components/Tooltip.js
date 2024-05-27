@@ -3,8 +3,8 @@ import TooltipQuestionmark from "../public/images/help.svg";
 import { useState } from "react";
 
 const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.8rem;
+  height: 1.8rem;
   fill: var(--main-dark);
   z-index: 2;
 `;

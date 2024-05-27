@@ -71,8 +71,6 @@ const StyledIconWrapper = styled(StyledWrapper)`
   align-items: center;
   gap: 1rem;
   width: auto;
-  transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
-  ${transition}
   z-index: 3;
 `;
 
@@ -81,6 +79,8 @@ const ToolTipWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
+  ${transition}
 `;
 
 const StyledLogo = styled(Logo)`
