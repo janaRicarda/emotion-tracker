@@ -105,11 +105,11 @@ const StyledListItem = styled.li`
 `;
 
 export default function Manual() {
-  const [itemColor, setItemColor] = useState("var(--joy)");
+  const [itemColor, setItemColor] = useState("var(--enjoyment)");
 
   function listenSrollEvent() {
     const colors = [
-      "var(--joy)",
+      "var(--enjoyment)",
       "var(--surprise)",
       "var(--fear)",
       "var(--sadness)",

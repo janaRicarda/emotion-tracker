@@ -25,7 +25,7 @@ export default createGlobalStyle`
  --section-background: ${({ theme }) => theme.sectionBackground};
  --green: ${({ theme }) => theme.green};
  --red: ${({ theme }) => theme.red};
-  --joy: ${({ theme }) => theme.joy};
+  --enjoyment: ${({ theme }) => theme.enjoyment};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
   --sadness: ${({ theme }) => theme.sadness};
