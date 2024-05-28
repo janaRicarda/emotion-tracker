@@ -3,6 +3,7 @@ import {
   StyledFlexColumnWrapper,
   StyledStandardLink,
   StyledButton,
+  StyledWrapper,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
@@ -77,6 +78,11 @@ const StyledParagraph = styled.p`
   padding: 0.5rem;
 `;
 
+const StyledButtonWrapper = styled(StyledWrapper)`
+  width: 30vw;
+  align-items: center;
+`;
+
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
@@ -95,7 +101,11 @@ export default function EmotionRecords({
     singleComparison: true,
     daysAgo: 0,
   });
-  const [chartIsShown, setChartIsShown] = useState(true);
+  // const [chartIsShown, setChartIsShown] = useState(true);
+  const [chartState, setChartState] = useState({
+    chartIsShown: true,
+    yAxis: "tension",
+  });
 
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
@@ -161,9 +171,11 @@ export default function EmotionRecords({
     difference < 48
       ? filteredData.map((entry) => entry.timeAndDate.slice(-5))
       : filteredData.map((entry) => new Date(entry.timeStamp));
-  const yValues = filteredData.map((entry) => entry.tensionLevel);
+  const yValues = filteredData.map((entry) =>
+    chartState.yAxis === "tension" ? entry.tensionLevel : entry?.intensity
+  );
   function handleChart() {
-    setChartIsShown(!chartIsShown);
+    setChartState({ ...chartState, chartIsShown: !chartState.chartIsShown });
   }
 
   return (
@@ -193,7 +205,7 @@ export default function EmotionRecords({
           />
           {xValues.length === 0 ? (
             <ErrorMessage itemText="No Data for Graph" />
-          ) : chartIsShown === true ? (
+          ) : chartState.chartIsShown === true ? (
             <EmotionChart
               emotionEntries={emotionEntries}
               theme={theme}
@@ -202,21 +214,30 @@ export default function EmotionRecords({
               title="Daily Tension Graph"
             />
           ) : null}
-          {/* {chartIsShown && xValues.length != 0 ? (
-            <EmotionChart
-              emotionEntries={emotionEntries}
-              theme={theme}
-              xValues={xValues}
-              yValues={yValues}
-              title="Daily Tension Graph"
-            />
-          ) : (
-            <ErrorMessage itemText="No Data for Graph" />
-          )} */}
 
-          <StyledGraphButton type="button" onClick={handleChart}>
-            {chartIsShown === true ? "Hide chart" : "Show chart"}
-          </StyledGraphButton>
+          <StyledButtonWrapper>
+            <StyledGraphButton type="button" onClick={handleChart}>
+              {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
+            </StyledGraphButton>
+            <StyledGraphButton
+              type="button"
+              onClick={() => {
+                setChartState({ ...chartState, yAxis: "tension" });
+                console.log(chartState.yAxis);
+              }}
+            >
+              Tension
+            </StyledGraphButton>
+            <StyledGraphButton
+              type="button"
+              onClick={() => {
+                setChartState({ ...chartState, yAxis: "intensity" });
+                console.log(chartState.yAxis);
+              }}
+            >
+              Intensity
+            </StyledGraphButton>
+          </StyledButtonWrapper>
         </StyledTopSection>
         {buttonState.datePicker ? (
           selectedTime ? (
