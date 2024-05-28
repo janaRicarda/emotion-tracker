@@ -26,7 +26,7 @@ const StyledSun = styled(Sun)`
 `;
 
 const StyledMenu = styled.div`
-  color: ${({ $isOpen }) => $isOpen};
+  color: ${({ $iconColor }) => $iconColor};
   z-index: 3;
 `;
 
@@ -77,7 +77,7 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
           </StyledToggleTheme>
         ) : null}
         <StyledMenu
-          $isOpen={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+          $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
         >
           <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
         </StyledMenu>
