@@ -2,12 +2,11 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
+import { devices } from "@/utils/devices";
 
 const StyledCircle = styled.article`
   width: 90vw;
   height: 90vw;
-  //width: 22rem;
-  //height: 22rem;
   border-radius: 50%;
   border: var(--circle-border);
   display: flex;
@@ -20,6 +19,18 @@ const StyledCircle = styled.article`
     width: 70vh;
     height: 70vh;
   }
+  @media ${devices.largeMobile} {
+    width: 30rem;
+    height: 30rem;
+    top: calc(100vh - 75%);
+  }
+  @media ${devices.tablet} {
+    width: 40rem;
+    height: 40rem;
+    top: calc(100vh - 80%);
+  }
+  @media ${devices.laptop} {
+  }
 `;
 
 const StyledEmotionList = styled.ul`
@@ -28,8 +39,6 @@ const StyledEmotionList = styled.ul`
   position: relative;
   width: 80vw;
   height: 80vw;
-  //width: 20rem;
-  //height: 20rem;
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
@@ -37,6 +46,16 @@ const StyledEmotionList = styled.ul`
   @media (orientation: landscape) {
     width: 60vh;
     height: 60vh;
+  }
+  @media ${devices.largeMobile} {
+    width: 26rem;
+    height: 26rem;
+  }
+  @media ${devices.tablet} {
+    width: 35rem;
+    height: 35rem;
+  }
+  @media ${devices.laptop} {
   }
 `;
 
