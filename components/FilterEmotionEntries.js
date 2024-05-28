@@ -50,9 +50,6 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--button-background)" : "var(--main-bright)"};
   margin: 0;
   padding: 0.2rem;
-  /* border-width: 1px; */
-  /* border-color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--contrast-text)"}; */
   border-color: var(--contrast-text);
   width: auto;
   color: ${({ $active }) =>
