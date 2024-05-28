@@ -7,7 +7,7 @@ import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
-import { StyledWrapper, StyledStandardLink } from "@/SharedStyledComponents";
+import { StyledStandardLink } from "@/SharedStyledComponents";
 import Tooltip from "./Tooltip";
 
 // used for all transition in this component
@@ -66,7 +66,8 @@ const PlaceholderHeader = styled.div`
   ${transition}
 `;
 
-const StyledIconWrapper = styled(StyledWrapper)`
+const StyledIconWrapper = styled.article`
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;

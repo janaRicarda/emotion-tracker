@@ -2,6 +2,7 @@ import EmotionForm from "@/components/EmotionForm";
 import { useRouter, useEffect } from "next/router";
 
 export default function EditPage({
+  theme,
   emotionEntries,
   onAddEmotionDetails,
   handleToolTip,
@@ -21,6 +22,7 @@ export default function EditPage({
   return (
     <>
       <EmotionForm
+        theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}

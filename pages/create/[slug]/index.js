@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function EmotionEntry({
+  theme,
   onAddEmotionDetails,
   emotionEntries,
   handleToolTip,
@@ -17,6 +18,7 @@ export default function EmotionEntry({
   if (!router.query) {
     return null;
   }
+  const { slug } = router.query;
 
   const { id } = router.query;
   const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
@@ -25,6 +27,8 @@ export default function EmotionEntry({
   return (
     <>
       <EmotionForm
+        slug={slug}
+        theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}

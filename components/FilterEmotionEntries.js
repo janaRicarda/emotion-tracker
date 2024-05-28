@@ -44,6 +44,7 @@ const StyledFilterSection = styled.section`
 `;
 
 const StyledFilterButton = styled(StyledButton)`
+  display: flex;
   background-color: ${({ $active }) =>
     $active ? "var(--button-background)" : "var(--main-bright)"};
   margin: 0;

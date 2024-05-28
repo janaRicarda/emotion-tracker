@@ -13,8 +13,8 @@ const StyledButton = styled.button`
 `;
 
 const StyledSubmitButton = styled(StyledButton)`
-  background-color: var(--submit-button-background);
-  color: var(--text-on-dark);
+  background: ${({ $submitBackground }) => $submitBackground};
+  color: ${({ $submit }) => $submit};
   border: 0;
   padding: 0.5rem;
   margin: 0;
@@ -31,11 +31,12 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledFixedTitle = styled(StyledTitle)`
+  color: ${({ $color }) => $color};
   width: 100%;
   position: fixed;
   top: 100px;
   left: 0;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
 `;
@@ -59,7 +60,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  border: 1px solid var(--main-dark);
+  border: 1px solid ${({ $text }) => $text};
   padding: 0.5rem;
   border-radius: 6px;
 `;
@@ -100,7 +101,6 @@ const StyledInput = styled.input`
     var(--section-background) ${({ $value }) => $value}%,
     var(--section-background) 100%
   );
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 2rem;
@@ -112,7 +112,6 @@ const StyledInput = styled.input`
       var(--button-background) 45%
     );
   }
-
   &::-moz-range-thumb {
     -moz-appearance: none;
     width: 2rem;
@@ -120,13 +119,14 @@ const StyledInput = styled.input`
     border-radius: 50%;
     background-image: radial-gradient(
       circle,
-      var(--main-bright) 40%,
+      var(--contrast-text) 40%,
       var(--button-background) 45%
     );
   }
 `;
 
 const StyledSelect = styled.select`
+  border: 2px solid var(--text-on-bright);
   border-radius: 6px;
   padding: 0.3rem 0;
 `;

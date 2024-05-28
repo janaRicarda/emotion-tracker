@@ -13,6 +13,9 @@ export default createGlobalStyle`
   * {
   margin: 0;
 }
+html {
+  overscroll-behavior: none;
+}
 :root {
   --main-bright: ${({ theme }) => theme.background};
   --main-dark: ${({ theme }) => theme.text};
@@ -20,21 +23,31 @@ export default createGlobalStyle`
   --contrast-bright: ${({ theme }) => theme.contrastBright};
   --text-on-bright: ${({ theme }) => theme.textOnBright};
   --text-on-dark: ${({ theme }) => theme.textOnDark};
- --button-background: ${({ theme }) => theme.buttonBackground};
- --submit-button-background:  ${({ theme }) => theme.submitButtonBackground};
- --section-background: ${({ theme }) => theme.sectionBackground};
- --green: ${({ theme }) => theme.green};
- --red: ${({ theme }) => theme.red};
+  --button-background: ${({ theme }) => theme.buttonBackground};
+  --section-background: ${({ theme }) => theme.sectionBackground};
+  --green: ${({ theme }) => theme.green};
+  --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
+  --enabled:  ${({ theme }) => theme.enabled};
+  --disabled: ${({ theme }) => theme.disabled};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
   --sadness: ${({ theme }) => theme.sadness};
   --contempt: ${({ theme }) => theme.contempt};
   --disgust: ${({ theme }) => theme.disgust};
   --anger: ${({ theme }) => theme.anger};
-  --box-shadow: -5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #aeaec0, inset -5px -5px 5px 0 #aeaec0, inset 5px 5px 5px 0 #ffffff;
-}
-  body {   
+  --manual1: ${({ theme }) => theme.manual1};
+  --manual2: ${({ theme }) => theme.manual2};
+  --manual3: ${({ theme }) => theme.manual3};
+  --manual4: ${({ theme }) => theme.manual4};
+  --manual5: ${({ theme }) => theme.manual5};
+  --manual6: ${({ theme }) => theme.manual6};
+  --manual7: ${({ theme }) => theme.manual7};
+  --box-shadow: ${({ theme }) => theme.boxShadow};
+  --emotion-border: ${({ theme }) => theme.emotionBorder};
+  --circle-border: ${({ theme }) => theme.circleBorder};
+  body {
+    margin: 0;
     background-color: var(--main-bright);
     color: var(--main-dark);
     font-family: ${manrope.style.fontFamily}, system-ui;

@@ -1,6 +1,9 @@
 import EmotionList from "@/components/EmotionList";
 import { useEffect } from "react";
-import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
+import {
+  StyledFlexColumnWrapper,
+  StyledFixedTitle,
+} from "@/SharedStyledComponents";
 
 export default function EmotionListPage({ handleToolTip }) {
   useEffect(() => {
@@ -11,8 +14,9 @@ export default function EmotionListPage({ handleToolTip }) {
 
   return (
     <>
+      <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
       <StyledFlexColumnWrapper>
-        <EmotionList title="The seven basic emotions" />
+        <EmotionList />
       </StyledFlexColumnWrapper>
     </>
   );

@@ -23,6 +23,29 @@ export default function App({ Component, pageProps }) {
     }
   );
 
+  // use-effect for mediaquery
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const userPrefersDark = mediaQuery.matches;
+    
+    if (userPrefersDark) {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
+    
+    const handleChange = (event) => {
+      setTheme(event.matches ? darkTheme : lightTheme);
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+  
   const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
@@ -83,11 +106,12 @@ export default function App({ Component, pageProps }) {
     const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
-      ...data,
+      tensionLevel: Number(data.tensionLevel),
       id,
       timeAndDate,
       isoDate: new Date().toISOString(),
     };
+
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
 
@@ -139,6 +163,7 @@ export default function App({ Component, pageProps }) {
         <Component
           isScrollDown={isScrollDown}
           handleToolTip={handleToolTip}
+          theme={theme}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
           onAddEmotionEntry={handleAddEmotionEntry}

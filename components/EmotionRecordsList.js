@@ -103,7 +103,6 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
-
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
