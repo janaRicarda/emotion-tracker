@@ -48,7 +48,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
               color: theme.text,
             },
           },
-          width: 340,
+          width: 1024,
           title: {
             font: {
               family: "system-ui",

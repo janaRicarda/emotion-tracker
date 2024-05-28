@@ -2,6 +2,7 @@ import {
   StyledTitle,
   StyledFlexColumnWrapper,
   StyledStandardLink,
+  StyledButton,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
@@ -10,6 +11,14 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import Tooltip from "@/components/Tooltip";
+import Loader from "@/components/Loader";
+import dynamic from "next/dynamic";
+import ErrorMessage from "@/components/ErrorMessage";
+
+const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
+  ssr: false,
+  loading: () => <Loader itemText="... loading" />,
+});
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
@@ -32,6 +41,12 @@ const StyledLink = styled(StyledStandardLink)`
   padding: 0.5rem;
   background-color: var(--button-background);
   color: var(--contrast-text);
+`;
+
+const StyledGraphButton = styled(StyledButton)`
+  width: fit-content;
+  padding: 0.5rem;
+  border-style: none;
 `;
 
 const StyledHeartSymbol = styled(HeartOutlineIcon)`
@@ -67,6 +82,7 @@ export default function EmotionRecords({
   onDeleteEmotionEntry,
   toggleHighlight,
   handleToggleTooltip,
+  theme,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -79,6 +95,7 @@ export default function EmotionRecords({
     singleComparison: true,
     daysAgo: 0,
   });
+  const [chartIsShown, setChartIsShown] = useState(true);
 
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
@@ -124,6 +141,31 @@ export default function EmotionRecords({
     );
   }
 
+  //logic for Graph
+  const currentShortDate = new Date().toISOString().slice(0, 10);
+  function compare(a, b) {
+    if (a.isoDate < b.isoDate) {
+      return -1;
+    }
+    if (a.isoDate > b.isoDate) {
+      return 1;
+    }
+    return 0;
+  }
+  const filteredData = shownEntries.toSorted(compare);
+  const lastIndex = filteredData.length - 1;
+  const difference =
+    (filteredData[lastIndex]?.timeStamp - filteredData[0]?.timeStamp) / 3600000;
+
+  const xValues =
+    difference < 48
+      ? filteredData.map((entry) => entry.timeAndDate.slice(-5))
+      : filteredData.map((entry) => new Date(entry.timeStamp));
+  const yValues = filteredData.map((entry) => entry.tensionLevel);
+  function handleChart() {
+    setChartIsShown(!chartIsShown);
+  }
+
   return (
     <>
       <Tooltip onClick={handleToggleTooltip}>
@@ -149,6 +191,32 @@ export default function EmotionRecords({
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
           />
+          {xValues.length === 0 ? (
+            <ErrorMessage itemText="No Data for Graph" />
+          ) : chartIsShown === true ? (
+            <EmotionChart
+              emotionEntries={emotionEntries}
+              theme={theme}
+              xValues={xValues}
+              yValues={yValues}
+              title="Daily Tension Graph"
+            />
+          ) : null}
+          {/* {chartIsShown && xValues.length != 0 ? (
+            <EmotionChart
+              emotionEntries={emotionEntries}
+              theme={theme}
+              xValues={xValues}
+              yValues={yValues}
+              title="Daily Tension Graph"
+            />
+          ) : (
+            <ErrorMessage itemText="No Data for Graph" />
+          )} */}
+
+          <StyledGraphButton type="button" onClick={handleChart}>
+            {chartIsShown === true ? "Hide chart" : "Show chart"}
+          </StyledGraphButton>
         </StyledTopSection>
         {buttonState.datePicker ? (
           selectedTime ? (

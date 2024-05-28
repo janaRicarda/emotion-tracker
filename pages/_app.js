@@ -69,13 +69,15 @@ export default function App({ Component, pageProps }) {
   }
 
   function handleAddEmotionEntry(data, id) {
-    const timeAndDate = getCurrentTimeAndDate();
+    const timeStamp = Date.now();
+    const timeAndDate = getCurrentTimeAndDate(timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
+      timeStamp,
       timeAndDate,
-      isoDate: new Date().toISOString(),
+      isoDate: new Date(timeStamp).toISOString(),
     };
 
     setEmotionEntries([newEntry, ...emotionEntries]);
