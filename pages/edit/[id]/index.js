@@ -1,5 +1,6 @@
 import EmotionForm from "@/components/EmotionForm";
-import { useRouter, useEffect } from "next/router";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function EditPage({
   theme,
