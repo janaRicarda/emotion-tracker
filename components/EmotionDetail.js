@@ -7,6 +7,7 @@ import {
   StyledList,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
+import { devices } from "@/utils/devices";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -14,6 +15,18 @@ const StyledArticle = styled.article`
   padding: 2rem;
   background: ${({ $color }) => $color};
   color: ${({ $text }) => $text};
+  @media ${devices.largeMobile} {
+    margin: 2rem 4rem 0 4rem;
+    padding: 2rem 5rem 2rem 5rem;
+  }
+  @media ${devices.tablet} {
+    margin: 4rem 8rem 0 8rem;
+    padding: 2rem 8rem 2rem 8rem;
+  }
+  @media ${devices.laptop} {
+    margin: 4rem 12rem 0 12rem;
+    padding: 2rem 14rem 2rem 14rem;
+  }
 `;
 
 const EmotionDetailsTitle = styled.h1`

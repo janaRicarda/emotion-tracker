@@ -6,6 +6,8 @@ import { useState } from "react";
 const StyledCircle = styled.article`
   width: 90vw;
   height: 90vw;
+  //width: 22rem;
+  //height: 22rem;
   border-radius: 50%;
   border: var(--circle-border);
   display: flex;
@@ -14,6 +16,10 @@ const StyledCircle = styled.article`
   box-shadow: var(--box-shadow);
   position: fixed;
   top: calc(100vh - 70%);
+  @media (orientation: landscape) {
+    width: 70vh;
+    height: 70vh;
+  }
 `;
 
 const StyledEmotionList = styled.ul`
@@ -22,13 +28,15 @@ const StyledEmotionList = styled.ul`
   position: relative;
   width: 80vw;
   height: 80vw;
+  //width: 20rem;
+  //height: 20rem;
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
   transform: rotate(${({ $rotation }) => $rotation}deg);
   @media (orientation: landscape) {
-    width: 40vw;
-    height: 40vw;
+    width: 60vh;
+    height: 60vh;
   }
 `;
 

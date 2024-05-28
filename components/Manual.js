@@ -3,11 +3,20 @@ import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
+import { devices } from "@/utils/devices";
 
 const StyledSection = styled.section`
-  width: 100%;
+  //width: 100%;
   height: auto;
   padding: 1rem;
+  @media ${devices.largeMobile} {
+    margin: 3rem;
+    padding: 2rem;
+  }
+  @media ${devices.tablet} {
+  }
+  @media ${devices.laptop} {
+  }
 `;
 
 const StyledText = styled.p`
