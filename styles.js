@@ -46,6 +46,7 @@ html {
   --box-shadow: ${({ theme }) => theme.boxShadow};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
+  --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
   body {
     margin: 0;
     background-color: var(--main-bright);

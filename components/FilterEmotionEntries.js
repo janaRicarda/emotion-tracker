@@ -40,7 +40,8 @@ const StyledFilterSection = styled.section`
   gap: 10px;
   justify-content: center;
   align-items: center;
-  background-color: var(--main-bright);
+  background-color: var(--text-on-dark);
+  /* background-color: var(--main-bright); */
 `;
 
 const StyledFilterButton = styled(StyledButton)`

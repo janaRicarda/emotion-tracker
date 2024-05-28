@@ -13,8 +13,7 @@ const transition = css`
 `;
 
 const GridWrapper = styled.section`
-  box-shadow: ${({ $show }) =>
-    $show ? "0px 0px 10px 10px rgba(0, 0, 0, 0.2)" : null};
+  box-shadow: ${({ $show }) => ($show ? "var(--box-shadow-filter)" : null)};
   position: fixed;
   padding: ${({ $show }) => ($show ? "1rem" : "0")};
   border-radius: 1rem;
@@ -23,7 +22,8 @@ const GridWrapper = styled.section`
   display: grid;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
-  background-color: var(--main-bright);
+  background-color: var(--text-on-dark);
+  color: var(--text-on-bright);
   z-index: 2;
 `;
 

@@ -29,6 +29,7 @@ export const lightTheme = {
     "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #a6a1a1, inset -5px -5px 5px 0 #a6a1a1, inset 5px 5px 5px 0 #ffffff",
   emotionBorder: "none",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
 };
 
 export const darkTheme = {
@@ -62,6 +63,7 @@ export const darkTheme = {
     "-3px -3px 15px 0 #454653, 5px 5px 15px 0 #111215, inset -5px -5px 5px 0 #111215, inset 5px 5px 5px 0 #454653",
   emotionBorder: "none",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #454653",
 };
 
 export const warmTheme = {
@@ -95,6 +97,7 @@ export const warmTheme = {
     "-5px -5px 15px 0 #fbf5e7, 5px 5px 15px 0 #aaa18c, inset -5px -5px 5px 0 #aaa18c, inset 5px 5px 5px 0 #fbf5e7",
   emotionBorder: "0.5px solid #471343",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #aaa18c",
 };
 
 export const coldTheme = {
@@ -128,6 +131,7 @@ export const coldTheme = {
     "-5px -5px 15px 0 #ebf9fa, 5px 5px 15px 0 #92aaab, inset -5px -5px 5px 0 #92aaab, inset 5px 5px 5px 0 #ebf9fa",
   emotionBorder: "0.5px solid #0F1555",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #92aaab",
 };
 
 export const neutralTheme = {
@@ -160,6 +164,7 @@ export const neutralTheme = {
   boxShadow: "none",
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
+  boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
 };
 
 export const highContrastTheme = {
@@ -192,4 +197,5 @@ export const highContrastTheme = {
   boxShadow: "none",
   emotionBorder: "1px solid black",
   circleBorder: "1px solid yellow",
+  boxShadowFilter: "none",
 };
