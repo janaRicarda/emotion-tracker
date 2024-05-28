@@ -11,15 +11,15 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
+import { useEffect, useState } from "react";
 
 const slideIn = keyframes`
-0% {width: 0}
-100% {width: 100%}
+0% {transform: translateX(-100%)}
+100% {transform: translateX(0)}
 `;
 
 const slideOut = keyframes`
-0% {width: 100%}
-100% {width: 0}
+100% {transform: translateX(-100%)}
 `;
 
 const StyledArticle = styled.article`
@@ -34,7 +34,16 @@ const StyledArticle = styled.article`
   justify-content: center;
   align-items: center;
   z-index: 2;
-  animation: ${slideIn} 300ms alternate;
+  /* animation: ${slideIn} 300ms alternate; */
+  animation: ${({ $isOpen }) =>
+      $isOpen
+        ? css`
+            ${slideIn}
+          `
+        : css`
+            ${slideOut}
+          `}
+    300ms;
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -76,10 +85,18 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
     { title: "high contrast", name: highContrastTheme },
   ];
 
+  // delay of isOpen-state to give time for animation
+  const [delayOpen, setDelayedOpen] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setDelayedOpen(isOpen);
+    }, 200);
+  }, [isOpen]);
+
   return (
     <>
-      {isOpen && (
-        <StyledArticle>
+      {delayOpen && (
+        <StyledArticle $isOpen={isOpen}>
           <StyledLink onClick={handleToggleMenu} href="/app-manual">
             Manual
           </StyledLink>
