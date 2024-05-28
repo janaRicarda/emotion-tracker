@@ -6,6 +6,7 @@ import { StyledTitle } from "@/SharedStyledComponents";
 import { devices } from "@/utils/devices";
 
 const StyledSection = styled.section`
+  display: grid;
   //width: 100%;
   height: auto;
   padding: 1rem;
