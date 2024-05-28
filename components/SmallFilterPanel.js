@@ -13,6 +13,7 @@ const StyledMinimalPanel = styled.section`
 
 const StyledPanelItem = styled.span`
   background-color: var(--button-background);
+  color: var(--contrast-text);
   border-radius: 50px;
   padding: 0.1rem 0.5rem;
   margin: 0.4rem;

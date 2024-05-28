@@ -22,8 +22,8 @@ const GridWrapper = styled.section`
   display: grid;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
-  background-color: var(--text-on-dark);
-  color: var(--text-on-bright);
+  background-color: var(--section-background-contrast);
+  //color: var(--text-on-bright);
   z-index: 2;
 `;
 

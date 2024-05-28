@@ -25,6 +25,8 @@ html {
   --text-on-dark: ${({ theme }) => theme.textOnDark};
   --button-background: ${({ theme }) => theme.buttonBackground};
   --section-background: ${({ theme }) => theme.sectionBackground};
+  --section-background-contrast: ${({ theme }) =>
+    theme.sectionBackgroundContrast};
   --green: ${({ theme }) => theme.green};
   --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};

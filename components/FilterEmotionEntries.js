@@ -26,10 +26,11 @@ const StyledInput = styled.input`
   height: 35px;
   padding-left: 2rem;
   background-color: var(--main-bright);
+
   color: var(--main-dark);
   border-radius: ${({ $showSearchBar }) => ($showSearchBar ? "20px" : "18px")};
   font-size: 0.8rem;
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
 `;
 
@@ -40,8 +41,7 @@ const StyledFilterSection = styled.section`
   gap: 10px;
   justify-content: center;
   align-items: center;
-  background-color: var(--text-on-dark);
-  /* background-color: var(--main-bright); */
+  background-color: var(--section-background-contrast);
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -51,7 +51,7 @@ const StyledFilterButton = styled(StyledButton)`
   margin: 0;
   padding: 0.2rem;
   border-color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--main-dark)"};
+    $active ? "var(--button-background)" : "var(--contrast-text)"};
   width: auto;
   color: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
