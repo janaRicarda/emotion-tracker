@@ -2,8 +2,6 @@ import styled from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Logo from "../public/logo.svg";
-import Menu from "./../public/menu.svg";
-import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
