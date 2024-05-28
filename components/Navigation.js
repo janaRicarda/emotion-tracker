@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import {
   lightTheme,
@@ -15,6 +15,11 @@ import {
 const slideIn = keyframes`
 0% {width: 0}
 100% {width: 100%}
+`;
+
+const slideOut = keyframes`
+0% {width: 100%}
+100% {width: 0}
 `;
 
 const StyledArticle = styled.article`

@@ -8,7 +8,7 @@ import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
-import Hamburger from "hamburger-react";
+import { Fade as Hamburger } from "hamburger-react";
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -81,7 +81,7 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
         <StyledMenu
           $isOpen={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
         >
-          <Hamburger toggled={isOpen} toggle={setIsOpen} />
+          <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
         </StyledMenu>
         <Navigation
           isOpen={isOpen}
