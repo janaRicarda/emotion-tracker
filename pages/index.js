@@ -9,6 +9,8 @@ import {
   StyledForm,
 } from "@/SharedStyledComponents";
 import Tooltip from "@/components/Tooltip";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 4rem auto;
@@ -66,6 +68,9 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
 
+  const router = useRouter();
+  const { locales, locale } = router;
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -80,6 +85,12 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
 
   return (
     <>
+      <div>Language: {locale === "en" ? "English" : "Deutsch"}</div>
+      {locales.map((locale) => (
+        <Link key={locale} href={"/emotion-recods"} locale={locale}>
+          {locale === "en" ? "English" : "Deutsch"} {""}
+        </Link>
+      ))}
       <Tooltip onClick={handleToggleTooltip}>
         On this page, you can indicate your level of tension on a range scale
         from 0 to 100. Afterward, simply press the Save-button to record your

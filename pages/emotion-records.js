@@ -10,6 +10,7 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import Tooltip from "@/components/Tooltip";
+import { useRouter } from "next/router";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
@@ -72,6 +73,9 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
+  const router = useRouter();
+  const { locale } = router;
+
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
   const handleSetFilterEntries = useCallback((filteredObject) => {
@@ -118,6 +122,7 @@ export default function EmotionRecords({
 
   return (
     <>
+      <div>Language: {locale === "en" ? "English" : "Deutsch"}</div>
       <Tooltip onClick={handleToggleTooltip}>
         Navigate through your emotion records list, a comprehensive compilation
         of all your added emotion entries. You can easily search for specific
