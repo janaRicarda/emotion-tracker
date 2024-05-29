@@ -1,31 +1,51 @@
 import styled from "styled-components";
 import TooltipQuestionmark from "../public/images/help.svg";
+import Info from "../public/info.svg";
+import Close from "../public/close.svg";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "1.3rem" : "1.8rem")};
+const StyledTooltipQuestionmark = styled(Info)`
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
   fill: var(--main-dark);
+  border: 1px solid var(--main-dark);
+  border-radius: 50%;
+
   z-index: 2;
   transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
+  margin-top: 2rem;
   position: absolute;
   right: 0.5rem;
   left: 0.5rem;
-  border-radius: 6px;
+  //border-radius: 6px;
+  border-radius: 2rem 0 2rem 2rem;
   background-color: var(--section-background);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
   border: 1px solid var(--main-dark);
-  height: 50vh;
+  box-shadow: var(--box-shadow-tooltip);
+  //height: 50vh;
   top: 100px;
 `;
 
+const StyledClose = styled(Close)`
+  width: 1rem;
+  margin: 0.5rem;
+
+  fill: var(--main-dark);
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+
 const StyledTooltipInfo = styled.p`
-  padding: 2rem 1rem 4rem 1rem;
+  padding: 3rem 1rem 2rem 1rem;
   color: var(--main-dark);
-  margin: 8rem 1 rem 8 rem 1 rem;
+  //margin: 8rem 1 rem 8 rem 1 rem;
 `;
 
 export default function Tooltip({ toolTip, isScrollDown }) {
@@ -35,6 +55,11 @@ export default function Tooltip({ toolTip, isScrollDown }) {
     setIsTooltipOpen(!isTooltipOpen);
   }
 
+  const router = useRouter();
+  useEffect(() => {
+    setIsTooltipOpen(false);
+  }, [router]);
+
   return (
     <>
       <StyledTooltipQuestionmark
@@ -42,6 +67,7 @@ export default function Tooltip({ toolTip, isScrollDown }) {
         onClick={handleToggleTooltip}
       />
       <StyledTooltipWrapper $show={isTooltipOpen}>
+        <StyledClose onClick={handleToggleTooltip} />
         <StyledTooltipInfo>{toolTip.text}</StyledTooltipInfo>
       </StyledTooltipWrapper>
     </>

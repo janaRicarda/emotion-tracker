@@ -5,7 +5,7 @@ export const lightTheme = {
   textOnBright: "#030352",
   textOnDark: "#f1eaea",
   buttonBackground: "lightskyblue",
-  sectionBackground: "#f5e8d7",
+  sectionBackground: "#e9e3e3",
   sectionBackgroundContrast: "#f5e8d7",
   contrastBright: "#f1eaea",
   red: "#cc0100",
@@ -31,6 +31,7 @@ export const lightTheme = {
   emotionBorder: "none",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
+  boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
 };
 
 export const darkTheme = {
@@ -66,6 +67,7 @@ export const darkTheme = {
   emotionBorder: "none",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const warmTheme = {
@@ -101,6 +103,7 @@ export const warmTheme = {
   emotionBorder: "0.5px solid #471343",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const coldTheme = {
@@ -136,6 +139,7 @@ export const coldTheme = {
   emotionBorder: "0.5px solid #0F1555",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #92aaab",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const neutralTheme = {
@@ -170,6 +174,7 @@ export const neutralTheme = {
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const highContrastTheme = {
@@ -204,4 +209,5 @@ export const highContrastTheme = {
   emotionBorder: "1px solid black",
   circleBorder: "1px solid yellow",
   boxShadowFilter: "none",
+  boxShadowTooltip: "10px 10px 15px black",
 };

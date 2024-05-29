@@ -113,11 +113,11 @@ export default function Header({
                 {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
               </StyledToggleTheme>
             ) : null}
-         <StyledMenu
-          $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
-        >
-          <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
-        </StyledMenu>
+            <StyledMenu
+              $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+            >
+              <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
+            </StyledMenu>
           </StyledIconWrapper>
         </ToolTipWrapper>
         <Navigation

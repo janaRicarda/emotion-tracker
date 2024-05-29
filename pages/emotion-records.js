@@ -56,7 +56,7 @@ const Background = styled.div`
 const AnimatedPanel = styled.div`
   width: 90vw;
   margin: 0.5rem;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
