@@ -87,7 +87,7 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
     <>
       <div>Language: {locale === "en" ? "English" : "Deutsch"}</div>
       {locales.map((locale) => (
-        <Link key={locale} href={"/emotion-recods"} locale={locale}>
+        <Link key={locale} href={"/emotion-records"} locale={locale}>
           {locale === "en" ? "English" : "Deutsch"} {""}
         </Link>
       ))}
