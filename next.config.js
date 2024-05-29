@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const { i18n } = require("./next-i18next.config");
+
 const nextConfig = {
   compiler: {
     styledComponents: true,
@@ -13,10 +15,7 @@ const nextConfig = {
 
     return config;
   },
-  i18n: {
-    locales: ["en", "de"],
-    defaultLocale: "en",
-  },
+  i18n,
 };
 
 module.exports = nextConfig;
