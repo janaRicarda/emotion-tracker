@@ -1,5 +1,5 @@
-import Sight from "@/db/models/Sights";
-import EmotionEntry from "@/db/models/emotionEntry";
+import dbConnect from "@/db/connect";
+import EmotionEntries from "@/db/models/emotionEntries";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -7,23 +7,23 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === `GET`) {
-    const emotionEntry = await EmotionEntry.findById(id);
+    const emotionEntries = await EmotionEntries.findById(id);
 
-    if (!emotionEntry) {
+    if (!emotionEntries) {
       return response.status(404).json({ status: "Not Found" });
     }
-    return response.status(200).json(emotionEntry);
+    return response.status(200).json(emotionEntries);
   }
 
   if (request.method === `PATCH`) {
     const updateEmotionEntry = request.body;
-    await EmotionEntry.findByIdAndUpdate(id, updateEmotionEntry);
+    await EmotionEntries.findByIdAndUpdate(id, updateEmotionEntry);
 
     response.status(200).json({ status: "Emotion Entry successfully updated" });
   }
 
   if (request.method === `DELETE`) {
-    await EmotionEntry.findByIdAndDelete(id);
+    await EmotionEntries.findByIdAndDelete(id);
 
     response.status(200).json({ status: "Emotion Entry was deleted!" });
   }

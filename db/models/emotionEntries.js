@@ -14,8 +14,8 @@ const EmotionEntrySchema = new Schema({
   id: { type: String },
 });
 
-const EmotionEntry =
-  mongoose.models.EmotionEntry ||
-  mongoose.model("EmotionEntry", EmotionEntrySchema);
+const EmotionEntries =
+  mongoose.models.EmotionEntries ||
+  mongoose.model("EmotionEntries", EmotionEntrySchema);
 
-export default EmotionEntry;
+export default EmotionEntries;

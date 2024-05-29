@@ -6,6 +6,9 @@ import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
+import useSWR, { SWRConfig } from "swr";
+
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
@@ -24,28 +27,28 @@ export default function App({ Component, pageProps }) {
   );
 
   // use-effect for mediaquery
-  
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const userPrefersDark = mediaQuery.matches;
-    
+
     if (userPrefersDark) {
       setTheme(darkTheme);
     } else {
       setTheme(lightTheme);
     }
-    
+
     const handleChange = (event) => {
       setTheme(event.matches ? darkTheme : lightTheme);
     };
-    
+
     mediaQuery.addEventListener("change", handleChange);
-    
+
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
-  
+
   const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
@@ -90,6 +93,15 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
+  const { data, isLoading, error } = useSWR("/api/emotionEntries", fetcher);
+
+  if (isLoading) return <h1>Loading...</h1>;
+
+  // if (data) console.log(data);
+  // if (!data) console.log("fail");
+
+  console.log(db.getMongo());
+
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
@@ -114,8 +126,6 @@ export default function App({ Component, pageProps }) {
 
     setEmotionEntries([newEntry, ...emotionEntries]);
   }
-
-  console.log(emotionEntries[0]);
 
   function handleAddEmotionDetails(data, id) {
     setEmotionEntries(
@@ -153,6 +163,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme}>
+      <SWRConfig value={{ fetcher }}></SWRConfig>
       <GlobalStyle />
       <Layout
         toolTip={toolTip}
