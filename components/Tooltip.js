@@ -9,25 +9,30 @@ import { useEffect } from "react";
 const StyledTooltipQuestionmark = styled(Info)`
   height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
   fill: var(--main-dark);
-  border: 1px solid var(--main-dark);
+  //border: 1px solid var(--main-dark);
   border-radius: 50%;
-
+  width: 2rem;
+  position: fixed;
+  top: 100px;
+  right: 1rem;
   z-index: 2;
   transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
-  margin-top: 2rem;
-  position: absolute;
+  margin-top: 1rem;
+  //position: absolute;
+  position: fixed;
   right: 0.5rem;
   left: 0.5rem;
+  //margin-right: 1rem;
   //border-radius: 6px;
   border-radius: 2rem 0 2rem 2rem;
   background-color: var(--section-background);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
   border: 1px solid var(--main-dark);
-  box-shadow: var(--box-shadow-tooltip);
+  box-shadow: var(--box-shadow-filter);
   //height: 50vh;
   top: 100px;
 `;

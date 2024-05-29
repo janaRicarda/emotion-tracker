@@ -4,6 +4,7 @@ import ScrollToTop from "react-scroll-to-top";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Tooltip from "./Tooltip";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -71,6 +72,7 @@ export default function Layout({
         switchTheme={switchTheme}
         toolTip={toolTip}
       />
+      {toolTip && <Tooltip toolTip={toolTip} />}
       {children}
       <Footer />
       <StyledToTopButton

@@ -20,9 +20,18 @@ const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
+  width: 80vw;
+  @media ${devices.largeMobile} {
+    width: 60vw;
+  }
+  @media ${devices.tablet} {
+    width: 50vw;
+  }
   @media ${devices.laptop} {
+    width: 40vw;
   }
   @media ${devices.desktop} {
+    width: 30vw;
   }
 `;
 
@@ -36,7 +45,7 @@ const StyledParagraph = styled.p`
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  width: 80vw;
+  //width: 80vw;
   cursor: pointer;
 `;
 
@@ -73,6 +82,7 @@ const StyledOutlineButton = styled(HeartOutlineIcon)`
   position: absolute;
   top: calc(50% - 2.4rem);
   right: -0.6rem;
+  background: var(--main-bright);
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;

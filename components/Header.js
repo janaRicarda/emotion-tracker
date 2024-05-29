@@ -106,7 +106,7 @@ export default function Header({
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledStandardLink>
         <ToolTipWrapper $isScrollDown={isScrollDown}>
-          {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
+          {/* {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />} */}
           <StyledIconWrapper $isScrollDown={isScrollDown}>
             {theme === lightTheme || theme === darkTheme ? (
               <StyledToggleTheme type="button" onClick={toggleTheme}>

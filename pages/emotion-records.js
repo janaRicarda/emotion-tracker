@@ -19,6 +19,7 @@ const GridWrapper = styled.section`
   padding: ${({ $show }) => ($show ? "1rem" : "0")};
   border-radius: 1rem;
   top: 200px;
+  margin-top: 1rem;
   max-width: 500px;
   display: grid;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
