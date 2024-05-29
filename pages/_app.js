@@ -6,8 +6,9 @@ import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
+import { appWithTranslation } from "next-i18next";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
@@ -111,3 +112,5 @@ export default function App({ Component, pageProps }) {
     </ThemeProvider>
   );
 }
+
+export default appWithTranslation(App);
