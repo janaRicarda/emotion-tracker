@@ -7,11 +7,23 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
+import { devices } from "@/utils/devices";
+
+const StyledResponsiveWrapper = styled.section`
+  @media ${devices.laptop} {
+  }
+  @media ${devices.desktop} {
+  }
+`;
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
+  @media ${devices.laptop} {
+  }
+  @media ${devices.desktop} {
+  }
 `;
 
 const StyledRecordListItem = styled.li`
@@ -104,7 +116,7 @@ export default function EmotionRecordsList({
     }));
   }
   return (
-    <>
+    <StyledResponsiveWrapper>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries.map(
@@ -175,6 +187,6 @@ export default function EmotionRecordsList({
           }
         )}
       </StyledRecordsList>
-    </>
+    </StyledResponsiveWrapper>
   );
 }

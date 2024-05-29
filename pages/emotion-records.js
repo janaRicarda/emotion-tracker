@@ -6,6 +6,7 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
+import { devices } from "@/utils/devices";
 
 // used for all transitions
 const transition = css`

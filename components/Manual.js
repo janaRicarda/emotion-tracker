@@ -20,17 +20,16 @@ const StyledSection = styled.section`
   height: auto;
   padding: 1rem;
   @media ${devices.largeMobile} {
-    padding: 2rem;
+    margin: 0 5rem 0 5rem;
   }
   @media ${devices.tablet} {
-    grid-template-areas:
-      "title title"
-      "text1 details"
-      "text2 details"
-      " . details"
-      "text3 text3";
+    margin: 0 10rem 0 10rem;
   }
   @media ${devices.laptop} {
+    margin: 0 20rem 0 20rem;
+  }
+  @media ${devices.desktop} {
+    margin: 0 30rem 0 30rem;
   }
 `;
 
