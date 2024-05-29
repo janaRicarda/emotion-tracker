@@ -39,14 +39,6 @@ const StyledFixedTitle = styled(StyledTitle)`
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
-  @media (orientation: landscape) {
-    position: absolute;
-    top: 0;
-    left: 25%;
-    padding: 2rem 0 0 0;
-
-    width: inherit;
-  }
 `;
 
 //links
