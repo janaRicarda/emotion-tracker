@@ -7,7 +7,7 @@ import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,
   StyledWrapper,
-  StyledFixedTitle,
+  StyledTitle,
   StyledForm,
   StyledSelect,
   StyledSubmitButton,
@@ -18,7 +18,6 @@ import { devices } from "@/utils/devices";
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
   margin: 1rem;
-  margin-top: 4rem;
   padding: 1rem;
   background: ${({ $color }) => $color};
   color: ${({ $text }) => $text};
@@ -210,24 +209,16 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledFixedTitle
-        $color={theme === darkTheme ? `var(--${slug})` : `var(--main-dark)`}
-      >
-        {editMode
-          ? emotionValue
-            ? `Edit your ${emotionValue}`
-            : `Edit your Emotion-Entry`
-          : emotionValue
-          ? `Record your ${emotionValue}`
-          : `Record your Emotion-Entry`}
-      </StyledFixedTitle>
-      <StyledEmotionForm
-        $color={
-          theme === darkTheme ? `var(--section-background)` : `${colorValue}`
-        }
-        $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
-        onSubmit={handleSubmit}
-      >
+      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
+        <StyledTitle>
+          {editMode
+            ? emotionValue
+              ? `Edit your ${emotionValue}`
+              : `Edit your Emotion-Entry`
+            : emotionValue
+            ? `Record your ${emotionValue}`
+            : `Record your Emotion-Entry`}
+        </StyledTitle>
         <p aria-label="Date and time">
           {editMode ? `Entry from:` : "Date: "} {timeAndDate}
         </p>
