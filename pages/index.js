@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uid } from "uid";
 import {
   StyledWrapper,
@@ -9,7 +9,6 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import Tooltip from "@/components/Tooltip";
 import dynamic from "next/dynamic";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
@@ -79,7 +78,7 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
 
 export default function HomePage({
   onAddEmotionEntry,
-  handleToggleTooltip,
+  handleToolTip,
   emotionEntries,
   theme,
 }) {
@@ -87,6 +86,12 @@ export default function HomePage({
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
   const [chartIsShown, setChartIsShown] = useState(true);
+
+  useEffect(() => {
+    handleToolTip({
+      text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
+    });
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -122,11 +127,6 @@ export default function HomePage({
 
   return (
     <>
-      <Tooltip onClick={handleToggleTooltip}>
-        On this page, you can indicate your level of tension on a range scale
-        from 0 to 100. Afterward, simply press the Save-button to record your
-        input.
-      </Tooltip>
       <StyledFlexColumnWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
