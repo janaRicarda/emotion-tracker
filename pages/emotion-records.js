@@ -11,6 +11,8 @@ import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import Tooltip from "@/components/Tooltip";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const StyledTopSection = styled(StyledFlexColumnWrapper)`
   position: sticky;
@@ -74,7 +76,13 @@ export default function EmotionRecords({
   });
 
   const router = useRouter();
-  const { locale } = router;
+  const { locales } = router;
+
+  const handleChangeLocale = (newLocale) => {
+    router.push(router.pathname, router.asPath, { locale: newLocale });
+  };
+
+  const { t: translate } = useTranslation("emotion-records");
 
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
 
@@ -122,17 +130,18 @@ export default function EmotionRecords({
 
   return (
     <>
-      <div>Language: {locale === "en" ? "English" : "Deutsch"}</div>
+      <p>Language:</p>
+      {locales.map((loc) => (
+        <button key={loc} onClick={() => handleChangeLocale(loc)}>
+          {loc === "en" ? "English" : "Deutsch"}
+        </button>
+      ))}
       <Tooltip onClick={handleToggleTooltip}>
-        Navigate through your emotion records list, a comprehensive compilation
-        of all your added emotion entries. You can easily search for specific
-        entries, edit or delete them, and even highlight important moments.
-        Also, you can search through your entries or filter them by the
-        following options: today, last week, or last month.
+        {translate("emotionRecordsTooltip")}
       </Tooltip>
       <StyledFlexColumnWrapper>
         <StyledTopSection>
-          <StyledTitle>Recorded Emotions</StyledTitle>
+          <StyledTitle>{translate("emotionRecordsTitle")}</StyledTitle>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
             filteredEntries={filteredEntries}
@@ -152,7 +161,8 @@ export default function EmotionRecords({
             <DisplayDate />
           ) : (
             <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
+              {translate("clickCalendar")} <StyledCalendarIcon />{" "}
+              {translate("selectDate")}
             </StyledDateIndicator>
           )
         ) : null}
@@ -169,10 +179,10 @@ export default function EmotionRecords({
                 <StyledLink href="./">add Entry &rarr;</StyledLink>
               </StyledTextMessage>
             ) : (
-              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+              <StyledTextMessage>{translate("sorry")}</StyledTextMessage>
             )
           ) : (
-            <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+            <StyledTextMessage>{translate("sorry")}</StyledTextMessage>
           ))}
 
         {shownEntries.length !== 0 && (
@@ -188,4 +198,13 @@ export default function EmotionRecords({
       </StyledFlexColumnWrapper>
     </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, "emotion-records")),
+      // Will be passed to the page component as props
+    },
+  };
 }

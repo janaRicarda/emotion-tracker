@@ -71,6 +71,10 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
   const router = useRouter();
   const { locales, locale } = router;
 
+  const handleChangeLocale = (newLocale) => {
+    router.push(router.pathname, router.asPath, { locale: newLocale });
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -85,11 +89,19 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
 
   return (
     <>
-      <div>Language: {locale === "en" ? "English" : "Deutsch"}</div>
+      <div>{locale}</div>
       {locales.map((locale) => (
         <Link key={locale} href={"/emotion-records"} locale={locale}>
-          {locale === "en" ? "English" : "Deutsch"} {""}
+          {locale === "en"
+            ? "Emotion Records (english) "
+            : "Aufgezeichnete Emotionen (Deutsch) "}
         </Link>
+      ))}
+      <p>Language:</p>
+      {locales.map((loc) => (
+        <button key={loc} onClick={() => handleChangeLocale(loc)}>
+          {loc === "en" ? "English" : "Deutsch"}
+        </button>
       ))}
       <Tooltip onClick={handleToggleTooltip}>
         On this page, you can indicate your level of tension on a range scale

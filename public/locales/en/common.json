@@ -1,4 +1,4 @@
 {
-  "language": "English",
-  "greeting": "Welcome"
+  "commonChosenLanguage": "Chosen language",
+  "language": "English"
 }
