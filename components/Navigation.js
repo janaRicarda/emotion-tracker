@@ -84,11 +84,7 @@ export default function Navigation({
           <StyledLink onClick={handleToggleMenu} href="/">
             add entry
           </StyledLink>
-          <StyledLink
-            onClick={handleToggleMenu}
-            loading={() => <loader />}
-            href="/emotion-records"
-          >
+          <StyledLink onClick={handleToggleMenu} href="/emotion-records">
             emotion records
           </StyledLink>
           <details>

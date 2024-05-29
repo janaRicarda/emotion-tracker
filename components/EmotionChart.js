@@ -12,7 +12,15 @@ const StyledChartSection = styled.section`
   padding: 0.5rem;
 `;
 
-export default function TensionChart({ xValues, yValues, title, theme }) {
+export default function EmotionChart({
+  xValues,
+  yValues,
+  title,
+  xTitle,
+  yTitle,
+  theme,
+  type,
+}) {
   return (
     <StyledChartSection>
       <Plot
@@ -20,12 +28,12 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           {
             x: xValues,
             y: yValues,
-            type: "scatter",
+            type: type,
             mode: "lines+markers",
             marker: { color: theme.buttonBackground },
           },
         ]}
-        config={{ displayModeBar: false }}
+        config={{ displayModeBar: false, scrollZoom: true }}
         layout={{
           font: { color: theme.text },
           paper_bgcolor: theme.sectionBackground,
@@ -33,7 +41,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           plot_bgcolor: theme.background,
           xaxis: {
             gridcolor: theme.text,
-            title: { text: "time" },
+            title: { text: xTitle },
             font: {
               size: 15,
               color: theme.text,
@@ -42,7 +50,7 @@ export default function TensionChart({ xValues, yValues, title, theme }) {
           },
           yaxis: {
             gridcolor: theme.text,
-            title: { text: "tension" },
+            title: { text: yTitle },
             font: {
               size: 15,
               color: theme.text,

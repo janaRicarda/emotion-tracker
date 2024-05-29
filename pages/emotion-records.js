@@ -101,10 +101,14 @@ export default function EmotionRecords({
     singleComparison: true,
     daysAgo: 0,
   });
-  // const [chartIsShown, setChartIsShown] = useState(true);
+
   const [chartState, setChartState] = useState({
     chartIsShown: true,
-    yAxis: "tension",
+    xTitle: "time",
+    yTitle: "tension",
+    title: "Tension Chart",
+    type: "scatter",
+    emoCount: [],
   });
 
   // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
@@ -152,7 +156,7 @@ export default function EmotionRecords({
   }
 
   //logic for Graph
-  const currentShortDate = new Date().toISOString().slice(0, 10);
+
   function compare(a, b) {
     if (a.isoDate < b.isoDate) {
       return -1;
@@ -172,8 +176,61 @@ export default function EmotionRecords({
       ? filteredData.map((entry) => entry.timeAndDate.slice(-5))
       : filteredData.map((entry) => new Date(entry.timeStamp));
   const yValues = filteredData.map((entry) =>
-    chartState.yAxis === "tension" ? entry.tensionLevel : entry?.intensity
+    chartState.yTitle === "tension" ? entry.tensionLevel : entry?.intensity
   );
+
+  function countEmotions(entries) {
+    const joyEntries = entries.filter((entry) => entry.emotion === "Joy");
+    const angerEntries = entries.filter((entry) => entry.emotion === "Anger");
+    const fearEntries = entries.filter((entry) => entry.emotion === "Fear");
+    const contemptEntries = entries.filter(
+      (entry) => entry.emotion === "Contempt"
+    );
+    const surpriseEntries = entries.filter(
+      (entry) => entry.emotion === "Surprise"
+    );
+    const disgustEntries = entries.filter(
+      (entry) => entry.emotion === "Disgust"
+    );
+    const sadnessEntries = entries.filter(
+      (entry) => entry.emotion === "Sadness"
+    );
+    const result = [
+      { emotion: "Joy", count: joyEntries.length, foundEntries: joyEntries },
+      {
+        emotion: "Anger",
+        count: angerEntries.length,
+        foundEntries: angerEntries,
+      },
+      {
+        emotion: "Fear",
+        count: fearEntries.length,
+        foundEntries: fearEntries,
+      },
+      {
+        emotion: "Contempt",
+        count: contemptEntries.length,
+        foundEntries: contemptEntries,
+      },
+      {
+        emotion: "Surprise",
+        count: surpriseEntries.length,
+        foundEntries: surpriseEntries,
+      },
+      {
+        emotion: "Disgust",
+        count: disgustEntries.length,
+        foundEntries: disgustEntries,
+      },
+      {
+        emotion: "Sadness",
+        count: sadnessEntries.length,
+        foundEntries: sadnessEntries,
+      },
+    ];
+    return result;
+  }
+
   function handleChart() {
     setChartState({ ...chartState, chartIsShown: !chartState.chartIsShown });
   }
@@ -203,42 +260,94 @@ export default function EmotionRecords({
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
           />
-          {xValues.length === 0 ? (
-            <ErrorMessage itemText="No Data for Graph" />
-          ) : chartState.chartIsShown === true ? (
-            <EmotionChart
-              emotionEntries={emotionEntries}
-              theme={theme}
-              xValues={xValues}
-              yValues={yValues}
-              title="Daily Tension Graph"
-            />
-          ) : null}
-
-          <StyledButtonWrapper>
-            <StyledGraphButton type="button" onClick={handleChart}>
-              {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
-            </StyledGraphButton>
-            <StyledGraphButton
-              type="button"
-              onClick={() => {
-                setChartState({ ...chartState, yAxis: "tension" });
-                console.log(chartState.yAxis);
-              }}
-            >
-              Tension
-            </StyledGraphButton>
-            <StyledGraphButton
-              type="button"
-              onClick={() => {
-                setChartState({ ...chartState, yAxis: "intensity" });
-                console.log(chartState.yAxis);
-              }}
-            >
-              Intensity
-            </StyledGraphButton>
-          </StyledButtonWrapper>
         </StyledTopSection>
+        {xValues.length === 0 ? (
+          <ErrorMessage itemText="No Data for Graph" />
+        ) : chartState.chartIsShown === true ? (
+          <EmotionChart
+            theme={theme}
+            type={chartState.type}
+            xValues={xValues}
+            yValues={yValues}
+            xTitle={chartState.xTitle}
+            yTitle={chartState.yTitle}
+            title={chartState.title}
+          />
+        ) : null}
+
+        <StyledButtonWrapper>
+          <StyledGraphButton type="button" onClick={handleChart}>
+            {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
+          </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                type:
+                  chartState.type === "scatter"
+                    ? "bar"
+                    : chartState.type === "bar"
+                    ? "scatter"
+                    : "scatter",
+              })
+            }
+          >
+            Switch Type
+          </StyledGraphButton>
+
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                yTitle: "tension",
+                Title: "Tension Chart",
+              })
+            }
+          >
+            Tension
+          </StyledGraphButton>
+
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                yTitle: "intensity",
+                Title: "Intensity Chart",
+              })
+            }
+          >
+            Intensity
+          </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() => {
+              const newEmocount = countEmotions(shownEntries);
+              setChartState({ ...chartState, emoCount: newEmocount });
+              console.log(chartState);
+            }}
+          >
+            Count emotions
+          </StyledGraphButton>
+        </StyledButtonWrapper>
+        <ul>
+          {chartState.emoCount.map((element) => (
+            <li key={element.emotion}>
+              {element.emotion}: {element.foundEntries.length}
+            </li>
+          ))}
+        </ul>
+        <EmotionChart
+          theme={theme}
+          type="bar"
+          title="Test Emotion chart"
+          xValues={chartState.emoCount.map((element) => element.emotion)}
+          yValues={chartState.emoCount.map((element) => element.count)}
+          xTitle="emotions"
+          yTitle="count"
+        />
         {buttonState.datePicker ? (
           selectedTime ? (
             <DisplayDate />
