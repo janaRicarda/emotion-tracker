@@ -26,10 +26,11 @@ const StyledInput = styled.input`
   height: 35px;
   padding-left: 2rem;
   background-color: var(--main-bright);
+
   color: var(--main-dark);
   border-radius: ${({ $showSearchBar }) => ($showSearchBar ? "20px" : "18px")};
   font-size: 0.8rem;
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
 `;
 
@@ -40,6 +41,7 @@ const StyledFilterSection = styled.section`
   gap: 10px;
   justify-content: center;
   align-items: center;
+  background-color: var(--section-background-contrast);
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -48,13 +50,14 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--button-background)" : "var(--main-bright)"};
   margin: 0;
   padding: 0.2rem;
-  border-color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--main-dark)"};
+  border-color: var(--contrast-text);
   width: auto;
   color: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
   fill: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
+  display: flex;
+  align-items: center;
 `;
 
 const StyledButtonGroup = styled.div`
@@ -129,7 +132,7 @@ export default function FilterEmotionEntries({
   changeSelectedTime,
   selectedTime,
 }) {
-  const [showSearchBar, SetShowSearchBar] = useState(false);
+  const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
   const [month, setMonth] = useState(new Date());
 
@@ -273,6 +276,7 @@ export default function FilterEmotionEntries({
           <StyledInput
             $showSearchBar={showSearchBar}
             aria-label="Search"
+            maxLength={15}
             type="search"
             id="searchTerm"
             name="searchTerm"
@@ -291,8 +295,10 @@ export default function FilterEmotionEntries({
                 onClick={() => {
                   changeButtonState({
                     [name]: true,
+                    label: label,
                     singleComparison,
                     daysAgo,
+                    icon,
                   });
                   setShow && setShowDayPicker(!showDayPicker);
                 }}
