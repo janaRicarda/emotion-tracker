@@ -1,13 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
 import Logo from "../public/logo.svg";
-import Menu from "./../public/menu.svg";
-import Close from "./../public/close.svg";
 import Moon from "../public/moon.svg";
 import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
+import { Fade as Hamburger } from "hamburger-react";
+import Tooltip from "./Tooltip";
+
+// used for all transition in this component
+const transition = css`
+  transition: all 300ms ease;
+`;
 
 const StyledToggleTheme = styled.button`
   border-radius: 50%;
@@ -26,22 +31,17 @@ const StyledSun = styled(Sun)`
   fill: var(--main-dark);
 `;
 
-const StyledMenuButton = styled(Menu)`
-  width: 2.5rem;
-  fill: var(--main-dark);
-  border-style: none;
-`;
-const StyledCloseButton = styled(Close)`
-  width: 2.5rem;
-  fill: var(--contrast-text);
-  border-style: none;
+const StyledMenu = styled.div`
+  color: ${({ $iconColor }) => $iconColor};
   z-index: 3;
 `;
 
 const StyledHeader = styled.header`
   width: 100%;
-  height: 100px;
   display: flex;
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
+  ${transition}
+  transition-property: height;
   justify-content: space-between;
   align-items: center;
   background: var(--main-bright);
@@ -49,24 +49,50 @@ const StyledHeader = styled.header`
   padding: 0 1rem;
   top: 0;
   left: 0;
-  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "1")};
+  z-index: ${({ $isOpen }) => ($isOpen ? "3" : "2")};
+`;
+
+const PlaceholderHeader = styled.div`
+  width: 100vw;
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
+  ${transition}
 `;
 
 const StyledIconWrapper = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: auto;
+  z-index: 3;
+  transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
+  ${transition}
+`;
+
+const ToolTipWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: ${({ $isScrollDown }) => ($isScrollDown ? "0.7rem" : "1rem")};
+  ${transition}
 `;
 
 const StyledLogo = styled(Logo)`
-  width: 9rem;
-  height: 9rem;
+  max-width: 8rem;
+  max-height: 8rem;
+  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
   stroke: var(--main-dark);
+  ${transition}
 `;
 
-export default function Header({ theme, toggleTheme, switchTheme }) {
+export default function Header({
+  theme,
+  toggleTheme,
+  switchTheme,
+  isScrollDown,
+  toolTip,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleToggleMenu() {
@@ -74,27 +100,33 @@ export default function Header({ theme, toggleTheme, switchTheme }) {
   }
 
   return (
-    <StyledHeader $isOpen={isOpen}>
-      <StyledStandardLink href="/">
-        <StyledLogo />
-      </StyledStandardLink>
-      <StyledIconWrapper>
-        {theme === lightTheme || theme === darkTheme ? (
-          <StyledToggleTheme type="button" onClick={toggleTheme}>
-            {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-          </StyledToggleTheme>
-        ) : null}
-        {isOpen ? (
-          <StyledCloseButton type="button" onClick={handleToggleMenu} />
-        ) : (
-          <StyledMenuButton type="button" onClick={handleToggleMenu} />
-        )}
+    <>
+      <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
+        <StyledStandardLink href="/">
+          <StyledLogo $isScrollDown={isScrollDown} />
+        </StyledStandardLink>
+        <ToolTipWrapper $isScrollDown={isScrollDown}>
+          {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
+          <StyledIconWrapper $isScrollDown={isScrollDown}>
+            {theme === lightTheme || theme === darkTheme ? (
+              <StyledToggleTheme type="button" onClick={toggleTheme}>
+                {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+              </StyledToggleTheme>
+            ) : null}
+         <StyledMenu
+          $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+        >
+          <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
+        </StyledMenu>
+          </StyledIconWrapper>
+        </ToolTipWrapper>
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}
           switchTheme={switchTheme}
         />
-      </StyledIconWrapper>
-    </StyledHeader>
+      </StyledHeader>
+      <PlaceholderHeader />
+    </>
   );
 }

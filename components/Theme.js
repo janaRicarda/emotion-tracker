@@ -6,6 +6,7 @@ export const lightTheme = {
   textOnDark: "#f1eaea",
   buttonBackground: "lightskyblue",
   sectionBackground: "#f5e8d7",
+  sectionBackgroundContrast: "#f5e8d7",
   contrastBright: "#f1eaea",
   red: "#cc0100",
   green: "#00b400",
@@ -29,6 +30,7 @@ export const lightTheme = {
     "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #a6a1a1, inset -5px -5px 5px 0 #a6a1a1, inset 5px 5px 5px 0 #ffffff",
   emotionBorder: "none",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
 };
 
 export const darkTheme = {
@@ -44,6 +46,7 @@ export const darkTheme = {
   enabled: "#cc0100",
   disabled: "#00b400",
   sectionBackground: "#3b3e4c",
+  sectionBackgroundContrast: "#3b3e4c",
   joy: "hsl(60, 70%, 70%)",
   surprise: "hsl(105, 70%, 80%)",
   fear: "hsl(165, 80%, 70%)",
@@ -62,6 +65,7 @@ export const darkTheme = {
     "-3px -3px 15px 0 #454653, 5px 5px 15px 0 #111215, inset -5px -5px 5px 0 #111215, inset 5px 5px 5px 0 #454653",
   emotionBorder: "none",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #111215",
 };
 
 export const warmTheme = {
@@ -72,6 +76,7 @@ export const warmTheme = {
   textOnDark: "#f7e9cb",
   buttonBackground: "orange",
   sectionBackground: "#F5E4B2",
+  sectionBackgroundContrast: "#f5e4b2",
   contrastBright: "#f7e9cb",
   red: "#D23406",
   green: "#75C52F",
@@ -95,6 +100,7 @@ export const warmTheme = {
     "-5px -5px 15px 0 #fbf5e7, 5px 5px 15px 0 #aaa18c, inset -5px -5px 5px 0 #aaa18c, inset 5px 5px 5px 0 #fbf5e7",
   emotionBorder: "0.5px solid #471343",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #aaa18c",
 };
 
 export const coldTheme = {
@@ -105,6 +111,7 @@ export const coldTheme = {
   textOnDark: "#D3F6F8",
   buttonBackground: "#00EBCA",
   sectionBackground: "#B4F2F7",
+  sectionBackgroundContrast: "#b4f2f7",
   contrastBright: "#D3F6F8",
   red: "#CB0566",
   green: "#2FC565",
@@ -128,6 +135,7 @@ export const coldTheme = {
     "-5px -5px 15px 0 #ebf9fa, 5px 5px 15px 0 #92aaab, inset -5px -5px 5px 0 #92aaab, inset 5px 5px 5px 0 #ebf9fa",
   emotionBorder: "0.5px solid #0F1555",
   circleBorder: "none",
+  boxShadowFilter: "0px 0px 10px 10px #92aaab",
 };
 
 export const neutralTheme = {
@@ -138,6 +146,7 @@ export const neutralTheme = {
   textOnDark: "white",
   buttonBackground: "lightgrey",
   sectionBackground: "#EFEFEB",
+  sectionBackgroundContrast: "#efefeb",
   contrastBright: "white",
   red: "#cc0100",
   green: "#00b400",
@@ -160,6 +169,7 @@ export const neutralTheme = {
   boxShadow: "none",
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
+  boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
 };
 
 export const highContrastTheme = {
@@ -174,6 +184,7 @@ export const highContrastTheme = {
   enabled: "grey",
   disabled: "black",
   sectionBackground: "black",
+  sectionBackgroundContrast: "yellow",
   contrastBright: "white",
   joy: "yellow",
   surprise: "yellow",
@@ -192,4 +203,5 @@ export const highContrastTheme = {
   boxShadow: "none",
   emotionBorder: "1px solid black",
   circleBorder: "1px solid yellow",
+  boxShadowFilter: "none",
 };

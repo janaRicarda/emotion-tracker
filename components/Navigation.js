@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import {
   lightTheme,
@@ -11,25 +11,43 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
+import { useEffect, useState } from "react";
+
+const slideIn = keyframes`
+0% {transform: translateX(-100%)}
+100% {transform: translateX(0)}
+`;
+
+const slideOut = keyframes`
+100% {transform: translateX(-100%)}
+`;
 
 const StyledArticle = styled.article`
   inset: 0;
   background-color: var(--button-background);
-  padding: 3rem 1rem;
+  padding-top: 25vh;
   position: fixed;
   top: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   z-index: 2;
+  animation: ${({ $isOpen }) =>
+      $isOpen
+        ? css`
+            ${slideIn}
+          `
+        : css`
+            ${slideOut}
+          `}
+    300ms;
 `;
 
 const StyledLink = styled(StyledStandardLink)`
   width: 100%;
   color: var(--contrast-text);
-
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
@@ -42,27 +60,20 @@ const StyledSummary = styled.summary`
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
-  gap: 1px;
-  border: 1px solid var(--text-on-bright);
+  gap: 0.2rem;
 `;
 const ThemeButton = styled(StyledButton)`
   text-align: left;
-  color: var(--text-on-dark);
-  background: var(--text-on-bright);
+  color: var(--button-background);
+  background-color: var(--contrast-text);
   border: 0 0 1px solid var(--text-on-bright) 0;
   border-radius: 0;
-  padding: 0;
-  padding-left: 0.1rem;
+  padding: 0.1rem 0 0.1rem 0.5rem;
   margin: 0;
   width: 100%;
 `;
 
-export default function Navigation({
-  handleToggleMenu,
-  isOpen,
-
-  switchTheme,
-}) {
+export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
   const colorSchemes = [
     { title: "what a feeling", name: lightTheme },
     { title: "warm", name: warmTheme },
@@ -71,10 +82,18 @@ export default function Navigation({
     { title: "high contrast", name: highContrastTheme },
   ];
 
+  // delay of isOpen-state to give time for animation
+  const [delayOpen, setDelayedOpen] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setDelayedOpen(isOpen);
+    }, 200);
+  }, [isOpen]);
+
   return (
     <>
-      {isOpen && (
-        <StyledArticle>
+      {delayOpen && (
+        <StyledArticle $isOpen={isOpen}>
           <StyledLink onClick={handleToggleMenu} href="/app-manual">
             Manual
           </StyledLink>
