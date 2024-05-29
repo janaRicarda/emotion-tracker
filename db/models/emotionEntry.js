@@ -11,6 +11,7 @@ const EmotionEntrySchema = new Schema({
   intensity: { type: String },
   trigger: { type: String },
   notes: { type: String },
+  id: { type: String },
 });
 
 const EmotionEntry =
