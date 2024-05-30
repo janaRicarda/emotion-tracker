@@ -5,40 +5,57 @@ import PencilIcon from "../public/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import HeartFilledIcon from "../public/heart-filled.svg";
+import OutlineCircle from "../public/outline-circle.svg";
+import Circle from "../public/circle.svg";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const StyledRecordListItem = styled.li`
-  position: relative;
+  background-color: var(--section-background);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  //justify-content: space-between;
+  //align-items: center;
+  padding: 0.5rem 0 0.5rem 0;
+  border: 1px solid var(--main-dark);
+  border-radius: 6px;
+  //height: inset;
+  width: 86vw;
+`;
+
+const StyledItemInfo = styled.article`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledParagraph = styled.p`
   color: var(--main-dark);
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  margin: 0.5rem auto;
-  padding: 1rem;
-  width: 80vw;
   cursor: pointer;
 `;
 
 const StyledDetails = styled(StyledList)`
   display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
-  padding: 0 1rem;
-  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border-top: 1px solid var(--main-dark);
+`;
+
+const StyledIconWrapper = styled.article`
+  display: flex;
 `;
 
 const StyledDeleteButton = styled(TrashIcon)`
   width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 0.8rem);
-  right: 0.2rem;
+
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;
@@ -47,35 +64,21 @@ const StyledDeleteButton = styled(TrashIcon)`
 
 const StyledEditButton = styled(PencilIcon)`
   width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 0.8rem);
-  right: 2rem;
+
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;
   }
 `;
 
-const StyledOutlineButton = styled(HeartOutlineIcon)`
-  width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 2.4rem);
-  right: -0.6rem;
-  fill: var(--main-dark);
-  &:hover {
-    cursor: pointer;
-  }
+const StyledOutLineCircle = styled(OutlineCircle)`
+  width: 2rem;
+  fill: var(--contrast-bright);
 `;
 
-const StyledFilledButton = styled(HeartFilledIcon)`
-  width: 1.6rem;
-  position: absolute;
-  top: calc(50% - 2.4rem);
-  right: -0.6rem;
-  fill: var(--main-dark);
-  &:hover {
-    cursor: pointer;
-  }
+const StyledCircle = styled(Circle)`
+  width: 2rem;
+  fill: var(--contrast-bright);
 `;
 
 export default function EmotionRecordsList({
@@ -103,6 +106,10 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
+  //const { emotion: emotionColor } = shownEntries;
+  //const color = emotionColor.toLowerCase();
+
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
@@ -123,29 +130,44 @@ export default function EmotionRecordsList({
             return (
               <section key={id}>
                 <StyledRecordListItem>
-                  <StyledParagraph onClick={() => handleShowDetails(id)}>
-                    {timeAndDate}
-                  </StyledParagraph>
-                  <StyledEditButton
-                    aria-label="Edit emotion entry"
-                    onClick={() =>
-                      editFromDevControls
-                        ? router.push(`edit/${id}`)
-                        : router.push(`./edit/${id}`)
-                    }
-                  />
-                  <StyledDeleteButton
-                    type="button"
-                    aria-label="Delete Emotion Entry"
-                    onClick={() => {
-                      handleShowConfirmMessage(id);
-                    }}
-                  />
-                  {isHighlighted ? (
-                    <StyledFilledButton onClick={() => toggleHighlight(id)} />
-                  ) : (
-                    <StyledOutlineButton onClick={() => toggleHighlight(id)} />
-                  )}
+                  <StyledItemInfo>
+                    {isHighlighted ? (
+                      <StyledCircle onClick={() => toggleHighlight(id)} />
+                    ) : (
+                      <StyledOutLineCircle
+                        onClick={() => toggleHighlight(id)}
+                      />
+                    )}
+                    <StyledParagraph onClick={() => handleShowDetails(id)}>
+                      {timeAndDate}
+                    </StyledParagraph>
+                    <StyledIconWrapper>
+                      <StyledEditButton
+                        aria-label="Edit emotion entry"
+                        onClick={() =>
+                          editFromDevControls
+                            ? router.push(`edit/${id}`)
+                            : router.push(`./edit/${id}`)
+                        }
+                      />
+                      <StyledDeleteButton
+                        type="button"
+                        aria-label="Delete Emotion Entry"
+                        onClick={() => {
+                          handleShowConfirmMessage(id);
+                        }}
+                      />
+                    </StyledIconWrapper>
+                  </StyledItemInfo>
+                  <StyledDetails $showDetails={showDetails[id]}>
+                    <li>Tension Level: {tensionLevel}%</li>
+                    {emotion && <li>Emotion: {emotion}</li>}
+                    {subemotion && <li>Subemotion: {subemotion}</li>}
+                    {intensity && <li>Intensity: {intensity}%</li>}
+                    {category && <li>Pleasantness: {category}%</li>}
+                    {trigger && <li>Trigger: {trigger}</li>}
+                    {notes && <li>Notes: {notes}</li>}
+                  </StyledDetails>
                 </StyledRecordListItem>
                 {showConfirmMessage[id] && (
                   <ConfirmMessage
@@ -161,15 +183,6 @@ export default function EmotionRecordsList({
                     Do you want to delete this entry?
                   </ConfirmMessage>
                 )}
-                <StyledDetails $showDetails={showDetails[id]}>
-                  <li>Tension Level: {tensionLevel}%</li>
-                  {emotion && <li>Emotion: {emotion}</li>}
-                  {subemotion && <li>Subemotion: {subemotion}</li>}
-                  {intensity && <li>Intensity: {intensity}%</li>}
-                  {category && <li>Pleasantness: {category}%</li>}
-                  {trigger && <li>Trigger: {trigger}</li>}
-                  {notes && <li>Notes: {notes}</li>}
-                </StyledDetails>
               </section>
             );
           }
