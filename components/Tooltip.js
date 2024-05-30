@@ -10,34 +10,47 @@ import { devices } from "@/utils/devices";
 
 const StyledTooltipQuestionmark = styled(Info)`
   height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
-  fill: var(--button-background);
+  fill: var(--main-dark);
 
   //border: 1px solid var(--main-dark);
   border-radius: 50%;
   width: 2rem;
   position: fixed;
-  top: 100px;
-  right: 1rem;
+  top: 90px;
+  right: 1.5rem;
   z-index: 2;
   transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
-  margin-top: 1rem;
+  //margin-top: 2.5rem;
   //position: absolute;
   position: fixed;
-  right: 0.5rem;
+  //right: 0.5rem;
+  right: 4rem;
   left: 0.5rem;
   //margin-right: 1rem;
-  //border-radius: 6px;
-  border-radius: 2rem 0 2rem 2rem;
+  border-radius: 1rem;
+  //border-radius: 2rem 0 2rem 2rem;
+  //border: 2rem;
   background-color: var(--section-background-contrast);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
-  border: var(--circle-border);
+  //border: var(--circle-border);
   box-shadow: var(--box-shadow-filter);
-  //height: 50vh;
+
   top: 100px;
+  &:after {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    right: 0;
+    //margin-right: 1.8rem;
+    border-width: 1.5rem;
+    border-style: solid;
+    border-color: transparent transparent var(--section-background-contrast)
+      transparent;
+  }
   @media ${devices.largeMobile} {
     margin-left: 5rem;
   }
@@ -55,7 +68,6 @@ const StyledTooltipWrapper = styled.div`
 const StyledClose = styled(Close)`
   width: 1rem;
   margin: 0.5rem;
-
   fill: var(--contrast-text);
   position: absolute;
   top: 0;
@@ -63,7 +75,7 @@ const StyledClose = styled(Close)`
 `;
 
 const StyledTooltipInfo = styled.p`
-  padding: 3rem 1rem 2rem 1rem;
+  padding: 2rem 1rem 1rem 1rem;
   color: var(--contrast-text);
   //margin: 8rem 1 rem 8 rem 1 rem;
 `;

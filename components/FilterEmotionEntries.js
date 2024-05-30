@@ -5,6 +5,7 @@ import { DayPicker } from "react-day-picker";
 import CalendarIcon from "/public/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
+import { devices } from "@/utils/devices";
 
 const StyledContainer = styled.div`
   height: auto;
@@ -22,7 +23,7 @@ const StyledMagnifier = styled(Magnifier)`
 `;
 
 const StyledInput = styled.input`
-  width: ${({ $showSearchBar }) => ($showSearchBar ? "80vw" : "35px")};
+  width: ${({ $showSearchBar }) => ($showSearchBar ? "20rem" : "35px")};
   height: 35px;
   padding-left: 2rem;
   background-color: var(--main-bright);
@@ -42,6 +43,13 @@ const StyledFilterSection = styled.section`
   justify-content: center;
   align-items: center;
   background-color: var(--section-background-contrast);
+  width: 20rem;
+  @media ${devices.largeMobile} {
+    width: 22rem;
+  }
+  @media ${devices.tablet} {
+    width: 30rem;
+  }
 `;
 
 const StyledFilterButton = styled(StyledButton)`
@@ -65,7 +73,7 @@ const StyledButtonGroup = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   padding: 0.6rem;
-  width: 90vw;
+  //width: 90vw;
   gap: 10px;
 `;
 
