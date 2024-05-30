@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
 
+  const [useExampleData, setUseExampleDate] = useState(false);
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -93,14 +94,13 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  const { data, isLoading, error } = useSWR("/api/emotionEntries", fetcher);
+  function handleUseExampleData() {
+    setUseExampleDate(!useExampleData);
+  }
+
+  const { data, isLoading } = useSWR("/api/emotionEntries", fetcher);
 
   if (isLoading) return <h1>Loading...</h1>;
-
-  // if (data) console.log(data);
-  // if (!data) console.log("fail");
-
-  console.log(db.getMongo());
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -114,7 +114,7 @@ export default function App({ Component, pageProps }) {
     setToolTip(toolTipData);
   }
 
-  function handleAddEmotionEntry(data, id) {
+  async function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
@@ -124,7 +124,22 @@ export default function App({ Component, pageProps }) {
       isoDate: new Date().toISOString(),
     };
 
-    setEmotionEntries([newEntry, ...emotionEntries]);
+    if (useExampleData) {
+      setEmotionEntries([newEntry, ...emotionEntries]);
+      console.log(emotionEntries);
+    } else {
+      const response = await fetch("/api/emotionEntries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newEntry),
+      });
+
+      if (!response.ok) {
+        console.log("Fail");
+      }
+    }
   }
 
   function handleAddEmotionDetails(data, id) {
@@ -161,6 +176,8 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(backupEntries);
   }
 
+  console.log(useExampleData ? emotionEntries : data);
+  
   return (
     <ThemeProvider theme={theme}>
       <SWRConfig value={{ fetcher }}></SWRConfig>
@@ -178,7 +195,7 @@ export default function App({ Component, pageProps }) {
           handleToolTip={handleToolTip}
           theme={theme}
           onAddEmotionDetails={handleAddEmotionDetails}
-          emotionEntries={emotionEntries}
+          emotionEntries={useExampleData ? emotionEntries : data}
           onAddEmotionEntry={handleAddEmotionEntry}
           onDeleteEmotionEntry={handleDeleteEmotionEntry}
           onReplaceUserData={handleReplaceAndBackup}
@@ -186,6 +203,8 @@ export default function App({ Component, pageProps }) {
           onRestore={restoreFromBackup}
           backupEntries={backupEntries}
           toggleHighlight={toggleHighlight}
+          toggleExampleData={handleUseExampleData}
+          useExampleData={useExampleData}
           {...pageProps}
         />
       </Layout>

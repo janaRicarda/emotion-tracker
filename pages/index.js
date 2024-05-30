@@ -10,6 +10,7 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
+import ToggleSwitch from "@/components/ToggleSwitch";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -19,6 +20,14 @@ const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
   align-items: center;
   width: 80vw;
+`;
+
+const ToggleSwitchWrapper = styled.div`
+  position: relative;
+  top: 0px;
+  left: 100px;
+  transform: scale(0.7);
+  padding: 0.1rem;
 `;
 
 const StyledTensionLabel = styled.label`
@@ -81,6 +90,8 @@ export default function HomePage({
   handleToolTip,
   emotionEntries,
   theme,
+  toggleExampleData,
+  useExampleData,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
@@ -128,6 +139,13 @@ export default function HomePage({
   return (
     <>
       <StyledFlexColumnWrapper>
+        <ToggleSwitchWrapper>
+          <ToggleSwitch
+            handleSwitch={toggleExampleData}
+            isChecked={useExampleData}
+            text={"Use Example data"}
+          />
+        </ToggleSwitchWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
             On a scale from 0 to 100, how tense do you feel in this moment?
