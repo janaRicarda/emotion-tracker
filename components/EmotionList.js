@@ -30,6 +30,8 @@ const StyledCircle = styled.article`
     top: calc(100vh - 80%);
   }
   @media ${devices.laptop} {
+    top: calc(100vh - 85%);
+    z-index: 2;
   }
 `;
 

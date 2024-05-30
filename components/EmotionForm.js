@@ -105,8 +105,8 @@ const ToggleSwitch = styled(Circle)`
 `;
 
 export default function EmotionForm({
-  slug,
   theme,
+  slug,
   editMode,
   onSubmit,
   id,
@@ -209,7 +209,13 @@ export default function EmotionForm({
 
   return (
     <>
-      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
+      <StyledEmotionForm
+        $color={
+          theme === darkTheme ? `var(--section-background)` : `${colorValue}`
+        }
+        $text={theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`}
+        onSubmit={handleSubmit}
+      >
         <StyledTitle>
           {editMode
             ? emotionValue

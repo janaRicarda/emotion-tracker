@@ -6,7 +6,7 @@ export const lightTheme = {
   textOnDark: "#f1eaea",
   buttonBackground: "lightskyblue",
   sectionBackground: "#f1eaea",
-  sectionBackgroundContrast: "#f5e8d7",
+  sectionBackgroundContrast: "#f1eaea",
   contrastBright: "#f1eaea",
   red: "#cc0100",
   green: "#00b400",

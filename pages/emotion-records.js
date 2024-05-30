@@ -27,6 +27,11 @@ const GridWrapper = styled.section`
   background-color: var(--section-background-contrast);
   //color: var(--text-on-bright);
   z-index: 2;
+  @media ${devices.laptop} {
+    left: 0;
+    width: 22rem;
+    margin-left: 0.5rem;
+  }
 `;
 
 const ControllOverflow = styled.div`

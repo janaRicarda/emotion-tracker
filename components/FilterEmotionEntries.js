@@ -50,6 +50,9 @@ const StyledFilterSection = styled.section`
   @media ${devices.tablet} {
     width: 30rem;
   }
+  @media ${devices.laptop} {
+    width: 20rem;
+  }
 `;
 
 const StyledFilterButton = styled(StyledButton)`

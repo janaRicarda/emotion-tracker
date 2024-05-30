@@ -23,11 +23,10 @@ const StyledTooltipQuestionmark = styled(Info)`
 `;
 
 const StyledTooltipWrapper = styled.div`
-  //margin-top: 2.5rem;
+  margin-top: 2rem;
   //position: absolute;
   position: fixed;
-  //right: 0.5rem;
-  right: 4rem;
+  right: 0.5rem;
   left: 0.5rem;
   //margin-right: 1rem;
   border-radius: 1rem;
@@ -40,17 +39,17 @@ const StyledTooltipWrapper = styled.div`
   box-shadow: var(--box-shadow-filter);
 
   top: 100px;
-  &:after {
-    content: "";
-    position: absolute;
-    top: -2rem;
-    right: 0;
-    //margin-right: 1.8rem;
-    border-width: 1.5rem;
-    border-style: solid;
-    border-color: transparent transparent var(--section-background-contrast)
-      transparent;
-  }
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   top: -2rem;
+  //   right: 0.5rem;
+  //   //margin-right: 1.8rem;
+  //   border-width: 1.5rem;
+  //   border-style: solid;
+  //   border-color: transparent transparent var(--section-background-contrast)
+  //     transparent;
+  // }
   @media ${devices.largeMobile} {
     margin-left: 5rem;
   }
@@ -58,7 +57,9 @@ const StyledTooltipWrapper = styled.div`
     margin-left: 20rem;
   }
   @media ${devices.laptop} {
-    margin-left: 40rem;
+    position: fixed;
+    margin-top: 7rem;
+    margin-left: 58rem;
   }
   @media ${devices.desktop} {
     margin-left: 50rem;
@@ -72,6 +73,7 @@ const StyledClose = styled(Close)`
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 1;
 `;
 
 const StyledTooltipInfo = styled.p`
