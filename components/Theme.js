@@ -1,11 +1,11 @@
 export const lightTheme = {
-  background: "#f1eaea",
+  background: "#e9e3e3",
   text: "#030352",
   contrastText: "#030352",
   textOnBright: "#030352",
   textOnDark: "#f1eaea",
   buttonBackground: "lightskyblue",
-  sectionBackground: "#e9e3e3",
+  sectionBackground: "#f1eaea",
   sectionBackgroundContrast: "#f5e8d7",
   contrastBright: "#f1eaea",
   red: "#cc0100",
