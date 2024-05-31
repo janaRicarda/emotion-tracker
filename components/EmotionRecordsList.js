@@ -104,78 +104,93 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
+  function sortEntries(a, b) {
+    if (a.isoDate > b.isoDate) {
+      return -1;
+    }
+    if (a.isoDate < b.isoDate) {
+      return 1;
+    }
+    return 0;
+  }
+
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
-        {shownEntries.map(
-          ({
-            id,
-            _id,
-            timeAndDate,
-            tensionLevel,
-            trigger,
-            intensity,
-            notes,
-            category,
-            emotion,
-            subemotion,
-            isHighlighted,
-          }) => {
-            return (
-              <section key={id}>
-                <StyledRecordListItem>
-                  <StyledParagraph onClick={() => handleShowDetails(id)}>
-                    {timeAndDate}
-                  </StyledParagraph>
-                  <StyledEditButton
-                    aria-label="Edit emotion entry"
-                    onClick={() =>
-                      editFromDevControls
-                        ? router.push(`edit/${useExampleData ? id : _id}`)
-                        : router.push(`./edit/${useExampleData ? id : _id}`)
-                    }
-                  />
-                  <StyledDeleteButton
-                    type="button"
-                    aria-label="Delete Emotion Entry"
-                    onClick={() => {
-                      handleShowConfirmMessage(id);
-                    }}
-                  />
-                  {isHighlighted ? (
-                    <StyledFilledButton onClick={() => toggleHighlight(id)} />
-                  ) : (
-                    <StyledOutlineButton onClick={() => toggleHighlight(id)} />
+        {shownEntries
+          .sort(sortEntries)
+          .map(
+            ({
+              id,
+              _id,
+              timeAndDate,
+              tensionLevel,
+              trigger,
+              intensity,
+              notes,
+              category,
+              emotion,
+              subemotion,
+              isHighlighted,
+            }) => {
+              return (
+                <section key={id}>
+                  <StyledRecordListItem>
+                    <StyledParagraph onClick={() => handleShowDetails(id)}>
+                      {timeAndDate}
+                    </StyledParagraph>
+                    <StyledEditButton
+                      aria-label="Edit emotion entry"
+                      onClick={() =>
+                        editFromDevControls
+                          ? router.push(`edit/${useExampleData ? id : _id}`)
+                          : router.push(`./edit/${useExampleData ? id : _id}`)
+                      }
+                    />
+                    <StyledDeleteButton
+                      type="button"
+                      aria-label="Delete Emotion Entry"
+                      onClick={() => {
+                        handleShowConfirmMessage(id);
+                      }}
+                    />
+                    {isHighlighted ? (
+                      <StyledFilledButton onClick={() => toggleHighlight(id)} />
+                    ) : (
+                      <StyledOutlineButton
+                        onClick={() => toggleHighlight(id)}
+                      />
+                    )}
+                  </StyledRecordListItem>
+                  {showConfirmMessage[id] && (
+                    <ConfirmMessage
+                      toggleMessage={handleShowConfirmMessage}
+                      itemId={id}
+                      itemText={timeAndDate}
+                      confirmFunction={onDeleteEmotionEntry}
+                      cancelButtonText={"Keep it!"}
+                      confirmButtonText={"Delete it!"}
+                      cancelButtonColor={"var(--green)"}
+                      confirmButtonColor={"var(--red)"}
+                    >
+                      Do you want to delete this entry?
+                    </ConfirmMessage>
                   )}
-                </StyledRecordListItem>
-                {showConfirmMessage[id] && (
-                  <ConfirmMessage
-                    toggleMessage={handleShowConfirmMessage}
-                    itemId={id}
-                    itemText={timeAndDate}
-                    confirmFunction={onDeleteEmotionEntry}
-                    cancelButtonText={"Keep it!"}
-                    confirmButtonText={"Delete it!"}
-                    cancelButtonColor={"var(--green)"}
-                    confirmButtonColor={"var(--red)"}
-                  >
-                    Do you want to delete this entry?
-                  </ConfirmMessage>
-                )}
-                <StyledDetails $showDetails={showDetails[id]}>
-                  <li>Tension Level: {tensionLevel}%</li>
-                  {emotion && <li>Emotion: {emotion}</li>}
-                  {subemotion && <li>Subemotion: {subemotion}</li>}
-                  {intensity && <li>Intensity: {intensity}%</li>}
-                  {category && <li>Pleasantness: {category}%</li>}
-                  {trigger && <li>Trigger: {trigger}</li>}
-                  {notes && <li>Notes: {notes}</li>}
-                </StyledDetails>
-              </section>
-            );
-          }
-        )}
+                  <StyledDetails $showDetails={showDetails[id]}>
+                    <li>Tension Level: {tensionLevel}%</li>
+                    {emotion && <li>Emotion: {emotion}</li>}
+                    {subemotion && <li>Subemotion: {subemotion}</li>}
+                    {intensity && <li>Intensity: {intensity}%</li>}
+                    {category && <li>Pleasantness: {category}%</li>}
+                    {trigger && <li>Trigger: {trigger}</li>}
+                    {notes && <li>Notes: {notes}</li>}
+                  </StyledDetails>
+                </section>
+              );
+            }
+          )}
       </StyledRecordsList>
     </>
   );
