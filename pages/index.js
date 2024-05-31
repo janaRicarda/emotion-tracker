@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uid } from "uid";
 import {
   StyledWrapper,
@@ -63,16 +63,24 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   width: 10rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: ${({ $actionButton }) =>
-    $actionButton ? "var(--button-background)" : "white"};
-  border: ${({ $actionButton }) =>
-    $actionButton ? "1px solid black" : "none"};
+  background-color: var(--button-background);
 `;
 
-export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
+export default function HomePage({
+  onAddEmotionEntry,
+  handleToolTip,
+  emotionEntries,
+  theme,
+}) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
+
+  useEffect(() => {
+    handleToolTip({
+      text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
+    });
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -88,11 +96,6 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
 
   return (
     <>
-      <Tooltip onClick={handleToggleTooltip}>
-        On this page, you can indicate your level of tension on a range scale
-        from 0 to 100. Afterward, simply press the Save-button to record your
-        input.
-      </Tooltip>
       <StyledFlexColumnWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
@@ -104,6 +107,7 @@ export default function HomePage({ onAddEmotionEntry, handleToggleTooltip }) {
             name="tensionLevel"
             type="range"
             value={tension}
+            $value={tension}
             max={100}
             onChange={(event) => setTension(event.target.value)}
           />

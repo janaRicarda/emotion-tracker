@@ -5,13 +5,18 @@ import {
   StyledButton,
   StyledWrapper,
 } from "@/SharedStyledComponents";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
-import Tooltip from "@/components/Tooltip";
+import SmallFilterPanel from "@/components/SmallFilterPanel";
+
+// used for all transitions
+const transition = css`
+  transition: all 300ms ease;
+`;
 import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
 import ErrorMessage from "@/components/ErrorMessage";
@@ -21,15 +26,60 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   loading: () => <Loader itemText="... loading" />,
 });
 
-const StyledTopSection = styled(StyledFlexColumnWrapper)`
-  position: sticky;
-  top: 99px;
+const GridWrapper = styled.section`
+  box-shadow: ${({ $show }) => ($show ? "var(--box-shadow-filter)" : null)};
+  position: fixed;
+  padding: ${({ $show }) => ($show ? "1rem" : "0")};
+  border-radius: 1rem;
+  top: 200px;
+  max-width: 500px;
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  ${transition}
+  background-color: var(--section-background-contrast);
+  //color: var(--text-on-bright);
+  z-index: 2;
+`;
+
+const ControllOverflow = styled.div`
+  overflow: hidden;
+`;
+
+const ControlPadding = styled.div`
+  margin-top: 5rem;
+  /* z-index: -1; */
+`;
+
+const StyledHeading = styled(StyledTitle)`
+  width: 100%;
+  padding: 1rem 0;
+  position: fixed;
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "110px")};
+  ${transition}
   background-color: var(--main-bright);
   z-index: 1;
 `;
 
+const Background = styled.div`
+  inset: 0;
+  position: absolute;
+  background: transparent;
+  display: ${({ $show }) => ($show ? "block" : "none")};
+  z-index: 2;
+`;
+const AnimatedPanel = styled.div`
+  width: 90vw;
+  margin: 0.5rem;
+  border-top: 1px solid black;
+  background-color: var(--main-bright);
+  position: fixed;
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
+  ${transition}
+  z-index: 1;
+`;
+
 const StyledTextMessage = styled.article`
-  margin-top: 4rem;
+  margin-top: 8rem;
   text-align: center;
   line-height: 3;
   display: flex;
@@ -75,7 +125,12 @@ const StyledDateIndicator = styled.article`
 
 const StyledParagraph = styled.p`
   text-align: center;
-  padding: 0.5rem;
+`;
+
+const StyledDateSpan = styled.span`
+  background-color: var(--button-background);
+  border-radius: 50px;
+  padding: 0 0.5rem;
 `;
 
 const StyledButtonWrapper = styled(StyledWrapper)`
@@ -87,7 +142,8 @@ export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
-  handleToggleTooltip,
+  handleToolTip,
+  isScrollDown,
   theme,
 }) {
   const [searchTerm, setSearchTerm] = useState();
@@ -111,7 +167,17 @@ export default function EmotionRecords({
     emoCount: [],
   });
 
-  // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
+  const [showFilter, setShowFilter] = useState(false);
+
+  useEffect(() => {
+    handleToolTip({
+      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+    });
+  }, []);
+
+  useEffect(() => {
+    setShowFilter(false);
+  }, [buttonState]);
 
   const handleSetFilterEntries = useCallback((filteredObject) => {
     setFilteredEntries(filteredObject);
@@ -145,14 +211,30 @@ export default function EmotionRecords({
 
   function DisplayDate() {
     return (
-      <StyledParagraph>
-        Your Selection:<br></br>
-        {getFormattedDate(selectedTime.from)}
-        {selectedTime.to &&
-          selectedTime.from.toString() !== selectedTime.to.toString() &&
-          " - " + getFormattedDate(selectedTime.to)}
+      <StyledParagraph aria-label="Selected Date">
+        <StyledDateSpan>
+          {getFormattedDate(selectedTime.from)}
+          {selectedTime.to &&
+            selectedTime.from.toString() !== selectedTime.to.toString() &&
+            " - " + getFormattedDate(selectedTime.to)}
+        </StyledDateSpan>
       </StyledParagraph>
     );
+  }
+
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === "Escape") {
+        setShowFilter(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscapeKey);
+  });
+
+  function closeOnKey(event) {
+    if (event.code === "Enter") {
+      setShowFilter(false);
+    }
   }
 
   //logic for Graph
@@ -241,16 +323,12 @@ export default function EmotionRecords({
 
   return (
     <>
-      <Tooltip onClick={handleToggleTooltip}>
-        Navigate through your emotion records list, a comprehensive compilation
-        of all your added emotion entries. You can easily search for specific
-        entries, edit or delete them, and even highlight important moments.
-        Also, you can search through your entries or filter them by the
-        following options: today, last week, or last month.
-      </Tooltip>
-      <StyledFlexColumnWrapper>
-        <StyledTopSection>
-          <StyledTitle>Recorded Emotions</StyledTitle>
+      <Background $show={showFilter} onClick={() => setShowFilter(false)} />
+      <StyledHeading $isScrollDown={isScrollDown}>
+        Recorded Emotions
+      </StyledHeading>
+      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
+        <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
             filteredEntries={filteredEntries}
@@ -264,133 +342,144 @@ export default function EmotionRecords({
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
           />
-        </StyledTopSection>
-        {xValues.length === 0 ? (
-          <ErrorMessage itemText="No Data for Graph" />
-        ) : chartState.chartIsShown === true ? (
-          <EmotionChart
-            theme={theme}
-            type={chartState.type}
-            xValues={xValues}
-            yValues={yValues}
-            xTitle={chartState.xTitle}
-            yTitle={chartState.yTitle}
-            title={chartState.title}
-          />
-        ) : null}
-
-        <StyledButtonWrapper>
-          <StyledGraphButton type="button" onClick={handleChart}>
-            {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
-          </StyledGraphButton>
-          <StyledGraphButton
-            type="button"
-            onClick={() =>
-              setChartState({
-                ...chartState,
-                type:
-                  chartState.type === "scatter"
-                    ? "bar"
-                    : chartState.type === "bar"
-                    ? "scatter"
-                    : "scatter",
-              })
-            }
-          >
-            Switch Type
-          </StyledGraphButton>
-
-          <StyledGraphButton
-            type="button"
-            onClick={() =>
-              setChartState({
-                ...chartState,
-                yTitle: "tension",
-                Title: "Tension Chart",
-              })
-            }
-          >
-            Tension
-          </StyledGraphButton>
-
-          <StyledGraphButton
-            type="button"
-            onClick={() =>
-              setChartState({
-                ...chartState,
-                yTitle: "intensity",
-                Title: "Intensity Chart",
-              })
-            }
-          >
-            Intensity
-          </StyledGraphButton>
-          <StyledGraphButton
-            type="button"
-            onClick={() => {
-              const newEmocount = countEmotions(shownEntries);
-              setChartState({ ...chartState, emoCount: newEmocount });
-              console.log(chartState);
-            }}
-          >
-            Count emotions
-          </StyledGraphButton>
-        </StyledButtonWrapper>
-        <ul>
-          {chartState.emoCount.map((element) => (
-            <li key={element.emotion}>
-              {element.emotion}: {element.foundEntries.length}
-            </li>
-          ))}
-        </ul>
+        </ControllOverflow>
+      </GridWrapper>
+      <AnimatedPanel
+        onClick={() => setShowFilter(!showFilter)}
+        $isScrollDown={isScrollDown}
+      >
+        <SmallFilterPanel
+          buttonState={buttonState}
+          searchTerm={searchTerm}
+          DisplayDate={DisplayDate}
+          selectedTime={selectedTime}
+        />
+      </AnimatedPanel>
+      {xValues.length === 0 ? (
+        <ErrorMessage itemText="No Data for Graph" />
+      ) : chartState.chartIsShown === true ? (
         <EmotionChart
           theme={theme}
-          type="bar"
-          title="Test Emotion chart"
-          xValues={chartState.emoCount.map((element) => element.emotion)}
-          yValues={chartState.emoCount.map((element) => element.count)}
-          xTitle="emotions"
-          yTitle="count"
+          type={chartState.type}
+          xValues={xValues}
+          yValues={yValues}
+          xTitle={chartState.xTitle}
+          yTitle={chartState.yTitle}
+          title={chartState.title}
         />
-        {buttonState.datePicker ? (
-          selectedTime ? (
-            <DisplayDate />
-          ) : (
-            <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
-            </StyledDateIndicator>
-          )
-        ) : null}
-        {shownEntries.length === 0 &&
-          (filteredEntries.length === 0 ? (
-            buttonState.highlightedButton ? (
-              <StyledTextMessage>
-                You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.
-              </StyledTextMessage>
-            ) : buttonState.todayButton ? (
-              <StyledTextMessage>
-                You haven&apos;t made any Entries today.<br></br>
-                <StyledLink href="./">add Entry &rarr;</StyledLink>
-              </StyledTextMessage>
-            ) : (
-              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-            )
+      ) : null}
+
+      <StyledButtonWrapper>
+        <StyledGraphButton type="button" onClick={handleChart}>
+          {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
+        </StyledGraphButton>
+        <StyledGraphButton
+          type="button"
+          onClick={() =>
+            setChartState({
+              ...chartState,
+              type:
+                chartState.type === "scatter"
+                  ? "bar"
+                  : chartState.type === "bar"
+                  ? "scatter"
+                  : "scatter",
+            })
+          }
+        >
+          Switch Type
+        </StyledGraphButton>
+
+        <StyledGraphButton
+          type="button"
+          onClick={() =>
+            setChartState({
+              ...chartState,
+              yTitle: "tension",
+              Title: "Tension Chart",
+            })
+          }
+        >
+          Tension
+        </StyledGraphButton>
+
+        <StyledGraphButton
+          type="button"
+          onClick={() =>
+            setChartState({
+              ...chartState,
+              yTitle: "intensity",
+              Title: "Intensity Chart",
+            })
+          }
+        >
+          Intensity
+        </StyledGraphButton>
+        <StyledGraphButton
+          type="button"
+          onClick={() => {
+            const newEmocount = countEmotions(shownEntries);
+            setChartState({ ...chartState, emoCount: newEmocount });
+            console.log(chartState);
+          }}
+        >
+          Count emotions
+        </StyledGraphButton>
+      </StyledButtonWrapper>
+      <ul>
+        {chartState.emoCount.map((element) => (
+          <li key={element.emotion}>
+            {element.emotion}: {element.foundEntries.length}
+          </li>
+        ))}
+      </ul>
+      <EmotionChart
+        theme={theme}
+        type="bar"
+        title="Test Emotion chart"
+        xValues={chartState.emoCount.map((element) => element.emotion)}
+        yValues={chartState.emoCount.map((element) => element.count)}
+        xTitle="emotions"
+        yTitle="count"
+      />
+      {buttonState.datePicker ? (
+        selectedTime ? (
+          <DisplayDate textAlign="center" />
+        ) : (
+          <StyledDateIndicator>
+            Click the calendar <StyledCalendarIcon /> and select a date
+          </StyledDateIndicator>
+        )
+      ) : null}
+      {shownEntries.length === 0 &&
+        (filteredEntries.length === 0 ? (
+          buttonState.highlightedButton ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.
+            </StyledTextMessage>
+          ) : buttonState.todayButton ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          ))}
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
 
-        {shownEntries.length !== 0 && (
-          <>
-            <EmotionRecordsList
-              onDeleteEmotionEntry={onDeleteEmotionEntry}
-              toggleHighlight={toggleHighlight}
-              shownEntries={shownEntries}
-              filteredEntries={filteredEntries}
-            />
-          </>
-        )}
-      </StyledFlexColumnWrapper>
+      {shownEntries.length !== 0 && (
+        <ControlPadding>
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+          />
+        </ControlPadding>
+      )}
     </>
   );
 }

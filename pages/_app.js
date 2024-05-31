@@ -11,7 +11,10 @@ export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
-  const initialData = generateExampleData();
+  const [toolTip, setToolTip] = useState();
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isScrollDown, setIsScrollDown] = useState(false);
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
@@ -21,28 +24,29 @@ export default function App({ Component, pageProps }) {
   );
 
   // use-effect for mediaquery
-
+  
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const userPrefersDark = mediaQuery.matches;
-
+    
     if (userPrefersDark) {
       setTheme(darkTheme);
     } else {
       setTheme(lightTheme);
     }
-
+    
     const handleChange = (event) => {
       setTheme(event.matches ? darkTheme : lightTheme);
     };
-
+    
     mediaQuery.addEventListener("change", handleChange);
-
+    
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
   }, []);
-
+  
+  const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
@@ -60,12 +64,42 @@ export default function App({ Component, pageProps }) {
     }
   );
 
+  useEffect(() => {
+    function handleScroll() {
+      const pageHeight = document.documentElement.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // stops resizing of elements and prevents resizing-loops when there is not enough space on the page
+      const enoughSpace = pageHeight - windowHeight > 400;
+      const currentScroll = document.documentElement.scrollTop;
+
+      if (!enoughSpace) {
+        setIsScrollDown(false);
+        return;
+      }
+      if (currentScroll < scrollPosition) {
+        setIsScrollDown(false);
+      } else if (currentScroll > scrollPosition) {
+        setIsScrollDown(true);
+      }
+      setScrollPosition(document.documentElement.scrollTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
 
   function switchTheme(customTheme) {
     setTheme(customTheme);
+  }
+
+  function handleToolTip(toolTipData) {
+    setToolTip(toolTipData);
   }
 
   function handleAddEmotionEntry(data, id) {
@@ -120,8 +154,17 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Layout theme={theme} toggleTheme={toggleTheme} switchTheme={switchTheme}>
+      <Layout
+        toolTip={toolTip}
+        theme={theme}
+        isScrollDown={isScrollDown}
+        scrollPosition={scrollPosition}
+        toggleTheme={toggleTheme}
+        switchTheme={switchTheme}
+      >
         <Component
+          isScrollDown={isScrollDown}
+          handleToolTip={handleToolTip}
           theme={theme}
           onAddEmotionDetails={handleAddEmotionDetails}
           emotionEntries={emotionEntries}
