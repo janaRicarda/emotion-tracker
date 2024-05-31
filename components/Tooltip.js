@@ -16,7 +16,8 @@ const StyledTooltipQuestionmark = styled(Info)`
   border-radius: 50%;
   width: 2rem;
   position: fixed;
-  top: 90px;
+  //top: 90px;
+  top: 100px;
   right: 1.5rem;
   z-index: 2;
   transition: all 300ms ease;
@@ -30,7 +31,7 @@ const StyledTooltipWrapper = styled.div`
   left: 0.5rem;
   //margin-right: 1rem;
   border-radius: 1rem;
-  //border-radius: 2rem 0 2rem 2rem;
+  border-radius: 2rem 0 2rem 2rem;
   //border: 2rem;
   background-color: var(--section-background-contrast);
   z-index: 2;
@@ -52,17 +53,20 @@ const StyledTooltipWrapper = styled.div`
   // }
   @media ${devices.largeMobile} {
     margin-left: 5rem;
+    margin-right: 1rem;
   }
   @media ${devices.tablet} {
     margin-left: 20rem;
+    mergin-right: 1rem;
   }
   @media ${devices.laptop} {
     position: fixed;
     margin-top: 7rem;
     margin-left: 58rem;
+    margin-right: 1rem;
   }
   @media ${devices.desktop} {
-    margin-left: 50rem;
+    margin-left: 60rem;
   }
 `;
 

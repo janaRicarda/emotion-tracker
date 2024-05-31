@@ -50,21 +50,21 @@ const StyledSubemotionsList = styled(StyledList)`
 `;
 
 const PrevLink = styled(StyledFixedLink)`
-  left: 0;
+  left: -0.5rem;
 `;
 
 const NextLink = styled(StyledFixedLink)`
-  right: 0;
+  right: -0.5rem;
 `;
 const StyledChevronPrev = styled(ChevronPrev)`
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3rem;
   fill: ${({ $text }) => $text};
 `;
 
 const StyledChevronNext = styled(ChevronNext)`
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 3rem;
+  height: 3rem;
   fill: ${({ $text }) => $text};
 `;
 

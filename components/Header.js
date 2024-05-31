@@ -8,6 +8,7 @@ import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
 import Tooltip from "./Tooltip";
+import { devices } from "@/utils/devices";
 
 // used for all transition in this component
 const transition = css`
@@ -39,7 +40,7 @@ const StyledMenu = styled.div`
 const StyledHeader = styled.header`
   width: 100%;
   display: flex;
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "100px")};
   ${transition}
   transition-property: height;
   justify-content: space-between;
@@ -77,6 +78,12 @@ const ToolTipWrapper = styled.div`
   ${transition}
 `;
 
+const StyledLogoLink = styled(StyledStandardLink)`
+  @media ${devices.laptop} {
+    z-index: 3;
+  }
+`;
+
 const StyledLogo = styled(Logo)`
   max-width: 8rem;
   max-height: 8rem;
@@ -102,9 +109,9 @@ export default function Header({
   return (
     <>
       <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
-        <StyledStandardLink href="/">
+        <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
-        </StyledStandardLink>
+        </StyledLogoLink>
         <ToolTipWrapper $isScrollDown={isScrollDown}>
           {/* {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />} */}
           <StyledIconWrapper $isScrollDown={isScrollDown}>

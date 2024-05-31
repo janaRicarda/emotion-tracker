@@ -14,9 +14,7 @@ export default function EmotionListPage({ handleToolTip }) {
 
   return (
     <>
-      <StyledFixedTitle $color={"var(--main-dark)"}>
-        The 7 basic emotions
-      </StyledFixedTitle>
+      <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
       <StyledFlexColumnWrapper>
         <EmotionList />
       </StyledFlexColumnWrapper>

@@ -31,9 +31,10 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledFixedTitle = styled(StyledTitle)`
-  color: ${({ $color }) => $color};
+  color: var(--main-dark);
   width: 100%;
   position: fixed;
+  margin-top: 1.5rem;
   top: 100px;
   left: 0;
   padding: 0 1rem 0 1rem;
@@ -46,9 +47,10 @@ const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border-radius: 6px;
-  color: var(--text);
+  //color: var(--text);
+  color: var(--text-on-bright);
 `;
-
+("");
 const StyledFixedLink = styled(Link)`
   position: fixed;
   top: 50%;
