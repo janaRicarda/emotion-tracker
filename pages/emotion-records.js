@@ -94,12 +94,6 @@ const StyledLink = styled(StyledStandardLink)`
   color: var(--contrast-text);
 `;
 
-const StyledGraphButton = styled(StyledButton)`
-  width: fit-content;
-  padding: 0.5rem;
-  border-style: none;
-`;
-
 const StyledHeartSymbol = styled(HeartOutlineIcon)`
   width: 1.4rem;
   display: inline;
@@ -133,9 +127,31 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
-const StyledButtonWrapper = styled(StyledWrapper)`
-  width: 30vw;
+const ChartWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  border: 1px solid black;
+  flex-direction: row;
+  justify-content: space-around;
+  /* grid-template-columns: 1fr 10fr 10fr; */
+  background-color: var(--section-background-contrast);
+  z-index: 2;
+`;
+
+const ChartPlaceholder = styled.div`
+  width: 400px;
+`;
+
+const StyledGraphButton = styled(StyledButton)`
+  width: fit-content;
+  padding: 0.5rem;
+  border-style: none;
+`;
+
+const StyledGraphButtonsWrapper = styled(StyledFlexColumnWrapper)`
+  width: 100px;
   align-items: center;
+  position: relative;
 `;
 
 export default function EmotionRecords({
@@ -317,7 +333,6 @@ export default function EmotionRecords({
     setChartState({
       ...chartState,
       chartIsShown: !chartState.chartIsShown,
-      xValues: xValues,
     });
   }
 
@@ -355,85 +370,86 @@ export default function EmotionRecords({
           selectedTime={selectedTime}
         />
       </AnimatedPanel>
-      {xValues.length === 0 ? (
-        <ErrorMessage itemText="No Data for Graph" />
-      ) : chartState.chartIsShown === true ? (
-        <EmotionChart
-          theme={theme}
-          type={chartState.type}
-          xValues={xValues}
-          yValues={yValues}
-          xTitle={chartState.xTitle}
-          yTitle={chartState.yTitle}
-          title={chartState.title}
-        />
-      ) : null}
+      <ChartWrapper>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </ChartWrapper>
+      <ChartWrapper>
+        <StyledGraphButtonsWrapper>
+          <StyledGraphButton type="button" onClick={handleChart}>
+            {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
+          </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                type:
+                  chartState.type === "scatter"
+                    ? "bar"
+                    : chartState.type === "bar"
+                    ? "scatter"
+                    : "scatter",
+              })
+            }
+          >
+            Switch Type
+          </StyledGraphButton>
 
-      <StyledButtonWrapper>
-        <StyledGraphButton type="button" onClick={handleChart}>
-          {chartState.chartIsShown === true ? "Hide chart" : "Show chart"}
-        </StyledGraphButton>
-        <StyledGraphButton
-          type="button"
-          onClick={() =>
-            setChartState({
-              ...chartState,
-              type:
-                chartState.type === "scatter"
-                  ? "bar"
-                  : chartState.type === "bar"
-                  ? "scatter"
-                  : "scatter",
-            })
-          }
-        >
-          Switch Type
-        </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                yTitle: "tension",
+                Title: "Tension Chart",
+              })
+            }
+          >
+            Tension
+          </StyledGraphButton>
 
-        <StyledGraphButton
-          type="button"
-          onClick={() =>
-            setChartState({
-              ...chartState,
-              yTitle: "tension",
-              Title: "Tension Chart",
-            })
-          }
-        >
-          Tension
-        </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() =>
+              setChartState({
+                ...chartState,
+                yTitle: "intensity",
+                Title: "Intensity Chart",
+              })
+            }
+          >
+            Intensity
+          </StyledGraphButton>
+          <StyledGraphButton
+            type="button"
+            onClick={() => {
+              const newEmocount = countEmotions(shownEntries);
+              setChartState({ ...chartState, emoCount: newEmocount });
+              console.log(chartState);
+            }}
+          >
+            emotions
+          </StyledGraphButton>
+        </StyledGraphButtonsWrapper>
+        <div>TEST TEST</div>
+        <ChartPlaceholder>
+          {chartState.chartIsShown === true ? (
+            <EmotionChart
+              theme={theme}
+              type={chartState.type}
+              xValues={xValues}
+              yValues={yValues}
+              xTitle={chartState.xTitle}
+              yTitle={chartState.yTitle}
+              title={chartState.title}
+            />
+          ) : null}
+        </ChartPlaceholder>
+      </ChartWrapper>
 
-        <StyledGraphButton
-          type="button"
-          onClick={() =>
-            setChartState({
-              ...chartState,
-              yTitle: "intensity",
-              Title: "Intensity Chart",
-            })
-          }
-        >
-          Intensity
-        </StyledGraphButton>
-        <StyledGraphButton
-          type="button"
-          onClick={() => {
-            const newEmocount = countEmotions(shownEntries);
-            setChartState({ ...chartState, emoCount: newEmocount });
-            console.log(chartState);
-          }}
-        >
-          Count emotions
-        </StyledGraphButton>
-      </StyledButtonWrapper>
-      <ul>
-        {chartState.emoCount.map((element) => (
-          <li key={element.emotion}>
-            {element.emotion}: {element.foundEntries.length}
-          </li>
-        ))}
-      </ul>
-      <EmotionChart
+      {/* <EmotionChart
         theme={theme}
         type="bar"
         title="Test Emotion chart"
@@ -441,7 +457,16 @@ export default function EmotionRecords({
         yValues={chartState.emoCount.map((element) => element.count)}
         xTitle="emotions"
         yTitle="count"
-      />
+      /> */}
+
+      {/* <ul>
+        {chartState.emoCount.map((element) => (
+          <li key={element.emotion}>
+            {element.emotion}: {element.foundEntries.length}
+          </li>
+        ))}
+      </ul> */}
+
       {buttonState.datePicker ? (
         selectedTime ? (
           <DisplayDate textAlign="center" />
