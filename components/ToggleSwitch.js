@@ -11,7 +11,7 @@ const Switch = styled.div`
   position: relative;
   padding: 4px;
   width: 60px;
-  height: 32px;
+  height: 30px;
   background-color: #b3b3b3;
   border-radius: 32px;
   transition: all 300ms;

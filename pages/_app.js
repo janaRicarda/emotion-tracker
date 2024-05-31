@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
-import useSWR, { SWRConfig } from "swr";
+import useSWR, { SWRConfig, mutate } from "swr";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
@@ -98,7 +98,11 @@ export default function App({ Component, pageProps }) {
     setUseExampleDate(!useExampleData);
   }
 
-  const { data, isLoading } = useSWR("/api/emotionEntries", fetcher);
+  const {
+    data: emotionEntriesFromMongo,
+    isLoading,
+    mutate,
+  } = useSWR("/api/emotionEntries", fetcher);
 
   if (isLoading) return <h1>Loading...</h1>;
 
@@ -126,7 +130,6 @@ export default function App({ Component, pageProps }) {
 
     if (useExampleData) {
       setEmotionEntries([newEntry, ...emotionEntries]);
-      console.log(emotionEntries);
     } else {
       const response = await fetch("/api/emotionEntries", {
         method: "POST",
@@ -136,18 +139,39 @@ export default function App({ Component, pageProps }) {
         body: JSON.stringify(newEntry),
       });
 
+      if (response.ok) {
+        mutate();
+      }
+
       if (!response.ok) {
         console.log("Fail");
       }
     }
   }
 
-  function handleAddEmotionDetails(data, id) {
-    setEmotionEntries(
-      emotionEntries.map((entry) =>
-        entry.id === id ? { ...entry, ...data } : entry
-      )
-    );
+  async function handleAddEmotionDetails(data, id) {
+    if (useExampleData) {
+      setEmotionEntries(
+        emotionEntries.map((entry) =>
+          entry.id === id ? { ...entry, ...data } : entry
+        )
+      );
+    } else {
+      const response = await fetch(`/api/emotionEntries/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        mutate();
+      }
+      if (!response.ok) {
+        console.log("fail");
+      }
+    }
   }
 
   function toggleHighlight(id) {
@@ -176,38 +200,39 @@ export default function App({ Component, pageProps }) {
     setEmotionEntries(backupEntries);
   }
 
-  console.log(useExampleData ? emotionEntries : data);
-  
   return (
     <ThemeProvider theme={theme}>
-      <SWRConfig value={{ fetcher }}></SWRConfig>
-      <GlobalStyle />
-      <Layout
-        toolTip={toolTip}
-        theme={theme}
-        isScrollDown={isScrollDown}
-        scrollPosition={scrollPosition}
-        toggleTheme={toggleTheme}
-        switchTheme={switchTheme}
-      >
-        <Component
-          isScrollDown={isScrollDown}
-          handleToolTip={handleToolTip}
+      <SWRConfig value={{ fetcher }}>
+        <GlobalStyle />
+        <Layout
+          toolTip={toolTip}
           theme={theme}
-          onAddEmotionDetails={handleAddEmotionDetails}
-          emotionEntries={useExampleData ? emotionEntries : data}
-          onAddEmotionEntry={handleAddEmotionEntry}
-          onDeleteEmotionEntry={handleDeleteEmotionEntry}
-          onReplaceUserData={handleReplaceAndBackup}
-          onDeleteAll={handleDeleteAll}
-          onRestore={restoreFromBackup}
-          backupEntries={backupEntries}
-          toggleHighlight={toggleHighlight}
-          toggleExampleData={handleUseExampleData}
-          useExampleData={useExampleData}
-          {...pageProps}
-        />
-      </Layout>
+          isScrollDown={isScrollDown}
+          scrollPosition={scrollPosition}
+          toggleTheme={toggleTheme}
+          switchTheme={switchTheme}
+        >
+          <Component
+            isScrollDown={isScrollDown}
+            handleToolTip={handleToolTip}
+            theme={theme}
+            onAddEmotionDetails={handleAddEmotionDetails}
+            emotionEntries={
+              useExampleData ? emotionEntries : emotionEntriesFromMongo
+            }
+            onAddEmotionEntry={handleAddEmotionEntry}
+            onDeleteEmotionEntry={handleDeleteEmotionEntry}
+            onReplaceUserData={handleReplaceAndBackup}
+            onDeleteAll={handleDeleteAll}
+            onRestore={restoreFromBackup}
+            backupEntries={backupEntries}
+            toggleHighlight={toggleHighlight}
+            toggleExampleData={handleUseExampleData}
+            useExampleData={useExampleData}
+            {...pageProps}
+          />
+        </Layout>
+      </SWRConfig>
     </ThemeProvider>
   );
 }

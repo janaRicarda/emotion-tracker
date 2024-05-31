@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const EmotionEntrySchema = new Schema({
-  tensionLevel: { type: String },
+  tensionLevel: { type: Number },
   timeAndDate: { type: String },
   isoDate: { type: String },
   emotion: { type: String },

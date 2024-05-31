@@ -96,7 +96,9 @@ export default function HomePage({
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-  const [chartIsShown, setChartIsShown] = useState(true);
+  const [chartIsShown, setChartIsShown] = useState(false);
+
+  const newest_ID = emotionEntries[emotionEntries.length - 1]._id;
 
   useEffect(() => {
     handleToolTip({
@@ -184,7 +186,10 @@ export default function HomePage({
                   }}
                 />
                 <StyledAddDetailsLink
-                  href={{ pathname: "/create", query: { id: id } }}
+                  href={{
+                    pathname: "/create",
+                    query: { id: useExampleData ? id : newest_ID },
+                  }}
                   forwardedAs={`/create`}
                 >
                   Add more details

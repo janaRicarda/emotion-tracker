@@ -83,6 +83,7 @@ export default function EmotionRecordsList({
   onDeleteEmotionEntry,
   toggleHighlight,
   editFromDevControls,
+  useExampleData,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -110,6 +111,7 @@ export default function EmotionRecordsList({
         {shownEntries.map(
           ({
             id,
+            _id,
             timeAndDate,
             tensionLevel,
             trigger,
@@ -130,8 +132,8 @@ export default function EmotionRecordsList({
                     aria-label="Edit emotion entry"
                     onClick={() =>
                       editFromDevControls
-                        ? router.push(`edit/${id}`)
-                        : router.push(`./edit/${id}`)
+                        ? router.push(`edit/${useExampleData ? id : _id}`)
+                        : router.push(`./edit/${useExampleData ? id : _id}`)
                     }
                   />
                   <StyledDeleteButton
