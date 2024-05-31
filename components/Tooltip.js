@@ -40,17 +40,17 @@ const StyledTooltipWrapper = styled.div`
   box-shadow: var(--box-shadow-filter);
 
   top: 100px;
-  // &:after {
-  //   content: "";
-  //   position: absolute;
-  //   top: -2rem;
-  //   right: 0.5rem;
-  //   //margin-right: 1.8rem;
-  //   border-width: 1.5rem;
-  //   border-style: solid;
-  //   border-color: transparent transparent var(--section-background-contrast)
-  //     transparent;
-  // }
+  &:after {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    right: 0.5rem;
+    margin-right: 1.8rem;
+    border-width: 1.5rem;
+    border-style: solid;
+    border-color: transparent transparent var(--section-background-contrast)
+      transparent;
+  }
   @media ${devices.largeMobile} {
     margin-left: 5rem;
     margin-right: 1rem;

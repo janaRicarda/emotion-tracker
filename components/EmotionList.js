@@ -30,8 +30,9 @@ const StyledCircle = styled.article`
     top: calc(100vh - 80%);
   }
   @media ${devices.laptop} {
-    top: calc(100vh - 85%);
-    z-index: 2;
+    width: 70vh;
+    height: 70vh;
+    top: calc(100vh - 76%);
   }
 `;
 
@@ -58,6 +59,8 @@ const StyledEmotionList = styled.ul`
     height: 35rem;
   }
   @media ${devices.laptop} {
+    width: 60vh;
+    height: 60vh;
   }
 `;
 
@@ -105,6 +108,15 @@ const EmotionLink = styled(StyledStandardLink)`
   height: auto;
   text-align: center;
   transform: skewY(-141deg) rotate(25deg);
+  @media ${devices.largeMobile} {
+    bottom: 5rem;
+    left: 2rem;
+    font-size: 1.5rem;
+  }
+  @media ${devices.tablet} {
+    left: 4rem;
+    bottom: 7rem;
+  }
 `;
 
 export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
