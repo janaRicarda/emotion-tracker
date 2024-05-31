@@ -232,7 +232,11 @@ export default function EmotionRecords({
   }
 
   function handleChart() {
-    setChartState({ ...chartState, chartIsShown: !chartState.chartIsShown });
+    setChartState({
+      ...chartState,
+      chartIsShown: !chartState.chartIsShown,
+      xValues: xValues,
+    });
   }
 
   return (

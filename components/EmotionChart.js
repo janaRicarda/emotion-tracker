@@ -33,7 +33,7 @@ export default function EmotionChart({
             marker: { color: theme.buttonBackground },
           },
         ]}
-        config={{ displayModeBar: false, scrollZoom: true }}
+        config={{ displayModeBar: false, scrollZoom: true, responsive: true }}
         layout={{
           font: { color: theme.text },
           paper_bgcolor: theme.sectionBackground,
@@ -56,7 +56,7 @@ export default function EmotionChart({
               color: theme.text,
             },
           },
-          width: 1024,
+          // width: 340,
           title: {
             font: {
               family: "system-ui",
