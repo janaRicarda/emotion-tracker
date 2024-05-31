@@ -203,8 +203,6 @@ export default function EmotionRecords({
     }
   }
 
-  console.log(shownEntries);
-
   return (
     <>
       <Background $show={showFilter} onClick={() => setShowFilter(false)} />

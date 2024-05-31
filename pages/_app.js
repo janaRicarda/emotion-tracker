@@ -1,3 +1,4 @@
+import { useSessionStorage } from "usehooks-ts";
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
@@ -6,7 +7,7 @@ import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
-import useSWR, { SWRConfig, mutate } from "swr";
+import useSWR, { SWRConfig } from "swr";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
@@ -19,7 +20,10 @@ export default function App({ Component, pageProps }) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
 
-  const [useExampleData, setUseExampleDate] = useState(false);
+  const [useExampleData, setUseExampleDate] = useSessionStorage(
+    "useExampleData",
+    false
+  );
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -60,6 +64,13 @@ export default function App({ Component, pageProps }) {
       setEmotionEntries(initialData);
     }
   }, []);
+
+  // sets new generated Data when toggleSwitch is moved to use ExampleData
+  useEffect(() => {
+    if (useExampleData) {
+      setEmotionEntries(initialData);
+    }
+  }, [useExampleData]);
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
@@ -144,7 +155,7 @@ export default function App({ Component, pageProps }) {
       }
 
       if (!response.ok) {
-        console.log("Fail");
+        console.log("Adding item failed");
       }
     }
   }
@@ -169,7 +180,7 @@ export default function App({ Component, pageProps }) {
         mutate();
       }
       if (!response.ok) {
-        console.log("fail");
+        console.log("Updating item failed");
       }
     }
   }
@@ -196,7 +207,7 @@ export default function App({ Component, pageProps }) {
         mutate();
       }
       if (!response.ok) {
-        console.log("fail");
+        console.log("Deleting item failed");
       }
     }
   }
