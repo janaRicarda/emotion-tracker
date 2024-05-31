@@ -34,16 +34,27 @@ const ToggleSwitchWrapper = styled.div`
   padding: 0.1rem;
 `;
 
-const StyledInfo = styled.span`
+const StyledInfoIcon = styled.span`
   background-color: var(--button-background);
   color: var(--contrast-text);
   border-radius: 50%;
   width: 1.5rem;
   height: 1.5rem;
-  /* padding: 0.1rem; */
   margin: 0 0.1rem;
   line-height: 1.5rem;
   text-align: center;
+`;
+
+const StyledInfoBox = styled.div`
+  display: ${({ $show }) => ($show ? "block" : "none")};
+  position: absolute;
+  left: -6rem;
+  top: 3rem;
+  border: 1px solid white;
+  border-radius: 6px;
+  padding: 0.5rem;
+  background-color: var(--button-background);
+  color: var(--contrast-text);
 `;
 
 const StyledTensionLabel = styled.label`
@@ -113,6 +124,7 @@ export default function HomePage({
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
   const [chartIsShown, setChartIsShown] = useState(false);
+  const [showInfoBox, setShowInfoBox] = useState(false);
 
   const newest_ID = emotionEntries[emotionEntries.length - 1]._id;
 
@@ -158,7 +170,24 @@ export default function HomePage({
     <>
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>
-          <StyledInfo>&#8505;</StyledInfo>
+          <StyledInfoIcon
+            onClick={() => {
+              setShowInfoBox(!showInfoBox);
+            }}
+          >
+            &#8505;
+          </StyledInfoIcon>
+          <StyledInfoBox
+            onClick={() => {
+              setShowInfoBox(false);
+            }}
+            $show={showInfoBox}
+          >
+            OFF: Displayed Data is real and comes from your own database.
+            <br></br>
+            <br></br>
+            ON: Data is generated locally and fictional.
+          </StyledInfoBox>
           <ToggleSwitch
             handleSwitch={toggleExampleData}
             isChecked={useExampleData}
