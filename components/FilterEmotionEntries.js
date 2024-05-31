@@ -54,7 +54,6 @@ const StyledFilterSection = styled.section`
     width: inherit;
   }
   @media ${devices.laptop} {
-    //width: 20rem;
     width: inherit;
   }
 `;
@@ -80,7 +79,6 @@ const StyledButtonGroup = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   padding: 0.6rem;
-  //width: 90vw;
   gap: 10px;
 `;
 
@@ -119,7 +117,6 @@ const StyledNavButton = styled(StyledButton)`
   width: 5rem;
   padding: 0.2rem;
   margin: 0.5rem;
-
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
 `;
 

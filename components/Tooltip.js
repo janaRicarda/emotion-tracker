@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import TooltipQuestionmark from "../public/images/help.svg";
-//import Info from "../public/info.svg";
-import Info from "../public/information.svg";
+import Info from "../public/info.svg";
 import Close from "../public/close.svg";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -11,13 +9,10 @@ import { devices } from "@/utils/devices";
 const StyledTooltipQuestionmark = styled(Info)`
   height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
   fill: var(--main-dark);
-
-  //border: 1px solid var(--main-dark);
   border-radius: 50%;
   width: 2rem;
   position: fixed;
-  //top: 90px;
-  top: 100px;
+  top: 90px;
   right: 1.5rem;
   z-index: 2;
   transition: all 300ms ease;
@@ -25,20 +20,15 @@ const StyledTooltipQuestionmark = styled(Info)`
 
 const StyledTooltipWrapper = styled.div`
   margin-top: 2rem;
-  //position: absolute;
   position: fixed;
-  right: 0.5rem;
-  left: 0.5rem;
-  //margin-right: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   border-radius: 1rem;
   border-radius: 2rem 0 2rem 2rem;
-  //border: 2rem;
   background-color: var(--section-background-contrast);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
-  //border: var(--circle-border);
   box-shadow: var(--box-shadow-filter);
-
   top: 100px;
   &:after {
     content: "";
@@ -52,19 +42,24 @@ const StyledTooltipWrapper = styled.div`
       transparent;
   }
   @media ${devices.largeMobile} {
-    margin-left: 5rem;
     margin-right: 1rem;
+    width: 50vw;
+    right: 1rem;
   }
   @media ${devices.tablet} {
-    margin-left: 20rem;
-    mergin-right: 1rem;
+    margin-right: 1rem;
+    width: 30vw;
+    right: 1rem;
   }
   @media ${devices.laptop} {
-    margin-left: 58rem;
     margin-right: 1rem;
+    width: 30vw;
+    right: 1rem;
   }
   @media ${devices.desktop} {
-    margin-left: 60rem;
+    margin-right: 1rem;
+    width: 30vw;
+    right: 1rem;
   }
 `;
 
@@ -81,7 +76,6 @@ const StyledClose = styled(Close)`
 const StyledTooltipInfo = styled.p`
   padding: 2rem 1rem 1rem 1rem;
   color: var(--contrast-text);
-  //margin: 8rem 1 rem 8 rem 1 rem;
 `;
 
 export default function Tooltip({ toolTip, isScrollDown }) {

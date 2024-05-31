@@ -23,16 +23,16 @@ const StyledEmotionForm = styled(StyledForm)`
   color: ${({ $text }) => $text};
   gap: 1rem;
   @media ${devices.largeMobile} {
-    margin: 2rem 4rem 0 4rem;
-    padding: 2rem 5rem 2rem 5rem;
+    margin: 0 5rem 0 5rem;
+    padding: 2rem;
   }
   @media ${devices.tablet} {
-    margin: 4rem 8rem 0 8rem;
-    padding: 2rem 8rem 2rem 8rem;
+    margin: 0 8rem 0 8rem;
+    padding: 2rem;
   }
   @media ${devices.laptop} {
-    margin: 4rem 12rem 0 12rem;
-    padding: 2rem 14rem 2rem 14rem;
+    margin: 0 10rem 0 10rem;
+    padding: 2rem;
   }
 `;
 

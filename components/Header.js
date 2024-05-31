@@ -70,14 +70,6 @@ const StyledIconWrapper = styled.article`
   ${transition}
 `;
 
-const ToolTipWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: ${({ $isScrollDown }) => ($isScrollDown ? "0.7rem" : "1rem")};
-  ${transition}
-`;
-
 const StyledLogoLink = styled(StyledStandardLink)`
   @media ${devices.laptop} {
     z-index: 3;
@@ -98,7 +90,6 @@ export default function Header({
   toggleTheme,
   switchTheme,
   isScrollDown,
-  toolTip,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -112,21 +103,18 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        <ToolTipWrapper $isScrollDown={isScrollDown}>
-          {/* {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />} */}
-          <StyledIconWrapper $isScrollDown={isScrollDown}>
-            {theme === lightTheme || theme === darkTheme ? (
-              <StyledToggleTheme type="button" onClick={toggleTheme}>
-                {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-              </StyledToggleTheme>
-            ) : null}
-            <StyledMenu
-              $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
-            >
-              <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
-            </StyledMenu>
-          </StyledIconWrapper>
-        </ToolTipWrapper>
+        <StyledIconWrapper $isScrollDown={isScrollDown}>
+          {theme === lightTheme || theme === darkTheme ? (
+            <StyledToggleTheme type="button" onClick={toggleTheme}>
+              {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+            </StyledToggleTheme>
+          ) : null}
+          <StyledMenu
+            $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+          >
+            <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
+          </StyledMenu>
+        </StyledIconWrapper>
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}

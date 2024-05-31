@@ -72,7 +72,6 @@ export default function Layout({
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
-        toolTip={toolTip}
       />
 
       {children}

@@ -32,7 +32,7 @@ const StyledRecordsList = styled(StyledList)`
   @media ${devices.laptop} {
     width: 40vw;
     margin-top: 0;
-    margin-left: 20vw;
+    margin-left: 22vw;
   }
   @media ${devices.desktop} {
     width: 30vw;
@@ -49,7 +49,6 @@ const StyledParagraph = styled.p`
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  //width: 80vw;
   cursor: pointer;
 `;
 

@@ -25,17 +25,13 @@ const GridWrapper = styled.section`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
   background-color: var(--section-background-contrast);
-  //color: var(--text-on-bright);
   z-index: 2;
   @media ${devices.tablet} {
     display: ${({ $show }) => ($show ? "block" : "block")};
     box-shadow: none;
-
     padding: 1rem;
     left: 3rem;
     width: 20rem;
-
-    //margin-left: 1rem;
   }
   @media ${devices.laptop} {
     display: ${({ $show }) => ($show ? "block" : "block")};
@@ -53,7 +49,6 @@ const ControllOverflow = styled.div`
 
 const ControlPadding = styled.div`
   margin-top: 5rem;
-  /* z-index: -1; */
 `;
 
 const StyledHeading = styled(StyledTitle)`

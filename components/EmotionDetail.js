@@ -16,15 +16,15 @@ const StyledArticle = styled.article`
   background: ${({ $color }) => $color};
   color: ${({ $text }) => $text};
   @media ${devices.largeMobile} {
-    margin: 2rem 4rem 0 4rem;
-    padding: 2rem 5rem 2rem 5rem;
+    margin: 0 4rem 0 4rem;
+    padding: 1rem 5rem 1rem 5rem;
   }
   @media ${devices.tablet} {
-    margin: 4rem 8rem 0 8rem;
+    margin: 0 8rem 0 8rem;
     padding: 2rem 8rem 2rem 8rem;
   }
   @media ${devices.laptop} {
-    margin: 4rem 12rem 0 12rem;
+    margin: 0 12rem 0 12rem;
     padding: 2rem 14rem 2rem 14rem;
   }
 `;
@@ -51,10 +51,28 @@ const StyledSubemotionsList = styled(StyledList)`
 
 const PrevLink = styled(StyledFixedLink)`
   left: -0.5rem;
+  @media ${devices.largeMobile} {
+    left: 1rem;
+  }
+  @media ${devices.tablet} {
+    left: 2rem;
+  }
+  @media ${devices.laptop} {
+    left: 6rem;
+  }
 `;
 
 const NextLink = styled(StyledFixedLink)`
   right: -0.5rem;
+  @media ${devices.largeMobile} {
+    right: 1rem;
+  }
+  @media ${devices.tablet} {
+    right: 2rem;
+  }
+  @media ${devices.laptop} {
+    right: 6rem;
+  }
 `;
 const StyledChevronPrev = styled(ChevronPrev)`
   width: 3rem;

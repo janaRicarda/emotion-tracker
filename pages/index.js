@@ -22,12 +22,7 @@ const StyledTensionForm = styled(StyledForm)`
   align-items: center;
   width: 80vw;
   background: var(--section-background);
-  //background: rgba(255, 255, 255, 0.21);
-  border-radius: 16px;
-  //box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  // backdrop-filter: blur(6.3px);
-  //-webkit-backdrop-filter: blur(6.3px);
-  // border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
   @media ${devices.tablet} {
     width: 60vw;
   }
