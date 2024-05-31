@@ -185,14 +185,40 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  function toggleHighlight(id) {
-    setEmotionEntries(
-      emotionEntries.map((entry) =>
-        entry.id === id
-          ? { ...entry, isHighlighted: !entry.isHighlighted }
-          : entry
-      )
-    );
+  async function toggleHighlight(id) {
+    if (useExampleData) {
+      setEmotionEntries(
+        emotionEntries.map((entry) =>
+          entry.id === id
+            ? { ...entry, isHighlighted: !entry.isHighlighted }
+            : entry
+        )
+      );
+    } else {
+      const entryToChange = emotionEntriesFromMongo.find(
+        (entry) => entry._id === id
+      );
+
+      const updatedEntry = {
+        ...entryToChange,
+        isHighlighted: !entryToChange.isHighlighted,
+      };
+
+      const response = await fetch(`/api/emotionEntries/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEntry),
+      });
+
+      if (response.ok) {
+        mutate();
+      }
+      if (!response.ok) {
+        console.log("Updating item failed");
+      }
+    }
   }
 
   async function handleDeleteEmotionEntry(id) {

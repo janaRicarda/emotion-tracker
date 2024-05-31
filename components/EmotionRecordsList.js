@@ -157,10 +157,16 @@ export default function EmotionRecordsList({
                       }}
                     />
                     {isHighlighted ? (
-                      <StyledFilledButton onClick={() => toggleHighlight(id)} />
+                      <StyledFilledButton
+                        onClick={() =>
+                          toggleHighlight(useExampleData ? id : _id)
+                        }
+                      />
                     ) : (
                       <StyledOutlineButton
-                        onClick={() => toggleHighlight(id)}
+                        onClick={() =>
+                          toggleHighlight(useExampleData ? id : _id)
+                        }
                       />
                     )}
                   </StyledRecordListItem>
