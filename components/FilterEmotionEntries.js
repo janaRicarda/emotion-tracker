@@ -33,6 +33,9 @@ const StyledInput = styled.input`
   font-size: 0.8rem;
   border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
+  @media ${devices.tablet} {
+    width: ${({ $showSearchBar }) => ($showSearchBar ? "18rem" : "35px")};
+  }
 `;
 
 // Styles for Filter-Buttons
@@ -48,10 +51,11 @@ const StyledFilterSection = styled.section`
     width: 22rem;
   }
   @media ${devices.tablet} {
-    width: 30rem;
+    width: inherit;
   }
   @media ${devices.laptop} {
-    width: 20rem;
+    //width: 20rem;
+    width: inherit;
   }
 `;
 
@@ -67,7 +71,7 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
   fill: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
-  display: flex;
+  //display: flex;
   align-items: center;
 `;
 

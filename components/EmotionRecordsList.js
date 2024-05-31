@@ -26,9 +26,13 @@ const StyledRecordsList = styled(StyledList)`
   }
   @media ${devices.tablet} {
     width: 50vw;
+    margin-top: 0;
+    margin-left: 30vw;
   }
   @media ${devices.laptop} {
     width: 40vw;
+    margin-top: 0;
+    margin-left: 20vw;
   }
   @media ${devices.desktop} {
     width: 30vw;

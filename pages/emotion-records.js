@@ -27,8 +27,21 @@ const GridWrapper = styled.section`
   background-color: var(--section-background-contrast);
   //color: var(--text-on-bright);
   z-index: 2;
+  @media ${devices.tablet} {
+    display: ${({ $show }) => ($show ? "block" : "block")};
+    box-shadow: none;
+
+    padding: 1rem;
+    left: 3rem;
+    width: 20rem;
+
+    //margin-left: 1rem;
+  }
   @media ${devices.laptop} {
-    left: 0;
+    display: ${({ $show }) => ($show ? "block" : "block")};
+    box-shadow: none;
+    padding: 1rem;
+    left: 5rem;
     width: 22rem;
     margin-left: 0.5rem;
   }
