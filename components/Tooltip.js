@@ -60,8 +60,6 @@ const StyledTooltipWrapper = styled.div`
     mergin-right: 1rem;
   }
   @media ${devices.laptop} {
-    position: fixed;
-    margin-top: 7rem;
     margin-left: 58rem;
     margin-right: 1rem;
   }
