@@ -32,7 +32,6 @@ export default function App({ Component, pageProps }) {
   );
 
   // use-effect for mediaquery
-
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const userPrefersDark = mediaQuery.matches;
