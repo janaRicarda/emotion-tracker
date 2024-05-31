@@ -12,7 +12,8 @@ const Switch = styled.div`
   padding: 4px;
   width: 60px;
   height: 30px;
-  background-color: #b3b3b3;
+  background-color: var(--section-background);
+  border: 1px solid var(--main-dark);
   border-radius: 32px;
   transition: all 300ms;
 
@@ -24,19 +25,17 @@ const Switch = styled.div`
     border-radius: 35px;
     top: 50%;
     left: 4px;
-    background: white;
+    background: var(--contrast-bright);
     transform: translate(0, -50%);
     transition: all 300ms;
   }
 `;
 
 const Input = styled.input`
-  /* opacity: 0;
-  position: absolute; */
   display: none;
 
   &:checked + ${Switch} {
-    background: green;
+    background: var(--toggle-active);
     &::before {
       transform: translate(24px, -50%);
     }

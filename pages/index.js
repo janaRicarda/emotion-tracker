@@ -23,11 +23,27 @@ const StyledTensionForm = styled(StyledForm)`
 `;
 
 const ToggleSwitchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
   position: relative;
   top: 0px;
   left: 100px;
   transform: scale(0.7);
   padding: 0.1rem;
+`;
+
+const StyledInfo = styled.span`
+  background-color: var(--button-background);
+  color: var(--contrast-text);
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  /* padding: 0.1rem; */
+  margin: 0 0.1rem;
+  line-height: 1.5rem;
+  text-align: center;
 `;
 
 const StyledTensionLabel = styled.label`
@@ -142,6 +158,7 @@ export default function HomePage({
     <>
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>
+          <StyledInfo>&#8505;</StyledInfo>
           <ToggleSwitch
             handleSwitch={toggleExampleData}
             isChecked={useExampleData}
