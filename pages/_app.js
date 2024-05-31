@@ -184,8 +184,21 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  function handleDeleteEmotionEntry(id) {
-    setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+  async function handleDeleteEmotionEntry(id) {
+    if (useExampleData) {
+      setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+    } else {
+      const response = await fetch(`/api/emotionEntries/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        mutate();
+      }
+      if (!response.ok) {
+        console.log("fail");
+      }
+    }
   }
 
   function handleDeleteAll() {

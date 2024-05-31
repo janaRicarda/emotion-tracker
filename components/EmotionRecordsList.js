@@ -167,7 +167,7 @@ export default function EmotionRecordsList({
                   {showConfirmMessage[id] && (
                     <ConfirmMessage
                       toggleMessage={handleShowConfirmMessage}
-                      itemId={id}
+                      itemId={useExampleData ? id : _id}
                       itemText={timeAndDate}
                       confirmFunction={onDeleteEmotionEntry}
                       cancelButtonText={"Keep it!"}
