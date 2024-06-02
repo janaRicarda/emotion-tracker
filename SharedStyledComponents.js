@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { devices } from "./utils/devices";
 
 //buttons
 const StyledButton = styled.button`
@@ -32,19 +33,31 @@ const StyledTitle = styled.h1`
 
 const StyledFixedTitle = styled(StyledTitle)`
   color: var(--main-dark);
-  width: 100%;
+  display: inline;
   position: fixed;
   margin-top: 1.5rem;
   top: 100px;
-  left: 0;
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
   @media (orientation: landscape) {
     top: 0;
+    left: 10rem;
+    right: 10rem;
     z-index: 2;
-
     background: transparent;
+  }
+  @media ${devices.tablet} {
+    top: 100px;
+  }
+  @media (max-height: 400px) {
+    top: 0;
+  }
+  @media ${devices.laptop} {
+    top: 100px;
+  }
+  @media ${devices.desktop} {
+    top: 100px;
   }
 `;
 
@@ -151,6 +164,7 @@ const StyledEmotionListWrapper = styled.section`
   @media (orientation: landscape) {
     height: calc(100vh - 100px);
     margin-top: 80px;
+    margin-bottom: 35px;
     z-index: 2;
   }
 `;

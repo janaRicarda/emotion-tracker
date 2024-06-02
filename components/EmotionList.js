@@ -14,10 +14,6 @@ const StyledCircle = styled.article`
   align-items: center;
 
   box-shadow: var(--box-shadow);
-  //position: fixed;
-
-  //top: calc(100vh - 70%);
-
   @media ${devices.largeMobile} {
     width: 70vw;
     height: 70vw;
@@ -31,10 +27,8 @@ const StyledCircle = styled.article`
     height: 70vh;
   }
   @media (orientation: landscape) {
-    width: 62vh;
-    height: 62vh;
-
-    z-index: 3;
+    width: 60vh;
+    height: 60vh;
   }
 `;
 
@@ -44,7 +38,6 @@ const StyledEmotionList = styled.ul`
   position: relative;
   width: 80vw;
   height: 80vw;
-
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
@@ -63,8 +56,8 @@ const StyledEmotionList = styled.ul`
     height: 60vh;
   }
   @media (orientation: landscape) {
-    width: 58vh;
-    height: 58vh;
+    width: 54vh;
+    height: 54vh;
   }
 `;
 
@@ -112,18 +105,24 @@ const EmotionLink = styled(StyledStandardLink)`
   height: auto;
   text-align: center;
   transform: skewY(-141deg) rotate(25deg);
-  @media (max-height: 500px) and (orientation: landscape) {
-    bottom: 3rem;
+  @media (orientation: landscape) {
+    bottom: 2rem;
     left: 0;
+    font-size: 0.8rem;
   }
+  // @media ${devices.mobileLandscape} {
+  //   bottom: 5rem;
+  //   left: 0;
+  //   font-size: 0.8rem;
+  // }
   // @media ${devices.largeMobile} {
   //   bottom: 5rem;
   //   left: 2rem;
   //   font-size: 1.5rem;
   // }
   // @media ${devices.tablet} {
-  //   left: 4rem;
-  //   bottom: 7rem;
+  //   bottom: 5rem;
+  //   left: 2rem;
   // }
 `;
 
