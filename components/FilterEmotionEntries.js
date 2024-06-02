@@ -60,18 +60,17 @@ const StyledFilterSection = styled.section`
 
 const StyledFilterButton = styled(StyledButton)`
   display: flex;
-  background-color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--main-bright)"};
+  align-items: center;
   margin: 0;
   padding: 0.2rem;
-  border-color: var(--contrast-text);
   width: auto;
+  background-color: ${({ $active }) =>
+    $active ? "var(--main-dark)" : "var(--button-background)"};
   color: ${({ $active }) =>
-    $active ? "var(--contrast-text)" : "var(--main-dark)"};
+    $active ? "var(--button-background)" : "var(--contrast-text)"};
   fill: ${({ $active }) =>
-    $active ? "var(--contrast-text)" : "var(--main-dark)"};
-  //display: flex;
-  align-items: center;
+    $active ? "var(--button-background)" : "var(--contrast-text)"};
+  border: var(--circle-border);
 `;
 
 const StyledButtonGroup = styled.div`
@@ -367,3 +366,16 @@ export default function FilterEmotionEntries({
     </>
   );
 }
+
+// display: flex;
+// background-color: ${({ $active }) =>
+// $active ? "var(--button-background)" : "var(--main-bright)"};
+// margin: 0;
+// padding: 0.2rem;
+// border-color: var(--contrast-text);
+// width: auto;
+// color: ${({ $active }) =>
+//   $active ? "var(--contrast-text)" : "var(--main-dark)"};
+// fill: ${({ $active }) =>
+//   $active ? "var(--contrast-text)" : "var(--main-dark)"};
+// align-items: center;

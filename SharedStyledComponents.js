@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { devices } from "./utils/devices";
 
 //buttons
 const StyledButton = styled.button`
@@ -40,6 +41,12 @@ const StyledFixedTitle = styled(StyledTitle)`
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
+  @media (orientation: landscape) {
+    top: 0;
+    z-index: 2;
+
+    background: transparent;
+  }
 `;
 
 //links

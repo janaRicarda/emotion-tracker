@@ -4,6 +4,21 @@ import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 import { devices } from "@/utils/devices";
 
+const StyledResponsiveWrapper = styled.section`
+  width: 100vw;
+  height: calc(100vh - 200px);
+  margin-top: 160px;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  @media (orientation: landscape) {
+    height: calc(100vh - 100px);
+    margin-top: 80px;
+  }
+`;
+
 const StyledCircle = styled.article`
   width: 90vw;
   height: 90vw;
@@ -12,27 +27,29 @@ const StyledCircle = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
+
   box-shadow: var(--box-shadow);
-  position: fixed;
-  top: calc(100vh - 70%);
-  @media (orientation: landscape) {
-    width: 70vh;
-    height: 70vh;
-  }
+  //position: fixed;
+
+  //top: calc(100vh - 70%);
+
   @media ${devices.largeMobile} {
-    width: 30rem;
-    height: 30rem;
-    top: calc(100vh - 75%);
+    width: 70vw;
+    height: 70vw;
   }
   @media ${devices.tablet} {
-    width: 40rem;
-    height: 40rem;
-    top: calc(100vh - 80%);
+    width: 60vw;
+    height: 60vw;
   }
   @media ${devices.laptop} {
     width: 70vh;
     height: 70vh;
-    top: calc(100vh - 76%);
+  }
+  @media (orientation: landscape) {
+    width: 62vh;
+    height: 62vh;
+
+    z-index: 3;
   }
 `;
 
@@ -42,25 +59,27 @@ const StyledEmotionList = styled.ul`
   position: relative;
   width: 80vw;
   height: 80vw;
+
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
   transform: rotate(${({ $rotation }) => $rotation}deg);
-  @media (orientation: landscape) {
-    width: 60vh;
-    height: 60vh;
-  }
+
   @media ${devices.largeMobile} {
-    width: 26rem;
-    height: 26rem;
+    width: 62vw;
+    height: 62vw;
   }
   @media ${devices.tablet} {
-    width: 35rem;
-    height: 35rem;
+    width: 55vw;
+    height: 55vw;
   }
   @media ${devices.laptop} {
     width: 60vh;
     height: 60vh;
+  }
+  @media (orientation: landscape) {
+    width: 58vh;
+    height: 58vh;
   }
 `;
 
@@ -108,15 +127,19 @@ const EmotionLink = styled(StyledStandardLink)`
   height: auto;
   text-align: center;
   transform: skewY(-141deg) rotate(25deg);
-  @media ${devices.largeMobile} {
-    bottom: 5rem;
-    left: 2rem;
-    font-size: 1.5rem;
+  @media (max-height: 500px) and (orientation: landscape) {
+    bottom: 3rem;
+    left: 0;
   }
-  @media ${devices.tablet} {
-    left: 4rem;
-    bottom: 7rem;
-  }
+  // @media ${devices.largeMobile} {
+  //   bottom: 5rem;
+  //   left: 2rem;
+  //   font-size: 1.5rem;
+  // }
+  // @media ${devices.tablet} {
+  //   left: 4rem;
+  //   bottom: 7rem;
+  // }
 `;
 
 export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
@@ -171,34 +194,36 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   return (
-    <StyledCircle>
-      <StyledEmotionList
-        onWheel={handleScroll}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        $rotation={rotation}
-      >
-        {emotionData.map(({ slug, name }) => (
-          <StyledListItem
-            onClick={createMode && (() => handleAddDetails(name, id))}
-            $color={`var(--${slug})`}
-            key={slug}
-          >
-            <EmotionLink
-              onClick={handleClickLink}
-              slug={slug}
-              href={
-                createMode
-                  ? { pathname: `/create/${slug}`, query: { id } }
-                  : `/emotions/${slug}`
-              }
+    <StyledResponsiveWrapper>
+      <StyledCircle>
+        <StyledEmotionList
+          onWheel={handleScroll}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          $rotation={rotation}
+        >
+          {emotionData.map(({ slug, name }) => (
+            <StyledListItem
+              onClick={createMode && (() => handleAddDetails(name, id))}
+              $color={`var(--${slug})`}
+              key={slug}
             >
-              {name}
-            </EmotionLink>
-          </StyledListItem>
-        ))}
-      </StyledEmotionList>
-    </StyledCircle>
+              <EmotionLink
+                onClick={handleClickLink}
+                slug={slug}
+                href={
+                  createMode
+                    ? { pathname: `/create/${slug}`, query: { id } }
+                    : `/emotions/${slug}`
+                }
+              >
+                {name}
+              </EmotionLink>
+            </StyledListItem>
+          ))}
+        </StyledEmotionList>
+      </StyledCircle>
+    </StyledResponsiveWrapper>
   );
 }

@@ -82,7 +82,13 @@ const StyledLogo = styled(Logo)`
   width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
   height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
   stroke: var(--main-dark);
+
   ${transition}
+  @media ${devices.laptop} {
+    stroke: var(--contrast-text);
+    fill: var(--contrast-text);
+    color: var(--contrast-text);
+  }
 `;
 
 export default function Header({

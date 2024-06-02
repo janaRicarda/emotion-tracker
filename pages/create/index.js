@@ -1,10 +1,8 @@
 import EmotionList from "@/components/EmotionList.js";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import {
-  StyledFlexColumnWrapper,
-  StyledFixedTitle,
-} from "@/SharedStyledComponents";
+import { StyledFixedTitle } from "@/SharedStyledComponents";
+import styled from "styled-components";
 
 export default function CreateIndexPage({
   onAddEmotionDetails,
@@ -22,13 +20,12 @@ export default function CreateIndexPage({
   return (
     <>
       <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
-      <StyledFlexColumnWrapper>
-        <EmotionList
-          createMode
-          id={id}
-          onAddEmotionDetails={onAddEmotionDetails}
-        />
-      </StyledFlexColumnWrapper>
+
+      <EmotionList
+        createMode
+        id={id}
+        onAddEmotionDetails={onAddEmotionDetails}
+      />
     </>
   );
 }
