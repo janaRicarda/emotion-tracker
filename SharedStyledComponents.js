@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { devices } from "./utils/devices";
 
 //buttons
 const StyledButton = styled.button`
@@ -140,6 +139,22 @@ const StyledSelect = styled.select`
   padding: 0.3rem 0;
 `;
 
+const StyledEmotionListWrapper = styled.section`
+  width: 100vw;
+  height: calc(100vh - 200px);
+  margin-top: 160px;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  @media (orientation: landscape) {
+    height: calc(100vh - 100px);
+    margin-top: 80px;
+    z-index: 2;
+  }
+`;
+
 export {
   StyledButton,
   StyledWrapper,
@@ -154,4 +169,5 @@ export {
   StyledSelect,
   StyledSubmitButton,
   StyledListItem,
+  StyledEmotionListWrapper,
 };

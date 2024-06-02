@@ -4,21 +4,6 @@ import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 import { devices } from "@/utils/devices";
 
-const StyledResponsiveWrapper = styled.section`
-  width: 100vw;
-  height: calc(100vh - 200px);
-  margin-top: 160px;
-  margin-bottom: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  @media (orientation: landscape) {
-    height: calc(100vh - 100px);
-    margin-top: 80px;
-  }
-`;
-
 const StyledCircle = styled.article`
   width: 90vw;
   height: 90vw;
@@ -194,7 +179,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   return (
-    <StyledResponsiveWrapper>
+    <>
       <StyledCircle>
         <StyledEmotionList
           onWheel={handleScroll}
@@ -224,6 +209,6 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
           ))}
         </StyledEmotionList>
       </StyledCircle>
-    </StyledResponsiveWrapper>
+    </>
   );
 }
