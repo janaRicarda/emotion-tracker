@@ -78,7 +78,7 @@ const StyledOutLineCircle = styled(OutlineCircle)`
 
 const StyledCircle = styled(Circle)`
   width: 2rem;
-  fill: var(--contrast-bright);
+  fill: var(--joy);
 `;
 
 export default function EmotionRecordsList({
