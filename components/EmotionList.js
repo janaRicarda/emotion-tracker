@@ -5,8 +5,10 @@ import { useState } from "react";
 import { breakpoints } from "@/utils/devices";
 
 const StyledCircle = styled.article`
-  width: 90vw;
-  height: 90vw;
+  //width: 90vw;
+  //height: 90vw;
+  width: 21rem;
+  height: 21rem;
   border-radius: 50%;
   border: var(--circle-border);
   display: flex;
@@ -16,11 +18,14 @@ const StyledCircle = styled.article`
   @media ${breakpoints.mobileLandscape} {
     width: 60vh;
     height: 60vh;
+    //width: 14rem;
+    //height: 14rem;
   }
-  // @media {devices.largeMobile} {
-  //   width: 70vw;
-  //   height: 70vw;
-  // }
+  @media ${breakpoints.largeMobile} {
+    width: 70vw;
+    height: 70vw;
+    border: 1px solid aqua;
+  }
   @media ${breakpoints.tablet} {
     width: 50vh;
     height: 50vh;
@@ -39,8 +44,10 @@ const StyledEmotionList = styled.ul`
   border: var(--emotion-border);
   padding: 0;
   position: relative;
-  width: 80vw;
-  height: 80vw;
+  //width: 80vw;
+  //height: 80vw;
+  width: 19rem;
+  height: 19rem;
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
@@ -48,6 +55,8 @@ const StyledEmotionList = styled.ul`
   @media ${breakpoints.mobileLandscape} {
     width: 54vh;
     height: 54vh;
+    //width: 12rem;
+    //height: 12rem;
   }
 
   // @media {devices.largeMobile} {
@@ -122,15 +131,17 @@ const EmotionLink = styled(StyledStandardLink)`
   //   left: 0;
   //   font-size: 0.8rem;
   // }
-  // @media {devices.largeMobile} {
-  //   bottom: 5rem;
-  //   left: 2rem;
-  //   font-size: 1.5rem;
-  // }
-  // @media {devices.tablet} {
-  //   bottom: 5rem;
-  //   left: 2rem;
-  // }
+  @media {breakpoints.largeMobile} {
+    bottom: 5rem;
+    left: 2rem;
+    font-size: 1.5rem;
+    color: hotpink;
+  }
+  @media ${breakpoints.tablet} {
+    bottom: 5rem;
+    left: 2rem;
+    color: blue;
+  }
 `;
 
 export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
