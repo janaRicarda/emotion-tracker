@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -175,13 +174,4 @@ export default function Manual() {
       </StyledSection>
     </>
   );
-}
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, "manual")),
-      // Will be passed to the page component as props
-    },
-  };
 }
