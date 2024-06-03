@@ -1,0 +1,12 @@
+{
+  "introQuestion": "Auf einer Skala von 0 bis 100, wie angespannt fühlst du dich in diesem Moment?",
+  "inputAriaLabel": "Spannungsniveau zwischen 0 und 100 einstellen",
+  "save": "Speichern",
+  "successMessage": "Dein Eintrag wurde erfolgreich gespeichert!",
+  "done": "Fertig",
+  "addMoreDetails": "Weitere Details hinzufügen",
+  "graphTitle": "Tages-Spannungskurve",
+  "hideChart": "Diagramm verbergen",
+  "showChart": "Diagramm anzeigen",
+  "toolTipText": "Auf dieser Seite können Sie Ihr Spannungsniveau auf einer Skala von 0 bis 100 angeben. Drücken Sie anschließend einfach auf die Schaltfläche „Speichern“, um Ihre Eingaben zu speichern."
+}

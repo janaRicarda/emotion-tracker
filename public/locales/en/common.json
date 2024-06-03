@@ -1,0 +1,12 @@
+{
+  "introQuestion": "On a scale from 0 to 100, how tense do you feel in this moment?",
+  "inputAriaLabel": "Adjust tension level between 0 and 100",
+  "save": "Save",
+  "successMessage": "Your entry was successfully saved!",
+  "done": "Done",
+  "addMoreDetails": "Add more details",
+  "graphTitle": "Daily Tension Graph",
+  "hideChart": "Hide chart",
+  "showChart": "Show chart",
+  "toolTipText": "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input."
+}
