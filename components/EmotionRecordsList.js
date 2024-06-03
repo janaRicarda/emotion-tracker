@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import OutlineCircle from "../public/outline-circle.svg";
 import Circle from "../public/circle.svg";
+import Highlight from "../public/highlight.svg";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -71,13 +72,17 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 
-const StyledOutLineCircle = styled(OutlineCircle)`
-  width: 2rem;
-  fill: var(--contrast-bright);
+const StyledHighlight = styled(Highlight)`
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: var(--main-dark);
+  stroke: var(--main-dark);
+  color: var(--main-dark);
 `;
 
 const StyledCircle = styled(Circle)`
   width: 2rem;
+  height: 2rem;
   fill: var(--joy);
 `;
 
@@ -134,9 +139,7 @@ export default function EmotionRecordsList({
                     {isHighlighted ? (
                       <StyledCircle onClick={() => toggleHighlight(id)} />
                     ) : (
-                      <StyledOutLineCircle
-                        onClick={() => toggleHighlight(id)}
-                      />
+                      <StyledHighlight onClick={() => toggleHighlight(id)} />
                     )}
                     <StyledParagraph onClick={() => handleShowDetails(id)}>
                       {timeAndDate}
