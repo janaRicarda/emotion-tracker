@@ -5,8 +5,13 @@ export default async function handler(request, response) {
   await dbConnect();
 
   if (request.method === `GET`) {
-    const emotionEntries = await EmotionEntries.find();
-    return response.status(200).json(emotionEntries);
+    try {
+      const emotionEntries = await EmotionEntries.find();
+      return response.status(200).json(emotionEntries);
+    } catch (error) {
+      console.log(error);
+      response.status(500).json({ error: error.message });
+    }
   }
 
   if (request.method === `POST`) {

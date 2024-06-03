@@ -20,7 +20,7 @@ export default function EmotionEntry({
   const { id } = router.query;
   const { slug } = router.query;
 
-  const { data: correspondingEntryFromMongo, isLoading } = useSWR(
+  const { data: correspondingDbEmotionEntry, isLoading } = useSWR(
     !useExampleData && `/api/emotionEntries/${id}`
   );
 
@@ -32,7 +32,7 @@ export default function EmotionEntry({
 
   const correspondingEntry = useExampleData
     ? emotionEntries.find((entry) => entry.id === id)
-    : correspondingEntryFromMongo;
+    : correspondingDbEmotionEntry;
 
   return (
     <>

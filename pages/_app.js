@@ -109,7 +109,7 @@ export default function App({ Component, pageProps }) {
   }
 
   const {
-    data: emotionEntriesFromMongo,
+    data: dbEmotionEntries,
     isLoading,
     mutate,
   } = useSWR("/api/emotionEntries", fetcher);
@@ -154,7 +154,7 @@ export default function App({ Component, pageProps }) {
       }
 
       if (!response.ok) {
-        console.log("Adding item failed");
+        console.error("Adding item failed");
       }
     }
   }
@@ -179,7 +179,7 @@ export default function App({ Component, pageProps }) {
         mutate();
       }
       if (!response.ok) {
-        console.log("Updating item failed");
+        console.error("Updating item failed");
       }
     }
   }
@@ -194,9 +194,7 @@ export default function App({ Component, pageProps }) {
         )
       );
     } else {
-      const entryToChange = emotionEntriesFromMongo.find(
-        (entry) => entry._id === id
-      );
+      const entryToChange = dbEmotionEntries.find((entry) => entry._id === id);
 
       const updatedEntry = {
         ...entryToChange,
@@ -215,7 +213,7 @@ export default function App({ Component, pageProps }) {
         mutate();
       }
       if (!response.ok) {
-        console.log("Updating item failed");
+        console.error("Updating item failed");
       }
     }
   }
@@ -232,7 +230,7 @@ export default function App({ Component, pageProps }) {
         mutate();
       }
       if (!response.ok) {
-        console.log("Deleting item failed");
+        console.error("Deleting item failed");
       }
     }
   }
@@ -266,9 +264,7 @@ export default function App({ Component, pageProps }) {
             handleToolTip={handleToolTip}
             theme={theme}
             onAddEmotionDetails={handleAddEmotionDetails}
-            emotionEntries={
-              useExampleData ? emotionEntries : emotionEntriesFromMongo
-            }
+            emotionEntries={useExampleData ? emotionEntries : dbEmotionEntries}
             onAddEmotionEntry={handleAddEmotionEntry}
             onDeleteEmotionEntry={handleDeleteEmotionEntry}
             onReplaceUserData={handleReplaceAndBackup}

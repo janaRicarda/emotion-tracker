@@ -134,7 +134,7 @@ export default function HomePage({
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
-  const newest_ID = emotionEntries[emotionEntries.length - 1]._id;
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
   useEffect(() => {
     handleToolTip({
@@ -242,7 +242,7 @@ export default function HomePage({
                 <StyledAddDetailsLink
                   href={{
                     pathname: "/create",
-                    query: { id: useExampleData ? id : newest_ID },
+                    query: { id: useExampleData ? id : newestDbEntryID },
                   }}
                   forwardedAs={`/create`}
                 >
