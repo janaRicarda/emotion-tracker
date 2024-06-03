@@ -7,23 +7,31 @@ import {
 } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
+import ToggleSwitch from "@/components/ToggleSwitch";
 import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
-
-// used for all transitions
-const transition = css`
-  transition: all 300ms ease;
-`;
-import Loader from "@/components/Loader";
+import Icon from "@mdi/react";
+import { mdiChartLine, mdiChartBar, mdiFormatListBulleted } from "@mdi/js";
 import dynamic from "next/dynamic";
+import Loader from "@/components/Loader";
+import {
+  chartPresets,
+  doTensionChartData,
+  countEmotions,
+} from "@/utils/chartUtils";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   ssr: false,
   loading: () => <Loader itemText="... loading" />,
 });
+
+// used for all transitions
+const transition = css`
+  transition: all 300ms ease;
+`;
 
 const GridWrapper = styled.section`
   box-shadow: ${({ $show }) => ($show ? "var(--box-shadow-filter)" : null)};
@@ -36,7 +44,6 @@ const GridWrapper = styled.section`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
   background-color: var(--section-background-contrast);
-  //color: var(--text-on-bright);
   z-index: 2;
 `;
 
@@ -46,7 +53,6 @@ const ControllOverflow = styled.div`
 
 const ControlPadding = styled.div`
   margin-top: 5rem;
-  /* z-index: -1; */
 `;
 
 const StyledHeading = styled(StyledTitle)`
@@ -128,12 +134,14 @@ const StyledDateSpan = styled.span`
 
 const ChartWrapper = styled.div`
   display: grid;
-  width: 100%;
+  width: 80vw;
   min-height: 340px;
+  max-height: fit-content;
   margin-top: 8rem;
+  border: 1px solid var(--main-dark);
   border-radius: 6px;
   grid-template-columns: 1fr 15fr;
-  background-color: #8e60d0;
+  /* background-color: #8e60d0; */
 `;
 
 const ChartPlaceholder = styled.div`
@@ -148,9 +156,31 @@ const StyledGraphButton = styled(StyledButton)`
   margin: 1rem 1rem 0 1rem;
 `;
 
+const ToggleContainer = styled(StyledWrapper)`
+  padding: 0.3rem;
+  margin: 1rem 1rem 0 1rem;
+  gap: 0.2rem;
+  background-color: var(--button-background);
+  border-radius: 6px;
+`;
+const SwitchSizer = styled.span`
+  transform: scale(0.6);
+`;
+
 const StyledGraphButtonsWrapper = styled(StyledFlexColumnWrapper)`
   align-items: center;
-  /* margin: 1rem; */
+`;
+
+const GraphToggleWrapper = styled.div`
+  display: flex;
+  flex-flow: row;
+  position: absolute;
+  top: 130px;
+  right: 10vw;
+  height: 2rem;
+  gap: 0.5rem;
+  margin: 5rem 0 0;
+  align-items: flex-end;
 `;
 
 export default function EmotionRecords({
@@ -173,139 +203,71 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
-  // const [chartState, setChartState] = useState({
-  //   chartIsShown: true,
-  //   xTitle: "time",
-  //   yTitle: "tension",
-  //   title: "Tension Chart",
-  //   type: "scatter",
-  //   emoCount: [],
-  // });
-
-  const initialPreset = {
-    tension: {
-      title: "Tension Chart",
-      xTitle: "time",
-      yTitle: "tension",
-    },
-    xValues: [8, 9, 10],
-    yValues: [0, 0, 0],
-  };
-
-  const [chartState, setChartState] = useState({
-    chartIsShown: true,
-    type: "scatter",
-    chartData: initialPreset,
-  });
-
-  const { chartIsShown, type, chartData } = chartState;
-  const { title, xValues, yValues, xTitle, yTitle } = chartData;
   //logic for Graph
 
-  function compare(a, b) {
-    if (a.isoDate < b.isoDate) {
-      return -1;
-    }
-    if (a.isoDate > b.isoDate) {
-      return 1;
-    }
-    return 0;
-  }
-  const filteredData = shownEntries.toSorted(compare);
-  const lastIndex = filteredData.length - 1;
-  const difference =
-    (filteredData[lastIndex]?.timeStamp - filteredData[0]?.timeStamp) / 3600000;
+  const [chartState, setChartState] = useState({
+    chartIsShown: false,
+    scatter: true,
+    type: "scatter",
+    listIsShown: true,
+    chartData: chartPresets.initialPreset,
+  });
 
-  const tensionXValues =
-    difference < 48
-      ? filteredData.map((entry) => entry.timeAndDate.slice(-5))
-      : filteredData.map((entry) => new Date(entry.timeStamp));
-  const tensionYValues = filteredData.map((entry) => entry.tensionLevel);
-
-  const chartPresets = {
-    tension: {
-      title: "Tension Chart",
-      xTitle: "time",
-      yTitle: "tension",
-
-      xValues: tensionXValues,
-      yValues: tensionYValues,
-    },
-    emotions: {
-      title: "Emotions Shares",
-      xTitle: "emotion",
-      yTitle: "number of entries",
-
-      xValues: [8, 9, 10],
-      yValues: [0, 0, 0],
-    },
-  };
-
-  function countEmotions(entries) {
-    const joyEntries = entries.filter((entry) => entry.emotion === "Joy");
-    const angerEntries = entries.filter((entry) => entry.emotion === "Anger");
-    const fearEntries = entries.filter((entry) => entry.emotion === "Fear");
-    const contemptEntries = entries.filter(
-      (entry) => entry.emotion === "Contempt"
-    );
-    const surpriseEntries = entries.filter(
-      (entry) => entry.emotion === "Surprise"
-    );
-    const disgustEntries = entries.filter(
-      (entry) => entry.emotion === "Disgust"
-    );
-    const sadnessEntries = entries.filter(
-      (entry) => entry.emotion === "Sadness"
-    );
-    const result = [
-      { emotion: "Joy", count: joyEntries.length, foundEntries: joyEntries },
-      {
-        emotion: "Anger",
-        count: angerEntries.length,
-        foundEntries: angerEntries,
-      },
-      {
-        emotion: "Fear",
-        count: fearEntries.length,
-        foundEntries: fearEntries,
-      },
-      {
-        emotion: "Contempt",
-        count: contemptEntries.length,
-        foundEntries: contemptEntries,
-      },
-      {
-        emotion: "Surprise",
-        count: surpriseEntries.length,
-        foundEntries: surpriseEntries,
-      },
-      {
-        emotion: "Disgust",
-        count: disgustEntries.length,
-        foundEntries: disgustEntries,
-      },
-      {
-        emotion: "Sadness",
-        count: sadnessEntries.length,
-        foundEntries: sadnessEntries,
-      },
-    ];
-    return result;
-  }
+  const { chartIsShown, type, scatter, listIsShown, chartData } = chartState;
+  const { title, xValues, yValues, xTitle, yTitle } = chartData;
 
   function handleChart() {
     setChartState({
       ...chartState,
       chartIsShown: !chartIsShown,
+      listIsShown: !listIsShown,
     });
   }
 
-  function handleTensionChart() {
+  function handleChartType() {
     setChartState({
       ...chartState,
-      chartData: chartPresets.tension,
+      type: type === "scatter" ? "bar" : type === "bar" ? "scatter" : "scatter",
+      scatter: !scatter,
     });
   }
+
+  function handleTensionChart(entries) {
+    setChartState({
+      ...chartState,
+      chartData: {
+        ...chartPresets.tension,
+        xValues: doTensionChartData(entries).xValues,
+        yValues: doTensionChartData(entries).yValues,
+      },
+    });
+  }
+
+  function handleEmotionChart() {
+    const countResult = countEmotions(shownEntries);
+
+    const emotions = countResult.map((element) => element.emotion);
+    const counts = countResult.map((element) => element.count);
+    setChartState({
+      ...chartState,
+      chartData: {
+        ...chartPresets.emotions,
+        xValues: emotions,
+        yValues: counts,
+      },
+    });
+  }
+
+  useEffect(() => {
+    setChartState({
+      ...chartState,
+      chartData: {
+        ...chartPresets.tension,
+        xValues: doTensionChartData(shownEntries).xValues,
+        yValues: doTensionChartData(shownEntries).yValues,
+      },
+    });
+  }, []);
 
   const [showFilter, setShowFilter] = useState(false);
 
@@ -412,89 +374,54 @@ export default function EmotionRecords({
         />
       </AnimatedPanel>
 
-      <ChartWrapper>
-        <StyledGraphButtonsWrapper>
-          <StyledGraphButton type="button" onClick={handleChart}>
-            {chartIsShown === true ? "Hide chart" : "Show chart"}
-          </StyledGraphButton>
-          {chartIsShown && (
-            <>
-              <StyledGraphButton
-                type="button"
-                onClick={() =>
-                  setChartState({
-                    ...chartState,
-                    type:
-                      chartState.type === "scatter"
-                        ? "bar"
-                        : chartState.type === "bar"
-                        ? "scatter"
-                        : "scatter",
-                  })
-                }
-              >
-                Switch Type
-              </StyledGraphButton>
-              <StyledGraphButton type="button" onClick={handleTensionChart}>
-                Tension
-              </StyledGraphButton>
-              <StyledGraphButton
-                type="button"
-                onClick={() =>
-                  setChartState({
-                    ...chartState,
-                    yTitle: "intensity",
-                    Title: "Intensity Chart",
-                  })
-                }
-              >
-                Intensity
-              </StyledGraphButton>
-              <StyledGraphButton
-                type="button"
-                onClick={() => {
-                  const newEmocount = countEmotions(shownEntries);
-                  setChartState({ ...chartState, emoCount: newEmocount });
-                  console.log(chartState);
-                }}
-              >
-                Emotions
-              </StyledGraphButton>
-            </>
-          )}
-        </StyledGraphButtonsWrapper>
-        <ChartPlaceholder>
-          {chartState.chartIsShown === true ? (
-            <EmotionChart
-              theme={theme}
-              type={type}
-              xValues={xValues}
-              yValues={yValues}
-              xTitle={xTitle}
-              yTitle={yTitle}
-              title={title}
-            />
-          ) : null}
-        </ChartPlaceholder>
-      </ChartWrapper>
-
-      {/* <EmotionChart
-        theme={theme}
-        type="bar"
-        title="Test Emotion chart"
-        xValues={chartState.emoCount.map((element) => element.emotion)}
-        yValues={chartState.emoCount.map((element) => element.count)}
-        xTitle="emotions"
-        yTitle="count"
-      /> */}
-
-      {/* <ul>
-        {chartState.emoCount.map((element) => (
-          <li key={element.emotion}>
-            {element.emotion}: {element.foundEntries.length}
-          </li>
-        ))}
-      </ul> */}
+      {chartIsShown && (
+        <ChartWrapper>
+          <StyledGraphButtonsWrapper>
+            <ToggleContainer>
+              <Icon path={mdiChartLine} size={1} />
+              <SwitchSizer>
+                <ToggleSwitch
+                  handleSwitch={handleChartType}
+                  isChecked={!scatter}
+                  // text={"Switch type"}
+                />
+              </SwitchSizer>
+              <Icon path={mdiChartBar} size={1} />
+            </ToggleContainer>
+            <StyledGraphButton type="button" onClick={handleTensionChart}>
+              Tension
+            </StyledGraphButton>
+            <StyledGraphButton
+              type="button"
+              onClick={() =>
+                setChartState({
+                  ...chartState,
+                  yTitle: "intensity",
+                  Title: "Intensity Chart",
+                })
+              }
+            >
+              Intensity
+            </StyledGraphButton>
+            <StyledGraphButton type="button" onClick={handleEmotionChart}>
+              Emotions
+            </StyledGraphButton>
+          </StyledGraphButtonsWrapper>
+          <ChartPlaceholder>
+            {chartState.chartIsShown === true ? (
+              <EmotionChart
+                theme={theme}
+                type={type}
+                xValues={xValues}
+                yValues={yValues}
+                xTitle={xTitle}
+                yTitle={yTitle}
+                title={title}
+              />
+            ) : null}
+          </ChartPlaceholder>
+        </ChartWrapper>
+      )}
 
       {buttonState.datePicker ? (
         selectedTime ? (
@@ -523,8 +450,18 @@ export default function EmotionRecords({
         ) : (
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
-
-      {shownEntries.length !== 0 && (
+      <GraphToggleWrapper>
+        <Icon path={mdiFormatListBulleted} size={1} />
+        <SwitchSizer>
+          <ToggleSwitch
+            handleSwitch={handleChart}
+            isChecked={chartIsShown}
+            // text={"Show chart"}
+          />
+        </SwitchSizer>
+        <Icon path={mdiChartLine} size={1} />
+      </GraphToggleWrapper>
+      {shownEntries.length !== 0 && listIsShown && (
         <ControlPadding>
           <EmotionRecordsList
             onDeleteEmotionEntry={onDeleteEmotionEntry}
