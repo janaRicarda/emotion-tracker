@@ -2,7 +2,7 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 const StyledCircle = styled.article`
   width: 90vw;
@@ -12,24 +12,27 @@ const StyledCircle = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-
   box-shadow: var(--box-shadow);
-  @media ${devices.largeMobile} {
-    width: 70vw;
-    height: 70vw;
-  }
-  @media ${devices.tablet} {
-    width: 60vw;
-    height: 60vw;
-  }
-  @media ${devices.laptop} {
-    width: 70vh;
-    height: 70vh;
-  }
-  @media (orientation: landscape) {
+  @media ${breakpoints.mobileLandscape} {
     width: 60vh;
     height: 60vh;
   }
+  // @media {devices.largeMobile} {
+  //   width: 70vw;
+  //   height: 70vw;
+  // }
+  @media ${breakpoints.tablet} {
+    width: 50vh;
+    height: 50vh;
+  }
+  @media ${breakpoints.laptop} {
+    width: 60vh;
+    height: 60vh;
+  }
+  // @media (orientation: landscape) {
+  //   width: 60vh;
+  //   height: 60vh;
+  // }
 `;
 
 const StyledEmotionList = styled.ul`
@@ -42,23 +45,27 @@ const StyledEmotionList = styled.ul`
   list-style: none;
   overflow: hidden;
   transform: rotate(${({ $rotation }) => $rotation}deg);
-
-  @media ${devices.largeMobile} {
-    width: 62vw;
-    height: 62vw;
-  }
-  @media ${devices.tablet} {
-    width: 55vw;
-    height: 55vw;
-  }
-  @media ${devices.laptop} {
-    width: 60vh;
-    height: 60vh;
-  }
-  @media (orientation: landscape) {
+  @media ${breakpoints.mobileLandscape} {
     width: 54vh;
     height: 54vh;
   }
+
+  // @media {devices.largeMobile} {
+  //   width: 62vw;
+  //   height: 62vw;
+  // }
+  @media ${breakpoints.tablet} {
+    width: 46vh;
+    height: 46vh;
+  }
+  @media ${breakpoints.laptop} {
+    width: 54vh;
+    height: 54vh;
+  }
+  // @media (orientation: landscape) {
+  //   width: 54vh;
+  //   height: 54vh;
+  // }
 `;
 
 const StyledListItem = styled.li`
@@ -105,22 +112,22 @@ const EmotionLink = styled(StyledStandardLink)`
   height: auto;
   text-align: center;
   transform: skewY(-141deg) rotate(25deg);
-  @media (orientation: landscape) {
+  @media ${breakpoints.mobileLandscape} {
     bottom: 2rem;
     left: 0;
     font-size: 0.8rem;
   }
-  // @media ${devices.mobileLandscape} {
+  // @media {devices.mobileLandscape} {
   //   bottom: 5rem;
   //   left: 0;
   //   font-size: 0.8rem;
   // }
-  // @media ${devices.largeMobile} {
+  // @media {devices.largeMobile} {
   //   bottom: 5rem;
   //   left: 2rem;
   //   font-size: 1.5rem;
   // }
-  // @media ${devices.tablet} {
+  // @media {devices.tablet} {
   //   bottom: 5rem;
   //   left: 2rem;
   // }

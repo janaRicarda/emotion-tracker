@@ -8,9 +8,18 @@ const sizes = {
 
 export const devices = {
   mobile: `(max-width: ${sizes.sizeXS})`,
-  mobileLandscape: `(max-width: ${sizes.sizeXS}) and (orientation: landscape)`,
+  mobileLandscape: "(min-width: 480px)",
   largeMobile: `(min-width: ${sizes.sizeS})`,
   tablet: `(min-width: ${sizes.sizeM})`,
   laptop: `(min-width: ${sizes.sizeL})`,
   desktop: `(min-width: ${sizes.sizeXL})`,
+};
+
+export const breakpoints = {
+  mobileLandscape: "(min-width: 480px) and (orientation: landscape)",
+  largeMobile: "(min-width: 600px)",
+  //tablet: "(min-width: 801px)",
+  tablet: "(min-width: 940px)",
+  laptop: "(min-width: 1025px)",
+  deskptop: "{min-width: 1281px)",
 };

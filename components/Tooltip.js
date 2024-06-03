@@ -12,14 +12,14 @@ const StyledTooltipQuestionmark = styled(Info)`
   border-radius: 50%;
   width: 2rem;
   position: fixed;
-  top: 90px;
+  top: 100px;
   right: 1.5rem;
   z-index: 2;
   transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   position: fixed;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -35,7 +35,6 @@ const StyledTooltipWrapper = styled.div`
     position: absolute;
     top: -2rem;
     right: 0.5rem;
-    margin-right: 1.8rem;
     border-width: 1.5rem;
     border-style: solid;
     border-color: transparent transparent var(--section-background-contrast)

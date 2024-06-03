@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { devices } from "./utils/devices";
+import { devices, breakpoints } from "./utils/devices";
 
 //buttons
 const StyledButton = styled.button`
@@ -40,23 +40,23 @@ const StyledFixedTitle = styled(StyledTitle)`
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
   z-index: 1;
-  @media (orientation: landscape) {
+  @media ${breakpoints.mobileLandscape} {
     top: 0;
     left: 10rem;
     right: 10rem;
     z-index: 2;
     background: transparent;
   }
-  @media ${devices.tablet} {
+  @media ${breakpoints.tablet} {
     top: 100px;
   }
   @media (max-height: 400px) {
     top: 0;
   }
-  @media ${devices.laptop} {
+  @media {devices.laptop} {
     top: 100px;
   }
-  @media ${devices.desktop} {
+  @media {devices.desktop} {
     top: 100px;
   }
 `;
