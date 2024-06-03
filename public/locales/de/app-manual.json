@@ -1,0 +1,61 @@
+{
+  "title": "Willkommen bei der What a feeling App!",
+  "intro": "Dieses Tool ist dazu gedacht, dir zu helfen, deine Emotionen besser zu verfolgen und zu verstehen. Im Folgenden findest du einige Richtlinien, die dir helfen, die App effektiv zu nutzen:",
+  "recap": "Denke daran, die What a feeling App ist da, um dir zu helfen, deine Emotionen zu verstehen und zu managen. Zögere nicht, ihre Funktionen zu erkunden, die Grafiken zu nutzen, spezifische Einträge hervorzuheben und zu filtern und Einblicke in die grundlegenden Emotionen zu gewinnen.",
+  "manualData": [
+    {
+      "question": "Wie kann ich einen neuen Eintrag machen?",
+      "answers": [
+        "Beim Starten der App wirst du aufgefordert, einen neuen Eintrag zu machen.",
+        "Beginne damit, dein Spannungsniveau auf einer Skala von 0 bis 100 zu bewerten.",
+        "Wähle, ob du deinen Eintrag dort beenden oder tiefer in deine Emotionen eintauchen möchtest.",
+        "Wenn du dich entscheidest, fortzufahren, wirst du gebeten, die grundlegende Emotion auszuwählen, die deinem Gefühl am nächsten kommt, aus den folgenden Optionen: Freude, Überraschung, Angst, Traurigkeit, Verachtung, Ekel oder Wut.",
+        "Nachdem du deine Auswahl getroffen hast, wirst du zu einem Fragebogen weitergeleitet, in dem du deinem Gefühl eine Unteremotion zuweisen kannst.",
+        "Klassifiziere, ob dein Gefühl als negativ, neutral oder positiv wahrgenommen wird.",
+        "Optional kannst du Details zu Auslösern oder zusätzliche Notizen angeben.",
+        "Nach Abschluss des Fragebogens speichere deinen Eintrag."
+      ]
+    },
+    {
+      "question": "Was, wenn mein Eintrag falsch war?",
+      "text": "Wenn du das Gefühl hast, dass dein Eintrag falsch war oder Änderungen vornehmen möchtest, kannst du ihn bearbeiten oder löschen.",
+      "answers": [
+        "Du kannst durch die App navigieren, indem du auf das Burger-Menü in der oberen rechten Ecke klickst.",
+        "Klicke auf „Emotionseinträge“, um zur Liste deiner Emotionseinträge zu gelangen.",
+        "Finde einfach den Eintrag in deiner Emotionseintragsliste, tippe auf das Bleistiftsymbol zum Bearbeiten oder auf das Mülleimersymbol zum Löschen.",
+        "Aus Sicherheitsgründen wirst du aufgefordert, deine Entscheidung zu bestätigen, bevor du deine Daten änderst.",
+        "Bitte beachte, dass es keine Option gibt, deine Einträge wiederherzustellen, sobald sie gelöscht wurden."
+      ]
+    },
+    {
+      "question": "Wie beantworte ich die Frage?",
+      "answers": [
+        "Wenn du die Frage beantwortest, welche grundlegende Emotion deinem Gefühl am nächsten kommt, wähle diejenige, die deinem aktuellen emotionalen Zustand am nächsten kommt.",
+        "Sei ehrlich und wähle die Emotion, die deine Gefühle im Moment am besten beschreibt.",
+        "Wenn du unsicher bist, nimm dir einen Moment Zeit, um über deine Emotionen nachzudenken, bevor du deine Wahl triffst.",
+        "Falls nötig, kannst du mehr Informationen über die 7 grundlegenden Emotionen erhalten. Gehe dazu einfach über das Burger-Menü zu den 7 grundlegenden Emotionen.",
+        "Die 7 grundlegenden Emotionen werden als Liste angezeigt und du kannst auf jede der Emotionen klicken, um mehr Details zu erhalten.",
+        "Über die Schaltflächen „Nächste“ und „Vorherige“ an der Seite kannst du dich durch alle Emotionen klicken, ohne ständig zur Emotionsliste zurückzukehren."
+      ]
+    },
+    {
+      "question": "Wie benutze ich die Navigationsleiste?",
+      "answers": [
+        "Durch Klicken auf das Logo wirst du unabhängig von deinem aktuellen Standort innerhalb der App zurück zur Hauptseite geleitet.",
+        "Sonne/Mond: Wechsle einfach zwischen dem hellen und dunklen Modus mit den Sonnen- und Mondsymbolen, um unabhängig von den Lichtverhältnissen optimalen Sehkomfort zu gewährleisten.",
+        "Burger-Menü: Das Burger-Menü-Symbol bietet schnellen Zugriff auf zusätzliche Navigationsoptionen und Funktionen."
+      ]
+    },
+    {
+      "question": "Warum so viele Farbschemata?",
+      "text": "Die Wahrnehmung von Emotionen ist sehr persönlich, ähnlich wie die Wahrnehmung von Farben. Wir möchten, dass du die bestmögliche Erfahrung beim Aufzeichnen deiner Emotionen hast, daher bieten wir dir eine Vielzahl von Themen zur Auswahl an. Wähle dasjenige, das am besten zu dir passt, indem du auf die Menü-Schaltfläche klickst, dann auf 'Farbschemata' und wähle deins aus.",
+      "answers": [
+        "Es gibt einige allgemeine Assoziationen zwischen Emotionen und Farben, und vielleicht passt das perfekt zu dir -> wähle das 'What a feeling' Thema.",
+        "Vielleicht fühlst du dich ruhig und wohl mit sogenannten 'warmen' Farben -> wähle das 'warme' Thema.",
+        "Oder umgekehrt -> wähle das 'kalte' Thema.",
+        "Vielleicht magst du Farben überhaupt nicht -> wähle das 'neutrale' Thema.",
+        "Oder vielleicht möchtest du keine Unterschiede zwischen den Farben wahrnehmen -> wähle das 'hoher Kontrast' Thema."
+      ]
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -87,6 +89,9 @@ export default function HomePage({
   const [tension, setTension] = useState(0);
   const [chartIsShown, setChartIsShown] = useState(true);
 
+  const router = useRouter();
+  const { locales, locale } = router;
+
   useEffect(() => {
     handleToolTip({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
@@ -127,6 +132,11 @@ export default function HomePage({
 
   return (
     <>
+      {locales.map((locale) => (
+        <Link key={locale} href={"/emotion-records"} locale={locale}>
+          {locale}
+        </Link>
+      ))}
       <StyledFlexColumnWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">

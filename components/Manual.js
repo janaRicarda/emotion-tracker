@@ -3,6 +3,7 @@ import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
+import { useTranslation } from "next-i18next";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -107,6 +108,10 @@ const StyledListItem = styled.li`
 export default function Manual() {
   const [itemColor, setItemColor] = useState("var(--manual1)");
 
+  const { t: translate } = useTranslation("app-manual");
+
+  const manualData = translate("manualData", { returnObjects: true });
+
   function listenSrollEvent() {
     const colors = [
       "var(--manual1)",
@@ -126,20 +131,13 @@ export default function Manual() {
 
   return (
     <StyledSection>
-      <StyledTitle>
-        Welcome to the <b>What a feeling app</b>!
-      </StyledTitle>
-      <StyledText>
-        This tool is designed to help you track and understand your emotions
-        better. Below are some guidelines to help you navigate the app
-        effectively:
-      </StyledText>
-
+      <StyledTitle>{translate("title")}</StyledTitle>
+      <StyledText>{translate("intro")}</StyledText>
       {manualData.map(({ question, text, answers }) => (
-        <StyledDetails key={question} $itemColor={itemColor}>
+        <StyledDetails key={question}>
           <StyledSummary>{question}</StyledSummary>
-          <StyledText>{text}</StyledText>
-          <StyledOl >
+          {text && <StyledText>{text}</StyledText>}
+          <StyledOl>
             {answers.map((answer) => (
               <StyledListItem key={answer} $itemColor={itemColor}>
                 {answer}
@@ -148,12 +146,7 @@ export default function Manual() {
           </StyledOl>
         </StyledDetails>
       ))}
-      <StyledText>
-        Remember, the <b>What a feeling</b> app is here to assist you in
-        understanding and managing your emotions. Feel free to explore its
-        features, utilize the graphs, highlight and filter specific entries, and
-        gain insights into the basic emotions.
-      </StyledText>
+      <StyledText>{translate("recap")}</StyledText>
       <StyledText>What a feeling!</StyledText>
     </StyledSection>
   );
