@@ -23,7 +23,6 @@ const GridWrapper = styled.section`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
   background-color: var(--section-background-contrast);
-  //color: var(--text-on-bright);
   z-index: 2;
 `;
 
@@ -33,7 +32,6 @@ const ControllOverflow = styled.div`
 
 const ControlPadding = styled.div`
   margin-top: 5rem;
-  /* z-index: -1; */
 `;
 
 const StyledHeading = styled(StyledTitle)`
