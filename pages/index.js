@@ -55,6 +55,14 @@ const StyledInfoBox = styled.div`
   padding: 0.5rem;
   background-color: var(--button-background);
   color: var(--contrast-text);
+
+  & > span {
+    display: block;
+  }
+
+  & > :nth-child(2) {
+    margin-top: 1rem;
+  }
 `;
 
 const StyledTensionLabel = styled.label`
@@ -183,10 +191,10 @@ export default function HomePage({
             }}
             $show={showInfoBox}
           >
-            OFF: Displayed Data is real and comes from your own database.
-            <br></br>
-            <br></br>
-            ON: Data is generated locally and fictional.
+            <span>
+              OFF: Displayed Data is real and comes from your own database.
+            </span>
+            <span> ON: Data is generated locally and fictional.</span>
           </StyledInfoBox>
           <ToggleSwitch
             handleSwitch={toggleExampleData}
