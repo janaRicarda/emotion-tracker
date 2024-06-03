@@ -130,7 +130,6 @@ export default function EmotionRecords({
 
   return (
     <>
-      <p>Language:</p>
       {locales.map((loc) => (
         <button key={loc} onClick={() => handleChangeLocale(loc)}>
           {loc === "en" ? "English" : "Deutsch"}
@@ -175,8 +174,11 @@ export default function EmotionRecords({
               </StyledTextMessage>
             ) : buttonState.todayButton ? (
               <StyledTextMessage>
-                You haven&apos;t made any Entries today.<br></br>
-                <StyledLink href="./">add Entry &rarr;</StyledLink>
+                {translate("emotionRecordsNoEntriesText")}
+                <br></br>
+                <StyledLink href="./">
+                  {translate("addEntryButtonText")}
+                </StyledLink>
               </StyledTextMessage>
             ) : (
               <StyledTextMessage>{translate("sorry")}</StyledTextMessage>

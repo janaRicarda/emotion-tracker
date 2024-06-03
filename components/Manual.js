@@ -3,6 +3,9 @@ import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const StyledSection = styled.section`
   width: 100%;
@@ -106,6 +109,8 @@ const StyledListItem = styled.li`
 
 export default function Manual() {
   const [itemColor, setItemColor] = useState("var(--enjoyment)");
+  const router = useRouter();
+  const { locales } = router;
 
   function listenSrollEvent() {
     const colors = [
@@ -125,38 +130,58 @@ export default function Manual() {
     window.addEventListener("scroll", listenSrollEvent);
   });
 
+  const handleChangeLocale = (newLocale) => {
+    router.push(router.pathname, router.asPath, { locale: newLocale });
+  };
+
+  const { t: translate } = useTranslation("emotion-records");
+
   return (
-    <StyledSection>
-      <StyledTitle>
-        Welcome to the <b>What a feeling app</b>!
-      </StyledTitle>
-      <StyledText>
-        This tool is designed to help you track and understand your emotions
-        better. Below are some guidelines to help you navigate the app
-        effectively:
-      </StyledText>
-
-      {manualData.map(({ question, text, answers }) => (
-        <StyledDetails key={question} $itemColor={itemColor}>
-          <StyledSummary>{question}</StyledSummary>
-          <StyledText>{text}</StyledText>
-          <StyledOl>
-            {answers.map((answer) => (
-              <StyledListItem key={answer} $itemColor={itemColor}>
-                {answer}
-              </StyledListItem>
-            ))}
-          </StyledOl>
-        </StyledDetails>
+    <>
+      {locales.map((loc) => (
+        <button key={loc} onClick={() => handleChangeLocale(loc)}>
+          {loc === "en" ? "English" : "Deutsch"}
+        </button>
       ))}
+      <StyledSection>
+        <StyledTitle>{translate("manualWelcomeText")}</StyledTitle>
+        <StyledText>
+          This tool is designed to help you track and understand your emotions
+          better. Below are some guidelines to help you navigate the app
+          effectively:
+        </StyledText>
 
-      <StyledText>
-        Remember, the <b>What a feeling</b> app is here to assist you in
-        understanding and managing your emotions. Feel free to explore its
-        features, utilize the graphs, highlight and filter specific entries, and
-        gain insights into the basic emotions.
-      </StyledText>
-      <StyledText>What a feeling!</StyledText>
-    </StyledSection>
+        {manualData.map(({ question, text, answers }) => (
+          <StyledDetails key={question} $itemColor={itemColor}>
+            <StyledSummary>{question}</StyledSummary>
+            <StyledText>{text}</StyledText>
+            <StyledOl>
+              {answers.map((answer) => (
+                <StyledListItem key={answer} $itemColor={itemColor}>
+                  {answer}
+                </StyledListItem>
+              ))}
+            </StyledOl>
+          </StyledDetails>
+        ))}
+
+        <StyledText>
+          Remember, the <b>What a feeling</b> app is here to assist you in
+          understanding and managing your emotions. Feel free to explore its
+          features, utilize the graphs, highlight and filter specific entries,
+          and gain insights into the basic emotions.
+        </StyledText>
+        <StyledText>What a feeling!</StyledText>
+      </StyledSection>
+    </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, "manual")),
+      // Will be passed to the page component as props
+    },
+  };
 }

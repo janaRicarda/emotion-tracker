@@ -3,5 +3,7 @@
   "emotionRecordsTooltip": "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
   "clickCalendar": "Click the calendar",
   "selectDate": "and select a date",
-  "sorry": "sorry, nothing found"
+  "sorry": "sorry, nothing found",
+  "emotionRecordsNoEntriesText": "You haven't made any Entries today.",
+  "addEntryButtonText": "add Entry →"
 }
