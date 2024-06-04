@@ -2,8 +2,8 @@ import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import { useState, useCallback, useEffect, useRef } from "react";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import CalendarIcon from "/public/calendar.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
 import { breakpoints } from "@/utils/breakpoints";
@@ -59,7 +59,7 @@ const StyledHeading = styled(StyledTitle)`
   width: 100%;
   padding: 1rem 0;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "110px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "100px")};
   ${transition}
   background-color: var(--main-bright);
   z-index: 1;
@@ -74,7 +74,7 @@ const Background = styled.div`
 `;
 const AnimatedPanel = styled.div`
   width: 90vw;
-  margin: 0.5rem;
+  margin: 0 0.5rem;
   border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;

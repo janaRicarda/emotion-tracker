@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import Magnifier from "../public/magnify.svg";
+import Magnifier from "../public/icons/magnify.svg";
 import { DayPicker } from "react-day-picker";
-import CalendarIcon from "/public/calendar.svg";
+import CalendarIcon from "/public/icons/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
@@ -67,12 +67,12 @@ const StyledFilterButton = styled(StyledButton)`
   padding: 0.2rem;
   width: auto;
   background-color: ${({ $active }) =>
-    $active ? "var(--main-dark)" : "var(--button-background)"};
+    $active ? "var(--button-background)" : "var(--main-bright)"};
   color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--contrast-text)"};
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
   fill: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--contrast-text)"};
-  border: var(--circle-border);
+    $active ? "var(--contrast-text)" : "var(--main-dark)"};
+  border: 1px solid var(--contrast-text);
 `;
 
 const StyledButtonGroup = styled.div`
@@ -368,16 +368,3 @@ export default function FilterEmotionEntries({
     </>
   );
 }
-
-// display: flex;
-// background-color: ${({ $active }) =>
-// $active ? "var(--button-background)" : "var(--main-bright)"};
-// margin: 0;
-// padding: 0.2rem;
-// border-color: var(--contrast-text);
-// width: auto;
-// color: ${({ $active }) =>
-//   $active ? "var(--contrast-text)" : "var(--main-dark)"};
-// fill: ${({ $active }) =>
-//   $active ? "var(--contrast-text)" : "var(--main-dark)"};
-// align-items: center;

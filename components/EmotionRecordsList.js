@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TrashIcon from "../public/trash-icon.svg";
-import PencilIcon from "../public/pencil.svg";
+import TrashIcon from "../public/icons/trash-icon.svg";
+import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import HeartFilledIcon from "../public/heart-filled.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HeartFilledIcon from "../public/icons/heart-filled.svg";
 import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`

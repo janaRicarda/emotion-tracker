@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logo from "../public/logo.svg";
-import Moon from "../public/moon.svg";
-import Sun from "../public/sun.svg";
+import Logo from "../public/icons/logo.svg";
+import Moon from "../public/icons/moon.svg";
+import Sun from "../public/icons/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";

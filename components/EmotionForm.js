@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
 import { useState } from "react";
-import Circle from "../public/circle.svg";
+import Circle from "../public/icons/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,

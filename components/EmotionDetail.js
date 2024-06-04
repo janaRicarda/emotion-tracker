@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ChevronPrev from "./../public/chevron-left.svg";
-import ChevronNext from "./../public/chevron-right.svg";
-import ArrowBack from "./../public/arrow-left.svg";
+import ChevronPrev from "./../public/icons/chevron-left.svg";
+import ChevronNext from "./../public/icons/chevron-right.svg";
+import ArrowBack from "./../public/icons/arrow-left.svg";
 import {
   StyledFixedLink,
   StyledListItem,

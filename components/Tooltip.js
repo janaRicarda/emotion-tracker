@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Info from "../public/info.svg";
-import Close from "../public/close.svg";
+import Info from "../public/icons/info.svg";
+import Close from "../public/icons/close.svg";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
