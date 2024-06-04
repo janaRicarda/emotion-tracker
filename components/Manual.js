@@ -3,52 +3,42 @@ import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 const StyledSection = styled.section`
-  border: 2px solid red;
-  padding: 1rem;
-  @media ${devices.largeMobile} {
-    margin: 0 5rem 0 5rem;
+  margin: 0 1rem;
+  //padding: 1rem;
+  @media ${breakpoints.mobileLandscape} {
+    padding: 0 1rem 1rem;
+    width: 70vw;
   }
-  @media ${devices.tablet} {
-    margin: 0 10rem 0 10rem;
+  @media ${breakpoints.largeMobile} {
+    margin: 0 20%;
   }
-  @media ${devices.laptop} {
-    margin: 0 20rem 0 20rem;
+  @media ${breakpoints.tablet} {
+    width: 50vw;
   }
-  @media ${devices.desktop} {
-    margin: 0 30rem 0 30rem;
+  @media ${breakpoints.laptop} {
+    margin: 0 30%;
   }
 `;
 
 const StyledManualTitle = styled(StyledTitle)`
   margin-bottom: 2rem;
 `;
+
+const StyledText = styled.p`
+  margin: 2rem 1rem;
+  &:last-child {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+`;
 const StyledDetailText = styled.p`
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  padding: 1.5rem;
 `;
 
-const StyledText1 = styled.p`
-  margin-bottom: 3rem;
-  @media ${devices.tablet} {
-    margin-right: 2rem;
-  }
-`;
-
-const StyledText2 = styled.p`
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  @media ${devices.tablet} {
-    margin-right: 2rem;
-  }
-`;
-
-const StyledText3 = styled.p`
-  text-align: center;
-  font-size: 2rem;
-`;
 const StyledDetailsWrapper = styled.article``;
 const StyledDetails = styled.details`
   border: 1px solid ${({ $itemColor }) => $itemColor};
@@ -159,33 +149,31 @@ export default function Manual() {
       <StyledManualTitle>
         Welcome to the <b>What a feeling app</b>!
       </StyledManualTitle>
-      <StyledText1>
+      <StyledText>
         This tool is designed to help you track and understand your emotions
         better. Below are some guidelines to help you navigate the app
         effectively:
-      </StyledText1>
-      <StyledDetailsWrapper>
-        {manualData.map(({ question, text, answers }) => (
-          <StyledDetails key={question} $itemColor={itemColor}>
-            <StyledSummary>{question}</StyledSummary>
-            <StyledDetailText>{text}</StyledDetailText>
-            <StyledOl>
-              {answers.map((answer) => (
-                <StyledListItem key={answer} $itemColor={itemColor}>
-                  {answer}
-                </StyledListItem>
-              ))}
-            </StyledOl>
-          </StyledDetails>
-        ))}
-      </StyledDetailsWrapper>
-      <StyledText2>
+      </StyledText>
+      {manualData.map(({ question, text, answers }) => (
+        <StyledDetails key={question} $itemColor={itemColor}>
+          <StyledSummary>{question}</StyledSummary>
+          <StyledDetailText>{text}</StyledDetailText>
+          <StyledOl>
+            {answers.map((answer) => (
+              <StyledListItem key={answer} $itemColor={itemColor}>
+                {answer}
+              </StyledListItem>
+            ))}
+          </StyledOl>
+        </StyledDetails>
+      ))}
+      <StyledText>
         Remember, the <b>What a feeling</b> app is here to assist you in
         understanding and managing your emotions. Feel free to explore its
         features, utilize the graphs, highlight and filter specific entries, and
         gain insights into the basic emotions.
-      </StyledText2>
-      <StyledText3>What a feeling!</StyledText3>
+      </StyledText>
+      <StyledText>What a feeling!</StyledText>
     </StyledSection>
   );
 }
