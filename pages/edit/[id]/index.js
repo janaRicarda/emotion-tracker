@@ -1,6 +1,7 @@
 import EmotionForm from "@/components/EmotionForm";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 
 export default function EditPage({
   theme,
@@ -22,6 +23,9 @@ export default function EditPage({
 
   return (
     <>
+      <Head>
+        <title>Edit</title>
+      </Head>
       <EmotionForm
         theme={theme}
         onSubmit={onAddEmotionDetails}

@@ -5,6 +5,7 @@ import {
   StyledFixedTitle,
   StyledEmotionListWrapper,
 } from "@/SharedStyledComponents";
+import Head from "next/head";
 
 export default function CreateIndexPage({
   onAddEmotionDetails,
@@ -21,6 +22,9 @@ export default function CreateIndexPage({
 
   return (
     <>
+      <Head>
+        <title>Choose emotions</title>
+      </Head>
       <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
       <StyledEmotionListWrapper>
         <EmotionList

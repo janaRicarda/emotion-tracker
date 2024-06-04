@@ -11,6 +11,7 @@ import {
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
 import { devices } from "@/utils/devices";
+import Head from "next/head";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -136,69 +137,74 @@ export default function HomePage({
   }
 
   return (
-    <StyledFlexColumnWrapper>
-      <StyledTensionForm onSubmit={handleSubmit}>
-        <StyledTensionLabel htmlFor="tension-level">
-          On a scale from 0 to 100, how tense do you feel in this moment?
-        </StyledTensionLabel>
-        <StyledInput
-          aria-label="Adjust tension level between 0 and 100"
-          id="tension-level"
-          name="tensionLevel"
-          type="range"
-          value={tension}
-          $value={tension}
-          max={100}
-          onChange={(event) => setTension(event.target.value)}
-        />
-        <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </StyledWrapper>
+    <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <StyledFlexColumnWrapper>
+        <StyledTensionForm onSubmit={handleSubmit}>
+          <StyledTensionLabel htmlFor="tension-level">
+            On a scale from 0 to 100, how tense do you feel in this moment?
+          </StyledTensionLabel>
+          <StyledInput
+            aria-label="Adjust tension level between 0 and 100"
+            id="tension-level"
+            name="tensionLevel"
+            type="range"
+            value={tension}
+            $value={tension}
+            max={100}
+            onChange={(event) => setTension(event.target.value)}
+          />
+          <StyledWrapper>
+            <StyledSpan>0</StyledSpan>
+            <StyledSpan>100</StyledSpan>
+          </StyledWrapper>
 
-        {!isFormSubmitted && (
-          <>
-            <StyledTensionDisplay>{tension}</StyledTensionDisplay>
-            <SaveButton type="submit">Save</SaveButton>
-          </>
+          {!isFormSubmitted && (
+            <>
+              <StyledTensionDisplay>{tension}</StyledTensionDisplay>
+              <SaveButton type="submit">Save</SaveButton>
+            </>
+          )}
+
+          {isFormSubmitted && (
+            <>
+              <StyledMessage>Your entry was successfully saved!</StyledMessage>
+              <StyledButtonWrapper>
+                <StyledBackButton
+                  type="reset"
+                  value={"Done"}
+                  onClick={() => {
+                    setIsFormSubmitted(!isFormSubmitted);
+                    setTension("0");
+                  }}
+                />
+                <StyledAddDetailsLink
+                  href={{ pathname: "/create", query: { id: id } }}
+                  forwardedAs={`/create`}
+                >
+                  Add more details
+                </StyledAddDetailsLink>
+              </StyledButtonWrapper>
+            </>
+          )}
+        </StyledTensionForm>
+
+        {chartIsShown && (
+          <TensionChart
+            emotionEntries={emotionEntries}
+            theme={theme}
+            xValues={xValues}
+            yValues={yValues}
+            title="Daily Tension Graph"
+          />
         )}
 
-        {isFormSubmitted && (
-          <>
-            <StyledMessage>Your entry was successfully saved!</StyledMessage>
-            <StyledButtonWrapper>
-              <StyledBackButton
-                type="reset"
-                value={"Done"}
-                onClick={() => {
-                  setIsFormSubmitted(!isFormSubmitted);
-                  setTension("0");
-                }}
-              />
-              <StyledAddDetailsLink
-                href={{ pathname: "/create", query: { id: id } }}
-                forwardedAs={`/create`}
-              >
-                Add more details
-              </StyledAddDetailsLink>
-            </StyledButtonWrapper>
-          </>
-        )}
-      </StyledTensionForm>
-
-      {chartIsShown && (
-        <TensionChart
-          emotionEntries={emotionEntries}
-          theme={theme}
-          xValues={xValues}
-          yValues={yValues}
-          title="Daily Tension Graph"
-        />
-      )}
-
-      <StyledGraphButton type="button" onClick={handleChart}>
-        {chartIsShown === true ? "Hide chart" : "Show chart"}
-      </StyledGraphButton>
-    </StyledFlexColumnWrapper>
+        <StyledGraphButton type="button" onClick={handleChart}>
+          {chartIsShown === true ? "Hide chart" : "Show chart"}
+        </StyledGraphButton>
+      </StyledFlexColumnWrapper>
+    </>
   );
 }

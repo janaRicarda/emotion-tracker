@@ -4,6 +4,7 @@ import {
   StyledFixedTitle,
   StyledEmotionListWrapper,
 } from "@/SharedStyledComponents";
+import Head from "next/head";
 
 export default function EmotionListPage({ handleToolTip }) {
   useEffect(() => {
@@ -14,6 +15,9 @@ export default function EmotionListPage({ handleToolTip }) {
 
   return (
     <>
+      <Head>
+        <title>The 7 basic emotions</title>
+      </Head>
       <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>
       <StyledEmotionListWrapper>
         <EmotionList />

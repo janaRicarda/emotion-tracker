@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { devices, breakpoints } from "./utils/devices";
+import { breakpoints } from "./utils/devices";
 
 //buttons
 const StyledButton = styled.button`
