@@ -14,12 +14,16 @@ const StyledCircle = styled.article`
   align-items: center;
   box-shadow: var(--box-shadow);
   @media ${breakpoints.mobileLandscape} {
-    width: 60vh;
-    height: 60vh;
+    width: 62vh;
+    height: 62vh;
+  }
+  @media ${breakpoints.largeMobile} {
+    width: 62vh;
+    height: 62vh;
   }
   @media ${breakpoints.tablet} {
-    width: 50vh;
-    height: 50vh;
+    width: 52vh;
+    height: 52vh;
   }
   @media ${breakpoints.laptop} {
     width: 60vh;
@@ -38,6 +42,10 @@ const StyledEmotionList = styled.ul`
   overflow: hidden;
   transform: rotate(${({ $rotation }) => $rotation}deg);
   @media ${breakpoints.mobileLandscape} {
+    width: 54vh;
+    height: 54vh;
+  }
+  @media ${breakpoints.largeMobile} {
     width: 54vh;
     height: 54vh;
   }

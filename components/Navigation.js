@@ -67,6 +67,9 @@ const StyledLink = styled(StyledStandardLink)`
   @media ${breakpoints.mobileLandscape} {
     padding: 0.2rem;
   }
+  @media ${breakpoints.laptop} {
+    padding: 0.8rem;
+  }
 `;
 
 const StyledThemeButton = styled.button`
@@ -78,6 +81,9 @@ const StyledThemeButton = styled.button`
   font-weight: 500;
   @media ${breakpoints.mobileLandscape} {
     padding: 0.2rem;
+  }
+  @media ${breakpoints.laptop} {
+    padding: 0.8rem;
   }
 `;
 

@@ -39,9 +39,8 @@ const StyledDetailText = styled.p`
   padding: 1.5rem;
 `;
 
-const StyledDetailsWrapper = styled.article``;
 const StyledDetails = styled.details`
-  border: 1px solid ${({ $itemColor }) => $itemColor};
+  border: 2px solid ${({ $itemColor }) => $itemColor};
   background: var(--section-background);
   border-radius: 30px;
   padding: 0.5rem;

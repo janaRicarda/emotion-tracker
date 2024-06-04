@@ -24,6 +24,11 @@ const StyledTensionForm = styled(StyledForm)`
   width: 80vw;
   background: var(--section-background);
   border-radius: 6px;
+  @media ${breakpoints.mobileLandscape} {
+    height: 60vh;
+    padding: 1rem;
+    margin-top: 0;
+  }
   @media ${breakpoints.tablet} {
     width: 60vw;
   }
