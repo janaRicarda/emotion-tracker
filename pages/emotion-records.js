@@ -8,8 +8,6 @@ import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
 // used for all transitions
 const transition = css`
@@ -117,10 +115,6 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
-const LocaleDiv = styled.div`
-  color: hotpink;
-`;
-
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
@@ -141,9 +135,6 @@ export default function EmotionRecords({
   });
 
   const [showFilter, setShowFilter] = useState(false);
-
-  const router = useRouter();
-  const { locale, locales } = router;
 
   const { t: translate } = useTranslation(["emotion-records"]);
 
@@ -287,14 +278,6 @@ export default function EmotionRecords({
           />
         </ControlPadding>
       )}
-      <LocaleDiv>
-        <p>{translate("language")}</p>
-        {locales.map((locale) => (
-          <Link key={locale} href={"/app-manual"} locale={locale}>
-            {locale}
-          </Link>
-        ))}
-      </LocaleDiv>
     </>
   );
 }

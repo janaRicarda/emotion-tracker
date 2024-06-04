@@ -113,7 +113,6 @@ export default function Header({
         <StyledStandardLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledStandardLink>
-        <div>{locale === "en" ? "Language: English" : "Sprache: Deutsch"}</div>
         {locales.map((locale) => (
           <button key={locale} onClick={() => handleChangeLanguage(locale)}>
             {locale === "en" ? "English" : "Deutsch"}
