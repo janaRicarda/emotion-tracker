@@ -33,6 +33,8 @@ export const lightTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
+  logoBackground: "linear-gradient(#fbffea, #eafff9, #f1eaff, #fff0ea)",
+  //logoBackground: "linear-gradient(#f7f28a, #8af9d8, #b18af9, #f98d8a)",
 };
 
 export const darkTheme = {
@@ -72,6 +74,7 @@ export const darkTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
   boxShadowTooltip: "10px 10px 15px black",
+  logoBackground: "linear-gradient(#396a73, #393e73, #593973, #693973)",
 };
 
 export const warmTheme = {
@@ -117,6 +120,7 @@ export const warmTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
   boxShadowTooltip: "10px 10px 15px black",
+  logoBackground: "linear-gradient(#fef1ad, #fbe7c4)",
 };
 
 export const coldTheme = {
@@ -153,6 +157,7 @@ export const coldTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #92aaab",
   boxShadowTooltip: "10px 10px 15px black",
+  logoBackground: "linear-gradient(#fefeee, #f1feee, #f3eefe, #fef0ee)",
 };
 
 export const neutralTheme = {
@@ -188,6 +193,7 @@ export const neutralTheme = {
   circleBorder: "1px solid black",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "10px 10px 15px black",
+  logoBackground: "lightgrey",
 };
 
 export const highContrastTheme = {
@@ -223,4 +229,5 @@ export const highContrastTheme = {
   circleBorder: "1px solid yellow",
   boxShadowFilter: "none",
   boxShadowTooltip: "10px 10px 15px black",
+  logoBackground: "black",
 };

@@ -4,27 +4,22 @@ import ChevronNext from "./../public/icons/chevron-right.svg";
 import ArrowBack from "./../public/icons/arrow-left.svg";
 import {
   StyledFixedLink,
+  StyledStandardLink,
   StyledListItem,
   StyledList,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
 import { breakpoints } from "@/utils/breakpoints";
 
-const StyledBackLink = styled(StyledFixedLink)`
-  top: 110px;
-  left: 2rem;
+const StyledBackLink = styled(StyledStandardLink)`
   display: flex;
+  color: var(--main-dark);
+
   @media ${breakpoints.mobileLandscape} {
-    top: 100px;
-    margin-left: 4rem;
+    margin-bottom: 1rem;
   }
   @media ${breakpoints.largeMobile} {
-    top: 100px;
-    margin-left: 4rem;
-  }
-  @media ${breakpoints.tablet} {
-    top: 100px;
-    margin-left: 6rem;
+    margin-bottom: 1rem;
   }
 `;
 

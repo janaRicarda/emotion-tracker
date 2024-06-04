@@ -70,9 +70,12 @@ const StyledIconWrapper = styled.article`
 `;
 
 const StyledLogoLink = styled(StyledStandardLink)`
+  //margin-top: 1rem;
+  border-radius: 50%;
+  background: var(--logo-background);
   @media ${breakpoints.laptop} {
     z-index: 3;
-    background: var(--main-bright);
+    //background: var(--main-bright);
     border-radius: 50%;
   }
 `;
@@ -80,8 +83,8 @@ const StyledLogoLink = styled(StyledStandardLink)`
 const StyledLogo = styled(Logo)`
   max-width: 8rem;
   max-height: 8rem;
-  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
+  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
   ${transition}
 `;
 

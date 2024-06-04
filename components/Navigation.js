@@ -45,8 +45,8 @@ const StyledArticle = styled.article`
     300ms;
   @media ${breakpoints.laptop} {
     justify-content: flex-start;
+    gap: 1rem;
     height: 100px;
-
     background-color: var(--section-background-contrast);
   }
 `;
@@ -61,9 +61,12 @@ const StyledLinkWrapper = styled.article`
 
 const StyledLink = styled(StyledStandardLink)`
   color: var(--contrast-text);
-  padding: 0.8rem;
   font-size: 1.4rem;
+  padding: 0.8rem;
   font-weight: 500;
+  @media ${breakpoints.mobileLandscape} {
+    padding: 0.2rem;
+  }
 `;
 
 const StyledThemeButton = styled.button`
@@ -73,6 +76,9 @@ const StyledThemeButton = styled.button`
   padding: 0.8rem;
   font-size: 1.4rem;
   font-weight: 500;
+  @media ${breakpoints.mobileLandscape} {
+    padding: 0.2rem;
+  }
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`

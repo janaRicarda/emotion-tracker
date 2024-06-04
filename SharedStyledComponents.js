@@ -4,7 +4,7 @@ import { breakpoints } from "./utils/breakpoints";
 
 //buttons
 const StyledButton = styled.button`
-  background-color: var(--button-background);
+  background: var(--button-background);
   color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
