@@ -27,8 +27,8 @@ const ChartWrapper = styled.div`
   min-height: 340px;
   max-height: fit-content;
   margin-top: 8rem;
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
+  /* border: 1px solid var(--main-dark);
+  border-radius: 6px; */
   grid-template-columns: 1fr 15fr;
   /* background-color: #8e60d0; */
 `;
@@ -48,7 +48,7 @@ const StyledGraphButton = styled(StyledButton)`
 `;
 
 const ToggleContainer = styled(StyledWrapper)`
-  padding: 0.3rem;
+  padding: 0.1rem;
   margin: 1rem 1rem 0 1rem;
   gap: 0.2rem;
   background-color: var(--button-background);
@@ -62,30 +62,20 @@ const StyledGraphButtonsWrapper = styled(StyledFlexColumnWrapper)`
   align-items: center;
 `;
 
-const GraphToggleWrapper = styled.div`
-  display: flex;
-  flex-flow: row;
-  position: absolute;
-  top: 130px;
-  right: 10vw;
-  height: 2rem;
-  gap: 0.5rem;
-  margin: 5rem 0 0;
-  align-items: flex-end;
-`;
-
 export default function ChartContainer({ shownEntries, theme }) {
   //logic for Graph
 
-  const width = 340;
+  const { tension, emotionShares, emotionIntensity } = chartPresets;
+
   const [chartState, setChartState] = useState({
     scatter: true,
-    type: "scatter",
-    chartData: chartPresets.initialPreset,
+    type: tension.type,
+    preset: tension,
   });
 
-  const { type, scatter, chartData } = chartState;
-  const { title, xValues, yValues, xTitle, yTitle } = chartData;
+  const width = 340;
+  const { type, scatter, preset } = chartState;
+  const { title, xTitle, yTitle } = preset;
 
   const xTensionValues = doTensionChartData(shownEntries).xValues;
   const yTensionValues = doTensionChartData(shownEntries).yValues;
@@ -93,6 +83,15 @@ export default function ChartContainer({ shownEntries, theme }) {
   const countResult = countEmotions(shownEntries);
   const emotions = countResult.map((element) => element.emotion);
   const emotionCounts = countResult.map((element) => element.count);
+
+  const xValues = preset === tension ? xTensionValues : emotions;
+
+  const yValues =
+    preset === tension
+      ? yTensionValues
+      : preset === emotionShares
+      ? emotionCounts
+      : emotionIntensity;
 
   function handleChartType() {
     setChartState({
@@ -102,25 +101,24 @@ export default function ChartContainer({ shownEntries, theme }) {
     });
   }
 
-  function handleTensionChart(entries) {
+  function handleTensionChart() {
     setChartState({
       ...chartState,
-      chartData: {
-        ...chartPresets.tension,
-        xValues: xTensionValues,
-        yValues: yTensionValues,
-      },
+      preset: tension,
     });
   }
 
   function handleEmotionChart() {
     setChartState({
       ...chartState,
-      chartData: {
-        ...chartPresets.emotions,
-        xValues: emotions,
-        yValues: emotionCounts,
-      },
+      preset: emotionShares,
+    });
+  }
+
+  function handleIntensityChart() {
+    setChartState({
+      ...chartState,
+      preset: emotionIntensity,
     });
   }
 
@@ -141,20 +139,11 @@ export default function ChartContainer({ shownEntries, theme }) {
         <StyledGraphButton type="button" onClick={handleTensionChart}>
           Tension
         </StyledGraphButton>
-        <StyledGraphButton
-          type="button"
-          onClick={() =>
-            setChartState({
-              ...chartState,
-              yTitle: "intensity",
-              Title: "Intensity Chart",
-            })
-          }
-        >
-          Intensity
-        </StyledGraphButton>
         <StyledGraphButton type="button" onClick={handleEmotionChart}>
           Emotions
+        </StyledGraphButton>
+        <StyledGraphButton type="button" onClick={handleIntensityChart}>
+          Intensity
         </StyledGraphButton>
       </StyledGraphButtonsWrapper>
       <ChartPlaceholder>

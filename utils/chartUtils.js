@@ -71,21 +71,22 @@ export function doTensionChartData(entries) {
 }
 
 export const chartPresets = {
-  initialPreset: {
-    title: "Tension Chart",
-    xTitle: "time",
-    yTitle: "tension",
-    xValues: [8, 9, 10],
-    yValues: [0, 0, 0],
-  },
   tension: {
     title: "Tension Chart",
     xTitle: "time",
     yTitle: "tension",
+    type: "scatter",
   },
-  emotions: {
+  emotionShares: {
     title: "Emotion Shares",
     xTitle: "emotion",
     yTitle: "number of entries",
+    type: "bar",
+  },
+  emotionIntensity: {
+    title: "Average Intensities of Emotions",
+    xTitle: "emotion",
+    yTitle: "average intensity",
+    type: "bar",
   },
 };

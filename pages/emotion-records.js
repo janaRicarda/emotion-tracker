@@ -124,11 +124,12 @@ const GraphToggleWrapper = styled.div`
   flex-flow: row;
   position: absolute;
   top: 130px;
-  right: 10vw;
-  height: 2rem;
-  gap: 0.5rem;
+  right: 9.5vw;
+  height: 24px;
+  padding: 0.2rem;
+  gap: 0.1rem;
+  justify-content: space-between;
   margin: 5rem 0 0;
-  align-items: flex-end;
 `;
 
 export default function EmotionRecords({
@@ -153,11 +154,10 @@ export default function EmotionRecords({
 
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
-  // const [listIsShown, setListIsShown] = useState(true);
 
   useEffect(() => {
     handleToolTip({
-      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month. Above the list to the right is a switch to display the data as chart instead of the list.",
     });
   }, []);
 
