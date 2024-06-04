@@ -99,9 +99,9 @@ export default function Header({
   const router = useRouter();
   const { locale, locales } = router;
 
-  const handleChangeLanguage = (newLocale) => {
+  function handleChangeLanguage(newLocale) {
     router.push(router.pathname, router.asPath, { locale: newLocale });
-  };
+  }
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
