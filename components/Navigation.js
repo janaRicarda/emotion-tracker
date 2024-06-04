@@ -46,6 +46,8 @@ const StyledArticle = styled.article`
   @media ${breakpoints.laptop} {
     justify-content: flex-start;
     height: 100px;
+
+    background-color: var(--section-background-contrast);
   }
 `;
 
@@ -102,6 +104,9 @@ const ThemeButton = styled(StyledButton)`
     width: auto;
     text-align: center;
     font-size: 0.8rem;
+    color: var(--contrast-text);
+    background: var(--section-background-contrast);
+    border: 1px solid var(--contrast-text);
   }
 `;
 
@@ -134,7 +139,7 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">
-              Manual
+              manual
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotions">
               7 basic emotions
@@ -146,7 +151,7 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
               emotion records
             </StyledLink>
             <StyledThemeButton onClick={handleShowThemes}>
-              Colorschemes
+              color schemes
             </StyledThemeButton>
           </StyledLinkWrapper>
           {showThemes && (

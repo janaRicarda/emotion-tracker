@@ -7,8 +7,7 @@ import Sun from "../public/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
-import Tooltip from "./Tooltip";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 // used for all transition in this component
 const transition = css`
@@ -71,8 +70,10 @@ const StyledIconWrapper = styled.article`
 `;
 
 const StyledLogoLink = styled(StyledStandardLink)`
-  @media ${devices.laptop} {
+  @media ${breakpoints.laptop} {
     z-index: 3;
+    background: var(--main-bright);
+    border-radius: 50%;
   }
 `;
 
@@ -81,14 +82,7 @@ const StyledLogo = styled(Logo)`
   max-height: 8rem;
   width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
   height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
-  stroke: var(--main-dark);
-
   ${transition}
-  @media ${devices.laptop} {
-    stroke: var(--contrast-text);
-    fill: var(--contrast-text);
-    color: var(--contrast-text);
-  }
 `;
 
 export default function Header({

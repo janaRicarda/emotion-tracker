@@ -10,7 +10,7 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 import Head from "next/head";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
@@ -24,10 +24,10 @@ const StyledTensionForm = styled(StyledForm)`
   width: 80vw;
   background: var(--section-background);
   border-radius: 6px;
-  @media ${devices.tablet} {
+  @media ${breakpoints.tablet} {
     width: 60vw;
   }
-  @media ${devices.laptop} {
+  @media ${breakpoints.laptop} {
     width: 40vw;
   }
 `;
