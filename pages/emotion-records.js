@@ -1,10 +1,4 @@
-import {
-  StyledTitle,
-  StyledFlexColumnWrapper,
-  StyledStandardLink,
-  StyledButton,
-  StyledWrapper,
-} from "@/SharedStyledComponents";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import ToggleSwitch from "@/components/ToggleSwitch";
@@ -13,20 +7,9 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
+import ChartContainer from "@/components/ChartContainer";
 import Icon from "@mdi/react";
-import { mdiChartLine, mdiChartBar, mdiFormatListBulleted } from "@mdi/js";
-import dynamic from "next/dynamic";
-import Loader from "@/components/Loader";
-import {
-  chartPresets,
-  doTensionChartData,
-  countEmotions,
-} from "@/utils/chartUtils";
-
-const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
-  ssr: false,
-  loading: () => <Loader itemText="... loading" />,
-});
+import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 
 // used for all transitions
 const transition = css`
@@ -132,43 +115,8 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
-const ChartWrapper = styled.div`
-  display: grid;
-  width: 80vw;
-  min-height: 340px;
-  max-height: fit-content;
-  margin-top: 8rem;
-  border: 1px solid var(--main-dark);
-  border-radius: 6px;
-  grid-template-columns: 1fr 15fr;
-  /* background-color: #8e60d0; */
-`;
-
-const ChartPlaceholder = styled.div`
-  min-width: 300px;
-  align-items: center;
-`;
-
-const StyledGraphButton = styled(StyledButton)`
-  width: 5rem;
-  padding: 0.3rem;
-  border-style: none;
-  margin: 1rem 1rem 0 1rem;
-`;
-
-const ToggleContainer = styled(StyledWrapper)`
-  padding: 0.3rem;
-  margin: 1rem 1rem 0 1rem;
-  gap: 0.2rem;
-  background-color: var(--button-background);
-  border-radius: 6px;
-`;
 const SwitchSizer = styled.span`
   transform: scale(0.6);
-`;
-
-const StyledGraphButtonsWrapper = styled(StyledFlexColumnWrapper)`
-  align-items: center;
 `;
 
 const GraphToggleWrapper = styled.div`
@@ -203,73 +151,9 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
-  //logic for Graph
-
-  const [chartState, setChartState] = useState({
-    chartIsShown: false,
-    scatter: true,
-    type: "scatter",
-    listIsShown: true,
-    chartData: chartPresets.initialPreset,
-  });
-
-  const { chartIsShown, type, scatter, listIsShown, chartData } = chartState;
-  const { title, xValues, yValues, xTitle, yTitle } = chartData;
-
-  function handleChart() {
-    setChartState({
-      ...chartState,
-      chartIsShown: !chartIsShown,
-      listIsShown: !listIsShown,
-    });
-  }
-
-  function handleChartType() {
-    setChartState({
-      ...chartState,
-      type: type === "scatter" ? "bar" : type === "bar" ? "scatter" : "scatter",
-      scatter: !scatter,
-    });
-  }
-
-  function handleTensionChart(entries) {
-    setChartState({
-      ...chartState,
-      chartData: {
-        ...chartPresets.tension,
-        xValues: doTensionChartData(entries).xValues,
-        yValues: doTensionChartData(entries).yValues,
-      },
-    });
-  }
-
-  function handleEmotionChart() {
-    const countResult = countEmotions(shownEntries);
-
-    const emotions = countResult.map((element) => element.emotion);
-    const counts = countResult.map((element) => element.count);
-    setChartState({
-      ...chartState,
-      chartData: {
-        ...chartPresets.emotions,
-        xValues: emotions,
-        yValues: counts,
-      },
-    });
-  }
-
-  useEffect(() => {
-    setChartState({
-      ...chartState,
-      chartData: {
-        ...chartPresets.tension,
-        xValues: doTensionChartData(shownEntries).xValues,
-        yValues: doTensionChartData(shownEntries).yValues,
-      },
-    });
-  }, []);
-
   const [showFilter, setShowFilter] = useState(false);
+  const [chartIsShown, setChartIsShown] = useState(false);
+  // const [listIsShown, setListIsShown] = useState(true);
 
   useEffect(() => {
     handleToolTip({
@@ -339,6 +223,10 @@ export default function EmotionRecords({
     }
   }
 
+  function handleChart() {
+    setChartIsShown(!chartIsShown);
+  }
+
   return (
     <>
       <Background $show={showFilter} onClick={() => setShowFilter(false)} />
@@ -375,52 +263,7 @@ export default function EmotionRecords({
       </AnimatedPanel>
 
       {chartIsShown && (
-        <ChartWrapper>
-          <StyledGraphButtonsWrapper>
-            <ToggleContainer>
-              <Icon path={mdiChartLine} size={1} />
-              <SwitchSizer>
-                <ToggleSwitch
-                  handleSwitch={handleChartType}
-                  isChecked={!scatter}
-                  // text={"Switch type"}
-                />
-              </SwitchSizer>
-              <Icon path={mdiChartBar} size={1} />
-            </ToggleContainer>
-            <StyledGraphButton type="button" onClick={handleTensionChart}>
-              Tension
-            </StyledGraphButton>
-            <StyledGraphButton
-              type="button"
-              onClick={() =>
-                setChartState({
-                  ...chartState,
-                  yTitle: "intensity",
-                  Title: "Intensity Chart",
-                })
-              }
-            >
-              Intensity
-            </StyledGraphButton>
-            <StyledGraphButton type="button" onClick={handleEmotionChart}>
-              Emotions
-            </StyledGraphButton>
-          </StyledGraphButtonsWrapper>
-          <ChartPlaceholder>
-            {chartState.chartIsShown === true ? (
-              <EmotionChart
-                theme={theme}
-                type={type}
-                xValues={xValues}
-                yValues={yValues}
-                xTitle={xTitle}
-                yTitle={yTitle}
-                title={title}
-              />
-            ) : null}
-          </ChartPlaceholder>
-        </ChartWrapper>
+        <ChartContainer shownEntries={shownEntries} theme={theme} />
       )}
 
       {buttonState.datePicker ? (
@@ -461,7 +304,7 @@ export default function EmotionRecords({
         </SwitchSizer>
         <Icon path={mdiChartLine} size={1} />
       </GraphToggleWrapper>
-      {shownEntries.length !== 0 && listIsShown && (
+      {shownEntries.length !== 0 && !chartIsShown && (
         <ControlPadding>
           <EmotionRecordsList
             onDeleteEmotionEntry={onDeleteEmotionEntry}
