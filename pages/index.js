@@ -212,6 +212,7 @@ export default function HomePage({
             name="tensionLevel"
             type="range"
             value={tension}
+            $value={tension}
             max={100}
             onChange={(event) => setTension(event.target.value)}
           />
