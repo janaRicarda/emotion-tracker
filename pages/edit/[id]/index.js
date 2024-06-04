@@ -7,6 +7,7 @@ export default function EditPage({
   emotionEntries,
   onAddEmotionDetails,
   handleToolTip,
+  useExampleData,
 }) {
   const router = useRouter();
 
@@ -17,7 +18,10 @@ export default function EditPage({
     });
   }, []);
 
-  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
+  const correspondingEntry = useExampleData
+    ? emotionEntries.find((entry) => entry.id === id)
+    : emotionEntries.find((entry) => entry._id === id);
+
   if (!correspondingEntry) return <h2>Page not found!</h2>;
 
   return (
