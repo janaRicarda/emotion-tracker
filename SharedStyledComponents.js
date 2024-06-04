@@ -66,10 +66,9 @@ const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border-radius: 6px;
-  //color: var(--text);
   color: var(--text-on-bright);
 `;
-("");
+
 const StyledFixedLink = styled(Link)`
   position: fixed;
   top: 50%;

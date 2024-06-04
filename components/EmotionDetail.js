@@ -7,7 +7,7 @@ import {
   StyledList,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -15,17 +15,20 @@ const StyledArticle = styled.article`
   padding: 2rem;
   background: ${({ $color }) => $color};
   color: ${({ $text }) => $text};
-  @media ${devices.largeMobile} {
+  @media ${breakpoints.mobileLandscape} {
+    margin: 0 4rem 1rem 4rem;
+    padding: 1rem 4rem 1rem 4rem;
+    width: 80vw;
+  }
+  @media ${breakpoints.largeMobile} {
     margin: 0 4rem 0 4rem;
     padding: 1rem 5rem 1rem 5rem;
+    width: 80vw;
   }
-  @media ${devices.tablet} {
-    margin: 0 8rem 0 8rem;
+  @media ${breakpoints.tablet} {
+    margin: 0 9rem 0 9rem;
     padding: 2rem 8rem 2rem 8rem;
-  }
-  @media ${devices.laptop} {
-    margin: 0 12rem 0 12rem;
-    padding: 2rem 14rem 2rem 14rem;
+    width: 80vw;
   }
 `;
 
@@ -51,27 +54,29 @@ const StyledSubemotionsList = styled(StyledList)`
 
 const PrevLink = styled(StyledFixedLink)`
   left: -0.5rem;
-  @media ${devices.largeMobile} {
+  @media ${breakpoints.largeMobile} {
     left: 1rem;
   }
-  @media ${devices.tablet} {
+  @media ${breakpoints.tablet} {
     left: 2rem;
   }
-  @media ${devices.laptop} {
-    left: 6rem;
+  @media ${breakpoints.laptop} {
+    top: 45%;
+    left: 4rem;
   }
 `;
 
 const NextLink = styled(StyledFixedLink)`
   right: -0.5rem;
-  @media ${devices.largeMobile} {
+  @media ${breakpoints.largeMobile} {
     right: 1rem;
   }
-  @media ${devices.tablet} {
+  @media ${breakpoints.tablet} {
     right: 2rem;
   }
-  @media ${devices.laptop} {
-    right: 6rem;
+  @media ${breakpoints.laptop} {
+    top: 45%;
+    right: 4rem;
   }
 `;
 const StyledChevronPrev = styled(ChevronPrev)`

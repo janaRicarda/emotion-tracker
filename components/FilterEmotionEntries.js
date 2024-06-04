@@ -5,7 +5,7 @@ import { DayPicker } from "react-day-picker";
 import CalendarIcon from "/public/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 const StyledContainer = styled.div`
   height: auto;
@@ -27,14 +27,16 @@ const StyledInput = styled.input`
   height: 35px;
   padding-left: 2rem;
   background-color: var(--main-bright);
-
   color: var(--main-dark);
   border-radius: ${({ $showSearchBar }) => ($showSearchBar ? "20px" : "18px")};
   font-size: 0.8rem;
   border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
-  @media ${devices.tablet} {
-    width: ${({ $showSearchBar }) => ($showSearchBar ? "18rem" : "35px")};
+  @media ${breakpoints.tablet} {
+    width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
+  }
+  @media ${breakpoints.laptop} {
+    width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
   }
 `;
 
@@ -47,13 +49,13 @@ const StyledFilterSection = styled.section`
   align-items: center;
   background-color: var(--section-background-contrast);
   width: 20rem;
-  @media ${devices.largeMobile} {
+  @media ${breakpoints.largeMobile} {
     width: 22rem;
   }
-  @media ${devices.tablet} {
+  @media ${breakpoints.tablet} {
     width: inherit;
   }
-  @media ${devices.laptop} {
+  @media ${breakpoints.laptop} {
     width: inherit;
   }
 `;

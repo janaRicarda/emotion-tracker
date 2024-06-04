@@ -4,7 +4,7 @@ import Close from "../public/close.svg";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { devices } from "@/utils/devices";
+import { devices, breakpoints } from "@/utils/devices";
 
 const StyledTooltipQuestionmark = styled(Info)`
   height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
@@ -24,7 +24,7 @@ const StyledTooltipWrapper = styled.div`
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   border-radius: 1rem;
-  border-radius: 2rem 0 2rem 2rem;
+  border-radius: 1rem;
   background-color: var(--section-background-contrast);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
@@ -40,25 +40,9 @@ const StyledTooltipWrapper = styled.div`
     border-color: transparent transparent var(--section-background-contrast)
       transparent;
   }
-  @media ${devices.largeMobile} {
-    margin-right: 1rem;
-    width: 50vw;
-    right: 1rem;
-  }
-  @media ${devices.tablet} {
-    margin-right: 1rem;
+  @media ${breakpoints.tablet} {
     width: 30vw;
-    right: 1rem;
-  }
-  @media ${devices.laptop} {
-    margin-right: 1rem;
-    width: 30vw;
-    right: 1rem;
-  }
-  @media ${devices.desktop} {
-    margin-right: 1rem;
-    width: 30vw;
-    right: 1rem;
+    right: 0;
   }
 `;
 

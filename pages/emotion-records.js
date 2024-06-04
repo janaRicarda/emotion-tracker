@@ -6,7 +6,7 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 // used for all transitions
 const transition = css`
@@ -26,20 +26,23 @@ const GridWrapper = styled.section`
   ${transition}
   background-color: var(--section-background-contrast);
   z-index: 2;
-  @media ${devices.tablet} {
-    display: ${({ $show }) => ($show ? "block" : "block")};
+  @media ${breakpoints.mobileLandscape} {
+    top: 100px;
+  }
+  @media ${breakpoints.tablet} {
+    display: block;
     box-shadow: none;
     padding: 1rem;
+    top: 200px;
     left: 3rem;
-    width: 20rem;
+    width: 25%;
   }
-  @media ${devices.laptop} {
-    display: ${({ $show }) => ($show ? "block" : "block")};
+  @media ${breakpoints.laptop} {
+    display: block;
     box-shadow: none;
     padding: 1rem;
     left: 5rem;
-    width: 22rem;
-    margin-left: 0.5rem;
+    width: 30%;
   }
 `;
 

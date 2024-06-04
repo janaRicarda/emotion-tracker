@@ -5,10 +5,8 @@ import { useState } from "react";
 import { breakpoints } from "@/utils/devices";
 
 const StyledCircle = styled.article`
-  //width: 90vw;
-  //height: 90vw;
-  width: 21rem;
-  height: 21rem;
+  width: 90vw;
+  height: 90vw;
   border-radius: 50%;
   border: var(--circle-border);
   display: flex;
@@ -18,13 +16,6 @@ const StyledCircle = styled.article`
   @media ${breakpoints.mobileLandscape} {
     width: 60vh;
     height: 60vh;
-    //width: 14rem;
-    //height: 14rem;
-  }
-  @media ${breakpoints.largeMobile} {
-    width: 70vw;
-    height: 70vw;
-    border: 1px solid aqua;
   }
   @media ${breakpoints.tablet} {
     width: 50vh;
@@ -34,20 +25,14 @@ const StyledCircle = styled.article`
     width: 60vh;
     height: 60vh;
   }
-  // @media (orientation: landscape) {
-  //   width: 60vh;
-  //   height: 60vh;
-  // }
 `;
 
 const StyledEmotionList = styled.ul`
   border: var(--emotion-border);
   padding: 0;
   position: relative;
-  //width: 80vw;
-  //height: 80vw;
-  width: 19rem;
-  height: 19rem;
+  width: 80vw;
+  height: 80vw;
   border-radius: 50%;
   list-style: none;
   overflow: hidden;
@@ -55,14 +40,7 @@ const StyledEmotionList = styled.ul`
   @media ${breakpoints.mobileLandscape} {
     width: 54vh;
     height: 54vh;
-    //width: 12rem;
-    //height: 12rem;
   }
-
-  // @media {devices.largeMobile} {
-  //   width: 62vw;
-  //   height: 62vw;
-  // }
   @media ${breakpoints.tablet} {
     width: 46vh;
     height: 46vh;
@@ -71,10 +49,6 @@ const StyledEmotionList = styled.ul`
     width: 54vh;
     height: 54vh;
   }
-  // @media (orientation: landscape) {
-  //   width: 54vh;
-  //   height: 54vh;
-  // }
 `;
 
 const StyledListItem = styled.li`
@@ -125,22 +99,6 @@ const EmotionLink = styled(StyledStandardLink)`
     bottom: 2rem;
     left: 0;
     font-size: 0.8rem;
-  }
-  // @media {devices.mobileLandscape} {
-  //   bottom: 5rem;
-  //   left: 0;
-  //   font-size: 0.8rem;
-  // }
-  @media {breakpoints.largeMobile} {
-    bottom: 5rem;
-    left: 2rem;
-    font-size: 1.5rem;
-    color: hotpink;
-  }
-  @media ${breakpoints.tablet} {
-    bottom: 5rem;
-    left: 2rem;
-    color: blue;
   }
 `;
 

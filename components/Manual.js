@@ -6,18 +6,7 @@ import { StyledTitle } from "@/SharedStyledComponents";
 import { devices } from "@/utils/devices";
 
 const StyledSection = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "title title"
-    "text1 text1"
-    "details details"
-    "details details"
-    "text2 text2"
-    "text3 text3";
-
-  //width: 100%;
-  height: auto;
+  border: 2px solid red;
   padding: 1rem;
   @media ${devices.largeMobile} {
     margin: 0 5rem 0 5rem;
@@ -34,7 +23,6 @@ const StyledSection = styled.section`
 `;
 
 const StyledManualTitle = styled(StyledTitle)`
-  grid-area: title;
   margin-bottom: 2rem;
 `;
 const StyledDetailText = styled.p`
@@ -43,8 +31,6 @@ const StyledDetailText = styled.p`
 `;
 
 const StyledText1 = styled.p`
-  grid-area: text1;
-
   margin-bottom: 3rem;
   @media ${devices.tablet} {
     margin-right: 2rem;
@@ -52,7 +38,6 @@ const StyledText1 = styled.p`
 `;
 
 const StyledText2 = styled.p`
-  grid-area: text2;
   margin-top: 2rem;
   margin-bottom: 3rem;
   @media ${devices.tablet} {
@@ -61,13 +46,10 @@ const StyledText2 = styled.p`
 `;
 
 const StyledText3 = styled.p`
-  grid-area: text3;
   text-align: center;
   font-size: 2rem;
 `;
-const StyledDetailsWrapper = styled.article`
-  grid-area: details;
-`;
+const StyledDetailsWrapper = styled.article``;
 const StyledDetails = styled.details`
   border: 1px solid ${({ $itemColor }) => $itemColor};
   background: var(--section-background);

@@ -12,7 +12,7 @@ import {
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
 import { useEffect, useState } from "react";
-import { devices } from "@/utils/devices";
+import { breakpoints } from "@/utils/devices";
 
 const slideIn = keyframes`
 0% {transform: translateX(-100%)}
@@ -26,13 +26,11 @@ const slideOut = keyframes`
 const StyledArticle = styled.article`
   inset: 0;
   background-color: var(--button-background);
-  //padding-top: 30%;
   position: fixed;
   top: 0;
   right: 0;
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
   z-index: 2;
@@ -45,7 +43,7 @@ const StyledArticle = styled.article`
             ${slideOut}
           `}
     300ms;
-  @media ${devices.laptop} {
+  @media ${breakpoints.laptop} {
     justify-content: flex-start;
     height: 100px;
   }
@@ -54,11 +52,9 @@ const StyledArticle = styled.article`
 const StyledLinkWrapper = styled.article`
   display: flex;
   flex-direction: column;
-  @media ${devices.laptop} {
+  @media ${breakpoints.laptop} {
     padding-top: 1rem;
-    flex-direction: row;
-    
-    
+    flex-direction: row;    
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -77,19 +73,13 @@ const StyledThemeButton = styled.button`
   font-weight: 500;
 `;
 
-const StyledSummary = styled.summary`
-  color: var(--contrast-text);
-  padding: 0.8rem;
-  font-size: 1.4rem;
-  font-weight: 500;
-`;
-
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
   gap: 0.2rem;
-  @media ${devices.laptop} {
+  @media ${breakpoints.mobileLandscape} {
     flex-direction: row;
-    align-self: left;
-    width: inherit;
+  }
+  @media ${breakpoints.laptop} {
+    flex-direction: row;
     padding-top: 0;
   }
 `;
@@ -101,11 +91,15 @@ const ThemeButton = styled(StyledButton)`
   border-radius: 0;
   padding: 0.1rem 0.1rem 0.1rem 0.5rem;
   margin: 0;
-  //width: 100%;
-  @media ${devices.laptop} {
-    //flex-direction: row;
-    //justify-content: center;
-    padding-top: 0;
+  width: 100%;
+  @media ${breakpoints.mobileLandscape} {
+    padding: 0 0.5rem;
+    width: auto;
+    text-align: center;
+  }
+  @media ${breakpoints.laptop} {
+    padding: 0 1rem;
+    width: auto;
     text-align: center;
     font-size: 0.8rem;
   }
@@ -151,23 +145,6 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">
               emotion records
             </StyledLink>
-            {/* <details>
-            <StyledSummary>colorschemes</StyledSummary>
-            <ThemeWrapper>
-              {colorSchemes.map(({ title, name }) => (
-                <ThemeButton
-                  key={title}
-                  type="button"
-                  onClick={() => {
-                    switchTheme(name);
-                    handleToggleMenu();
-                  }}
-                >
-                  {title}
-                </ThemeButton>
-              ))}
-            </ThemeWrapper>
-          </details> */}
             <StyledThemeButton onClick={handleShowThemes}>
               Colorschemes
             </StyledThemeButton>
