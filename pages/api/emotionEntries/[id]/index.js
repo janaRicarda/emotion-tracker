@@ -11,7 +11,7 @@ export default async function handler(request, response) {
       const emotionEntries = await EmotionEntries.findById(id);
       return response.status(200).json(emotionEntries);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response.status(404).json({ status: "Not Found" });
     }
   }
@@ -25,7 +25,7 @@ export default async function handler(request, response) {
         .status(200)
         .json({ status: "Emotion Entry successfully updated" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -35,7 +35,7 @@ export default async function handler(request, response) {
 
       response.status(200).json({ status: "Emotion Entry was deleted!" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

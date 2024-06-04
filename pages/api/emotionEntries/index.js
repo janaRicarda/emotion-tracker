@@ -9,7 +9,7 @@ export default async function handler(request, response) {
       const emotionEntries = await EmotionEntries.find();
       return response.status(200).json(emotionEntries);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       response.status(500).json({ error: error.message });
     }
   }
@@ -21,7 +21,7 @@ export default async function handler(request, response) {
 
       response.status(201).json({ status: "Emotion Entry created" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       response.status(400).json({ error: error.message });
     }
   }

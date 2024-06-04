@@ -141,20 +141,27 @@ export default function App({ Component, pageProps }) {
     if (useExampleData) {
       setEmotionEntries([newEntry, ...emotionEntries]);
     } else {
-      const response = await fetch("/api/emotionEntries", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newEntry),
-      });
+      try {
+        const response = await fetch("/api/emotionEntries", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newEntry),
+        });
 
-      if (response.ok) {
-        mutate();
-      }
+        if (response.ok) {
+          mutate();
+        }
 
-      if (!response.ok) {
-        console.error("Adding item failed");
+        if (!response.ok) {
+          console.error("Server declined: Adding item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
       }
     }
   }
@@ -167,19 +174,25 @@ export default function App({ Component, pageProps }) {
         )
       );
     } else {
-      const response = await fetch(`/api/emotionEntries/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        mutate();
-      }
-      if (!response.ok) {
-        console.error("Updating item failed");
+      try {
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Updating the item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
       }
     }
   }
@@ -194,26 +207,35 @@ export default function App({ Component, pageProps }) {
         )
       );
     } else {
-      const entryToChange = dbEmotionEntries.find((entry) => entry._id === id);
+      try {
+        const entryToChange = dbEmotionEntries.find(
+          (entry) => entry._id === id
+        );
 
-      const updatedEntry = {
-        ...entryToChange,
-        isHighlighted: !entryToChange.isHighlighted,
-      };
+        const updatedEntry = {
+          ...entryToChange,
+          isHighlighted: !entryToChange.isHighlighted,
+        };
 
-      const response = await fetch(`/api/emotionEntries/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedEntry),
-      });
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedEntry),
+        });
 
-      if (response.ok) {
-        mutate();
-      }
-      if (!response.ok) {
-        console.error("Updating item failed");
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Highlighting item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
       }
     }
   }
@@ -222,15 +244,22 @@ export default function App({ Component, pageProps }) {
     if (useExampleData) {
       setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
     } else {
-      const response = await fetch(`/api/emotionEntries/${id}`, {
-        method: "DELETE",
-      });
+      try {
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "DELETE",
+        });
 
-      if (response.ok) {
-        mutate();
-      }
-      if (!response.ok) {
-        console.error("Deleting item failed");
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Deleting item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
       }
     }
   }
