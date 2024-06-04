@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { breakpoints } from "./utils/devices";
+import { breakpoints } from "./utils/breakpoints";
 
 //buttons
 const StyledButton = styled.button`
@@ -50,15 +50,6 @@ const StyledFixedTitle = styled(StyledTitle)`
   @media ${breakpoints.tablet} {
     top: 100px;
   }
-  @media (max-height: 400px) {
-    top: 0;
-  }
-  @media {devices.laptop} {
-    top: 100px;
-  }
-  @media {devices.desktop} {
-    top: 100px;
-  }
 `;
 
 //links
@@ -72,6 +63,8 @@ const StyledStandardLink = styled(Link)`
 const StyledFixedLink = styled(Link)`
   position: fixed;
   top: 50%;
+  text-decoration: none;
+  color: var(--main-dark);
 `;
 
 //lists

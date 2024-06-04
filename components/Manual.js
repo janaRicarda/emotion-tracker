@@ -3,7 +3,7 @@ import { manualData } from "@/lib/db";
 import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledSection = styled.section`
   margin: 0 1rem;

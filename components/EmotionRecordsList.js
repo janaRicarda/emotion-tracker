@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import HeartFilledIcon from "../public/heart-filled.svg";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;

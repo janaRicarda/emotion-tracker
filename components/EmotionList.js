@@ -2,7 +2,7 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledCircle = styled.article`
   width: 90vw;

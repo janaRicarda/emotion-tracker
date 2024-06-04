@@ -6,7 +6,7 @@ import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 
 // used for all transitions

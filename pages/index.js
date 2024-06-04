@@ -10,7 +10,7 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {

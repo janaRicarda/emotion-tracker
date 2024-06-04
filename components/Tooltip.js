@@ -4,7 +4,7 @@ import Close from "../public/close.svg";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { devices, breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledTooltipQuestionmark = styled(Info)`
   height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};

@@ -1,13 +1,37 @@
 import styled from "styled-components";
 import ChevronPrev from "./../public/chevron-left.svg";
 import ChevronNext from "./../public/chevron-right.svg";
+import ArrowBack from "./../public/arrow-left.svg";
 import {
   StyledFixedLink,
   StyledListItem,
   StyledList,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
+
+const StyledBackLink = styled(StyledFixedLink)`
+  top: 110px;
+  left: 2rem;
+  display: flex;
+  @media ${breakpoints.mobileLandscape} {
+    top: 100px;
+    margin-left: 4rem;
+  }
+  @media ${breakpoints.largeMobile} {
+    top: 100px;
+    margin-left: 4rem;
+  }
+  @media ${breakpoints.tablet} {
+    top: 100px;
+    margin-left: 6rem;
+  }
+`;
+
+const StyledArrow = styled(ArrowBack)`
+  width: 1rem;
+  fill: var(--main-dark);
+`;
 
 const StyledArticle = styled.article`
   border-radius: 10px;
@@ -103,45 +127,50 @@ export default function EmotionDetails({
   nextEmotion,
 }) {
   return (
-    <StyledArticle
-      $color={
-        theme === darkTheme ? `var(--section-background)` : `var(--${slug})`
-      }
-      $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
-    >
-      <EmotionDetailsTitle>{name}</EmotionDetailsTitle>
-      <p>{description}</p>
-      <SubTitle>The function of {name}</SubTitle>
-      <p>{emotionfunction}</p>
-      <SubTitle>Physical indications</SubTitle>
-      <p>{indications}</p>
-      <SubTitle>Subemotions</SubTitle>
-      <StyledSubemotionsList>
-        {subemotions.map((sub) => (
-          <StyledListItem
+    <>
+      <StyledBackLink href="/emotions">
+        <StyledArrow /> back to overview
+      </StyledBackLink>
+      <StyledArticle
+        $color={
+          theme === darkTheme ? `var(--section-background)` : `var(--${slug})`
+        }
+        $text={theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`}
+      >
+        <EmotionDetailsTitle>{name}</EmotionDetailsTitle>
+        <p>{description}</p>
+        <SubTitle>The function of {name}</SubTitle>
+        <p>{emotionfunction}</p>
+        <SubTitle>Physical indications</SubTitle>
+        <p>{indications}</p>
+        <SubTitle>Subemotions</SubTitle>
+        <StyledSubemotionsList>
+          {subemotions.map((sub) => (
+            <StyledListItem
+              $text={
+                theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+              }
+              key={sub}
+            >
+              {sub}
+            </StyledListItem>
+          ))}
+        </StyledSubemotionsList>
+        <PrevLink href={`/emotions/${prevEmotion.slug}`}>
+          <StyledChevronPrev
             $text={
               theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
             }
-            key={sub}
-          >
-            {sub}
-          </StyledListItem>
-        ))}
-      </StyledSubemotionsList>
-      <PrevLink href={`/emotions/${prevEmotion.slug}`}>
-        <StyledChevronPrev
-          $text={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
-          }
-        />
-      </PrevLink>
-      <NextLink href={`/emotions/${nextEmotion.slug}`}>
-        <StyledChevronNext
-          $text={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
-          }
-        />
-      </NextLink>
-    </StyledArticle>
+          />
+        </PrevLink>
+        <NextLink href={`/emotions/${nextEmotion.slug}`}>
+          <StyledChevronNext
+            $text={
+              theme === darkTheme ? `var(--${slug})` : `var(--text-on-bright)`
+            }
+          />
+        </NextLink>
+      </StyledArticle>
+    </>
   );
 }

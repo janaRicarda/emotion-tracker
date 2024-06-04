@@ -12,7 +12,7 @@ import {
   StyledFlexColumnWrapper,
 } from "../SharedStyledComponents";
 import { useEffect, useState } from "react";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const slideIn = keyframes`
 0% {transform: translateX(-100%)}

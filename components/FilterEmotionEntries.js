@@ -5,7 +5,7 @@ import { DayPicker } from "react-day-picker";
 import CalendarIcon from "/public/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
-import { breakpoints } from "@/utils/devices";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledContainer = styled.div`
   height: auto;
