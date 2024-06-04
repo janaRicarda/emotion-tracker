@@ -1,48 +1,52 @@
+import { emotionData } from "@/lib/db";
+
+export const chartPresets = {
+  tension: {
+    title: "Tension Chart",
+    xTitle: "time",
+    yTitle: "tension",
+    scatter: true,
+  },
+  emotionShares: {
+    title: "Emotion Shares",
+    xTitle: "emotion",
+    yTitle: "number of entries",
+    scatter: false,
+  },
+  emotionIntensity: {
+    title: "Average Intensities of Emotions",
+    xTitle: "emotion",
+    yTitle: "average intensity",
+    scatter: false,
+  },
+};
+
 export function countEmotions(entries) {
-  const joyEntries = entries.filter((entry) => entry.emotion === "Joy");
-  const angerEntries = entries.filter((entry) => entry.emotion === "Anger");
-  const fearEntries = entries.filter((entry) => entry.emotion === "Fear");
-  const contemptEntries = entries.filter(
-    (entry) => entry.emotion === "Contempt"
-  );
-  const surpriseEntries = entries.filter(
-    (entry) => entry.emotion === "Surprise"
-  );
-  const disgustEntries = entries.filter((entry) => entry.emotion === "Disgust");
-  const sadnessEntries = entries.filter((entry) => entry.emotion === "Sadness");
-  const countResult = [
-    { emotion: "Joy", count: joyEntries.length, foundEntries: joyEntries },
-    {
-      emotion: "Anger",
-      count: angerEntries.length,
-      foundEntries: angerEntries,
-    },
-    {
-      emotion: "Fear",
-      count: fearEntries.length,
-      foundEntries: fearEntries,
-    },
-    {
-      emotion: "Contempt",
-      count: contemptEntries.length,
-      foundEntries: contemptEntries,
-    },
-    {
-      emotion: "Surprise",
-      count: surpriseEntries.length,
-      foundEntries: surpriseEntries,
-    },
-    {
-      emotion: "Disgust",
-      count: disgustEntries.length,
-      foundEntries: disgustEntries,
-    },
-    {
-      emotion: "Sadness",
-      count: sadnessEntries.length,
-      foundEntries: sadnessEntries,
-    },
-  ];
+  const emotionsToCount = emotionData.map((element) => element.name);
+
+  function getAverageValue(entries) {
+    function add(a, b) {
+      return Number(a) + Number(b);
+    }
+    const averageValue =
+      entries.length === 0
+        ? 0
+        : Math.round(
+            entries.map((entry) => entry.intensity).reduce(add, 0) /
+              entries.length
+          );
+    return averageValue;
+  }
+  const countResult = emotionsToCount.map((element) => {
+    const foundEntries = entries.filter((entry) => entry.emotion === element);
+    const object = {
+      emotion: element,
+      count: foundEntries.length,
+      averageIntensity: getAverageValue(foundEntries),
+      foundEntries,
+    };
+    return object;
+  });
   return countResult;
 }
 
@@ -69,24 +73,3 @@ export function doTensionChartData(entries) {
   const tensionChartData = { xValues: tensionXValues, yValues: tensionYValues };
   return tensionChartData;
 }
-
-export const chartPresets = {
-  tension: {
-    title: "Tension Chart",
-    xTitle: "time",
-    yTitle: "tension",
-    type: "scatter",
-  },
-  emotionShares: {
-    title: "Emotion Shares",
-    xTitle: "emotion",
-    yTitle: "number of entries",
-    type: "bar",
-  },
-  emotionIntensity: {
-    title: "Average Intensities of Emotions",
-    xTitle: "emotion",
-    yTitle: "average intensity",
-    type: "bar",
-  },
-};
