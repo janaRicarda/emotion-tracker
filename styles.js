@@ -25,11 +25,14 @@ html {
   --text-on-dark: ${({ theme }) => theme.textOnDark};
   --button-background: ${({ theme }) => theme.buttonBackground};
   --section-background: ${({ theme }) => theme.sectionBackground};
+  --section-background-contrast: ${({ theme }) =>
+    theme.sectionBackgroundContrast};
   --green: ${({ theme }) => theme.green};
   --red: ${({ theme }) => theme.red};
   --joy: ${({ theme }) => theme.joy};
   --enabled:  ${({ theme }) => theme.enabled};
   --disabled: ${({ theme }) => theme.disabled};
+  --toggle-active: ${({ theme }) => theme.toggleActive};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
   --sadness: ${({ theme }) => theme.sadness};
@@ -45,16 +48,16 @@ html {
   --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
-  --circle-border: ${({ theme }) => theme.circleBorder};}
+  --circle-border: ${({ theme }) => theme.circleBorder};
+  --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
+}
   body {
     margin: 0;
-    padding: 100px 2rem 75px 2rem;
-   
     background-color: var(--main-bright);
     color: var(--main-dark);
     font-family: ${manrope.style.fontFamily}, system-ui;
     line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
   }
   img, picture, video, canvas, svg {
   display: block;
@@ -69,6 +72,12 @@ p, h1, h2, h3, h4, h5, h6 {
 
 #root, #__next {
   isolation: isolate;
+  margin: 0 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 // DayPicker className for color-styles; more styles under node-modules/react-day-picker

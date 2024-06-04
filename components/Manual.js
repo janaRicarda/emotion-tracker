@@ -139,7 +139,7 @@ export default function Manual() {
         <StyledDetails key={question} $itemColor={itemColor}>
           <StyledSummary>{question}</StyledSummary>
           <StyledText>{text}</StyledText>
-          <StyledOl>
+          <StyledOl >
             {answers.map((answer) => (
               <StyledListItem key={answer} $itemColor={itemColor}>
                 {answer}

@@ -1,25 +1,69 @@
-import {
-  StyledTitle,
-  StyledFlexColumnWrapper,
-  StyledStandardLink,
-} from "@/SharedStyledComponents";
-import styled from "styled-components";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
-import Tooltip from "@/components/Tooltip";
+import SmallFilterPanel from "@/components/SmallFilterPanel";
 
-const StyledTopSection = styled(StyledFlexColumnWrapper)`
-  position: sticky;
-  top: 99px;
+// used for all transitions
+const transition = css`
+  transition: all 300ms ease;
+`;
+
+const GridWrapper = styled.section`
+  box-shadow: ${({ $show }) => ($show ? "var(--box-shadow-filter)" : null)};
+  position: fixed;
+  padding: ${({ $show }) => ($show ? "1rem" : "0")};
+  border-radius: 1rem;
+  top: 200px;
+  max-width: 500px;
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  ${transition}
+  background-color: var(--section-background-contrast);
+  z-index: 2;
+`;
+
+const ControllOverflow = styled.div`
+  overflow: hidden;
+`;
+
+const ControlPadding = styled.div`
+  margin-top: 5rem;
+`;
+
+const StyledHeading = styled(StyledTitle)`
+  width: 100%;
+  padding: 1rem 0;
+  position: fixed;
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "110px")};
+  ${transition}
   background-color: var(--main-bright);
   z-index: 1;
 `;
 
+const Background = styled.div`
+  inset: 0;
+  position: absolute;
+  background: transparent;
+  display: ${({ $show }) => ($show ? "block" : "none")};
+  z-index: 2;
+`;
+const AnimatedPanel = styled.div`
+  width: 90vw;
+  margin: 0.5rem;
+  border-top: 1px solid black;
+  background-color: var(--main-bright);
+  position: fixed;
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
+  ${transition}
+  z-index: 1;
+`;
+
 const StyledTextMessage = styled.article`
-  margin-top: 4rem;
+  margin-top: 8rem;
   text-align: center;
   line-height: 3;
   display: flex;
@@ -59,14 +103,21 @@ const StyledDateIndicator = styled.article`
 
 const StyledParagraph = styled.p`
   text-align: center;
-  padding: 0.5rem;
+`;
+
+const StyledDateSpan = styled.span`
+  background-color: var(--button-background);
+  border-radius: 50px;
+  padding: 0 0.5rem;
 `;
 
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
-  handleToggleTooltip,
+  handleToolTip,
+  isScrollDown,
+  useExampleData,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -80,7 +131,17 @@ export default function EmotionRecords({
     daysAgo: 0,
   });
 
-  // handler-functions used in a useEffect after passed to FilterEmotionEntries are wrapped into useCallback hook here
+  const [showFilter, setShowFilter] = useState(false);
+
+  useEffect(() => {
+    handleToolTip({
+      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+    });
+  }, []);
+
+  useEffect(() => {
+    setShowFilter(false);
+  }, [buttonState]);
 
   const handleSetFilterEntries = useCallback((filteredObject) => {
     setFilteredEntries(filteredObject);
@@ -114,28 +175,40 @@ export default function EmotionRecords({
 
   function DisplayDate() {
     return (
-      <StyledParagraph>
-        Your Selection:<br></br>
-        {getFormattedDate(selectedTime.from)}
-        {selectedTime.to &&
-          selectedTime.from.toString() !== selectedTime.to.toString() &&
-          " - " + getFormattedDate(selectedTime.to)}
+      <StyledParagraph aria-label="Selected Date">
+        <StyledDateSpan>
+          {getFormattedDate(selectedTime.from)}
+          {selectedTime.to &&
+            selectedTime.from.toString() !== selectedTime.to.toString() &&
+            " - " + getFormattedDate(selectedTime.to)}
+        </StyledDateSpan>
       </StyledParagraph>
     );
   }
 
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === "Escape") {
+        setShowFilter(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscapeKey);
+  });
+
+  function closeOnKey(event) {
+    if (event.code === "Enter") {
+      setShowFilter(false);
+    }
+  }
+
   return (
     <>
-      <Tooltip onClick={handleToggleTooltip}>
-        Navigate through your emotion records list, a comprehensive compilation
-        of all your added emotion entries. You can easily search for specific
-        entries, edit or delete them, and even highlight important moments.
-        Also, you can search through your entries or filter them by the
-        following options: today, last week, or last month.
-      </Tooltip>
-      <StyledFlexColumnWrapper>
-        <StyledTopSection>
-          <StyledTitle>Recorded Emotions</StyledTitle>
+      <Background $show={showFilter} onClick={() => setShowFilter(false)} />
+      <StyledHeading $isScrollDown={isScrollDown}>
+        Recorded Emotions
+      </StyledHeading>
+      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
+        <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
             filteredEntries={filteredEntries}
@@ -149,46 +222,58 @@ export default function EmotionRecords({
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
           />
-        </StyledTopSection>
-        {buttonState.datePicker ? (
-          selectedTime ? (
-            <DisplayDate />
-          ) : (
-            <StyledDateIndicator>
-              Click the calendar <StyledCalendarIcon /> and select a date
-            </StyledDateIndicator>
-          )
-        ) : null}
-        {shownEntries.length === 0 &&
-          (filteredEntries.length === 0 ? (
-            buttonState.highlightedButton ? (
-              <StyledTextMessage>
-                You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.
-              </StyledTextMessage>
-            ) : buttonState.todayButton ? (
-              <StyledTextMessage>
-                You haven&apos;t made any Entries today.<br></br>
-                <StyledLink href="./">add Entry &rarr;</StyledLink>
-              </StyledTextMessage>
-            ) : (
-              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-            )
+        </ControllOverflow>
+      </GridWrapper>
+      <AnimatedPanel
+        onClick={() => setShowFilter(!showFilter)}
+        $isScrollDown={isScrollDown}
+      >
+        <SmallFilterPanel
+          buttonState={buttonState}
+          searchTerm={searchTerm}
+          DisplayDate={DisplayDate}
+          selectedTime={selectedTime}
+        />
+      </AnimatedPanel>
+      {buttonState.datePicker ? (
+        selectedTime ? (
+          <DisplayDate textAlign="center" />
+        ) : (
+          <StyledDateIndicator>
+            Click the calendar <StyledCalendarIcon /> and select a date
+          </StyledDateIndicator>
+        )
+      ) : null}
+      {shownEntries.length === 0 &&
+        (filteredEntries.length === 0 ? (
+          buttonState.highlightedButton ? (
+            <StyledTextMessage>
+              You haven&apos;t highlighted any Entries yet. Click the{" "}
+              <StyledHeartSymbol /> on a Entry to highlight it.
+            </StyledTextMessage>
+          ) : buttonState.todayButton ? (
+            <StyledTextMessage>
+              You haven&apos;t made any Entries today.<br></br>
+              <StyledLink href="./">add Entry &rarr;</StyledLink>
+            </StyledTextMessage>
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          ))}
+          )
+        ) : (
+          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+        ))}
 
-        {shownEntries.length !== 0 && (
-          <>
-            <EmotionRecordsList
-              onDeleteEmotionEntry={onDeleteEmotionEntry}
-              toggleHighlight={toggleHighlight}
-              shownEntries={shownEntries}
-              filteredEntries={filteredEntries}
-            />
-          </>
-        )}
-      </StyledFlexColumnWrapper>
+      {shownEntries.length !== 0 && (
+        <ControlPadding>
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+            useExampleData={useExampleData}
+          />
+        </ControlPadding>
+      )}
     </>
   );
 }
