@@ -21,11 +21,11 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   loading: () => <Loader itemText="... loading" />,
 });
 
-const ChartWrapper = styled.div`
+const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
   width: 80vw;
-  min-height: 500px;
+  min-height: 450px;
   max-height: fit-content;
   margin-top: 8rem;
   align-items: center;
@@ -131,7 +131,7 @@ export default function ChartContainer({ shownEntries, theme }) {
   }
 
   return (
-    <ChartWrapper>
+    <ChartSection>
       <ChartPlaceholder>
         <EmotionChart
           theme={theme}
@@ -164,6 +164,6 @@ export default function ChartContainer({ shownEntries, theme }) {
           </StyledGraphButton>
         </StyledGraphButtonsWrapper>
       </ChartControlSection>
-    </ChartWrapper>
+    </ChartSection>
   );
 }
