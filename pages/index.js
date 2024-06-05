@@ -11,6 +11,7 @@ import {
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
 import ToggleSwitch from "@/components/ToggleSwitch";
+import { useSession } from "next-auth/react";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -136,6 +137,8 @@ export default function HomePage({
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
+  const { data: session } = useSession();
+
   useEffect(() => {
     handleToolTip({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
@@ -240,15 +243,17 @@ export default function HomePage({
                     setTension("0");
                   }}
                 />
-                <StyledAddDetailsLink
-                  href={{
-                    pathname: "/create",
-                    query: { id: useExampleData ? id : newestDbEntryID },
-                  }}
-                  forwardedAs={`/create`}
-                >
-                  Add more details
-                </StyledAddDetailsLink>
+                {session && (
+                  <StyledAddDetailsLink
+                    href={{
+                      pathname: "/create",
+                      query: { id: useExampleData ? id : newestDbEntryID },
+                    }}
+                    forwardedAs={`/create`}
+                  >
+                    Add more details
+                  </StyledAddDetailsLink>
+                )}
               </StyledButtonWrapper>
             </>
           )}
