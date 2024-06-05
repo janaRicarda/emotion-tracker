@@ -281,18 +281,18 @@ export default function App({
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <SWRConfig value={{ fetcher }}>
-        <GlobalStyle />
-        <Layout
-          toolTip={toolTip}
-          theme={theme}
-          isScrollDown={isScrollDown}
-          scrollPosition={scrollPosition}
-          toggleTheme={toggleTheme}
-          switchTheme={switchTheme}
-        >
-          <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <ThemeProvider theme={theme}>
+        <SWRConfig value={{ fetcher }}>
+          <GlobalStyle />
+          <Layout
+            toolTip={toolTip}
+            theme={theme}
+            isScrollDown={isScrollDown}
+            scrollPosition={scrollPosition}
+            toggleTheme={toggleTheme}
+            switchTheme={switchTheme}
+          >
             <Component
               isScrollDown={isScrollDown}
               handleToolTip={handleToolTip}
@@ -312,9 +312,9 @@ export default function App({
               useExampleData={useExampleData}
               {...pageProps}
             />
-          </SessionProvider>
-        </Layout>
-      </SWRConfig>
-    </ThemeProvider>
+          </Layout>
+        </SWRConfig>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }

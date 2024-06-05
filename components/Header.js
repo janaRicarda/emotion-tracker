@@ -8,6 +8,7 @@ import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
 import Tooltip from "./Tooltip";
+import Login from "./Login";
 
 // used for all transition in this component
 const transition = css`
@@ -105,6 +106,7 @@ export default function Header({
         <StyledStandardLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledStandardLink>
+        <Login />
         <ToolTipWrapper $isScrollDown={isScrollDown}>
           {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
           <StyledIconWrapper $isScrollDown={isScrollDown}>
@@ -113,11 +115,11 @@ export default function Header({
                 {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
               </StyledToggleTheme>
             ) : null}
-         <StyledMenu
-          $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
-        >
-          <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
-        </StyledMenu>
+            <StyledMenu
+              $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+            >
+              <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
+            </StyledMenu>
           </StyledIconWrapper>
         </ToolTipWrapper>
         <Navigation
