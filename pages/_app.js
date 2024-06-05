@@ -1,3 +1,4 @@
+import { useSessionStorage } from "usehooks-ts";
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
@@ -6,6 +7,9 @@ import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
+import useSWR, { SWRConfig } from "swr";
+
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
@@ -13,6 +17,11 @@ export default function App({ Component, pageProps }) {
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
+
+  const [useExampleData, setUseExampleDate] = useSessionStorage(
+    "useExampleData",
+    false
+  );
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -21,7 +30,6 @@ export default function App({ Component, pageProps }) {
   );
 
   // use-effect for mediaquery
-
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const userPrefersDark = mediaQuery.matches;
@@ -53,6 +61,13 @@ export default function App({ Component, pageProps }) {
       setEmotionEntries(initialData);
     }
   }, []);
+
+  // sets new generated Data when toggleSwitch is moved to use ExampleData
+  useEffect(() => {
+    if (useExampleData) {
+      setEmotionEntries(initialData);
+    }
+  }, [useExampleData]);
 
   const [backupEntries, setBackupEntries] = useLocalStorageState(
     "backupEntries",
@@ -87,6 +102,18 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
+  function handleUseExampleData() {
+    setUseExampleDate(!useExampleData);
+  }
+
+  const {
+    data: dbEmotionEntries,
+    isLoading,
+    mutate,
+  } = useSWR("/api/emotionEntries", fetcher);
+
+  if (isLoading) return <h1>Loading...</h1>;
+
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
@@ -99,7 +126,7 @@ export default function App({ Component, pageProps }) {
     setToolTip(toolTipData);
   }
 
-  function handleAddEmotionEntry(data, id) {
+  async function handleAddEmotionEntry(data, id) {
     const timeAndDate = getCurrentTimeAndDate();
 
     const newEntry = {
@@ -109,29 +136,130 @@ export default function App({ Component, pageProps }) {
       isoDate: new Date().toISOString(),
     };
 
-    setEmotionEntries([newEntry, ...emotionEntries]);
+    if (useExampleData) {
+      setEmotionEntries([newEntry, ...emotionEntries]);
+    } else {
+      try {
+        const response = await fetch("/api/emotionEntries", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newEntry),
+        });
+
+        if (response.ok) {
+          mutate();
+        }
+
+        if (!response.ok) {
+          console.error("Server declined: Adding item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
+      }
+    }
   }
 
-  function handleAddEmotionDetails(data, id) {
-    setEmotionEntries(
-      emotionEntries.map((entry) =>
-        entry.id === id ? { ...entry, ...data } : entry
-      )
-    );
+  async function handleAddEmotionDetails(data, id) {
+    if (useExampleData) {
+      setEmotionEntries(
+        emotionEntries.map((entry) =>
+          entry.id === id ? { ...entry, ...data } : entry
+        )
+      );
+    } else {
+      try {
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Updating the item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
+      }
+    }
   }
 
-  function toggleHighlight(id) {
-    setEmotionEntries(
-      emotionEntries.map((entry) =>
-        entry.id === id
-          ? { ...entry, isHighlighted: !entry.isHighlighted }
-          : entry
-      )
-    );
+  async function toggleHighlight(id) {
+    if (useExampleData) {
+      setEmotionEntries(
+        emotionEntries.map((entry) =>
+          entry.id === id
+            ? { ...entry, isHighlighted: !entry.isHighlighted }
+            : entry
+        )
+      );
+    } else {
+      try {
+        const entryToChange = dbEmotionEntries.find(
+          (entry) => entry._id === id
+        );
+
+        const updatedEntry = {
+          ...entryToChange,
+          isHighlighted: !entryToChange.isHighlighted,
+        };
+
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedEntry),
+        });
+
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Highlighting item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
+      }
+    }
   }
 
-  function handleDeleteEmotionEntry(id) {
-    setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+  async function handleDeleteEmotionEntry(id) {
+    if (useExampleData) {
+      setEmotionEntries(emotionEntries.filter((entry) => entry.id !== id));
+    } else {
+      try {
+        const response = await fetch(`/api/emotionEntries/${id}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          mutate();
+        }
+        if (!response.ok) {
+          console.error("Server declined: Deleting item failed");
+        }
+      } catch (error) {
+        console.error(
+          "Your request got rejected before reaching the Server:",
+          error
+        );
+      }
+    }
   }
 
   function handleDeleteAll() {
@@ -148,31 +276,35 @@ export default function App({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Layout
-        toolTip={toolTip}
-        theme={theme}
-        isScrollDown={isScrollDown}
-        scrollPosition={scrollPosition}
-        toggleTheme={toggleTheme}
-        switchTheme={switchTheme}
-      >
-        <Component
-          isScrollDown={isScrollDown}
-          handleToolTip={handleToolTip}
+      <SWRConfig value={{ fetcher }}>
+        <GlobalStyle />
+        <Layout
+          toolTip={toolTip}
           theme={theme}
-          onAddEmotionDetails={handleAddEmotionDetails}
-          emotionEntries={emotionEntries}
-          onAddEmotionEntry={handleAddEmotionEntry}
-          onDeleteEmotionEntry={handleDeleteEmotionEntry}
-          onReplaceUserData={handleReplaceAndBackup}
-          onDeleteAll={handleDeleteAll}
-          onRestore={restoreFromBackup}
-          backupEntries={backupEntries}
-          toggleHighlight={toggleHighlight}
-          {...pageProps}
-        />
-      </Layout>
+          isScrollDown={isScrollDown}
+          scrollPosition={scrollPosition}
+          toggleTheme={toggleTheme}
+          switchTheme={switchTheme}
+        >
+          <Component
+            isScrollDown={isScrollDown}
+            handleToolTip={handleToolTip}
+            theme={theme}
+            onAddEmotionDetails={handleAddEmotionDetails}
+            emotionEntries={useExampleData ? emotionEntries : dbEmotionEntries}
+            onAddEmotionEntry={handleAddEmotionEntry}
+            onDeleteEmotionEntry={handleDeleteEmotionEntry}
+            onReplaceUserData={handleReplaceAndBackup}
+            onDeleteAll={handleDeleteAll}
+            onRestore={restoreFromBackup}
+            backupEntries={backupEntries}
+            toggleHighlight={toggleHighlight}
+            toggleExampleData={handleUseExampleData}
+            useExampleData={useExampleData}
+            {...pageProps}
+          />
+        </Layout>
+      </SWRConfig>
     </ThemeProvider>
   );
 }

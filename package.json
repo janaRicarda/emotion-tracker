@@ -10,12 +10,15 @@
     "test": "jest --watchAll"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.4.1",
     "chance": "^1.1.11",
     "date-fns": "^3.6.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.8",
     "fuse.js": "^7.0.0",
     "hamburger-react": "^2.5.1",
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.4.0",
     "next": "13.4.8",
     "plotly.js": "^2.32.0",
     "react": "18.2.0",
@@ -24,8 +27,10 @@
     "react-plotly.js": "^2.6.0",
     "react-scroll-to-top": "^3.0.0",
     "styled-components": "^6.0.2",
+    "swr": "^2.2.5",
     "uid": "^2.0.2",
-    "use-local-storage-state": "^19.2.0"
+    "use-local-storage-state": "^19.2.0",
+    "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
