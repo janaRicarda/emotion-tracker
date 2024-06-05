@@ -45,7 +45,6 @@ const StyledArticle = styled.article`
     300ms;
   @media ${breakpoints.laptop} {
     justify-content: flex-start;
-    gap: 1rem;
     height: 100px;
     background-color: var(--section-background-contrast);
   }
@@ -72,7 +71,7 @@ const StyledLink = styled(StyledStandardLink)`
   }
 `;
 
-const StyledThemeButton = styled.button`
+const StyledColoSchemesButton = styled.button`
   border-style: none;
   background: transparent;
   color: var(--contrast-text);
@@ -94,7 +93,6 @@ const ThemeWrapper = styled(StyledFlexColumnWrapper)`
   }
   @media ${breakpoints.laptop} {
     flex-direction: row;
-    padding-top: 0;
   }
 `;
 const ThemeButton = styled(StyledButton)`
@@ -162,9 +160,9 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">
               emotion records
             </StyledLink>
-            <StyledThemeButton onClick={handleShowThemes}>
+            <StyledColoSchemesButton onClick={handleShowThemes}>
               color schemes
-            </StyledThemeButton>
+            </StyledColoSchemesButton>
           </StyledLinkWrapper>
           {showThemes && (
             <ThemeWrapper>

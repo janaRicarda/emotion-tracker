@@ -50,7 +50,6 @@ html {
   --circle-border: ${({ theme }) => theme.circleBorder};
   --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
   --box-shadow-tooltip: ${({ theme }) => theme.boxShadowTooltip};
-  --logo-background: ${({ theme }) => theme.logoBackground};
 }
   body {
     margin: 0;

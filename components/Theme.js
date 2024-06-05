@@ -1,8 +1,8 @@
 export const lightTheme = {
   background: "#e9e3e3",
-  text: "#3b288e",
-  contrastText: "#3b288e",
-  textOnBright: "#3b288e",
+  text: "#030352",
+  contrastText: "#030352",
+  textOnBright: "#030352",
   textOnDark: "#f1eaea",
   buttonBackground: "#89d3e5",
   sectionBackground: "#f1eaea",
@@ -32,7 +32,6 @@ export const lightTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
-  logoBackground: "linear-gradient(#f9ffe0, #e0fff1, #e6e0ff, #ffe1e0)",
 };
 
 export const darkTheme = {
@@ -48,7 +47,7 @@ export const darkTheme = {
   enabled: "#cc0100",
   disabled: "#00b400",
   sectionBackground: "#443f5d",
-  sectionBackgroundContrast: "#3b3e4c",
+  sectionBackgroundContrast: "#443f5d",
   joy: "hsl(60, 70%, 70%)",
   surprise: "hsl(105, 70%, 80%)",
   fear: "hsl(165, 80%, 70%)",
@@ -69,7 +68,6 @@ export const darkTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
   boxShadowTooltip: "10px 10px 15px black",
-  logoBackground: "linear-gradient(#396a73, #393e73, #593973, #693973)",
 };
 
 export const warmTheme = {
@@ -106,7 +104,6 @@ export const warmTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
   boxShadowTooltip: "10px 10px 15px black",
-  logoBackground: "linear-gradient(#f7efa6, #f7a6d6)",
 };
 
 export const coldTheme = {
@@ -143,7 +140,6 @@ export const coldTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #92aaab",
   boxShadowTooltip: "10px 10px 15px black",
-  logoBackground: "linear-gradient(#adecfe, #adb0fe)",
 };
 
 export const neutralTheme = {
@@ -178,8 +174,6 @@ export const neutralTheme = {
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
-  boxShadowTooltip: "10px 10px 15px black",
-  logoBackground: "lightgrey",
 };
 
 export const highContrastTheme = {
@@ -215,5 +209,4 @@ export const highContrastTheme = {
   circleBorder: "1px solid yellow",
   boxShadowFilter: "none",
   boxShadowTooltip: "10px 10px 15px black",
-  logoBackground: "black",
 };
