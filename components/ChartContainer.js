@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { mdiChartLine, mdiChartBar, mdiFormatListBulleted } from "@mdi/js";
+import { mdiChartLine, mdiChartBar } from "@mdi/js";
 import dynamic from "next/dynamic";
 import Loader from "@/components/Loader";
 import ToggleSwitch from "./ToggleSwitch";
@@ -24,31 +24,18 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: 90vw;
   min-height: 450px;
-  max-height: fit-content;
+  max-height: 700px;
   margin-top: 8rem;
   align-items: center;
   border-radius: 6px;
-  justify-content: space-around;
+  justify-content: center;
   background-color: var(--section-background);
 `;
 
-const ChartPlaceholder = styled.div`
-  width: 300px;
-  min-height: 340px;
-  align-items: center;
-`;
-const ChartControlSection = styled.section`
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-`;
-
 const StyledGraphButton = styled(StyledButton)`
-  width: fit-content;
+  width: 5rem;
   padding: 0.3rem;
   font-size: 0.8rem;
   border-style: none;
@@ -59,6 +46,7 @@ const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-self: center;
+  height: 2rem;
   padding: 0.1rem;
   width: inherit;
   margin: 0.1rem;
@@ -73,10 +61,8 @@ const SwitchSizer = styled.span`
 const StyledGraphButtonsWrapper = styled.div`
   display: grid;
   grid-template-columns: 2fr 2fr 2fr;
-  /* 
-  flex-flow: row;
-  justify-content: center; */
-  max-width: 80vw;
+  gap: 0.3rem;
+  max-width: 50vw;
   align-items: center;
 `;
 
@@ -132,19 +118,17 @@ export default function ChartContainer({ shownEntries, theme }) {
 
   return (
     <ChartSection>
-      <ChartPlaceholder>
-        <EmotionChart
-          theme={theme}
-          type={type}
-          xValues={xValues}
-          yValues={yValues}
-          xTitle={xTitle}
-          yTitle={yTitle}
-          title={title}
-          width={width}
-        />
-      </ChartPlaceholder>
-      <ChartControlSection>
+      <EmotionChart
+        theme={theme}
+        type={type}
+        xValues={xValues}
+        yValues={yValues}
+        xTitle={xTitle}
+        yTitle={yTitle}
+        title={title}
+        width={width}
+      />
+      <StyledFlexColumnWrapper>
         <ToggleContainer>
           <Icon path={mdiChartLine} size={1} />
           <SwitchSizer>
@@ -152,6 +136,8 @@ export default function ChartContainer({ shownEntries, theme }) {
           </SwitchSizer>
           <Icon path={mdiChartBar} size={1} />
         </ToggleContainer>
+      </StyledFlexColumnWrapper>
+      <StyledFlexColumnWrapper>
         <StyledGraphButtonsWrapper>
           <StyledGraphButton type="button" onClick={handleTensionChart}>
             Tension
@@ -163,7 +149,7 @@ export default function ChartContainer({ shownEntries, theme }) {
             Intensity
           </StyledGraphButton>
         </StyledGraphButtonsWrapper>
-      </ChartControlSection>
+      </StyledFlexColumnWrapper>
     </ChartSection>
   );
 }

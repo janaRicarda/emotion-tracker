@@ -20,6 +20,7 @@ export default function EmotionChart({
   yTitle,
   theme,
   type,
+  width,
 }) {
   return (
     <StyledChartSection>
@@ -36,7 +37,7 @@ export default function EmotionChart({
               marker: { color: theme.buttonBackground },
             },
           ]}
-          config={{ displayModeBar: false, scrollZoom: true, responsive: true }}
+          config={{ displayModeBar: false, scrollZoom: true }}
           layout={{
             font: { color: theme.text },
             paper_bgcolor: theme.sectionBackground,
@@ -59,7 +60,7 @@ export default function EmotionChart({
                 color: theme.text,
               },
             },
-            width: 340,
+            width: width,
             title: {
               font: {
                 family: "system-ui",
@@ -67,7 +68,7 @@ export default function EmotionChart({
               },
             },
             autosize: true,
-            margin: { autoexpand: true, b: 50, l: 30, r: 30, t: 50 },
+            margin: { autoexpand: true, b: 40, l: 30, r: 30, t: 50 },
             title: title,
           }}
         />
