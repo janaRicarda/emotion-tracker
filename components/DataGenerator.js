@@ -8,6 +8,8 @@ import {
 } from "@/SharedStyledComponents";
 import { exampleData } from "@/lib/db";
 
+export { generateCompleteData };
+
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;
   gap: 0.5rem;
@@ -211,7 +213,6 @@ export default function DataGenerator({
       return setSmallMessage("Please use a number below 366!");
 
     setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
-    console.log(newData);
   }
 
   function handleDeleteAll() {

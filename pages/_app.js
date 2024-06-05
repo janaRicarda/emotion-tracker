@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
+import { generateCompleteData } from "@/components/DataGenerator";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
@@ -53,7 +54,7 @@ export default function App({ Component, pageProps }) {
     };
   }, []);
 
-  const initialData = generateExampleData();
+  const initialData = generateCompleteData(40);
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
@@ -128,12 +129,9 @@ export default function App({ Component, pageProps }) {
     setToolTip(toolTipData);
   }
 
-
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
     const timeAndDate = getCurrentTimeAndDate(timeStamp);
-
-
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),

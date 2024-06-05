@@ -35,9 +35,16 @@ const ChartWrapper = styled.div`
 `;
 
 const ChartPlaceholder = styled.div`
-  min-width: 300px;
+  width: 300px;
   min-height: 340px;
   align-items: center;
+`;
+const ChartControlSection = styled.section`
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 `;
 
 const StyledGraphButton = styled(StyledButton)`
@@ -48,9 +55,10 @@ const StyledGraphButton = styled(StyledButton)`
   margin: 0.4rem;
 `;
 
-const ToggleContainer = styled.span`
+const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-self: center;
   padding: 0.1rem;
   width: inherit;
   margin: 0.1rem;
@@ -136,24 +144,26 @@ export default function ChartContainer({ shownEntries, theme }) {
           width={width}
         />
       </ChartPlaceholder>
-      <ToggleContainer>
-        <Icon path={mdiChartLine} size={1} />
-        <SwitchSizer>
-          <ToggleSwitch handleSwitch={handleChartType} isChecked={!scatter} />
-        </SwitchSizer>
-        <Icon path={mdiChartBar} size={1} />
-      </ToggleContainer>
-      <StyledGraphButtonsWrapper>
-        <StyledGraphButton type="button" onClick={handleTensionChart}>
-          Tension
-        </StyledGraphButton>
-        <StyledGraphButton type="button" onClick={handleEmotionChart}>
-          Emotions
-        </StyledGraphButton>
-        <StyledGraphButton type="button" onClick={handleIntensityChart}>
-          Intensity
-        </StyledGraphButton>
-      </StyledGraphButtonsWrapper>
+      <ChartControlSection>
+        <ToggleContainer>
+          <Icon path={mdiChartLine} size={1} />
+          <SwitchSizer>
+            <ToggleSwitch handleSwitch={handleChartType} isChecked={!scatter} />
+          </SwitchSizer>
+          <Icon path={mdiChartBar} size={1} />
+        </ToggleContainer>
+        <StyledGraphButtonsWrapper>
+          <StyledGraphButton type="button" onClick={handleTensionChart}>
+            Tension
+          </StyledGraphButton>
+          <StyledGraphButton type="button" onClick={handleEmotionChart}>
+            Emotions
+          </StyledGraphButton>
+          <StyledGraphButton type="button" onClick={handleIntensityChart}>
+            Intensity
+          </StyledGraphButton>
+        </StyledGraphButtonsWrapper>
+      </ChartControlSection>
     </ChartWrapper>
   );
 }

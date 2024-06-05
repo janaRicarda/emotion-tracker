@@ -9,7 +9,8 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import Tooltip from "@/components/Tooltip";
+
+import ToggleSwitch from "@/components/ToggleSwitch";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -113,7 +114,6 @@ export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
-  theme,
   toggleExampleData,
   useExampleData,
 }) {

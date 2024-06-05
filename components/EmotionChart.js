@@ -1,6 +1,5 @@
 import Plot from "react-plotly.js";
 import styled from "styled-components";
-import ErrorMessage from "./ErrorMessage";
 
 const StyledChartSection = styled.section`
   background-color: var(--section-background);
@@ -24,8 +23,8 @@ export default function EmotionChart({
 }) {
   return (
     <StyledChartSection>
-      {xValues.length === 0 ? (
-        <ErrorMessage itemText="No Data for Graph" />
+      {xValues.length < 2 ? (
+        <p>Sorry, there is not enough data to draw the chart!</p>
       ) : (
         <Plot
           data={[
