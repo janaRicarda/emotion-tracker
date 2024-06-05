@@ -2,12 +2,13 @@ import { useSessionStorage } from "usehooks-ts";
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
+import Loader from "@/components/Loader";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
@@ -112,9 +113,12 @@ export default function App({ Component, pageProps }) {
     data: dbEmotionEntries,
     isLoading,
     mutate,
-  } = useSWR("/api/emotionEntries", fetcher);
+  } = useSWR("/api/emotionEntries", fetcher, {
+    fallbackData: [],
+    suspense: true,
+  });
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (!dbEmotionEntries) return null;
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -287,6 +291,7 @@ export default function App({ Component, pageProps }) {
           scrollPosition={scrollPosition}
           toggleTheme={toggleTheme}
           switchTheme={switchTheme}
+          isLoading={isLoading}
         >
           <Component
             isScrollDown={isScrollDown}

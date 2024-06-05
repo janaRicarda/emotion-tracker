@@ -1,4 +1,5 @@
 import EmotionForm from "@/components/EmotionForm";
+import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -24,7 +25,7 @@ export default function EmotionEntry({
     !useExampleData && `/api/emotionEntries/${id}`
   );
 
-  if (isLoading) return <h2>Is Loading...</h2>;
+  if (isLoading) return <Loader itemText={"Is Loading"} />;
 
   if (!router.query) {
     return null;

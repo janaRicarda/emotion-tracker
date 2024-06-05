@@ -26,7 +26,7 @@ const StyledLoadingSpinner = styled.div`
 export default function Loader({ itemText, fullScreen }) {
   return (
     <>
-      <StyledFlexColumnWrapper>
+      <StyledFlexColumnWrapper style={{ marginTop: "5rem" }}>
         <StyledLoadingSpinner />
         <StyledConfirmText>
           <b>{itemText}</b>

@@ -1,6 +1,7 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import ScrollToTop from "react-scroll-to-top";
+import Loader from "./Loader";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -32,6 +33,7 @@ export default function Layout({
   toolTip,
   scrollPosition,
   isScrollDown,
+  isLoading,
 }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
@@ -71,7 +73,7 @@ export default function Layout({
         switchTheme={switchTheme}
         toolTip={toolTip}
       />
-      {children}
+      {isLoading ? <Loader itemText={"App is loading..."} /> : children}
       <Footer />
       <StyledToTopButton
         $background={

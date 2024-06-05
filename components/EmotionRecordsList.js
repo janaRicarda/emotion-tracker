@@ -136,9 +136,13 @@ export default function EmotionRecordsList({
               isHighlighted,
             }) => {
               return (
-                <section key={id}>
+                <section key={useExampleData ? id : _id}>
                   <StyledRecordListItem>
-                    <StyledParagraph onClick={() => handleShowDetails(id)}>
+                    <StyledParagraph
+                      onClick={() =>
+                        handleShowDetails(useExampleData ? id : _id)
+                      }
+                    >
                       {timeAndDate}
                     </StyledParagraph>
                     <StyledEditButton
@@ -153,7 +157,7 @@ export default function EmotionRecordsList({
                       type="button"
                       aria-label="Delete Emotion Entry"
                       onClick={() => {
-                        handleShowConfirmMessage(id);
+                        handleShowConfirmMessage(useExampleData ? id : _id);
                       }}
                     />
                     {isHighlighted ? (
@@ -170,7 +174,7 @@ export default function EmotionRecordsList({
                       />
                     )}
                   </StyledRecordListItem>
-                  {showConfirmMessage[id] && (
+                  {showConfirmMessage[useExampleData ? id : _id] && (
                     <ConfirmMessage
                       toggleMessage={handleShowConfirmMessage}
                       itemId={useExampleData ? id : _id}
@@ -184,7 +188,9 @@ export default function EmotionRecordsList({
                       Do you want to delete this entry?
                     </ConfirmMessage>
                   )}
-                  <StyledDetails $showDetails={showDetails[id]}>
+                  <StyledDetails
+                    $showDetails={showDetails[useExampleData ? id : _id]}
+                  >
                     <li>Tension Level: {tensionLevel}%</li>
                     {emotion && <li>Emotion: {emotion}</li>}
                     {subemotion && <li>Subemotion: {subemotion}</li>}

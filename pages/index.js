@@ -137,14 +137,13 @@ export default function HomePage({
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
-
   useEffect(() => {
     handleToolTip({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
     });
   }, []);
 
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
