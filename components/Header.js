@@ -70,12 +70,10 @@ const StyledIconWrapper = styled.article`
 `;
 
 const StyledLogoLink = styled(StyledStandardLink)`
-  //margin-top: 1rem;
   border-radius: 50%;
   background: var(--logo-background);
   @media ${breakpoints.laptop} {
     z-index: 3;
-    //background: var(--main-bright);
     border-radius: 50%;
   }
 `;

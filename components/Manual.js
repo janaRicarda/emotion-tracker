@@ -7,7 +7,6 @@ import { breakpoints } from "@/utils/breakpoints";
 
 const StyledSection = styled.section`
   margin: 0 1rem;
-  //padding: 1rem;
   @media ${breakpoints.mobileLandscape} {
     padding: 0 1rem 1rem;
     width: 70vw;
