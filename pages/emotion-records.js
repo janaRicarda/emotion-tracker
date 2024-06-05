@@ -139,9 +139,9 @@ export default function EmotionRecords({
 
   useEffect(() => {
     handleToolTip({
-      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+      text: `${translate("emotionRecordsTooltip")}`,
     });
-  }, []);
+  }, [translate]);
 
   useEffect(() => {
     setShowFilter(false);
@@ -263,10 +263,10 @@ export default function EmotionRecords({
               <StyledLink href="./">{translate("addEntry")}</StyledLink>
             </StyledTextMessage>
           ) : (
-            <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+            <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
           )
         ) : (
-          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+          <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
         ))}
 
       {shownEntries.length !== 0 && (

@@ -7,5 +7,6 @@
   "noEntriesHighlighted": "You haven't highlighted any Entries yet. Click the",
   "toHighlightEntry": "on a Entry to highlight it.",
   "noEntriesMadeToday": "You haven't made any Entries today.",
-  "addEntry": "add Entry →"
+  "addEntry": "add Entry →",
+  "nothingFound": "sorry, nothing found"
 }
