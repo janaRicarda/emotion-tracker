@@ -38,7 +38,7 @@ const StyledFixedTitle = styled(StyledTitle)`
   left: 0;
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
-  z-index: 1;
+  z-index: 2;
 `;
 
 //links

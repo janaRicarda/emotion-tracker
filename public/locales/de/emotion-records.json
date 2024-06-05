@@ -1,3 +1,10 @@
 {
-  "language": "Deutsch"
+  "language": "Deutsch",
+  "emotionRecordsTitle": "Aufgezeichnete Emotionen",
+  "clickTheCalendar": "Klick auf den Kalender ",
+  "selectADate": "und wähle ein Datum",
+  "noEntriesHighlighted": "Du hast noch keine Einträge gehighlighted. Klick auf das",
+  "toHighlightEntry": "um einen Eintrag zu highlighten.",
+  "noEntriesMadeToday": "Du hast heute noch keine Einträge gemacht.",
+  "addEntry": "Eintrag hinzufügen →"
 }

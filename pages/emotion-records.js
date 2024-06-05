@@ -1,7 +1,7 @@
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/heart-outline.svg";
 import CalendarIcon from "/public/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
@@ -209,7 +209,7 @@ export default function EmotionRecords({
     <>
       <Background $show={showFilter} onClick={() => setShowFilter(false)} />
       <StyledHeading $isScrollDown={isScrollDown}>
-        Recorded Emotions
+        {translate("emotionRecordsTitle")}
       </StyledHeading>
       <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
         <ControllOverflow>
@@ -244,7 +244,8 @@ export default function EmotionRecords({
           <DisplayDate textAlign="center" />
         ) : (
           <StyledDateIndicator>
-            Click the calendar <StyledCalendarIcon /> and select a date
+            {translate("clickTheCalendar")} <StyledCalendarIcon />{" "}
+            {translate("selectADate")}
           </StyledDateIndicator>
         )
       ) : null}
@@ -252,13 +253,14 @@ export default function EmotionRecords({
         (filteredEntries.length === 0 ? (
           buttonState.highlightedButton ? (
             <StyledTextMessage>
-              You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.
+              {translate("noEntriesHighlighted")} <StyledHeartSymbol />{" "}
+              {translate("toHighlightEntry")}
             </StyledTextMessage>
           ) : buttonState.todayButton ? (
             <StyledTextMessage>
-              You haven&apos;t made any Entries today.<br></br>
-              <StyledLink href="./">add Entry &rarr;</StyledLink>
+              {translate("noEntriesMadeToday")}
+              <br></br>
+              <StyledLink href="./">{translate("addEntry")}</StyledLink>
             </StyledTextMessage>
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>

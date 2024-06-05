@@ -1,3 +1,11 @@
 {
-  "language": "English"
+  "language": "English",
+  "emotionRecordsTooltip": "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+  "emotionRecordsTitle": "Recorded Emotions",
+  "clickTheCalendar": "Click the calendar ",
+  "selectADate": "and select a date",
+  "noEntriesHighlighted": "You haven't highlighted any Entries yet. Click the",
+  "toHighlightEntry": "on a Entry to highlight it.",
+  "noEntriesMadeToday": "You haven't made any Entries today.",
+  "addEntry": "add Entry →"
 }
