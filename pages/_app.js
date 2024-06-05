@@ -8,10 +8,14 @@ import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
+import { SessionProvider } from "next-auth/react";
 
 const fetcher = (url) => fetch(url).then((response) => response.json());
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
@@ -288,23 +292,27 @@ export default function App({ Component, pageProps }) {
           toggleTheme={toggleTheme}
           switchTheme={switchTheme}
         >
-          <Component
-            isScrollDown={isScrollDown}
-            handleToolTip={handleToolTip}
-            theme={theme}
-            onAddEmotionDetails={handleAddEmotionDetails}
-            emotionEntries={useExampleData ? emotionEntries : dbEmotionEntries}
-            onAddEmotionEntry={handleAddEmotionEntry}
-            onDeleteEmotionEntry={handleDeleteEmotionEntry}
-            onReplaceUserData={handleReplaceAndBackup}
-            onDeleteAll={handleDeleteAll}
-            onRestore={restoreFromBackup}
-            backupEntries={backupEntries}
-            toggleHighlight={toggleHighlight}
-            toggleExampleData={handleUseExampleData}
-            useExampleData={useExampleData}
-            {...pageProps}
-          />
+          <SessionProvider session={session}>
+            <Component
+              isScrollDown={isScrollDown}
+              handleToolTip={handleToolTip}
+              theme={theme}
+              onAddEmotionDetails={handleAddEmotionDetails}
+              emotionEntries={
+                useExampleData ? emotionEntries : dbEmotionEntries
+              }
+              onAddEmotionEntry={handleAddEmotionEntry}
+              onDeleteEmotionEntry={handleDeleteEmotionEntry}
+              onReplaceUserData={handleReplaceAndBackup}
+              onDeleteAll={handleDeleteAll}
+              onRestore={restoreFromBackup}
+              backupEntries={backupEntries}
+              toggleHighlight={toggleHighlight}
+              toggleExampleData={handleUseExampleData}
+              useExampleData={useExampleData}
+              {...pageProps}
+            />
+          </SessionProvider>
         </Layout>
       </SWRConfig>
     </ThemeProvider>
