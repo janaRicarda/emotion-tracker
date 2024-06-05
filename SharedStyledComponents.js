@@ -48,7 +48,7 @@ const StyledFixedTitle = styled(StyledTitle)`
     background: transparent;
   }
   @media ${breakpoints.tablet} {
-    top: 100px;
+    top: 80px;
   }
 `;
 
@@ -153,10 +153,10 @@ const StyledEmotionListWrapper = styled.section`
   justify-content: center;
   align-items: center;
   position: fixed;
-  @media (orientation: landscape) {
+  @media ${breakpoints.mobileLandscape} {
     height: calc(100vh - 100px);
-    margin-top: 80px;
-    margin-bottom: 35px;
+    margin: 100px 35px;
+    width: 60vw;
     z-index: 2;
   }
 `;
