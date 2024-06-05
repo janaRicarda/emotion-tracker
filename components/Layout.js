@@ -37,7 +37,6 @@ export default function Layout({
 }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
-  //const [emotionColor, setEmotionColor] = useState(`var(--${slug})`);
 
   function listenScrollEvent(position) {
     const colors = [

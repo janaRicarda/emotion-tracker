@@ -113,12 +113,7 @@ export default function App({ Component, pageProps }) {
     data: dbEmotionEntries,
     isLoading,
     mutate,
-  } = useSWR("/api/emotionEntries", fetcher, {
-    fallbackData: [],
-    suspense: true,
-  });
-
-  if (!dbEmotionEntries) return null;
+  } = useSWR("/api/emotionEntries", fetcher);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
