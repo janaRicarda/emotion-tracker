@@ -139,6 +139,7 @@ export default function EmotionRecords({
   handleToolTip,
   isScrollDown,
   theme,
+  useExampleData,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -311,6 +312,7 @@ export default function EmotionRecords({
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
+            useExampleData={useExampleData}
           />
         </ControlPadding>
       )}

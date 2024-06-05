@@ -200,7 +200,7 @@ export default function EmotionForm({
         $color={
           theme === darkTheme ? "var(--section-background)" : `${colorValue}`
         }
-        $text={theme === darkTheme ? `${colorValue}` : "var(--text-on-bright"}
+        $text={theme === darkTheme ? `${colorValue}` : "var(--text-on-bright)"}
         onSubmit={handleSubmit}
       >
         <StyledTitle>

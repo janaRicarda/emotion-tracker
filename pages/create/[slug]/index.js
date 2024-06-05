@@ -1,12 +1,14 @@
 import EmotionForm from "@/components/EmotionForm";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import useSWR from "swr";
 
 export default function EmotionEntry({
   theme,
   onAddEmotionDetails,
   emotionEntries,
   handleToolTip,
+  useExampleData,
 }) {
   useEffect(() => {
     handleToolTip({
@@ -15,14 +17,22 @@ export default function EmotionEntry({
   }, []);
 
   const router = useRouter();
+  const { id } = router.query;
+  const { slug } = router.query;
+
+  const { data: correspondingDbEmotionEntry, isLoading } = useSWR(
+    !useExampleData && `/api/emotionEntries/${id}`
+  );
+
+  if (isLoading) return <h2>Is Loading...</h2>;
+
   if (!router.query) {
     return null;
   }
-  const { slug } = router.query;
 
-  const { id } = router.query;
-  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
-  if (!correspondingEntry) return <h2>Page not found!</h2>;
+  const correspondingEntry = useExampleData
+    ? emotionEntries.find((entry) => entry.id === id)
+    : correspondingDbEmotionEntry;
 
   return (
     <>
