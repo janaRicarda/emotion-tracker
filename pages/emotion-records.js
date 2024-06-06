@@ -121,7 +121,7 @@ const StyledCalendarIcon = styled(CalendarIcon)`
 `;
 
 const StyledDateIndicator = styled.article`
-  margin: 2rem auto 1rem;
+  margin: 6rem auto 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
