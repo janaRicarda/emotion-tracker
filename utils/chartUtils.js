@@ -10,7 +10,7 @@ export const chartPresets = {
   emotionShares: {
     title: "Emotion Shares",
     xTitle: "emotion",
-    yTitle: "number of entries",
+    yTitle: "percentage",
     scatter: false,
   },
   emotionIntensity: {
@@ -23,11 +23,10 @@ export const chartPresets = {
 
 export function countEmotions(entries) {
   const emotionsToCount = emotionData.map((element) => element.name);
-
+  function add(a, b) {
+    return Number(a) + Number(b);
+  }
   function getAverageValue(entries) {
-    function add(a, b) {
-      return Number(a) + Number(b);
-    }
     const averageValue =
       entries.length === 0
         ? 0
@@ -37,7 +36,7 @@ export function countEmotions(entries) {
           );
     return averageValue;
   }
-  const countResult = emotionsToCount.map((element) => {
+  const preResults = emotionsToCount.map((element) => {
     const foundEntries = entries.filter((entry) => entry.emotion === element);
     const object = {
       emotion: element,
@@ -47,7 +46,16 @@ export function countEmotions(entries) {
     };
     return object;
   });
-  return countResult;
+  const entriesSum = preResults.map((result) => result.count).reduce(add, 0);
+  const countResults = preResults.map((result) => {
+    const percentage = Math.round((result.count / entriesSum) * 100);
+    const object = {
+      ...result,
+      percentage,
+    };
+    return object;
+  });
+  return countResults;
 }
 
 export function doTensionChartData(entries) {

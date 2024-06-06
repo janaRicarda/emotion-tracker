@@ -12,7 +12,6 @@ import styled from "styled-components";
 import {
   StyledFlexColumnWrapper,
   StyledButton,
-  StyledWrapper,
 } from "@/SharedStyledComponents";
 import { useState } from "react";
 
@@ -45,11 +44,12 @@ const StyledGraphButton = styled(StyledButton)`
 const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-self: center;
-  height: 2rem;
-  padding: 0.1rem;
+
+  justify-content: space-between;
+  height: 24px;
+  padding: 0.2rem;
   width: inherit;
-  margin: 0.1rem;
+  margin: 0 0 0.8rem;
   gap: 0.1rem;
   background-color: var(--section-background);
   border-radius: 6px;
@@ -83,7 +83,7 @@ export default function ChartContainer({ shownEntries, theme }) {
   const countResult = countEmotions(shownEntries);
 
   const xEmotions = countResult.map((element) => element.emotion);
-  const yEmotionCount = countResult.map((element) => element.count);
+  const yEmotionCount = countResult.map((element) => element.percentage);
   const yAverageIntensities = countResult.map(
     (element) => element.averageIntensity
   );
