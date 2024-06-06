@@ -1,6 +1,7 @@
 import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
+import Head from "next/head";
 
 export default function EmotionDetailsPage({ theme }) {
   const router = useRouter();
@@ -22,17 +23,22 @@ export default function EmotionDetailsPage({ theme }) {
 
   if (!emotion) return <h1>emotion not found</h1>;
   return (
-    <EmotionDetails
-      theme={theme}
-      name={emotion.name}
-      description={emotion.description}
-      emotionfunction={emotion.emotionfunction}
-      indications={emotion.indications}
-      subemotions={emotion.subemotions}
-      color={emotion.color}
-      prevEmotion={prevEmotion}
-      nextEmotion={nextEmotion}
-      slug={emotion.slug}
-    />
+    <>
+      <Head>
+        <title>{emotion.name}</title>
+      </Head>
+      <EmotionDetails
+        theme={theme}
+        name={emotion.name}
+        description={emotion.description}
+        emotionfunction={emotion.emotionfunction}
+        indications={emotion.indications}
+        subemotions={emotion.subemotions}
+        color={emotion.color}
+        prevEmotion={prevEmotion}
+        nextEmotion={nextEmotion}
+        slug={emotion.slug}
+      />
+    </>
   );
 }
