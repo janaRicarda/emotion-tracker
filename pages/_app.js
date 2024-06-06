@@ -35,6 +35,8 @@ export default function App({
     }
   );
 
+  const [demoMode, setDemoMode] = useState(false);
+
   // use-effect for mediaquery
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -110,6 +112,13 @@ export default function App({
 
   function handleUseExampleData() {
     setUseExampleDate(!useExampleData);
+  }
+
+  // function for StartModal
+
+  function handleDemoMode() {
+    setDemoMode(true);
+    setUseExampleDate(true);
   }
 
   const {
@@ -310,6 +319,8 @@ export default function App({
               toggleHighlight={toggleHighlight}
               toggleExampleData={handleUseExampleData}
               useExampleData={useExampleData}
+              demoMode={demoMode}
+              handleDemoMode={handleDemoMode}
               {...pageProps}
             />
           </Layout>

@@ -12,6 +12,7 @@ import {
 import dynamic from "next/dynamic";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import { useSession } from "next-auth/react";
+import StartModal from "@/components/Modal";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -128,6 +129,8 @@ export default function HomePage({
   theme,
   toggleExampleData,
   useExampleData,
+  demoMode,
+  handleDemoMode,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
@@ -176,9 +179,11 @@ export default function HomePage({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
-
   return (
     <>
+      {!session && (
+        <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
+      )}
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>
           <StyledInfoIcon
@@ -200,6 +205,7 @@ export default function HomePage({
             <span> ON: Data is generated locally and fictional.</span>
           </StyledInfoBox>
           <ToggleSwitch
+            demoMode={demoMode}
             handleSwitch={toggleExampleData}
             isChecked={useExampleData}
             text={"Use Example data"}

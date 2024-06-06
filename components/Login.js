@@ -21,7 +21,7 @@ export default function Login() {
   if (session) {
     return (
       <>
-        Signed in as {session.user.email} <br />
+        Signed in as {session.user.name} <br />
         <StyledLogoutButton onClick={() => signOut()}>
           Sign out
         </StyledLogoutButton>
@@ -29,9 +29,6 @@ export default function Login() {
     );
   }
   return (
-    <>
-      Not signed in <br />
-      <StyledLoginButton onClick={() => signIn()}>Sign in</StyledLoginButton>
-    </>
+    <StyledLoginButton onClick={() => signIn()}>Sign in</StyledLoginButton>
   );
 }
