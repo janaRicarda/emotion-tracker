@@ -91,6 +91,9 @@ const StyledTextMessage = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media ${breakpoints.laptop} {
+    margin-left: 10%;
+  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
