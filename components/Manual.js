@@ -3,25 +3,43 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { StyledTitle } from "@/SharedStyledComponents";
 import { useTranslation } from "next-i18next";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledSection = styled.section`
-  width: 100%;
-  height: auto;
-  padding: 1rem;
-`;
-
-const StyledText = styled.p`
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  &:last-child {
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 0;
+  margin: 0 1rem;
+  @media ${breakpoints.mobileLandscape} {
+    padding: 0 1rem 1rem;
+    width: 70vw;
+  }
+  @media ${breakpoints.largeMobile} {
+    margin: 0 20%;
+  }
+  @media ${breakpoints.tablet} {
+    width: 50vw;
+  }
+  @media ${breakpoints.laptop} {
+    margin: 0 30%;
   }
 `;
 
+const StyledManualTitle = styled(StyledTitle)`
+  margin-bottom: 2rem;
+`;
+
+const StyledText = styled.p`
+  margin: 2rem 1rem;
+  &:last-child {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+`;
+const StyledDetailText = styled.p`
+  padding: 1.5rem;
+`;
+
 const StyledDetails = styled.details`
-  border: 1px solid ${({ $itemColor }) => $itemColor};
+  border: 2px solid ${({ $itemColor }) => $itemColor};
   background: var(--section-background);
   border-radius: 30px;
   padding: 0.5rem;
@@ -130,12 +148,15 @@ export default function Manual() {
 
   return (
     <StyledSection>
-      <StyledTitle>{translate("title")}</StyledTitle>
+      <StyledManualTitle>{translate("title")}</StyledManualTitle>
       <StyledText>{translate("intro")}</StyledText>
+
       {manualData.map(({ question, text, answers }) => (
         <StyledDetails key={question}>
           <StyledSummary>{question}</StyledSummary>
-          {text && <StyledText>{text}</StyledText>}
+
+          {text && <StyledDetailText>{text}</StyledDetailText>}
+
           <StyledOl>
             {answers.map((answer) => (
               <StyledListItem key={answer} $itemColor={itemColor}>

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import Magnifier from "../public/magnify.svg";
+import Magnifier from "../public/icons/magnify.svg";
 import { DayPicker } from "react-day-picker";
-import CalendarIcon from "/public/calendar.svg";
+import CalendarIcon from "/public/icons/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledContainer = styled.div`
   height: auto;
@@ -22,16 +23,21 @@ const StyledMagnifier = styled(Magnifier)`
 `;
 
 const StyledInput = styled.input`
-  width: ${({ $showSearchBar }) => ($showSearchBar ? "80vw" : "35px")};
+  width: ${({ $showSearchBar }) => ($showSearchBar ? "20rem" : "35px")};
   height: 35px;
   padding-left: 2rem;
   background-color: var(--main-bright);
-
   color: var(--main-dark);
   border-radius: ${({ $showSearchBar }) => ($showSearchBar ? "20px" : "18px")};
   font-size: 0.8rem;
   border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
+  @media ${breakpoints.tablet} {
+    width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
+  }
+  @media ${breakpoints.laptop} {
+    width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
+  }
 `;
 
 // Styles for Filter-Buttons
@@ -42,22 +48,31 @@ const StyledFilterSection = styled.section`
   justify-content: center;
   align-items: center;
   background-color: var(--section-background-contrast);
+  width: 20rem;
+  @media ${breakpoints.largeMobile} {
+    width: 22rem;
+  }
+  @media ${breakpoints.tablet} {
+    width: inherit;
+  }
+  @media ${breakpoints.laptop} {
+    width: inherit;
+  }
 `;
 
 const StyledFilterButton = styled(StyledButton)`
   display: flex;
-  background-color: ${({ $active }) =>
-    $active ? "var(--button-background)" : "var(--main-bright)"};
+  align-items: center;
   margin: 0;
   padding: 0.2rem;
-  border-color: var(--contrast-text);
   width: auto;
+  background-color: ${({ $active }) =>
+    $active ? "var(--button-background)" : "var(--main-bright)"};
   color: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
   fill: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
-  display: flex;
-  align-items: center;
+  border: 1px solid var(--contrast-text);
 `;
 
 const StyledButtonGroup = styled.div`
@@ -65,7 +80,6 @@ const StyledButtonGroup = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   padding: 0.6rem;
-  width: 90vw;
   gap: 10px;
 `;
 
@@ -104,7 +118,6 @@ const StyledNavButton = styled(StyledButton)`
   width: 5rem;
   padding: 0.2rem;
   margin: 0.5rem;
-
   opacity: ${(props) => (props.disabled ? "0.25" : "1")};
 `;
 

@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { breakpoints } from "./utils/breakpoints";
 
 //buttons
 const StyledButton = styled.button`
-  background-color: var(--button-background);
+  background: var(--button-background);
   color: var(--contrast-text);
   width: 6rem;
   border: 1px solid var(--main-dark);
@@ -31,14 +32,24 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledFixedTitle = styled(StyledTitle)`
-  color: ${({ $color }) => $color};
-  width: 100%;
+  color: var(--main-dark);
+  display: inline;
   position: fixed;
+  margin-top: 1.5rem;
   top: 100px;
-  left: 0;
   padding: 0 1rem 0 1rem;
   background-color: var(--main-bright);
-  z-index: 2;
+  z-index: 1;
+  @media ${breakpoints.mobileLandscape} {
+    top: 0;
+    left: 10rem;
+    right: 10rem;
+    z-index: 2;
+    background: transparent;
+  }
+  @media ${breakpoints.tablet} {
+    top: 80px;
+  }
 `;
 
 //links
@@ -46,12 +57,14 @@ const StyledStandardLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   border-radius: 6px;
-  color: var(--text);
+  color: var(--text-on-bright);
 `;
 
 const StyledFixedLink = styled(Link)`
   position: fixed;
   top: 50%;
+  text-decoration: none;
+  color: var(--main-dark);
 `;
 
 //lists
@@ -131,6 +144,23 @@ const StyledSelect = styled.select`
   padding: 0.3rem 0;
 `;
 
+const StyledEmotionListWrapper = styled.section`
+  width: 100vw;
+  height: calc(100vh - 200px);
+  margin-top: 160px;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  @media ${breakpoints.mobileLandscape} {
+    height: calc(100vh - 100px);
+    margin: 100px 35px;
+    width: 60vw;
+    z-index: 2;
+  }
+`;
+
 export {
   StyledButton,
   StyledWrapper,
@@ -145,4 +175,5 @@ export {
   StyledSelect,
   StyledSubmitButton,
   StyledListItem,
+  StyledEmotionListWrapper,
 };

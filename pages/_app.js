@@ -15,9 +15,7 @@ const fetcher = (url) => fetch(url).then((response) => response.json());
 function App({ Component, pageProps }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
-
   const [toolTip, setToolTip] = useState();
-
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
 

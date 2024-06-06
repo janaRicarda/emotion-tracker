@@ -1,11 +1,12 @@
 import EmotionList from "@/components/EmotionList";
 import { useEffect } from "react";
 import {
-  StyledFlexColumnWrapper,
   StyledFixedTitle,
+  StyledEmotionListWrapper,
 } from "@/SharedStyledComponents";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 
 export default function EmotionListPage({ handleToolTip }) {
   const { t: translate } = useTranslation(["emotionList"]);
@@ -18,10 +19,13 @@ export default function EmotionListPage({ handleToolTip }) {
 
   return (
     <>
+      <Head>
+        <title>The 7 basic emotions</title>
+      </Head>
       <StyledFixedTitle>{translate("emotionListTitle")}</StyledFixedTitle>
-      <StyledFlexColumnWrapper>
+      <StyledEmotionListWrapper>
         <EmotionList />
-      </StyledFlexColumnWrapper>
+      </StyledEmotionListWrapper>
     </>
   );
 }
