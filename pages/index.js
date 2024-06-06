@@ -10,6 +10,8 @@ import {
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
 import dynamic from "next/dynamic";
+import { breakpoints } from "@/utils/breakpoints";
+import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import { useSession } from "next-auth/react";
 import StartModal from "@/components/Modal";
@@ -20,8 +22,22 @@ const TensionChart = dynamic(() => import("../components/TensionChart"), {
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
+  padding: 1rem;
   align-items: center;
   width: 80vw;
+  background: var(--section-background);
+  border-radius: 6px;
+  @media ${breakpoints.mobileLandscape} {
+    height: 60vh;
+    padding: 1rem;
+    margin-top: 0;
+  }
+  @media ${breakpoints.tablet} {
+    width: 60vw;
+  }
+  @media ${breakpoints.laptop} {
+    width: 40vw;
+  }
 `;
 
 const ToggleSwitchWrapper = styled.div`
@@ -184,6 +200,9 @@ export default function HomePage({
       {!session && (
         <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
       )}
+      <Head>
+        <title>Home</title>
+      </Head>
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>
           <StyledInfoIcon

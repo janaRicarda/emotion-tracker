@@ -1,17 +1,29 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TrashIcon from "../public/trash-icon.svg";
-import PencilIcon from "../public/pencil.svg";
+import TrashIcon from "../public/icons/trash-icon.svg";
+import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import HeartFilledIcon from "../public/heart-filled.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HeartFilledIcon from "../public/icons/heart-filled.svg";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
+  width: 80vw;
+  @media ${breakpoints.tablet} {
+    width: 50vw;
+    margin-top: 0;
+    margin-left: 30vw;
+  }
+  @media ${breakpoints.laptop} {
+    width: 40vw;
+    margin-top: 0;
+    margin-left: 40%;
+  }
 `;
 
 const StyledRecordListItem = styled.li`
@@ -24,7 +36,6 @@ const StyledParagraph = styled.p`
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  width: 80vw;
   cursor: pointer;
 `;
 
@@ -61,6 +72,7 @@ const StyledOutlineButton = styled(HeartOutlineIcon)`
   position: absolute;
   top: calc(50% - 2.4rem);
   right: -0.6rem;
+  background: var(--main-bright);
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;
@@ -136,9 +148,13 @@ export default function EmotionRecordsList({
               isHighlighted,
             }) => {
               return (
-                <section key={id}>
+                <section key={useExampleData ? id : _id}>
                   <StyledRecordListItem>
-                    <StyledParagraph onClick={() => handleShowDetails(id)}>
+                    <StyledParagraph
+                      onClick={() =>
+                        handleShowDetails(useExampleData ? id : _id)
+                      }
+                    >
                       {timeAndDate}
                     </StyledParagraph>
                     <StyledEditButton
@@ -153,7 +169,7 @@ export default function EmotionRecordsList({
                       type="button"
                       aria-label="Delete Emotion Entry"
                       onClick={() => {
-                        handleShowConfirmMessage(id);
+                        handleShowConfirmMessage(useExampleData ? id : _id);
                       }}
                     />
                     {isHighlighted ? (
@@ -170,7 +186,7 @@ export default function EmotionRecordsList({
                       />
                     )}
                   </StyledRecordListItem>
-                  {showConfirmMessage[id] && (
+                  {showConfirmMessage[useExampleData ? id : _id] && (
                     <ConfirmMessage
                       toggleMessage={handleShowConfirmMessage}
                       itemId={useExampleData ? id : _id}
@@ -184,7 +200,9 @@ export default function EmotionRecordsList({
                       Do you want to delete this entry?
                     </ConfirmMessage>
                   )}
-                  <StyledDetails $showDetails={showDetails[id]}>
+                  <StyledDetails
+                    $showDetails={showDetails[useExampleData ? id : _id]}
+                  >
                     <li>Tension Level: {tensionLevel}%</li>
                     {emotion && <li>Emotion: {emotion}</li>}
                     {subemotion && <li>Subemotion: {subemotion}</li>}

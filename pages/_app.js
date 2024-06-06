@@ -18,9 +18,7 @@ export default function App({
 }) {
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
-
   const [toolTip, setToolTip] = useState();
-
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
 

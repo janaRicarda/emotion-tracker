@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components";
 import Navigation from "./Navigation";
 import { useState } from "react";
-import Logo from "../public/logo.svg";
-import Moon from "../public/moon.svg";
-import Sun from "../public/sun.svg";
+import Logo from "../public/icons/logo.svg";
+import Moon from "../public/icons/moon.svg";
+import Sun from "../public/icons/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
-import Tooltip from "./Tooltip";
 import Login from "./Login";
+import { breakpoints } from "@/utils/breakpoints";
 
 // used for all transition in this component
 const transition = css`
@@ -40,7 +40,7 @@ const StyledMenu = styled.div`
 const StyledHeader = styled.header`
   width: 100%;
   display: flex;
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "100px")};
   ${transition}
   transition-property: height;
   justify-content: space-between;
@@ -70,20 +70,20 @@ const StyledIconWrapper = styled.article`
   ${transition}
 `;
 
-const ToolTipWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: ${({ $isScrollDown }) => ($isScrollDown ? "0.7rem" : "1rem")};
-  ${transition}
+const StyledLogoLink = styled(StyledStandardLink)`
+  border-radius: 50%;
+  @media ${breakpoints.laptop} {
+    z-index: 3;
+    border-radius: 50%;
+    background: var(--section-background);
+  }
 `;
 
 const StyledLogo = styled(Logo)`
   max-width: 8rem;
   max-height: 8rem;
-  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
-  stroke: var(--main-dark);
+  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
   ${transition}
 `;
 
@@ -92,7 +92,6 @@ export default function Header({
   toggleTheme,
   switchTheme,
   isScrollDown,
-  toolTip,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,25 +102,22 @@ export default function Header({
   return (
     <>
       <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
-        <StyledStandardLink href="/">
+        <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
-        </StyledStandardLink>
+        </StyledLogoLink>
         <Login />
-        <ToolTipWrapper $isScrollDown={isScrollDown}>
-          {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
-          <StyledIconWrapper $isScrollDown={isScrollDown}>
-            {theme === lightTheme || theme === darkTheme ? (
-              <StyledToggleTheme type="button" onClick={toggleTheme}>
-                {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
-              </StyledToggleTheme>
-            ) : null}
-            <StyledMenu
-              $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
-            >
-              <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
-            </StyledMenu>
-          </StyledIconWrapper>
-        </ToolTipWrapper>
+        <StyledIconWrapper $isScrollDown={isScrollDown}>
+          {theme === lightTheme || theme === darkTheme ? (
+            <StyledToggleTheme type="button" onClick={toggleTheme}>
+              {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
+            </StyledToggleTheme>
+          ) : null}
+          <StyledMenu
+            $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
+          >
+            <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
+          </StyledMenu>
+        </StyledIconWrapper>
         <Navigation
           isOpen={isOpen}
           handleToggleMenu={handleToggleMenu}
