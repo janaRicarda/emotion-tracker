@@ -30,7 +30,7 @@ export default function ErrorMessage({ errorMessage }) {
 
   return (
     <StyledMessageWrapper>
-      <h2>Sorry there was an error!</h2>
+      <h2>Sorry, there was an error!</h2>
       <b>You got redirected.</b>
       <p>Error message:</p>
       <p>{errorMessage}</p>
