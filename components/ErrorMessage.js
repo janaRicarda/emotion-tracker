@@ -25,6 +25,8 @@ const StyledErrorButton = styled(StyledButton)`
 
 export default function ErrorMessage({ errorMessage }) {
   const router = useRouter();
+  const previousURL = router.query.currentURL;
+  const isHomePage = router.route === "/";
 
   return (
     <StyledMessageWrapper>
@@ -33,10 +35,16 @@ export default function ErrorMessage({ errorMessage }) {
       <p>Error message:</p>
       <p>{errorMessage}</p>
       <StyledErrorButtonBox>
-        <StyledErrorButton onClick={() => router.back()}>
+        <StyledErrorButton
+          onClick={() =>
+            previousURL ? router.push(previousURL) : router.reload()
+          }
+        >
           Try again
         </StyledErrorButton>
-        <StyledErrorButton onClick={() => router.push("/")}>
+        <StyledErrorButton
+          onClick={() => (isHomePage ? router.reload() : router.push("/"))}
+        >
           Homepage
         </StyledErrorButton>
       </StyledErrorButtonBox>

@@ -144,7 +144,13 @@ export default function App({ Component, pageProps }) {
   }
 
   function handleError(error) {
-    router.push({ query: { text: error } }, "/error");
+    router.push(
+      {
+        pathname: "/error",
+        query: { text: error, currentURL: router.pathname },
+      },
+      "/error"
+    );
   }
 
   async function handleAddEmotionEntry(data, id) {
