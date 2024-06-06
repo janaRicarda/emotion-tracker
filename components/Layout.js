@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import ErrorMessage from "./ErrorMessage";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -33,7 +34,8 @@ export default function Layout({
   toolTip,
   scrollPosition,
   isScrollDown,
-  isLoading,
+  emotionEntriesAreLoading,
+  errorFetchingEmotionEntries,
 }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
@@ -72,7 +74,13 @@ export default function Layout({
         switchTheme={switchTheme}
         toolTip={toolTip}
       />
-      {isLoading ? <Loader itemText={"App is loading..."} /> : children}
+      {(emotionEntriesAreLoading && (
+        <Loader itemText={"App is loading..."} />
+      )) ||
+        (errorFetchingEmotionEntries && (
+          <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
+        )) ||
+        children}
       <Footer />
       <StyledToTopButton
         $background={

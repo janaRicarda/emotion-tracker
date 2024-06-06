@@ -12,6 +12,7 @@ export default function EmotionListPage({ handleToolTip }) {
     });
   }, []);
 
+
   return (
     <>
       <StyledFixedTitle>The 7 basic emotions</StyledFixedTitle>

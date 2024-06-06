@@ -2,17 +2,32 @@ import { useSessionStorage } from "usehooks-ts";
 import useLocalStorageState from "use-local-storage-state";
 import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import generateExampleData from "@/utils/exampleData";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
-import Loader from "@/components/Loader";
+import { useRouter } from "next/router";
 
-const fetcher = (url) => fetch(url).then((response) => response.json());
+const fetcher = async (url) => {
+  const res = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await res.json();
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
+};
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
 
@@ -111,7 +126,8 @@ export default function App({ Component, pageProps }) {
 
   const {
     data: dbEmotionEntries,
-    isLoading,
+    isLoading: emotionEntriesAreLoading,
+    error: errorFetchingEmotionEntries,
     mutate,
   } = useSWR("/api/emotionEntries", fetcher);
 
@@ -125,6 +141,10 @@ export default function App({ Component, pageProps }) {
 
   function handleToolTip(toolTipData) {
     setToolTip(toolTipData);
+  }
+
+  function handleError(error) {
+    router.push({ query: { text: error } }, "/error");
   }
 
   async function handleAddEmotionEntry(data, id) {
@@ -161,6 +181,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -192,6 +213,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -207,6 +229,17 @@ export default function App({ Component, pageProps }) {
       );
     } else {
       try {
+        // test error
+        function randomNumber(count) {
+          return Math.floor(Math.random() * count);
+        }
+
+        const number = randomNumber(2);
+
+        if (number === 1) {
+          throw new Error("This is a test Error");
+        }
+        ////
         const entryToChange = dbEmotionEntries.find(
           (entry) => entry._id === id
         );
@@ -229,12 +262,14 @@ export default function App({ Component, pageProps }) {
         }
         if (!response.ok) {
           console.error("Server declined: Highlighting item failed");
+          alert("Server declined: Highlighting item failed");
         }
       } catch (error) {
         console.error(
           "Your request got rejected before reaching the Server:",
-          error
+          error.message
         );
+        handleError(error.message);
       }
     }
   }
@@ -259,6 +294,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -286,7 +322,8 @@ export default function App({ Component, pageProps }) {
           scrollPosition={scrollPosition}
           toggleTheme={toggleTheme}
           switchTheme={switchTheme}
-          isLoading={isLoading}
+          emotionEntriesAreLoading={emotionEntriesAreLoading}
+          errorFetchingEmotionEntries={errorFetchingEmotionEntries}
         >
           <Component
             isScrollDown={isScrollDown}

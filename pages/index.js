@@ -11,7 +11,6 @@ import {
 } from "@/SharedStyledComponents";
 import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
-import ErrorMessage from "@/components/ErrorMessage";
 import ToggleSwitch from "@/components/ToggleSwitch";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
@@ -255,19 +254,13 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-
-        {chartIsShown && xValues.length != 0 ? (
-          <TensionChart
-            emotionEntries={emotionEntries}
-            theme={theme}
-            xValues={xValues}
-            yValues={yValues}
-            title="Daily Tension Graph"
-          />
-        ) : (
-          <ErrorMessage itemText="No Data for Graph" />
-        )}
-
+        <TensionChart
+          emotionEntries={emotionEntries}
+          theme={theme}
+          xValues={xValues}
+          yValues={yValues}
+          title="Daily Tension Graph"
+        />
         <StyledGraphButton type="button" onClick={handleChart}>
           {chartIsShown === true ? "Hide chart" : "Show chart"}
         </StyledGraphButton>

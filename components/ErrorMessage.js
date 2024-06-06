@@ -1,37 +1,45 @@
 import {
-  StyledStandardLink,
   StyledFlexColumnWrapper,
+  StyledWrapper,
+  StyledButton,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
-
-const StyledConfirmText = styled.p`
-  padding: 1rem 2rem;
-  text-align: center;
-  color: var(--main-dark);
-`;
+import { useRouter } from "next/router";
 
 const StyledMessageWrapper = styled(StyledFlexColumnWrapper)`
   height: fit-content;
   background-color: var(--section-background);
   border-radius: 6px;
   border: 1px solid var(--main-dark);
+  & > * {
+    margin: 1rem 0;
+  }
 `;
 
-const StyledBackLink = styled(StyledStandardLink)`
-  background-color: var(--button-background);
-  color: var(--contrast-text);
-  width: 6rem;
-  margin: 1rem;
-  padding: 1rem;
+const StyledErrorButtonBox = styled(StyledWrapper)`
+  justify-content: space-evenly;
+`;
+const StyledErrorButton = styled(StyledButton)`
+  width: 8rem;
 `;
 
-export default function ErrorMessage({ itemText }) {
+export default function ErrorMessage({ errorMessage }) {
+  const router = useRouter();
+
   return (
     <StyledMessageWrapper>
-      <StyledConfirmText>
-        <b>{itemText}</b>
-      </StyledConfirmText>
-      <StyledBackLink href="/">Back to main</StyledBackLink>
+      <h2>Sorry there was an error!</h2>
+      <b>You got redirected.</b>
+      <p>Error message:</p>
+      <p>{errorMessage}</p>
+      <StyledErrorButtonBox>
+        <StyledErrorButton onClick={() => router.back()}>
+          Try again
+        </StyledErrorButton>
+        <StyledErrorButton onClick={() => router.push("/")}>
+          Homepage
+        </StyledErrorButton>
+      </StyledErrorButtonBox>
     </StyledMessageWrapper>
   );
 }
