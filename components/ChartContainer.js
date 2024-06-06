@@ -13,7 +13,8 @@ import {
   StyledFlexColumnWrapper,
   StyledButton,
 } from "@/SharedStyledComponents";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { breakpoints } from "@/utils/breakpoints";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   ssr: false,
@@ -26,11 +27,28 @@ const ChartSection = styled.section`
   width: 90vw;
   min-height: 450px;
   max-height: 700px;
-  margin-top: 8rem;
+  margin-top: 5rem;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 12px;
   justify-content: center;
   background-color: var(--section-background);
+
+  @media ${breakpoints.mobileLandscape} {
+    top: 100px;
+  }
+  @media ${breakpoints.tablet} {
+    display: block;
+    padding: 1rem;
+    left: 5rem;
+    width: 92%;
+  }
+  @media ${breakpoints.laptop} {
+    display: block;
+    box-shadow: none;
+    padding: 1rem;
+    left: 5rem;
+    width: 92%;
+  }
 `;
 
 const StyledGraphButton = styled(StyledButton)`
@@ -65,6 +83,14 @@ const StyledGraphButtonsWrapper = styled.div`
   max-width: 50vw;
   align-items: center;
 `;
+const Chartwrapper = styled(StyledFlexColumnWrapper)`
+  @media ${breakpoints.tablet} {
+    margin-left: 10rem;
+  }
+  @media ${breakpoints.laptop} {
+    margin-left: 20rem;
+  }
+`;
 
 export default function ChartContainer({ shownEntries, theme }) {
   //logic for Graph
@@ -73,9 +99,7 @@ export default function ChartContainer({ shownEntries, theme }) {
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
 
-  //wird noch responsive
-  const width = 340;
-  //wird noch responsive
+  //logic
 
   const xTensionValues = doTensionChartData(shownEntries).xValues;
   const yTensionValues = doTensionChartData(shownEntries).yValues;
@@ -96,6 +120,22 @@ export default function ChartContainer({ shownEntries, theme }) {
       : title === "Emotion Shares"
       ? yEmotionCount
       : yAverageIntensities;
+
+  //responsive
+  console.log(breakpoints);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  function updateWidth() {
+    setWindowWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  const width = Math.max(340, Math.round(windowWidth / 2));
+  const height = Math.round(width * 1.2);
 
   function handleChartType() {
     setChartState({
@@ -118,38 +158,48 @@ export default function ChartContainer({ shownEntries, theme }) {
 
   return (
     <ChartSection>
-      <EmotionChart
-        theme={theme}
-        type={type}
-        xValues={xValues}
-        yValues={yValues}
-        xTitle={xTitle}
-        yTitle={yTitle}
-        title={title}
-        width={width}
-      />
-      <StyledFlexColumnWrapper>
-        <ToggleContainer>
-          <Icon path={mdiChartLine} size={1} />
-          <SwitchSizer>
-            <ToggleSwitch handleSwitch={handleChartType} isChecked={!scatter} />
-          </SwitchSizer>
-          <Icon path={mdiChartBar} size={1} />
-        </ToggleContainer>
-      </StyledFlexColumnWrapper>
-      <StyledFlexColumnWrapper>
-        <StyledGraphButtonsWrapper>
-          <StyledGraphButton type="button" onClick={handleTensionChart}>
-            Tension
-          </StyledGraphButton>
-          <StyledGraphButton type="button" onClick={handleEmotionChart}>
-            Emotions
-          </StyledGraphButton>
-          <StyledGraphButton type="button" onClick={handleIntensityChart}>
-            Intensity
-          </StyledGraphButton>
-        </StyledGraphButtonsWrapper>
-      </StyledFlexColumnWrapper>
+      <Chartwrapper>
+        <EmotionChart
+          theme={theme}
+          type={type}
+          xValues={xValues}
+          yValues={yValues}
+          xTitle={xTitle}
+          yTitle={yTitle}
+          title={title}
+          width={width}
+          height={height}
+        />
+
+        <StyledFlexColumnWrapper>
+          <ToggleContainer>
+            <Icon path={mdiChartLine} size={1} />
+            <SwitchSizer>
+              <ToggleSwitch
+                handleSwitch={handleChartType}
+                isChecked={!scatter}
+              />
+            </SwitchSizer>
+            <Icon path={mdiChartBar} size={1} />
+          </ToggleContainer>
+        </StyledFlexColumnWrapper>
+        <StyledFlexColumnWrapper>
+          <StyledGraphButtonsWrapper>
+            <StyledGraphButton type="button" onClick={handleTensionChart}>
+              Tension
+            </StyledGraphButton>
+            <StyledGraphButton type="button" onClick={handleEmotionChart}>
+              Emotions
+            </StyledGraphButton>
+            <StyledGraphButton type="button" onClick={handleIntensityChart}>
+              Intensity
+            </StyledGraphButton>
+          </StyledGraphButtonsWrapper>
+        </StyledFlexColumnWrapper>
+      </Chartwrapper>
+      <p>
+        Windowwith: {windowWidth} Width: {width} Height: {height}
+      </p>
     </ChartSection>
   );
 }

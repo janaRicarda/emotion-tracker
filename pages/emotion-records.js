@@ -147,13 +147,17 @@ const GraphToggleWrapper = styled.div`
   display: flex;
   flex-flow: row;
   position: absolute;
-  top: 130px;
+  top: 95px;
   right: 9.5vw;
   height: 24px;
   padding: 0.2rem;
   gap: 0.1rem;
   justify-content: space-between;
   margin: 5rem 0 0;
+  z-index: 2;
+  @media ${breakpoints.laptop} {
+    right: 13%;
+  }
 `;
 
 export default function EmotionRecords({
