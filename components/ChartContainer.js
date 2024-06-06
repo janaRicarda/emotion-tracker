@@ -24,7 +24,7 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 90vw;
+  width: 92vw;
   min-height: 450px;
   max-height: 700px;
   margin-top: 5rem;
@@ -80,12 +80,19 @@ const StyledGraphButtonsWrapper = styled.div`
   display: grid;
   grid-template-columns: 2fr 2fr 2fr;
   gap: 0.3rem;
-  max-width: 50vw;
+  max-width: 90vw;
   align-items: center;
+  @media ${breakpoints.tablet} {
+    max-width: 50vw;
+  }
+  @media ${breakpoints.laptop} {
+    max-width: 50vw;
+  }
 `;
 const Chartwrapper = styled(StyledFlexColumnWrapper)`
   @media ${breakpoints.tablet} {
     margin-left: 10rem;
+    max-width: 90vw;
   }
   @media ${breakpoints.laptop} {
     margin-left: 20rem;
@@ -121,9 +128,7 @@ export default function ChartContainer({ shownEntries, theme }) {
       ? yEmotionCount
       : yAverageIntensities;
 
-  //responsive
-  console.log(breakpoints);
-
+  //make chart responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   function updateWidth() {
@@ -134,7 +139,7 @@ export default function ChartContainer({ shownEntries, theme }) {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const width = Math.max(340, Math.round(windowWidth / 2));
+  const width = Math.max(330, Math.round(windowWidth / 2));
   const height = Math.round(width * 1.2);
 
   function handleChartType() {
@@ -178,6 +183,7 @@ export default function ChartContainer({ shownEntries, theme }) {
               <ToggleSwitch
                 handleSwitch={handleChartType}
                 isChecked={!scatter}
+                useButtonColor={true}
               />
             </SwitchSizer>
             <Icon path={mdiChartBar} size={1} />
@@ -197,9 +203,6 @@ export default function ChartContainer({ shownEntries, theme }) {
           </StyledGraphButtonsWrapper>
         </StyledFlexColumnWrapper>
       </Chartwrapper>
-      <p>
-        Windowwith: {windowWidth} Width: {width} Height: {height}
-      </p>
     </ChartSection>
   );
 }

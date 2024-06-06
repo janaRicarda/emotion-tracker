@@ -77,7 +77,7 @@ const Background = styled.div`
   z-index: 2;
 `;
 const AnimatedPanel = styled.div`
-  width: 90vw;
+  width: 92vw;
   margin: 0 0.5rem;
   border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
@@ -146,15 +146,22 @@ const SwitchSizer = styled.span`
 const GraphToggleWrapper = styled.div`
   display: flex;
   flex-flow: row;
-  position: absolute;
-  top: 95px;
-  right: 9.5vw;
-  height: 24px;
-  padding: 0.2rem;
+  position: relative;
+  top: -36px;
+  left: 200px;
+  width: 8rem;
+  height: 26px;
+  padding: 0.3rem;
   gap: 0.1rem;
   justify-content: space-between;
-  margin: 5rem 0 0;
+  margin: 0;
   z-index: 2;
+  @media ${breakpoints.mobileLandscape} {
+    top: 80px;
+  }
+  @media ${breakpoints.tablet} {
+    right: 10%;
+  }
   @media ${breakpoints.laptop} {
     right: 13%;
   }
@@ -292,6 +299,17 @@ export default function EmotionRecords({
           DisplayDate={DisplayDate}
           selectedTime={selectedTime}
         />
+        <GraphToggleWrapper>
+          <Icon path={mdiFormatListBulleted} size={1} />
+          <SwitchSizer>
+            <ToggleSwitch
+              handleSwitch={handleChart}
+              isChecked={chartIsShown}
+              useButtonColor={true}
+            />
+          </SwitchSizer>
+          <Icon path={mdiChartLine} size={1} />
+        </GraphToggleWrapper>
       </AnimatedPanel>
 
       {chartIsShown && (
@@ -325,17 +343,7 @@ export default function EmotionRecords({
         ) : (
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
-      <GraphToggleWrapper>
-        <Icon path={mdiFormatListBulleted} size={1} />
-        <SwitchSizer>
-          <ToggleSwitch
-            handleSwitch={handleChart}
-            isChecked={chartIsShown}
-            // text={"Show chart"}
-          />
-        </SwitchSizer>
-        <Icon path={mdiChartLine} size={1} />
-      </GraphToggleWrapper>
+
       {shownEntries.length !== 0 && !chartIsShown && (
         <ControlPadding>
           <EmotionRecordsList
