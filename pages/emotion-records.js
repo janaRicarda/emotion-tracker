@@ -84,7 +84,7 @@ const AnimatedPanel = styled.div`
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
   ${transition}
-  z-index: 1;
+  z-index: 2;
 `;
 
 const StyledTextMessage = styled.article`
@@ -148,7 +148,7 @@ const GraphToggleWrapper = styled.div`
   flex-flow: row;
   position: relative;
   top: -36px;
-  left: 200px;
+  left: 72%;
   width: 8rem;
   height: 26px;
   padding: 0.3rem;
@@ -157,13 +157,13 @@ const GraphToggleWrapper = styled.div`
   margin: 0;
   z-index: 2;
   @media ${breakpoints.mobileLandscape} {
-    top: 80px;
+    left: 80%;
   }
   @media ${breakpoints.tablet} {
-    right: 10%;
+    left: 84%;
   }
   @media ${breakpoints.laptop} {
-    right: 13%;
+    left: 84%;
   }
 `;
 
@@ -262,7 +262,6 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
-
   return (
     <>
       <Head>

@@ -26,28 +26,26 @@ const ChartSection = styled.section`
   flex-direction: column;
   width: 92vw;
   min-height: 450px;
-  max-height: 700px;
+  max-height: fit-content;
   margin-top: 5rem;
   align-items: center;
-  border-radius: 12px;
+  border-radius: 18px;
   justify-content: center;
   background-color: var(--section-background);
 
   @media ${breakpoints.mobileLandscape} {
-    top: 100px;
   }
   @media ${breakpoints.tablet} {
     display: block;
     padding: 1rem;
     left: 5rem;
-    width: 92%;
+    width: 92vw;
   }
   @media ${breakpoints.laptop} {
     display: block;
-    box-shadow: none;
     padding: 1rem;
     left: 5rem;
-    width: 92%;
+    width: 92vw;
   }
 `;
 
@@ -106,13 +104,10 @@ export default function ChartContainer({ shownEntries, theme }) {
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
 
-  //logic
-
   const xTensionValues = doTensionChartData(shownEntries).xValues;
   const yTensionValues = doTensionChartData(shownEntries).yValues;
 
   const countResult = countEmotions(shownEntries);
-
   const xEmotions = countResult.map((element) => element.emotion);
   const yEmotionCount = countResult.map((element) => element.percentage);
   const yAverageIntensities = countResult.map(
@@ -120,7 +115,6 @@ export default function ChartContainer({ shownEntries, theme }) {
   );
 
   const xValues = title === "Tension Chart" ? xTensionValues : xEmotions;
-
   const yValues =
     title === "Tension Chart"
       ? yTensionValues
@@ -140,7 +134,7 @@ export default function ChartContainer({ shownEntries, theme }) {
   }, []);
 
   const width = Math.max(330, Math.round(windowWidth / 2));
-  const height = Math.round(width * 1.2);
+  const height = Math.round(width * 1.15);
 
   function handleChartType() {
     setChartState({
