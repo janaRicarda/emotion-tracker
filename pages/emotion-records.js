@@ -148,7 +148,7 @@ const GraphToggleWrapper = styled.div`
   flex-flow: row;
   position: relative;
   top: -36px;
-  left: 72%;
+  left: 64%;
   width: 8rem;
   height: 26px;
   padding: 0.3rem;
