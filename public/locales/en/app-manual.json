@@ -2,6 +2,7 @@
   "title": "Welcome to the What a feeling app!",
   "intro": "This tool is designed to help you track and understand your emotions better. Below are some guidelines to help you navigate the app effectively:",
   "recap": "Remember, the What a feeling app is here to assist you in understanding and managing your emotions. Feel free to explore its features utilize the graphs, highlight and filter specific entries, and gain insights into the basic emotions.",
+  "backOverview": "back to overview",
   "manualData": [
     {
       "question": "How can I make a new entry?",

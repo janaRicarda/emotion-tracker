@@ -10,6 +10,7 @@ import {
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
 import { breakpoints } from "@/utils/breakpoints";
+import { useTranslation } from "next-i18next";
 
 const StyledBackLink = styled(StyledStandardLink)`
   display: flex;
@@ -121,10 +122,14 @@ export default function EmotionDetails({
   prevEmotion,
   nextEmotion,
 }) {
+  const { t: translate } = useTranslation("emotionList");
+
+  const emotionData = translate("emotionData", { returnObjects: true });
+
   return (
     <>
       <StyledBackLink href="/emotions">
-        <StyledArrow /> back to overview
+        <StyledArrow /> {translate("backOverview")}
       </StyledBackLink>
       <StyledArticle
         $color={
