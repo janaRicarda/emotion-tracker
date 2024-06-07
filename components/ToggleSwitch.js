@@ -42,12 +42,7 @@ const Input = styled.input`
   }
 `;
 
-export default function ToggleSwitch({
-  text,
-  handleSwitch,
-  isChecked,
-  demoMode,
-}) {
+export default function ToggleSwitch({ text, handleSwitch, isChecked }) {
   return (
     <Label>
       <span>{text}</span>

@@ -71,7 +71,7 @@ export default function Layout({
   const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
   const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
   const isEdit = router.pathname === "/edit[id]" ? true : false;
-  console.log(demoMode);
+
   return (
     <>
       {!session && (

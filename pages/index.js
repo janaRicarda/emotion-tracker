@@ -145,8 +145,6 @@ export default function HomePage({
   theme,
   toggleExampleData,
   useExampleData,
-  demoMode,
-  handleDemoMode,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
@@ -222,7 +220,6 @@ export default function HomePage({
               <span> ON: Data is generated locally and fictional.</span>
             </StyledInfoBox>
             <ToggleSwitch
-              demoMode={demoMode}
               handleSwitch={toggleExampleData}
               isChecked={useExampleData}
               text={"Use Example data"}
