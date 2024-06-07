@@ -293,6 +293,7 @@ export default function App({
         <SWRConfig value={{ fetcher }}>
           <GlobalStyle />
           <Layout
+            demoMode={demoMode}
             toolTip={toolTip}
             theme={theme}
             isScrollDown={isScrollDown}

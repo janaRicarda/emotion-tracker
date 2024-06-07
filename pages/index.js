@@ -197,39 +197,42 @@ export default function HomePage({
   }
   return (
     <>
-      {!session && (
-        <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
-      )}
       <Head>
         <title>Home</title>
       </Head>
+      {!session && (
+        <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
+      )}
       <StyledFlexColumnWrapper>
-        <ToggleSwitchWrapper>
-          <StyledInfoIcon
-            onClick={() => {
-              setShowInfoBox(!showInfoBox);
-            }}
-          >
-            &#8505;
-          </StyledInfoIcon>
-          <StyledInfoBox
-            onClick={() => {
-              setShowInfoBox(false);
-            }}
-            $show={showInfoBox}
-          >
-            <span>
-              OFF: Displayed Data is real and comes from your own database.
-            </span>
-            <span> ON: Data is generated locally and fictional.</span>
-          </StyledInfoBox>
-          <ToggleSwitch
-            demoMode={demoMode}
-            handleSwitch={toggleExampleData}
-            isChecked={useExampleData}
-            text={"Use Example data"}
-          />
-        </ToggleSwitchWrapper>
+        {session && (
+          <ToggleSwitchWrapper>
+            <StyledInfoIcon
+              onClick={() => {
+                setShowInfoBox(!showInfoBox);
+              }}
+            >
+              &#8505;
+            </StyledInfoIcon>
+            <StyledInfoBox
+              onClick={() => {
+                setShowInfoBox(false);
+              }}
+              $show={showInfoBox}
+            >
+              <span>
+                OFF: Displayed Data is real and comes from your own database.
+              </span>
+              <span> ON: Data is generated locally and fictional.</span>
+            </StyledInfoBox>
+            <ToggleSwitch
+              demoMode={demoMode}
+              handleSwitch={toggleExampleData}
+              isChecked={useExampleData}
+              text={"Use Example data"}
+            />
+          </ToggleSwitchWrapper>
+        )}
+
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
             On a scale from 0 to 100, how tense do you feel in this moment?
@@ -268,17 +271,16 @@ export default function HomePage({
                     setTension("0");
                   }}
                 />
-                {session && (
-                  <StyledAddDetailsLink
-                    href={{
-                      pathname: "/create",
-                      query: { id: useExampleData ? id : newestDbEntryID },
-                    }}
-                    forwardedAs={`/create`}
-                  >
-                    Add more details
-                  </StyledAddDetailsLink>
-                )}
+
+                <StyledAddDetailsLink
+                  href={{
+                    pathname: "/create",
+                    query: { id: useExampleData ? id : newestDbEntryID },
+                  }}
+                  forwardedAs={`/create`}
+                >
+                  Add more details
+                </StyledAddDetailsLink>
               </StyledButtonWrapper>
             </>
           )}

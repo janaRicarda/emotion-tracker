@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Tooltip from "./Tooltip";
+import { useSession } from "next-auth/react";
+import DemoLayout from "./DemoLayout";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -33,6 +35,7 @@ export default function Layout({
   toolTip,
   scrollPosition,
   isScrollDown,
+  demoMode,
 }) {
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
@@ -64,9 +67,10 @@ export default function Layout({
   const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
   const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
   const isEdit = router.pathname === "/edit[id]" ? true : false;
-
+  console.log(demoMode);
   return (
     <>
+      {demoMode === true && <DemoLayout />}
       <Header
         isScrollDown={isScrollDown}
         theme={theme}
