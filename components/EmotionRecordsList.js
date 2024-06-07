@@ -5,11 +5,7 @@ import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import OutlineCircle from "../public/outline-circle.svg";
-import Circle from "../public/circle.svg";
 import Highlight from "../public/highlight.svg";
-import HeartOutlineIcon from "../public/icons/heart-outline.svg";
-import HeartFilledIcon from "../public/icons/heart-filled.svg";
 import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`
@@ -19,7 +15,7 @@ const StyledRecordsList = styled(StyledList)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 80vw;
+  width: 86vw;
   @media ${breakpoints.tablet} {
     width: 50vw;
     margin-top: 0;
@@ -37,13 +33,8 @@ const StyledRecordListItem = styled.li`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  //justify-content: space-between;
-  //align-items: center;
-  padding: 0.5rem 0 0.5rem 0;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
-  //height: inset;
-  width: 86vw;
 `;
 
 const StyledItemInfo = styled.article`
@@ -55,21 +46,44 @@ const StyledItemInfo = styled.article`
 
 const StyledParagraph = styled.p`
   color: var(--main-dark);
-  border: 1px solid var(--main-dark);
+  /* border: 1px solid var(--main-dark); */
   border-radius: 6px;
   margin: 0.5rem auto;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
 `;
 
 const StyledDetails = styled(StyledList)`
-  display: ${({ $showDetails }) => ($showDetails ? "block" : "none")};
-  padding: 0.5rem;
-  border-top: 1px solid var(--main-dark);
+  /* display: ${({ $showDetails }) => ($showDetails ? "block" : "none")}; */
+  display: grid;
+  grid-template-rows: ${({ $showDetails }) => ($showDetails ? "1fr" : "0fr")};
+  /* padding: 0.5rem; */
+  /* border-top: 1px solid var(--main-dark); */
+
+  & > * {
+    overflow: hidden;
+  }
 `;
 
 const StyledIconWrapper = styled.article`
   display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  position: relative;
+
+  & > * {
+    margin: 0.3rem auto;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background-color: var(--main-dark);
+  }
 `;
 
 const StyledDeleteButton = styled(TrashIcon)`
@@ -96,12 +110,7 @@ const StyledHighlight = styled(Highlight)`
   fill: var(--main-dark);
   stroke: var(--main-dark);
   color: var(--main-dark);
-`;
-
-const StyledCircle = styled(Circle)`
-  width: 2rem;
-  height: 2rem;
-  fill: var(--joy);
+  /* background: yellow; */
 `;
 
 export default function EmotionRecordsList({
@@ -147,77 +156,90 @@ export default function EmotionRecordsList({
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
-        {shownEntries.sort(sortEntries).map(
-          ({
-            id,
-            timeAndDate,
-            tensionLevel,
-            trigger,
-            intensity,
-            notes,
-            category,
-            emotion,
-            subemotion,
-            isHighlighted,
-          }) => {
-            return (
-              <section key={id}>
-                <StyledRecordListItem>
-                  <StyledItemInfo>
-                    {isHighlighted ? (
-                      <StyledCircle onClick={() => toggleHighlight(id)} />
-                    ) : (
-                      <StyledHighlight onClick={() => toggleHighlight(id)} />
-                    )}
-                    <StyledParagraph onClick={() => handleShowDetails(id)}>
-                      {timeAndDate}
-                    </StyledParagraph>
-                    <StyledIconWrapper>
-                      <StyledEditButton
-                        aria-label="Edit emotion entry"
+        {shownEntries
+          .sort(sortEntries)
+          .map(
+            ({
+              id,
+              _id,
+              timeAndDate,
+              tensionLevel,
+              trigger,
+              intensity,
+              notes,
+              category,
+              emotion,
+              subemotion,
+              isHighlighted,
+            }) => {
+              return (
+                <section
+                  style={{ width: "86vw" }}
+                  key={useExampleData ? id : _id}
+                >
+                  <StyledRecordListItem>
+                    <StyledItemInfo>
+                      <StyledHighlight
                         onClick={() =>
-                          editFromDevControls
-                            ? router.push(`edit/${id}`)
-                            : router.push(`./edit/${id}`)
+                          toggleHighlight(useExampleData ? id : _id)
                         }
+                        $highlighted={isHighlighted}
                       />
-                      <StyledDeleteButton
-                        type="button"
-                        aria-label="Delete Emotion Entry"
-                        onClick={() => {
-                          handleShowConfirmMessage(id);
-                        }}
-                      />
-                    </StyledIconWrapper>
-                  </StyledItemInfo>
-                  <StyledDetails $showDetails={showDetails[id]}>
-                    <li>Tension Level: {tensionLevel}%</li>
-                    {emotion && <li>Emotion: {emotion}</li>}
-                    {subemotion && <li>Subemotion: {subemotion}</li>}
-                    {intensity && <li>Intensity: {intensity}%</li>}
-                    {category && <li>Pleasantness: {category}%</li>}
-                    {trigger && <li>Trigger: {trigger}</li>}
-                    {notes && <li>Notes: {notes}</li>}
-                  </StyledDetails>
-                </StyledRecordListItem>
-                {showConfirmMessage[id] && (
-                  <ConfirmMessage
-                    toggleMessage={handleShowConfirmMessage}
-                    itemId={id}
-                    itemText={timeAndDate}
-                    confirmFunction={onDeleteEmotionEntry}
-                    cancelButtonText={"Keep it!"}
-                    confirmButtonText={"Delete it!"}
-                    cancelButtonColor={"var(--green)"}
-                    confirmButtonColor={"var(--red)"}
-                  >
-                    Do you want to delete this entry?
-                  </ConfirmMessage>
-                )}
-              </section>
-            );
-          }
-        )}
+                      <StyledParagraph
+                        onClick={() =>
+                          handleShowDetails(useExampleData ? id : _id)
+                        }
+                      >
+                        {timeAndDate}
+                      </StyledParagraph>
+                      <StyledIconWrapper>
+                        <StyledEditButton
+                          aria-label="Edit emotion entry"
+                          onClick={() =>
+                            editFromDevControls
+                              ? router.push(`edit/${id}`)
+                              : router.push(`./edit/${id}`)
+                          }
+                        />
+                        <StyledDeleteButton
+                          type="button"
+                          aria-label="Delete Emotion Entry"
+                          onClick={() => {
+                            handleShowConfirmMessage(useExampleData ? id : _id);
+                          }}
+                        />
+                      </StyledIconWrapper>
+                    </StyledItemInfo>
+                    <StyledDetails
+                      $showDetails={showDetails[useExampleData ? id : _id]}
+                    >
+                      <li>Tension Level: {tensionLevel}%</li>
+                      {emotion && <li>Emotion: {emotion}</li>}
+                      {subemotion && <li>Subemotion: {subemotion}</li>}
+                      {intensity && <li>Intensity: {intensity}%</li>}
+                      {category && <li>Pleasantness: {category}%</li>}
+                      {trigger && <li>Trigger: {trigger}</li>}
+                      {notes && <li>Notes: {notes}</li>}
+                    </StyledDetails>
+                  </StyledRecordListItem>
+                  {showConfirmMessage[useExampleData ? id : _id] && (
+                    <ConfirmMessage
+                      toggleMessage={handleShowConfirmMessage}
+                      itemId={id}
+                      itemText={timeAndDate}
+                      confirmFunction={onDeleteEmotionEntry}
+                      cancelButtonText={"Keep it!"}
+                      confirmButtonText={"Delete it!"}
+                      cancelButtonColor={"var(--green)"}
+                      confirmButtonColor={"var(--red)"}
+                    >
+                      Do you want to delete this entry?
+                    </ConfirmMessage>
+                  )}
+                </section>
+              );
+            }
+          )}
       </StyledRecordsList>
     </>
   );
