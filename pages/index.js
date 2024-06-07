@@ -15,6 +15,14 @@ import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
 
+import {
+  doTensionChartData,
+  countEmotions,
+  getAveragePerDay,
+  getTimeSinceLastEntry,
+} from "@/utils/dataAndChartUtils";
+import EmotionChart from "@/components/EmotionChart";
+
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
   padding: 1rem;
@@ -131,15 +139,15 @@ const DashboardSection = styled.section`
   display: grid;
   grid-template-columns: 6fr 6fr;
   grid-template-rows: 6fr 6fr 6fr;
-  gap: 1rem;
+  gap: 0.5rem;
   width: 92vw;
-  min-height: 480px;
+  min-height: 420px;
   max-height: fit-content;
-  margin-top: 1rem;
+  margin: 0;
   align-items: center;
   border-radius: 18px;
   justify-content: center;
-  background-color: var(--section-background);
+  /* background-color: var(--section-background); */
 
   @media ${breakpoints.mobileLandscape} {
   }
@@ -153,21 +161,56 @@ const DashboardSection = styled.section`
   }
 `;
 const GridElement = styled.div`
-  border-radius: 6px;
+  border-radius: 18px;
+  padding: 0.5rem;
   border: 1px solid var(--main-dark);
+  min-height: 136px;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+`;
+const ChartElement = styled.div`
+  grid-column: 1 / 3;
+  border-radius: 18px;
+  padding: 0.5rem;
+  border: 1px solid var(--main-dark);
+  min-height: 136px;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+`;
+const ElementText = styled.p`
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  margin: 0.3rem;
 `;
 
+const DashboardLink = styled(StyledStandardLink)`
+  font-size: 0.9rem;
+  color: var(--contrast-text);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+  padding: 0.5rem;
+  background-color: var(--button-background);
+`;
 export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
   toggleExampleData,
   useExampleData,
+  theme,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
   const [showInfoBox, setShowInfoBox] = useState(false);
+
+  //for dashboard
+  const averageEntriesPerDay = getAveragePerDay(emotionEntries);
+  const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
@@ -197,14 +240,46 @@ export default function HomePage({
       <StyledTitle>Dashboard</StyledTitle>
       <DashboardSection>
         <GridElement>
-          <p>1</p>
-          <p>Your last entry is xxx</p>
+          {/* click for more */}
+          <ElementText>
+            Welcome to What a Feeling! Track and explore your feelings ...
+          </ElementText>
+          {/* <p>
+            Welcome to What a Feeling! Track and explore your feelings
+            effortlessly. Log your tension level and dive into the depths of
+            your emotions. From joy to sadness, our app helps you understand it
+            all. Start your journey today. Welcome to What a Feeling - where
+            emotions meet clarity.
+          </p> */}
         </GridElement>
-        <GridElement>2</GridElement>
-        <GridElement>3</GridElement>
+        <GridElement>
+          <p>Your last entry is {timeSinceLastEntry} hours ago. </p>
+          <br></br>
+          <DashboardLink href="/add-entry">add new entry</DashboardLink>
+        </GridElement>
+        <GridElement>
+          <ElementText>
+            Great job! Your average rate is {averageEntriesPerDay} entries per
+            day.
+          </ElementText>
+          <DashboardLink href="/emotion-records">emotion records</DashboardLink>
+        </GridElement>
         <GridElement>4</GridElement>
-        <GridElement>5</GridElement>
-        <GridElement>6</GridElement>
+        <ChartElement>
+          {/* <EmotionChart
+            theme={theme}
+            type={type}
+            xValues={xValues}
+            yValues={yValues}
+            xTitle={xTitle}
+            yTitle={yTitle}
+            title={title}
+            width={width}
+            height={height}
+          /> */}
+        </ChartElement>
+        {/* <GridElement>5</GridElement>
+        <GridElement>6</GridElement> */}
       </DashboardSection>
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>

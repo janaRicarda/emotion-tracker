@@ -7,7 +7,7 @@ import {
   chartPresets,
   doTensionChartData,
   countEmotions,
-} from "@/utils/chartUtils";
+} from "@/utils/dataAndChartUtils";
 import styled from "styled-components";
 import {
   StyledFlexColumnWrapper,

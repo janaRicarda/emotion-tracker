@@ -21,6 +21,40 @@ export const chartPresets = {
   },
 };
 
+function compare(a, b) {
+  if (a < b) {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+}
+
+//dashboard
+//folgendes noch einfacher machen wenn generator angepasst ist
+export function getTimeSinceLastEntry(entries) {
+  const lastEntryTimeStamp = entries.toSorted(compare)[0].timeStamp;
+
+  const timeStampNow = Date.now();
+  const minutesSinceLastEntry = Math.round(
+    Math.abs(timeStampNow - lastEntryTimeStamp) / 60000
+  );
+  const hours = Math.floor(minutesSinceLastEntry / 60);
+  const minutesPart = (minutesSinceLastEntry % 60).toString().padStart(2, "0");
+  const timeSinceLastEntry = `${hours.toString()}:${minutesPart}`;
+  return timeSinceLastEntry;
+}
+
+export function getAveragePerDay(entries) {
+  const allDays =
+    Math.abs(entries[entries.length - 1]?.timeStamp - entries[0]?.timeStamp) /
+    (24 * 3600000);
+  const average = entries.length / allDays;
+  const averageString = average.toFixed(1);
+  return averageString;
+}
+
 export function countEmotions(entries) {
   const emotionsToCount = emotionData.map((element) => element.name);
   function add(a, b) {
