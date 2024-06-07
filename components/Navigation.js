@@ -158,13 +158,13 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
               {translate("navigationBasicEmotions")}
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/">
-              add entry
+              {translate("navigationAddEntry")}
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">
-              emotion records
+              {translate("navigationEmotionRecords")}
             </StyledLink>
             <StyledColoSchemesButton onClick={handleShowThemes}>
-              color schemes
+              {translate("navigationColorSchemes")}
             </StyledColoSchemesButton>
           </StyledLinkWrapper>
           {showThemes && (

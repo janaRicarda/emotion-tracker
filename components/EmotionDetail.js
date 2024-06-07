@@ -127,7 +127,7 @@ export default function EmotionDetails({
   return (
     <>
       <StyledBackLink href="/emotions">
-        <StyledArrow /> back to overview
+        <StyledArrow /> {translate("backOverview")}
       </StyledBackLink>
       <StyledArticle
         $color={
@@ -137,11 +137,14 @@ export default function EmotionDetails({
       >
         <EmotionDetailsTitle>{name}</EmotionDetailsTitle>
         <p>{description}</p>
-        <SubTitle>The function of {name}</SubTitle>
+        <SubTitle>
+          {translate("functionOfEmotion")}
+          {name}
+        </SubTitle>
         <p>{emotionfunction}</p>
-        <SubTitle>Physical indications</SubTitle>
+        <SubTitle>{translate("physicalIndications")}</SubTitle>
         <p>{indications}</p>
-        <SubTitle>Subemotions</SubTitle>
+        <SubTitle>{translate("subemotions")}</SubTitle>
         <StyledSubemotionsList>
           {subemotions.map((sub) => (
             <StyledListItem
