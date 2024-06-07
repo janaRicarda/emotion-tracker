@@ -155,7 +155,7 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
               {translate("navigationManual")}
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotions">
-              {translate("navigationBasicEmotions")}7 basic emotions
+              {translate("navigationBasicEmotions")}
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/">
               add entry
