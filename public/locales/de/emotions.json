@@ -1,0 +1,117 @@
+{
+  "emotionListTitle": "Die 7 grundlegenden Emotionen",
+  "emotionListTooltip": "Erkunden Sie die Liste der sieben grundlegenden Emotionen, jede bietet einen einzigartigen Weg, Ihre inneren Gefühle zu verstehen und auszudrücken. Egal ob Sie Freude, Traurigkeit, Wut, Angst, Überraschung, Ekel oder Vorfreude erleben, tauchen Sie tiefer in die Komplexität Ihrer Gefühlswelt ein, indem Sie die Emotion auswählen, die am meisten mit Ihnen resoniert. Jede Emotion dient als Tor zu weiterer Erkundung, bietet Einsicht und Klarheit in Ihren Seinszustand.",
+  "emotionData": [
+    {
+      "name": "Freude",
+      "slug": "joy",
+      "color": "var(--joy)",
+      "description": "Freude ist für viele die wünschenswerteste der sieben universellen Emotionen und entsteht typischerweise aus Verbindung oder sensorischem Vergnügen. Das Wort Glück und Freude können austauschbar verwendet werden, obwohl immer mehr Menschen das Wort Glück verwenden, um ihr allgemeines Wohlbefinden oder die Bewertung ihres Lebens zu beschreiben, anstatt eine bestimmte Freude-Emotion.",
+      "emotionfunction": "Als soziale Funktion spielt der Ausdruck von Freude eine wichtige Rolle, um Freundlichkeit zu signalisieren und sicherzustellen, dass wir keine Bedrohung für andere darstellen. Viele Emotionenwissenschaftler sind sich einig, dass angenehme Emotionen uns motivieren, Dinge zu tun, die im Großen und Ganzen gut für uns und das Überleben unserer Spezies sind (z.B. Fortpflanzung und Kindererziehung). Viele Emotionenwissenschaftler sind sich auch einig, dass das Streben nach Freude eine primäre Motivation in unserem Leben ist.",
+      "indications": "Die häufigsten Beschreibungen des Gefühls von Glück sind leicht/erhoben, energisch, summend oder prickelnd, warm oder geerdet. Je nach Zustand Ihres Glücks kann unsere Haltung entweder aufrecht und erhoben oder still und entspannt sein.",
+      "subemotions": [
+        "Sensorisches Vergnügen",
+        "Freudentaumel",
+        "Mitgefühl/Freude",
+        "Belustigung",
+        "Schadenfreude",
+        "Erleichterung",
+        "Frieden",
+        "Stolz",
+        "Fiero",
+        "Naches",
+        "Staunen",
+        "Aufregung",
+        "Ekstase"
+      ]
+    },
+    {
+      "name": "Überraschung",
+      "slug": "surprise",
+      "color": "var(--surprise)",
+      "description": "Überraschung ist eine der sieben universellen Emotionen und entsteht, wenn wir plötzliche und unerwartete Geräusche oder Bewegungen wahrnehmen. Als die kürzeste der universellen Emotionen besteht ihre Funktion darin, unsere Aufmerksamkeit darauf zu richten, was passiert und ob es gefährlich ist.",
+      "emotionfunction": "Die Funktion der Überraschung besteht darin, unsere Aufmerksamkeit zu fokussieren, damit wir herausfinden können, was passiert und ob wir in Gefahr sind oder nicht.",
+      "indications": "Zu den Empfindungen gehört ein allgemeines Gefühl der Aufmerksamkeit. Den Kopf bewegen, die Hände heben, um das Gesicht zu schützen, und/oder einen Schritt zurück vom überraschenden Objekt machen.",
+      "subemotions": []
+    },
+    {
+      "name": "Angst",
+      "slug": "fear",
+      "color": "var(--fear)",
+      "description": "Angst ist eine der sieben universellen Emotionen, die von allen Menschen auf der ganzen Welt erlebt wird. Angst entsteht bei der Androhung von Schaden, sei es körperlich, emotional oder psychologisch, real oder vorgestellt. Obwohl traditionell als „negative“ Emotion betrachtet, spielt Angst tatsächlich eine wichtige Rolle dabei, uns zu schützen, indem sie uns mobilisiert, um mit potenziellen Gefahren umzugehen. Die Familie der Angst-Erfahrungen kann in Bezug auf drei Faktoren unterschieden werden: Intensität: Wie schwerwiegend ist die Bedrohung? Zeitpunkt: Ist die Bedrohung unmittelbar oder bevorstehend? Bewältigung: Welche Maßnahmen können ergriffen werden, um die Bedrohung zu reduzieren oder zu beseitigen? Wenn wir in der Lage sind, mit der Bedrohung umzugehen, verringert oder beseitigt dies die Angst. Wenn wir jedoch hilflos sind, um die Bedrohung zu verringern, verstärkt sich die Angst.",
+      "emotionfunction": "Die universelle Funktion der Angst besteht darin, Schaden zu vermeiden oder zu verringern. Abhängig davon, was wir in der Vergangenheit gelernt haben, um uns in gefährlichen Situationen zu schützen, sind wir in der Lage, viele Dinge zu tun, die wir normalerweise nicht tun oder nicht tun würden, um die Bedrohung zu stoppen. Die unmittelbare Bedrohung des Schadens fokussiert unsere Aufmerksamkeit und mobilisiert uns, um mit der Gefahr umzugehen. Auf diese Weise kann Angst tatsächlich unser Leben retten, indem sie uns zwingt zu reagieren, ohne darüber nachzudenken (z.B. vor einem herannahenden Auto ausweichen). Die evolutionär voreingestellten Handlungen der Angst umfassen Kampf, Flucht und Erstarren. Obwohl traditionell als „negative“ Emotion betrachtet, spielt Angst tatsächlich eine wichtige Rolle dabei, uns zu schützen. Sie kann uns jedoch auch gefangen halten und uns daran hindern, Dinge zu tun, die wir gerne tun würden. Während einige Menschen Angst als nahezu unerträglich empfinden und die Emotion um jeden Preis vermeiden, empfinden andere Freude daran, Angst zu fühlen und suchen sie aktiv (z.B. beim Anschauen eines Horrorfilms). Es erfordert eine gut entwickelte Fähigkeit zur Empathie, die Angst einer anderen Person zu respektieren, mitzufühlen und geduldig zu beruhigen. Wir müssen die Angst einer anderen Person nicht selbst fühlen, um sie zu akzeptieren und ihr zu helfen, damit umzugehen.",
+      "indications": "Häufige Empfindungen sind Kälte und Kurzatmigkeit. Es kann auch Schwitzen und Zittern oder Muskelverspannungen in den Armen und Beinen umfassen. Die Haltung der Angst kann entweder mobilisierend oder immobilisierend sein – erstarren oder sich entfernen.",
+      "subemotions": [
+        "Befürchtung",
+        "Nervosität",
+        "Angst",
+        "Sorge",
+        "Verzweiflung",
+        "Panik",
+        "Horror",
+        "Terror"
+      ]
+    },
+    {
+      "name": "Traurigkeit",
+      "slug": "sadness",
+      "color": "var(--sadness)",
+      "description": "Traurigkeit ist eine der sieben universellen Emotionen, die von allen Menschen auf der ganzen Welt erlebt wird und entsteht durch den Verlust von jemandem oder etwas Wichtigem. Was uns traurig macht, variiert stark basierend auf persönlichen und kulturellen Vorstellungen von Verlust. Obwohl Traurigkeit oft als „negative“ Emotion betrachtet wird, spielt sie eine wichtige Rolle, um ein Bedürfnis nach Hilfe oder Trost zu signalisieren.",
+      "emotionfunction": "Die universelle Funktion der Traurigkeit besteht darin, in gewisser Weise Hilfe zu signalisieren. Dies kann ein Signal an andere sein, dass wir Trost brauchen, oder an uns selbst, uns Zeit zu nehmen und uns von unserem Verlust zu erholen.",
+      "indications": "Häufige Empfindungen sind Engegefühl in der Brust, Schwere in den Gliedern, Stechen im Hals und/oder tränende Augen. Oft gibt es einen Verlust der Muskelspannung, eine gesenkte oder gebeugte Haltung und das Wegschauen und/oder Nach-unten-Schauen.",
+      "subemotions": [
+        "Enttäuschung",
+        "Entmutigung",
+        "Bestürzung",
+        "Resignation",
+        "Hilflosigkeit",
+        "Hoffnungslosigkeit",
+        "Elend",
+        "Verzweiflung"
+      ]
+    },
+    {
+      "name": "Verachtung",
+      "slug": "contempt",
+      "color": "var(--contempt)",
+      "description": "Die am wenigsten erforschte der sieben universellen Emotionen, Verachtung, ist das Gefühl der Abneigung und Überlegenheit (normalerweise moralisch) gegenüber einer anderen Person, einer Gruppe von Menschen und/oder deren Handlungen. Es wird von vielen Emotionsexperten als universelle Emotion akzeptiert, jedoch unterscheiden einige Emotionenwissenschaftler Verachtung immer noch nicht als eigenständige Emotion. Dr. Ekmans ursprüngliche Liste der universellen Emotionen, die während seiner bahnbrechenden Forschung in Neuguinea in den 1960er Jahren entdeckt wurden, schloss Verachtung nicht ein, aber er fügte sie später nach seiner fortgesetzten kulturübergreifenden Forschung hinzu.",
+      "emotionfunction": "Es wird allgemein angenommen, dass die Funktion der Verachtung darin besteht, ein Gefühl der Überlegenheit, des Nicht-Eingehen-Müssens oder -Wollens und des Durchsetzens von Macht oder Status zu signalisieren.",
+      "indications": "Da Menschen unterschiedliche Reaktionen auf das Gefühl der Verachtung haben, können die mit dem Gefühl verbundenen Empfindungen je nach Situation sehr unterschiedlich sein. Manchmal kann es sich ähnlich wie Wut anfühlen (z.B. Spannung, Hitze, etc.) und manchmal kann es sich angenehm anfühlen (z.B. erhoben, ermutigt, etc.). Es kann auch unangenehm und/oder peinlich sein. Es ist üblich, die Brust zu wölben, eine aufrechte Haltung einzunehmen, „über die Nase“ auf andere herabzusehen und/oder die Augen zu rollen.",
+      "subemotions": []
+    },
+    {
+      "name": "Ekel",
+      "slug": "disgust",
+      "color": "var(--disgust)",
+      "description": "Ekel ist eine der sieben universellen Emotionen und entsteht als Gefühl der Abneigung gegenüber etwas Anstößigem. Wir können uns vor etwas ekeln, das wir mit unseren physischen Sinnen wahrnehmen (Sehen, Riechen, Fühlen, Hören, Schmecken), vor den Handlungen oder dem Aussehen von Menschen und sogar vor Ideen.",
+      "emotionfunction": "Die universelle Funktion des Ekels besteht darin, etwas Anstößiges, Giftiges oder Kontaminierendes zu vermeiden, zu blockieren oder zu eliminieren.",
+      "indications": "Häufige Empfindungen sind Abscheu im Mund, Hals und/oder Magen, Übelkeit oder körperliche Abneigung (z.B. Erbrechen). Ekel führt oft dazu, den Kopf oder Körper von der Quelle des Ekels abzuwenden. Wenn Ekel zu Übelkeit führt, gehören zu den Reaktionen auch das Bedecken der Nase/des Mundes und das Überbeugen.",
+      "subemotions": [
+        "Abneigung",
+        "Aversion",
+        "Abscheu",
+        "Widerwillen",
+        "Abscheu",
+        "Verabscheuung",
+        "Abscheu"
+      ]
+    },
+    {
+      "name": "Wut",
+      "slug": "anger",
+      "color": "var(--anger)",
+      "description": "Wut ist eine der sieben universellen Emotionen, die entsteht, wenn wir daran gehindert werden, ein Ziel zu verfolgen und/oder unfair behandelt werden. In ihrer extremsten Form kann Wut eine der gefährlichsten Emotionen sein, da sie potenziell mit Gewalt verbunden ist und daher eine häufige Emotion ist, bei der man Hilfe sucht.",
+      "emotionfunction": "Wut verursacht leicht Schaden für uns selbst und andere. Psychologen sind sich nicht sicher, ob der Wunsch zu schaden in der Kernwut eingebaut ist oder ob es etwas ist, das wir lernen, aber wir wissen, dass es oft Teil des Wutprozesses ist, der uns in Schwierigkeiten bringt. In sowohl psychologischen als auch kontemplativen Traditionen wird anerkannt, dass Wut nützlich sein kann, wenn sie von Mitgefühl motiviert ist und mit Unterscheidungskraft ausgedrückt wird. Da Wut jedoch leicht einen Kreislauf der Gewalt auslösen kann, muss man sehr ehrlich und klar in seiner Einschätzung sein, um festzustellen, ob es sich um konstruktive Wut handelt oder nicht.",
+      "indications": "Typische Empfindungen sind: Hitzegefühl (daher der Ausdruck „rot sehen“), Schwitzen, Muskelverspannungen und das Zusammenbeißen von Kiefer und/oder Fäusten. Die meisten Menschen finden sich nach vorne geneigt, mit vorgestrecktem Kopf/Kinn und aufgeblähter Brust, um größer zu erscheinen.",
+      "subemotions": [
+        "Verärgerung",
+        "Frustration",
+        "Verzweiflung",
+        "Streitlust",
+        "Verbitterung",
+        "Rachsucht",
+        "Wut"
+      ]
+    }
+  ]
+}
