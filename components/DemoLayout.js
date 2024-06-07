@@ -7,6 +7,7 @@ const StyledDemoFrame = styled.article`
 position: fixed;
   z-index: 3;
   top: 0;
+
 `;
 const StyledMessage = styled.p`
   width: 100vw;

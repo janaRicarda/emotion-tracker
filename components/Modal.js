@@ -21,7 +21,7 @@ const StyledArticle = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   background-color: var(--section-background);
   border-radius: 1rem;
 `;

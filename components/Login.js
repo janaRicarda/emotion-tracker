@@ -15,13 +15,21 @@ const StyledLogoutButton = styled.button`
   border-radius: 6px;
 `;
 
+const StyledP = styled.p`
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 0.8rem;
+`;
+
 export default function Login() {
   const { data: session } = useSession();
 
   if (session) {
     return (
       <>
-        Signed in as {session.user.name} <br />
+        <StyledP>Signed in as {session.user.name}</StyledP>
         <StyledLogoutButton onClick={() => signOut()}>
           Sign out
         </StyledLogoutButton>

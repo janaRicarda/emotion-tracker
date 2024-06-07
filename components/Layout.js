@@ -83,6 +83,7 @@ export default function Layout({
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
+        demoMode={demoMode}
       />
 
       {children}

@@ -57,6 +57,12 @@ export default function App({
     };
   }, []);
 
+  useEffect(() => {
+    if (session) {
+      setUseExampleDate(false);
+    }
+  }, [session]);
+
   const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
@@ -122,6 +128,7 @@ export default function App({
   const {
     data: dbEmotionEntries,
     isLoading,
+    error,
     mutate,
   } = useSWR("/api/emotionEntries", fetcher);
 

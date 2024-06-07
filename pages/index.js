@@ -14,7 +14,6 @@ import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import { useSession } from "next-auth/react";
-import StartModal from "@/components/Modal";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
@@ -152,7 +151,7 @@ export default function HomePage({
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
 
   const { data: session } = useSession();
 
