@@ -233,17 +233,6 @@ export default function App({ Component, pageProps }) {
       );
     } else {
       try {
-        // test error
-        function randomNumber(count) {
-          return Math.floor(Math.random() * count);
-        }
-
-        const number = randomNumber(2);
-
-        if (number === 1) {
-          throw new Error("This is a test Error");
-        }
-        ////
         const entryToChange = dbEmotionEntries.find(
           (entry) => entry._id === id
         );
