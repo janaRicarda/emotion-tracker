@@ -1,17 +1,29 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TrashIcon from "../public/trash-icon.svg";
-import PencilIcon from "../public/pencil.svg";
+import TrashIcon from "../public/icons/trash-icon.svg";
+import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import HeartFilledIcon from "../public/heart-filled.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HeartFilledIcon from "../public/icons/heart-filled.svg";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
   margin: 1rem auto;
   text-align: left;
+  width: 80vw;
+  @media ${breakpoints.tablet} {
+    width: 50vw;
+    margin-top: 0;
+    margin-left: 30vw;
+  }
+  @media ${breakpoints.laptop} {
+    width: 40vw;
+    margin-top: 0;
+    margin-left: 40%;
+  }
 `;
 
 const StyledRecordListItem = styled.li`
@@ -24,7 +36,6 @@ const StyledParagraph = styled.p`
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 1rem;
-  width: 80vw;
   cursor: pointer;
 `;
 
@@ -61,6 +72,7 @@ const StyledOutlineButton = styled(HeartOutlineIcon)`
   position: absolute;
   top: calc(50% - 2.4rem);
   right: -0.6rem;
+  background: var(--main-bright);
   fill: var(--main-dark);
   &:hover {
     cursor: pointer;

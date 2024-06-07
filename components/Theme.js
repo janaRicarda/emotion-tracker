@@ -1,12 +1,12 @@
 export const lightTheme = {
-  background: "#f1eaea",
+  background: "#e9e3e3",
   text: "#030352",
   contrastText: "#030352",
   textOnBright: "#030352",
   textOnDark: "#f1eaea",
-  buttonBackground: "lightskyblue",
-  sectionBackground: "#f5e8d7",
-  sectionBackgroundContrast: "#f5e8d7",
+  buttonBackground: "#89d3e5",
+  sectionBackground: "#f1eaea",
+  sectionBackgroundContrast: "#f1eaea",
   contrastBright: "#f1eaea",
   red: "#cc0100",
   green: "#00b400",
@@ -32,23 +32,24 @@ export const lightTheme = {
   emotionBorder: "none",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
+  boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
 };
 
 export const darkTheme = {
-  background: "#2B2C34",
+  background: "#322e44",
   text: "#f1eaea",
   contrastText: "#f1eaea",
   textOnBright: "#2B2C34",
   textOnDark: "#f1eaea",
-  buttonBackground: "#8e60d0",
+  buttonBackground: "#743dc3",
   contrastBright: "#f1eaea",
   red: "#cc0100",
   green: "#00b400",
   enabled: "#cc0100",
   disabled: "#00b400",
+  sectionBackground: "#443f5d",
+  sectionBackgroundContrast: "#443f5d",
   toggleActive: "#00b400",
-  sectionBackground: "#3b3e4c",
-  sectionBackgroundContrast: "#3b3e4c",
   joy: "hsl(60, 70%, 70%)",
   surprise: "hsl(105, 70%, 80%)",
   fear: "hsl(165, 80%, 70%)",
@@ -68,17 +69,18 @@ export const darkTheme = {
   emotionBorder: "none",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const warmTheme = {
-  background: "#f7e9cb",
-  text: "#471343",
-  contrastText: "#471343",
-  textOnBright: "#471343",
+  background: "#fdfcd7",
+  text: "#762e72",
+  contrastText: "#762e72",
+  textOnBright: "#762e72",
   textOnDark: "#f7e9cb",
-  buttonBackground: "orange",
-  sectionBackground: "#F5E4B2",
-  sectionBackgroundContrast: "#f5e4b2",
+  buttonBackground: "#f8ca24",
+  sectionBackground: "#fefcc2",
+  sectionBackgroundContrast: "#fefcc2",
   contrastBright: "#f7e9cb",
   red: "#D23406",
   green: "#75C52F",
@@ -104,6 +106,7 @@ export const warmTheme = {
   emotionBorder: "0.5px solid #471343",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const coldTheme = {
@@ -140,6 +143,7 @@ export const coldTheme = {
   emotionBorder: "0.5px solid #0F1555",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #92aaab",
+  boxShadowTooltip: "10px 10px 15px black",
 };
 
 export const neutralTheme = {
@@ -210,4 +214,5 @@ export const highContrastTheme = {
   emotionBorder: "1px solid black",
   circleBorder: "1px solid yellow",
   boxShadowFilter: "none",
+  boxShadowTooltip: "10px 10px 15px black",
 };

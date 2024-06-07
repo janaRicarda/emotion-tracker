@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import ErrorMessage from "./ErrorMessage";
+import Tooltip from "./Tooltip";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -64,6 +65,8 @@ export default function Layout({
 
   const isAppManual = router.pathname === "/app-manual";
   const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
+  const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
+  const isEdit = router.pathname === "/edit[id]" ? true : false;
 
   return (
     <>
@@ -72,7 +75,6 @@ export default function Layout({
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
-        toolTip={toolTip}
       />
       {(emotionEntriesAreLoading && (
         <Loader itemText={"App is loading..."} />
@@ -82,11 +84,16 @@ export default function Layout({
         )) ||
         children}
       <Footer />
+      {toolTip && <Tooltip toolTip={toolTip} />}
       <StyledToTopButton
         $background={
           isAppManual
             ? color
             : isEmotionDetail
+            ? `var(--${slug})`
+            : isEmotionForm
+            ? `var(--${slug})`
+            : isEdit
             ? `var(--${slug})`
             : "var(--button-background)"
         }

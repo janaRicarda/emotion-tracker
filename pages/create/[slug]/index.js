@@ -2,6 +2,7 @@ import EmotionForm from "@/components/EmotionForm";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 import useSWR from "swr";
 
 export default function EmotionEntry({
@@ -37,6 +38,9 @@ export default function EmotionEntry({
 
   return (
     <>
+      <Head>
+        <title>Record your emotion</title>
+      </Head>
       <EmotionForm
         slug={slug}
         theme={theme}
