@@ -6,26 +6,30 @@ import {
   StyledEmotionListWrapper,
 } from "@/SharedStyledComponents";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function CreateIndexPage({
   onAddEmotionDetails,
   handleToolTip,
 }) {
+  const { t: translate } = useTranslation(["create-emotion"]);
+
   const router = useRouter();
   const id = router.query.id;
 
   useEffect(() => {
     handleToolTip({
-      text: "  Select the emotion that best represents how you are feeling right now. Use the provided visual cues, brief descriptions, and examples to guide your choice.",
+      text: `${translate("createEmotionTooltip")}`,
     });
-  }, []);
+  }, [translate]);
 
   return (
     <>
       <Head>
         <title>Choose emotions</title>
       </Head>
-      <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
+      <StyledFixedTitle>{translate("createEmotionTitle")}</StyledFixedTitle>
       <StyledEmotionListWrapper>
         <EmotionList
           createMode
@@ -35,4 +39,12 @@ export default function CreateIndexPage({
       </StyledEmotionListWrapper>
     </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["create-emotion", "common"])),
+    },
+  };
 }

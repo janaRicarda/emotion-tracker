@@ -315,7 +315,11 @@ export default function EmotionRecords({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["emotion-records", "common"])),
+      ...(await serverSideTranslations(locale, [
+        "emotion-records",
+        "common",
+        "navigation",
+      ])),
     },
   };
 }

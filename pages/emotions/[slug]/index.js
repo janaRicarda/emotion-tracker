@@ -2,6 +2,7 @@ import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 import Head from "next/head";
+// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function EmotionDetailsPage({ theme }) {
   const router = useRouter();

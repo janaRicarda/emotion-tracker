@@ -20,7 +20,11 @@ export default function ManualPage({ handleToolTip }) {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["app-manual", "common"])),
+      ...(await serverSideTranslations(locale, [
+        "app-manual",
+        "common",
+        "navigation",
+      ])),
     },
   };
 }

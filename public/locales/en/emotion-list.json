@@ -1,11 +1,12 @@
 {
   "emotionListTitle": "The 7 basic emotions",
   "emotionListTooltip": "Explore the list of seven fundamental emotions, each offering a unique pathway to understanding and expressing your inner feelings. Whether you are experiencing joy, sadness, anger, fear, surprise, disgust, or anticipation, delve deeper into the complexities of your emotional landscape by selecting the emotion that resonates with you most. Each emotion serves as a gateway to further exploration, providing insight and clarity into your state of being.",
+  "backOverview": "back to overview",
   "emotionData": [
     {
-      "name": "Joy",
-      "slug": "joy",
-      "color": "var(--joy)",
+      "name": "Enjoy",
+      "slug": "enjoy",
+      "color": "var(--enjoy)",
       "description": "Enjoyment is, for many, the most desirable of the seven universal emotions,typically arising from connection or sensory pleasure. The word happiness and enjoyment can be interchanged, although increasingly people use the word happiness to refer to their overall sense of well-being or evaluation of their lives rather than a particular enjoyment emotion.",
       "emotionfunction": "As a social function, expressing enjoyment plays an important role in signaling friendliness and assuring that we are not a threat to others. Many emotions scientists agree that enjoyable emotions motivate us to do things that are, by and large, good for us and the survival of our species (i.e., reproducing and child-rearing). Many emotions scientists also agree that the pursuit of enjoyment is a primary motivation in our lives.",
       "indications": "The most common ways people describe the sensation of happiness is feeling light/uplifted, energetic, buzzing or tingling, warm, or grounded. Depending on the state of your happiness, our posture can be either upright and elevated or still and relaxed.",
@@ -22,7 +23,8 @@
         "Naches",
         "Wonder",
         "Excitement",
-        "Ecstasy"
+        "Ecstasy",
+        "Joy"
       ]
     },
     {

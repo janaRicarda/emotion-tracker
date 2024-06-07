@@ -13,6 +13,7 @@ import {
 } from "../SharedStyledComponents";
 import { useEffect, useState } from "react";
 import { breakpoints } from "@/utils/breakpoints";
+import { useTranslation } from "next-i18next";
 
 const slideIn = keyframes`
 0% {transform: translateX(-100%)}
@@ -129,6 +130,8 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
     { title: "high contrast", name: highContrastTheme },
   ];
 
+  const { t: translate } = useTranslation(["navigation"]);
+
   // delay of isOpen-state to give time for animation
   const [delayOpen, setDelayedOpen] = useState(false);
   const [showThemes, setShowThemes] = useState(false);
@@ -149,10 +152,10 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">
-              manual
+              {translate("navigationManual")}
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotions">
-              7 basic emotions
+              {translate("navigationBasicEmotions")}7 basic emotions
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/">
               add entry
