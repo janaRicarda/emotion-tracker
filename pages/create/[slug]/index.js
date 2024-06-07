@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Head from "next/head";
 import useSWR from "swr";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function EmotionEntry({
   theme,
@@ -22,11 +23,15 @@ export default function EmotionEntry({
   const { id } = router.query;
   const { slug } = router.query;
 
-  const { data: correspondingDbEmotionEntry, isLoading } = useSWR(
-    !useExampleData && `/api/emotionEntries/${id}`
-  );
+  const {
+    data: correspondingDbEmotionEntry,
+    isLoading,
+    error,
+  } = useSWR(!useExampleData && `/api/emotionEntries/${id}`);
 
   if (isLoading) return <Loader itemText={"Is Loading"} />;
+
+  if (error) return <ErrorMessage errorMessage={error.message} />;
 
   if (!router.query) {
     return null;

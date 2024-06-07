@@ -11,6 +11,7 @@ const StyledMessageWrapper = styled(StyledFlexColumnWrapper)`
   background-color: var(--section-background);
   border-radius: 6px;
   border: 1px solid var(--main-dark);
+  margin-top: 2rem;
   & > * {
     margin: 1rem 0;
   }
