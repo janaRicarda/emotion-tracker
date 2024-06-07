@@ -1,13 +1,23 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import styled from "styled-components";
 
-const StyledArticle = styled.article`
+const StyledOverlay = styled.section`
+  width: 100vw;
+  height: 100vh;
   display: ${({ $display }) => ($display ? "none" : "flex")};
+  background: var(--button-background);
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  z-index: 3;
+  top: 0;
+`;
+
+const StyledArticle = styled.article`
+  display: flex;
   width: 90vw;
   height: 60vh;
-  position: fixed;
-  top: 120px;
-  z-index: 9;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -32,11 +42,15 @@ const StyledP = styled.p`
 
 export default function StartModal({ demoMode, handleDemoMode }) {
   return (
-    <StyledArticle $display={demoMode}>
-      <StyledP>Login with credentials</StyledP>
-      <StyledLoginButton onClick={() => signIn()}>Login</StyledLoginButton>
-      <StyledP>or use app in demo-mode</StyledP>
-      <StyledLoginButton onClick={handleDemoMode}>demo-mode</StyledLoginButton>
-    </StyledArticle>
+    <StyledOverlay $display={demoMode}>
+      <StyledArticle>
+        <StyledP>Login with credentials</StyledP>
+        <StyledLoginButton onClick={() => signIn()}>Login</StyledLoginButton>
+        <StyledP>or use app in demo-mode</StyledP>
+        <StyledLoginButton onClick={handleDemoMode}>
+          demo-mode
+        </StyledLoginButton>
+      </StyledArticle>
+    </StyledOverlay>
   );
 }

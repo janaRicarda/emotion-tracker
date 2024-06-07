@@ -4,7 +4,6 @@ const StyledDemoFrame = styled.article`
   width: 100vw:
   height: 1rem;
   background: var(--button-background);
-
 position: fixed;
   z-index: 3;
   top: 0;

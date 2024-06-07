@@ -200,9 +200,6 @@ export default function HomePage({
       <Head>
         <title>Home</title>
       </Head>
-      {!session && (
-        <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
-      )}
       <StyledFlexColumnWrapper>
         {session && (
           <ToggleSwitchWrapper>

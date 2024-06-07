@@ -294,6 +294,7 @@ export default function App({
           <GlobalStyle />
           <Layout
             demoMode={demoMode}
+            handleDemoMode={handleDemoMode}
             toolTip={toolTip}
             theme={theme}
             isScrollDown={isScrollDown}
@@ -319,7 +320,6 @@ export default function App({
               toggleExampleData={handleUseExampleData}
               useExampleData={useExampleData}
               demoMode={demoMode}
-              handleDemoMode={handleDemoMode}
               {...pageProps}
             />
           </Layout>
