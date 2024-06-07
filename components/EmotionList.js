@@ -3,8 +3,6 @@ import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 import { breakpoints } from "@/utils/breakpoints";
 import { useTranslation } from "next-i18next";
-// import { emotionData as libEmotionData } from "@/lib/db";
-import { emotionData } from "@/lib/db";
 
 const StyledCircle = styled.article`
   width: 90vw;

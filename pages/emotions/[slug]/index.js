@@ -48,6 +48,7 @@ export default function EmotionDetailsPage({ theme }) {
     </>
   );
 }
+
 export async function getStaticProps({ params, locale }) {
   const emotion = libEmotionData.find(
     (emotion) => emotion.slug === params.slug

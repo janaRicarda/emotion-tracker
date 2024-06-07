@@ -13,6 +13,7 @@ import {
   StyledSubmitButton,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
+import { useTranslation } from "next-i18next";
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
@@ -100,6 +101,10 @@ export default function EmotionForm({
   correspondingEntry,
 }) {
   const router = useRouter();
+
+  const { t: translate } = useTranslation("emotions");
+
+  const emotionData = translate("emotionData", { returnObjects: true });
 
   const {
     timeAndDate,

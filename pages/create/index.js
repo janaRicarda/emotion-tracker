@@ -13,7 +13,7 @@ export default function CreateIndexPage({
   onAddEmotionDetails,
   handleToolTip,
 }) {
-  const { t: translate } = useTranslation(["create-emotion"]);
+  const { t: translate } = useTranslation(["create-emotions"]);
 
   const router = useRouter();
   const id = router.query.id;
@@ -44,7 +44,11 @@ export default function CreateIndexPage({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["create-emotion", "common"])),
+      ...(await serverSideTranslations(locale, [
+        "emotions",
+        "common",
+        "navigation",
+      ])),
     },
   };
 }

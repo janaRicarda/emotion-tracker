@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Head from "next/head";
 import useSWR from "swr";
+import { emotionData } from "@/lib/db";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function EmotionEntry({
   theme,
@@ -49,4 +51,42 @@ export default function EmotionEntry({
       />
     </>
   );
+}
+
+export async function getStaticProps({ params, locale }) {
+  const emotion = emotionData.find((emotion) => emotion.slug === params.slug);
+  const emotionIndex = emotionData.findIndex(
+    (emotion) => emotion.slug === params.slug
+  );
+
+  const prevEmotionIndex =
+    emotionIndex === 0 ? emotionData.length - 1 : emotionIndex - 1;
+  const prevEmotion = emotionData[prevEmotionIndex];
+  const nextEmotionIndex =
+    emotionIndex === emotionData.length - 1 ? 0 : emotionIndex + 1;
+  const nextEmotion = emotionData[nextEmotionIndex];
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "emotions",
+        "common",
+        "navigation",
+      ])),
+      emotion,
+      prevEmotion,
+      nextEmotion,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const paths = emotionData.map((emotion) => ({
+    params: { slug: emotion.slug },
+  }));
+
+  return {
+    paths,
+    fallback: true, // Set to 'true' or 'blocking' if you want to generate paths on-demand
+  };
 }
