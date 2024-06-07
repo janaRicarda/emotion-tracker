@@ -7,15 +7,15 @@ export default async function handler(request, response) {
   if (request.method === `GET`) {
     try {
       // test error
-      // function randomNumber(count) {
-      //   return Math.floor(Math.random() * count);
-      // }
+      function randomNumber(count) {
+        return Math.floor(Math.random() * count);
+      }
 
-      // const number = randomNumber(2);
+      const number = randomNumber(2);
 
-      // if (number === 1) {
-      //   throw new Error("Error in fetching emotion Entries");
-      // }
+      if (number === 1) {
+        throw new Error("Error in fetching emotion Entries");
+      }
       ////
       const emotionEntries = await EmotionEntries.find();
       return response.status(200).json(emotionEntries);

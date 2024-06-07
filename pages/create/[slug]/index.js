@@ -20,8 +20,7 @@ export default function EmotionEntry({
   }, []);
 
   const router = useRouter();
-  const { id } = router.query;
-  const { slug } = router.query;
+  const { id, slug } = router.query;
 
   const {
     data: correspondingDbEmotionEntry,
