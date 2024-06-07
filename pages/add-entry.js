@@ -8,7 +8,6 @@ import {
   StyledInput,
   StyledForm,
   StyledFlexColumnWrapper,
-  StyledTitle,
 } from "@/SharedStyledComponents";
 
 import { breakpoints } from "@/utils/breakpoints";
@@ -127,36 +126,6 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 
-const DashboardSection = styled.section`
-  display: grid;
-  grid-template-columns: 6fr 6fr;
-  grid-template-rows: 6fr 6fr 6fr;
-  gap: 1rem;
-  width: 92vw;
-  min-height: 480px;
-  max-height: fit-content;
-  margin-top: 1rem;
-  align-items: center;
-  border-radius: 18px;
-  justify-content: center;
-  background-color: var(--section-background);
-
-  @media ${breakpoints.mobileLandscape} {
-  }
-  @media ${breakpoints.tablet} {
-  }
-  @media ${breakpoints.laptop} {
-    display: block;
-    padding: 1rem;
-    left: 5rem;
-    width: 92vw;
-  }
-`;
-const GridElement = styled.div`
-  border-radius: 6px;
-  border: 1px solid var(--main-dark);
-`;
-
 export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
@@ -194,18 +163,6 @@ export default function HomePage({
       <Head>
         <title>Home</title>
       </Head>
-      <StyledTitle>Dashboard</StyledTitle>
-      <DashboardSection>
-        <GridElement>
-          <p>1</p>
-          <p>Your last entry is xxx</p>
-        </GridElement>
-        <GridElement>2</GridElement>
-        <GridElement>3</GridElement>
-        <GridElement>4</GridElement>
-        <GridElement>5</GridElement>
-        <GridElement>6</GridElement>
-      </DashboardSection>
       <StyledFlexColumnWrapper>
         <ToggleSwitchWrapper>
           <StyledInfoIcon
