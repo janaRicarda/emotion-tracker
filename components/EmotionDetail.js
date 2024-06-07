@@ -122,14 +122,12 @@ export default function EmotionDetails({
   prevEmotion,
   nextEmotion,
 }) {
-  const { t: translate } = useTranslation("emotionList");
-
-  const emotionData = translate("emotionData", { returnObjects: true });
+  const { t: translate } = useTranslation("emotions");
 
   return (
     <>
       <StyledBackLink href="/emotions">
-        <StyledArrow /> {translate("backOverview")}
+        <StyledArrow /> back to overview
       </StyledBackLink>
       <StyledArticle
         $color={

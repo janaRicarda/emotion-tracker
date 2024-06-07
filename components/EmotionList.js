@@ -1,8 +1,8 @@
-import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
 import { breakpoints } from "@/utils/breakpoints";
+import { useTranslation } from "next-i18next";
 
 const StyledCircle = styled.article`
   width: 90vw;
@@ -115,9 +115,14 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   const [touchStart, setTouchStart] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const { t: translate } = useTranslation("emotions");
+
+  const emotionData = translate("emotionData", { returnObjects: true });
+
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
   }
+
   function handleAddDetails(data, id) {
     const emotion = { emotion: data };
     onAddEmotionDetails(emotion, id);
