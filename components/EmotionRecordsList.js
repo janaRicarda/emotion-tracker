@@ -1,13 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TrashIcon from "../public/trash-icon.svg";
-import PencilIcon from "../public/pencil.svg";
+import TrashIcon from "../public/icons/trash-icon.svg";
+import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import OutlineCircle from "../public/outline-circle.svg";
 import Circle from "../public/circle.svg";
 import Highlight from "../public/highlight.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HeartFilledIcon from "../public/icons/heart-filled.svg";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -16,6 +19,17 @@ const StyledRecordsList = styled(StyledList)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 80vw;
+  @media ${breakpoints.tablet} {
+    width: 50vw;
+    margin-top: 0;
+    margin-left: 30vw;
+  }
+  @media ${breakpoints.laptop} {
+    width: 40vw;
+    margin-top: 0;
+    margin-left: 40%;
+  }
 `;
 
 const StyledRecordListItem = styled.li`
@@ -41,6 +55,10 @@ const StyledItemInfo = styled.article`
 
 const StyledParagraph = styled.p`
   color: var(--main-dark);
+  border: 1px solid var(--main-dark);
+  border-radius: 6px;
+  margin: 0.5rem auto;
+  padding: 1rem;
   cursor: pointer;
 `;
 
@@ -91,6 +109,7 @@ export default function EmotionRecordsList({
   onDeleteEmotionEntry,
   toggleHighlight,
   editFromDevControls,
+  useExampleData,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -114,12 +133,21 @@ export default function EmotionRecordsList({
 
   //const { emotion: emotionColor } = shownEntries;
   //const color = emotionColor.toLowerCase();
+  function sortEntries(a, b) {
+    if (a.isoDate > b.isoDate) {
+      return -1;
+    }
+    if (a.isoDate < b.isoDate) {
+      return 1;
+    }
+    return 0;
+  }
 
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
         {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
-        {shownEntries.map(
+        {shownEntries.sort(sortEntries).map(
           ({
             id,
             timeAndDate,

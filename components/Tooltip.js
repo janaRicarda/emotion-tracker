@@ -1,31 +1,64 @@
 import styled from "styled-components";
-import TooltipQuestionmark from "../public/images/help.svg";
+import Info from "../public/icons/info.svg";
+import Close from "../public/icons/close.svg";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { breakpoints } from "@/utils/breakpoints";
 
-const StyledTooltipQuestionmark = styled(TooltipQuestionmark)`
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "1.3rem" : "1.8rem")};
+const StyledTooltipQuestionmark = styled(Info)`
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "1.5rem" : "2.2rem")};
   fill: var(--main-dark);
-  z-index: 2;
+  border-radius: 50%;
+  width: 2rem;
+  position: fixed;
+  top: 100px;
+  right: 1.5rem;
+  z-index: 1;
   transition: all 300ms ease;
 `;
 
 const StyledTooltipWrapper = styled.div`
-  position: absolute;
-  right: 0.5rem;
-  left: 0.5rem;
-  border-radius: 6px;
-  background-color: var(--section-background);
+  margin-top: 2.5rem;
+  position: fixed;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 1rem;
+  border-radius: 1rem;
+  background-color: var(--section-background-contrast);
   z-index: 2;
   display: ${({ $show }) => ($show ? "block" : "none")};
-  border: 1px solid var(--main-dark);
-  height: 50vh;
+  box-shadow: var(--box-shadow-filter);
   top: 100px;
+  &:after {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    right: 0.5rem;
+    border-width: 1.5rem;
+    border-style: solid;
+    border-color: transparent transparent var(--section-background-contrast)
+      transparent;
+  }
+  @media ${breakpoints.tablet} {
+    width: 30vw;
+    right: 0;
+  }
+`;
+
+const StyledClose = styled(Close)`
+  width: 1rem;
+  margin: 0.5rem;
+  fill: var(--contrast-text);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
 `;
 
 const StyledTooltipInfo = styled.p`
-  padding: 2rem 1rem 4rem 1rem;
-  color: var(--main-dark);
-  margin: 8rem 1 rem 8 rem 1 rem;
+  padding: 2rem 1rem 1rem 1rem;
+  color: var(--contrast-text);
 `;
 
 export default function Tooltip({ toolTip, isScrollDown }) {
@@ -35,6 +68,11 @@ export default function Tooltip({ toolTip, isScrollDown }) {
     setIsTooltipOpen(!isTooltipOpen);
   }
 
+  const router = useRouter();
+  useEffect(() => {
+    setIsTooltipOpen(false);
+  }, [router]);
+
   return (
     <>
       <StyledTooltipQuestionmark
@@ -42,6 +80,7 @@ export default function Tooltip({ toolTip, isScrollDown }) {
         onClick={handleToggleTooltip}
       />
       <StyledTooltipWrapper $show={isTooltipOpen}>
+        <StyledClose onClick={handleToggleTooltip} />
         <StyledTooltipInfo>{toolTip.text}</StyledTooltipInfo>
       </StyledTooltipWrapper>
     </>

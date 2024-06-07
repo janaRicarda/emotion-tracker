@@ -1,12 +1,17 @@
 import EmotionForm from "@/components/EmotionForm";
+import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
+import useSWR from "swr";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function EmotionEntry({
   theme,
   onAddEmotionDetails,
   emotionEntries,
   handleToolTip,
+  useExampleData,
 }) {
   useEffect(() => {
     handleToolTip({
@@ -15,17 +20,32 @@ export default function EmotionEntry({
   }, []);
 
   const router = useRouter();
+  const { id } = router.query;
+  const { slug } = router.query;
+
+  const {
+    data: correspondingDbEmotionEntry,
+    isLoading,
+    error,
+  } = useSWR(!useExampleData && `/api/emotionEntries/${id}`);
+
+  if (isLoading) return <Loader itemText={"Is Loading"} />;
+
+  if (error) return <ErrorMessage errorMessage={error.message} />;
+
   if (!router.query) {
     return null;
   }
-  const { slug } = router.query;
 
-  const { id } = router.query;
-  const correspondingEntry = emotionEntries.find((entry) => entry.id === id);
-  if (!correspondingEntry) return <h2>Page not found!</h2>;
+  const correspondingEntry = useExampleData
+    ? emotionEntries.find((entry) => entry.id === id)
+    : correspondingDbEmotionEntry;
 
   return (
     <>
+      <Head>
+        <title>Record your emotion</title>
+      </Head>
       <EmotionForm
         slug={slug}
         theme={theme}

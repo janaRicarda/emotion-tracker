@@ -2,10 +2,12 @@ import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import { useState, useCallback, useEffect, useRef } from "react";
-import HeartOutlineIcon from "../public/heart-outline.svg";
-import CalendarIcon from "/public/calendar.svg";
+import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
+import { breakpoints } from "@/utils/breakpoints";
+import Head from "next/head";
 
 // used for all transitions
 const transition = css`
@@ -18,13 +20,31 @@ const GridWrapper = styled.section`
   padding: ${({ $show }) => ($show ? "1rem" : "0")};
   border-radius: 1rem;
   top: 200px;
+  margin-top: 1rem;
   max-width: 500px;
   display: grid;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   ${transition}
   background-color: var(--section-background-contrast);
-  //color: var(--text-on-bright);
   z-index: 2;
+  @media ${breakpoints.mobileLandscape} {
+    top: 100px;
+  }
+  @media ${breakpoints.tablet} {
+    display: block;
+    box-shadow: none;
+    padding: 1rem;
+    top: 200px;
+    left: 3rem;
+    width: 25%;
+  }
+  @media ${breakpoints.laptop} {
+    display: block;
+    box-shadow: none;
+    padding: 1rem;
+    left: 5rem;
+    width: 30%;
+  }
 `;
 
 const ControllOverflow = styled.div`
@@ -33,14 +53,13 @@ const ControllOverflow = styled.div`
 
 const ControlPadding = styled.div`
   margin-top: 5rem;
-  /* z-index: -1; */
 `;
 
 const StyledHeading = styled(StyledTitle)`
   width: 100%;
   padding: 1rem 0;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "110px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "100px")};
   ${transition}
   background-color: var(--main-bright);
   z-index: 1;
@@ -55,8 +74,8 @@ const Background = styled.div`
 `;
 const AnimatedPanel = styled.div`
   width: 90vw;
-  margin: 0.5rem;
-  border-top: 1px solid black;
+  margin: 0 0.5rem;
+  border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
@@ -72,6 +91,9 @@ const StyledTextMessage = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media ${breakpoints.laptop} {
+    margin-left: 10%;
+  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -119,6 +141,7 @@ export default function EmotionRecords({
   toggleHighlight,
   handleToolTip,
   isScrollDown,
+  useExampleData,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -204,6 +227,9 @@ export default function EmotionRecords({
 
   return (
     <>
+      <Head>
+        <title>Emotion Records</title>
+      </Head>
       <Background $show={showFilter} onClick={() => setShowFilter(false)} />
       <StyledHeading $isScrollDown={isScrollDown}>
         Recorded Emotions
@@ -271,6 +297,7 @@ export default function EmotionRecords({
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
+            useExampleData={useExampleData}
           />
         </ControlPadding>
       )}

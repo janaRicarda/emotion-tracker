@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { emotionData } from "@/lib/db";
 import { useState } from "react";
-import Circle from "../public/circle.svg";
+import Circle from "../public/icons/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import {
   StyledInput,
@@ -92,8 +92,8 @@ const ToggleSwitch = styled(Circle)`
 `;
 
 export default function EmotionForm({
-  slug,
   theme,
+  slug,
   editMode,
   onSubmit,
   id,
@@ -195,234 +195,235 @@ export default function EmotionForm({
   }
 
   return (
-    <>
-      <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
-        <StyledTitle>
-          {editMode
-            ? emotionValue
-              ? `Edit your ${emotionValue}`
-              : `Edit your Emotion-Entry`
-            : emotionValue
-            ? `Record your ${emotionValue}`
-            : `Record your Emotion-Entry`}
-        </StyledTitle>
-        <p aria-label="Date and time">
-          {editMode ? `Entry from:` : "Date: "} {timeAndDate}
-        </p>
-        <TensionLabelEdit htmlFor="tension-level">
-          Choose a tension level between 0 and 100:
-        </TensionLabelEdit>
-        <StyledEmotionInput
-          aria-label="Adjust tension level between 0 and 100"
-          id="tension-level"
-          name="tensionLevel"
-          type="range"
-          $inputColor={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-          }
-          $inputCircle={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-          }
-          value={tensionValue}
-          $value={tensionValue}
-          max={100}
-          onChange={(event) =>
-            setFormValues({
-              ...formValues,
-              tensionValue: event.target.value,
-            })
-          }
-        />
-        <StyledWrapper>
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>{tensionValue}</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </StyledWrapper>
-        <label htmlFor="emotion">Select an emotion:</label>
-        <StyledSelect
-          id="emotion"
-          name="emotion"
-          value={`${emotionValue}`}
-          onChange={(event) => {
-            handleChangeEmotion(event.target.value);
-          }}
-        >
-          <option value={""}>--select emotion--</option>
-          {emotionData.map((emotion) => (
-            <option key={emotion.name} value={emotion.name}>
-              {emotion.name}
-            </option>
-          ))}
-        </StyledSelect>
-        <label htmlFor="subemotion">Select Subemotion:</label>
-        <StyledSelect
-          disabled={emotionValue ? false : true}
-          value={`${selectedSubemotionValue}`}
-          id="subemotion"
-          name="subemotion"
-          onChange={(event) =>
-            setFormValues({
-              ...formValues,
-              selectedSubemotionValue: event.target.value,
-            })
-          }
-        >
-          <option value={""}>--select subemotion--</option>
-          {subemotionOptions.map((sub) => (
-            <option key={sub} value={sub}>
-              {sub}
-            </option>
-          ))}
-        </StyledSelect>
-        <StyledLabel htmlFor="intensity">
-          Emotion Intensity:{" "}
-          {emotionValue && (
-            <ToggleSwitch
-              aria-label="Switch intensity input on and off"
-              $color={toggleIntensity}
-              onClick={() =>
-                setTogggleRangeInputs({
-                  ...toggleRangeInputs,
-                  toggleIntensity: !toggleIntensity,
-                })
-              }
-            >
-              {emotionValue ? (toggleIntensity ? "O" : "O") : "O"}
-            </ToggleSwitch>
-          )}
-        </StyledLabel>
-        <StyledEmotionInput
-          disabled={emotionValue ? (toggleIntensity ? false : true) : true}
-          type="range"
-          id="intensity"
-          name="intensity"
-          value={intensityValue}
-          $value={intensityValue}
-          $inputColor={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-          }
-          $inputCircle={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-          }
-          max={100}
-          onChange={(event) =>
-            setFormValues({
-              ...formValues,
-              intensityValue: event.target.value,
-            })
-          }
-        />
-        <StyledWrapper>
-          <StyledSpan>
-            {emotionValue ? (toggleIntensity ? 0 : "") : ""}
-          </StyledSpan>
-          <StyledSpan>
-            {emotionValue
-              ? toggleIntensity
-                ? intensityValue
-                : "Disabled"
-              : "Disabled"}
-          </StyledSpan>
-          <StyledSpan>
-            {emotionValue ? (toggleIntensity ? 100 : "") : ""}
-          </StyledSpan>
-        </StyledWrapper>
-        <StyledLabel htmlFor="category">
-          Association Category:{" "}
-          {emotionValue && (
-            <ToggleSwitch
-              aria-label="Switch association category input on and off"
-              $color={toggleCategory}
-              onClick={() =>
-                setTogggleRangeInputs({
-                  ...toggleRangeInputs,
-                  toggleCategory: !toggleCategory,
-                })
-              }
-            >
-              {emotionValue
-                ? toggleCategory
-                  ? "Disable"
-                  : "Enable"
-                : "Disabled"}
-            </ToggleSwitch>
-          )}
-        </StyledLabel>
-        <StyledEmotionInput
-          disabled={emotionValue ? (toggleCategory ? false : true) : true}
-          type="range"
-          id="category"
-          name="category"
-          value={categoryValue}
-          $value={categoryValue}
-          $inputColor={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-          }
-          $inputCircle={
-            theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-          }
-          max={100}
-          onChange={(event) =>
-            setFormValues({
-              ...formValues,
-              categoryValue: event.target.value,
-            })
-          }
-        />
-        <StyledWrapper>
-          <StyledSpan>
-            {emotionValue ? (toggleCategory ? "unpleasant" : "") : ""}
-          </StyledSpan>
-          <StyledSpan>
+    <StyledEmotionForm
+      $color={
+        theme === darkTheme ? "var(--section-background)" : `${colorValue}`
+      }
+      $text={theme === darkTheme ? `${colorValue}` : "var(--contrast-text)"}
+      onSubmit={handleSubmit}
+    >
+      <StyledTitle>
+        {editMode
+          ? emotionValue
+            ? `Edit your ${emotionValue}`
+            : `Edit your Emotion-Entry`
+          : emotionValue
+          ? `Record your ${emotionValue}`
+          : `Record your Emotion-Entry`}
+      </StyledTitle>
+      <p aria-label="Date and time">
+        {editMode ? `Entry from:` : "Date: "} {timeAndDate}
+      </p>
+      <TensionLabelEdit htmlFor="tension-level">
+        Choose a tension level between 0 and 100:
+      </TensionLabelEdit>
+      <StyledEmotionInput
+        aria-label="Adjust tension level between 0 and 100"
+        id="tension-level"
+        name="tensionLevel"
+        type="range"
+        $inputColor={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+        }
+        $inputCircle={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+        }
+        value={tensionValue}
+        $value={tensionValue}
+        max={100}
+        onChange={(event) =>
+          setFormValues({
+            ...formValues,
+            tensionValue: event.target.value,
+          })
+        }
+      />
+      <StyledWrapper>
+        <StyledSpan>0</StyledSpan>
+        <StyledSpan>{tensionValue}</StyledSpan>
+        <StyledSpan>100</StyledSpan>
+      </StyledWrapper>
+      <label htmlFor="emotion">Select an emotion:</label>
+      <StyledSelect
+        id="emotion"
+        name="emotion"
+        value={`${emotionValue}`}
+        onChange={(event) => {
+          handleChangeEmotion(event.target.value);
+        }}
+      >
+        <option value={""}>--select emotion--</option>
+        {emotionData.map((emotion) => (
+          <option key={emotion.name} value={emotion.name}>
+            {emotion.name}
+          </option>
+        ))}
+      </StyledSelect>
+      <label htmlFor="subemotion">Select Subemotion:</label>
+      <StyledSelect
+        disabled={emotionValue ? false : true}
+        value={`${selectedSubemotionValue}`}
+        id="subemotion"
+        name="subemotion"
+        onChange={(event) =>
+          setFormValues({
+            ...formValues,
+            selectedSubemotionValue: event.target.value,
+          })
+        }
+      >
+        <option value={""}>--select subemotion--</option>
+        {subemotionOptions.map((sub) => (
+          <option key={sub} value={sub}>
+            {sub}
+          </option>
+        ))}
+      </StyledSelect>
+      <StyledLabel htmlFor="intensity">
+        Emotion Intensity:{" "}
+        {emotionValue && (
+          <ToggleSwitch
+            aria-label="Switch intensity input on and off"
+            $color={toggleIntensity}
+            onClick={() =>
+              setTogggleRangeInputs({
+                ...toggleRangeInputs,
+                toggleIntensity: !toggleIntensity,
+              })
+            }
+          >
+            {emotionValue ? (toggleIntensity ? "O" : "O") : "O"}
+          </ToggleSwitch>
+        )}
+      </StyledLabel>
+      <StyledEmotionInput
+        disabled={emotionValue ? (toggleIntensity ? false : true) : true}
+        type="range"
+        id="intensity"
+        name="intensity"
+        value={intensityValue}
+        $value={intensityValue}
+        $inputColor={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+        }
+        $inputCircle={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+        }
+        max={100}
+        onChange={(event) =>
+          setFormValues({
+            ...formValues,
+            intensityValue: event.target.value,
+          })
+        }
+      />
+      <StyledWrapper>
+        <StyledSpan>
+          {emotionValue ? (toggleIntensity ? 0 : "") : ""}
+        </StyledSpan>
+        <StyledSpan>
+          {emotionValue
+            ? toggleIntensity
+              ? intensityValue
+              : "Disabled"
+            : "Disabled"}
+        </StyledSpan>
+        <StyledSpan>
+          {emotionValue ? (toggleIntensity ? 100 : "") : ""}
+        </StyledSpan>
+      </StyledWrapper>
+      <StyledLabel htmlFor="category">
+        Association Category:{" "}
+        {emotionValue && (
+          <ToggleSwitch
+            aria-label="Switch association category input on and off"
+            $color={toggleCategory}
+            onClick={() =>
+              setTogggleRangeInputs({
+                ...toggleRangeInputs,
+                toggleCategory: !toggleCategory,
+              })
+            }
+          >
             {emotionValue
               ? toggleCategory
-                ? "neutral"
-                : "Disabled"
+                ? "Disable"
+                : "Enable"
               : "Disabled"}
-          </StyledSpan>
-          <StyledSpan>
-            {emotionValue ? (toggleCategory ? "pleasant" : "") : ""}
-          </StyledSpan>
-        </StyledWrapper>
-        <label htmlFor="trigger">Trigger:</label>
-        <StyledTextarea
-          id="trigger"
-          name="trigger"
-          defaultValue={triggerValue}
-        ></StyledTextarea>
-        <label htmlFor="notes">Notes: </label>
-        <StyledTextarea
-          id="notes"
-          name="notes"
-          defaultValue={notesValue}
-        ></StyledTextarea>
-
-        <StyledSubmitButton
-          type="submit"
-          $submit={
-            theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`
-          }
-          $submitBackground={
-            theme === darkTheme ? `black` : `var(--text-on-bright)`
-          }
-        >
-          Submit
-        </StyledSubmitButton>
-        {showConfirmMessage && (
-          <ConfirmMessage
-            toggleMessage={() => setShowConfirmMessage(false)}
-            confirmFunction={() => {
-              router.push("/emotion-records");
-            }}
-            cancelButtonText={"Keep editing"}
-            confirmButtonText={"Go to emotion records"}
-            cancelButtonColor={"var(--red)"}
-            confirmButtonColor={"var(--green)"}
-          >
-            Your changes were saved successfully!
-          </ConfirmMessage>
+          </ToggleSwitch>
         )}
-      </StyledEmotionForm>
-    </>
+      </StyledLabel>
+      <StyledEmotionInput
+        disabled={emotionValue ? (toggleCategory ? false : true) : true}
+        type="range"
+        id="category"
+        name="category"
+        value={categoryValue}
+        $value={categoryValue}
+        $inputColor={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
+        }
+        $inputCircle={
+          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
+        }
+        max={100}
+        onChange={(event) =>
+          setFormValues({
+            ...formValues,
+            categoryValue: event.target.value,
+          })
+        }
+      />
+      <StyledWrapper>
+        <StyledSpan>
+          {emotionValue ? (toggleCategory ? "unpleasant" : "") : ""}
+        </StyledSpan>
+        <StyledSpan>
+          {emotionValue
+            ? toggleCategory
+              ? "neutral"
+              : "Disabled"
+            : "Disabled"}
+        </StyledSpan>
+        <StyledSpan>
+          {emotionValue ? (toggleCategory ? "pleasant" : "") : ""}
+        </StyledSpan>
+      </StyledWrapper>
+      <label htmlFor="trigger">Trigger:</label>
+      <StyledTextarea
+        id="trigger"
+        name="trigger"
+        defaultValue={triggerValue}
+      ></StyledTextarea>
+      <label htmlFor="notes">Notes: </label>
+      <StyledTextarea
+        id="notes"
+        name="notes"
+        defaultValue={notesValue}
+      ></StyledTextarea>
+      <StyledSubmitButton
+        type="submit"
+        $submit={theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`}
+        $submitBackground={
+          theme === darkTheme ? `black` : `var(--text-on-bright)`
+        }
+      >
+        Submit
+      </StyledSubmitButton>
+      {showConfirmMessage && (
+        <ConfirmMessage
+          toggleMessage={() => setShowConfirmMessage(false)}
+          confirmFunction={() => {
+            router.push("/emotion-records");
+          }}
+          cancelButtonText={"Keep editing"}
+          confirmButtonText={"Go to emotion records"}
+          cancelButtonColor={"var(--red)"}
+          confirmButtonColor={"var(--green)"}
+        >
+          Your changes were saved successfully!
+        </ConfirmMessage>
+      )}
+    </StyledEmotionForm>
   );
 }

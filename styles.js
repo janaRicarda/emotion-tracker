@@ -32,6 +32,7 @@ html {
   --joy: ${({ theme }) => theme.joy};
   --enabled:  ${({ theme }) => theme.enabled};
   --disabled: ${({ theme }) => theme.disabled};
+  --toggle-active: ${({ theme }) => theme.toggleActive};
   --surprise: ${({ theme }) => theme.surprise};
   --fear: ${({ theme }) => theme.fear};
   --sadness: ${({ theme }) => theme.sadness};
@@ -49,9 +50,11 @@ html {
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
   --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
+  --box-shadow-tooltip: ${({ theme }) => theme.boxShadowTooltip};
+}
   body {
     margin: 0;
-    background-color: var(--main-bright);
+    background: var(--main-bright);
     color: var(--main-dark);
     font-family: ${manrope.style.fontFamily}, system-ui;
     line-height: 1.5;
