@@ -290,6 +290,7 @@ export default function App({ Component, pageProps }) {
             isScrollDown={isScrollDown}
             handleToolTip={handleToolTip}
             theme={theme}
+            switchTheme={switchTheme}
             onAddEmotionDetails={handleAddEmotionDetails}
             emotionEntries={useExampleData ? emotionEntries : dbEmotionEntries}
             onAddEmotionEntry={handleAddEmotionEntry}
