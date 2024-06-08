@@ -25,7 +25,6 @@ const StyledSettingsWrapper = styled.article`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background: var(--section-background);
 `;
 
 const StyledColorSchemesButton = styled(StyledButton)`
@@ -39,12 +38,6 @@ const ThemeWrapper = styled(StyledFlexColumnWrapper)`
   align-items: center;
   width: 50%;
   gap: 0.2rem;
-  @media ${breakpoints.mobileLandscape} {
-    flex-direction: row;
-  }
-  @media ${breakpoints.laptop} {
-    flex-direction: row;
-  }
 `;
 
 const StyledCircle = styled(Circle)`
