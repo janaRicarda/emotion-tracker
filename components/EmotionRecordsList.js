@@ -5,8 +5,9 @@ import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import Highlight from "../public/highlight.svg";
+import HighlightIcon from "../public/highlight-icon.svg";
 import { breakpoints } from "@/utils/breakpoints";
+import DetailsList from "./EmotionRecordsDetails";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -30,9 +31,6 @@ const StyledRecordsList = styled(StyledList)`
 
 const StyledRecordListItem = styled.li`
   background-color: var(--section-background);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
   border: 1px solid var(--main-dark);
   border-radius: 6px;
 `;
@@ -46,7 +44,6 @@ const StyledItemInfo = styled.article`
 
 const StyledParagraph = styled.p`
   color: var(--main-dark);
-  /* border: 1px solid var(--main-dark); */
   border-radius: 6px;
   margin: 0.5rem auto;
   padding: 0.5rem;
@@ -54,14 +51,22 @@ const StyledParagraph = styled.p`
 `;
 
 const StyledDetails = styled(StyledList)`
-  /* display: ${({ $showDetails }) => ($showDetails ? "block" : "none")}; */
   display: grid;
+  position: relative;
+  transition: grid-template-rows 300ms;
   grid-template-rows: ${({ $showDetails }) => ($showDetails ? "1fr" : "0fr")};
-  /* padding: 0.5rem; */
-  /* border-top: 1px solid var(--main-dark); */
+  overflow: hidden;
+  padding: 0;
 
-  & > * {
-    overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: ${({ $showDetails }) => ($showDetails ? "100%" : "0")};
+    background-color: var(--main-dark);
+    transition: all 500ms;
   }
 `;
 
@@ -71,16 +76,16 @@ const StyledIconWrapper = styled.article`
   padding: 0 1rem;
   position: relative;
 
-  & > * {
-    margin: 0.3rem auto;
+  & > svg {
+    padding: 0.3rem 0;
   }
 
   &::after {
     content: "";
     position: absolute;
     left: 0;
-    top: 10%;
-    height: 80%;
+    top: 5%;
+    height: 90%;
     width: 1px;
     background-color: var(--main-dark);
   }
@@ -104,13 +109,13 @@ const StyledEditButton = styled(PencilIcon)`
   }
 `;
 
-const StyledHighlight = styled(Highlight)`
+const StyledHighlight = styled(HighlightIcon)`
   width: 2.5rem;
   height: 2.5rem;
   fill: var(--main-dark);
   stroke: var(--main-dark);
   color: var(--main-dark);
-  /* background: yellow; */
+  border-radius: 50%;
 `;
 
 export default function EmotionRecordsList({
@@ -140,8 +145,6 @@ export default function EmotionRecordsList({
     }));
   }
 
-  //const { emotion: emotionColor } = shownEntries;
-  //const color = emotionColor.toLowerCase();
   function sortEntries(a, b) {
     if (a.isoDate > b.isoDate) {
       return -1;
@@ -173,10 +176,7 @@ export default function EmotionRecordsList({
               isHighlighted,
             }) => {
               return (
-                <section
-                  style={{ width: "86vw" }}
-                  key={useExampleData ? id : _id}
-                >
+                <section key={useExampleData ? id : _id}>
                   <StyledRecordListItem>
                     <StyledItemInfo>
                       <StyledHighlight
@@ -198,7 +198,9 @@ export default function EmotionRecordsList({
                           onClick={() =>
                             editFromDevControls
                               ? router.push(`edit/${id}`)
-                              : router.push(`./edit/${id}`)
+                              : router.push(
+                                  `./edit/${useExampleData ? id : _id}`
+                                )
                           }
                         />
                         <StyledDeleteButton
@@ -213,19 +215,33 @@ export default function EmotionRecordsList({
                     <StyledDetails
                       $showDetails={showDetails[useExampleData ? id : _id]}
                     >
-                      <li>Tension Level: {tensionLevel}%</li>
-                      {emotion && <li>Emotion: {emotion}</li>}
-                      {subemotion && <li>Subemotion: {subemotion}</li>}
-                      {intensity && <li>Intensity: {intensity}%</li>}
-                      {category && <li>Pleasantness: {category}%</li>}
-                      {trigger && <li>Trigger: {trigger}</li>}
-                      {notes && <li>Notes: {notes}</li>}
+                      <DetailsList
+                        listItems={{
+                          tensionLevel,
+                          emotion,
+                          subemotion,
+                          intensity,
+                          category,
+                          trigger,
+                          notes,
+                        }}
+                        showDetails={showDetails[useExampleData ? id : _id]}
+                      />
+                      {/* <div>
+                        <li>Tension Level: {tensionLevel}%</li>
+                        {emotion && <li>Emotion: {emotion}</li>}
+                        {subemotion && <li>Subemotion: {subemotion}</li>}
+                        {intensity && <li>Intensity: {intensity}%</li>}
+                        {category && <li>Pleasantness: {category}%</li>}
+                        {trigger && <li>Trigger: {trigger}</li>}
+                        {notes && <li>Notes: {notes}</li>}
+                      </div> */}
                     </StyledDetails>
                   </StyledRecordListItem>
                   {showConfirmMessage[useExampleData ? id : _id] && (
                     <ConfirmMessage
                       toggleMessage={handleShowConfirmMessage}
-                      itemId={id}
+                      itemId={useExampleData ? id : _id}
                       itemText={timeAndDate}
                       confirmFunction={onDeleteEmotionEntry}
                       cancelButtonText={"Keep it!"}
