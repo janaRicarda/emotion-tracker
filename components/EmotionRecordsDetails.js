@@ -12,6 +12,8 @@ const StyledWrapper = styled.div`
     border: none;
     border-top: 2px double white;
     margin: 1rem 0;
+    width: ${({ $showDetails }) => ($showDetails ? "100%" : "0%")};
+    transition: width 700ms;
   }
 
   & > * tr {
@@ -55,7 +57,7 @@ const ProgressBar = styled.div`
       $showDetails ? `${$progress}%` : "0px"};
     background: var(--button-background);
     border-radius: 6px;
-    transition: width 400ms 400ms;
+    transition: width 400ms 600ms;
   }
 `;
 
@@ -71,7 +73,7 @@ export default function DetailsList({ listItems, showDetails }) {
   } = listItems;
 
   return (
-    <StyledWrapper>
+    <StyledWrapper $showDetails={showDetails}>
       <table>
         {tensionLevel && (
           <tr>

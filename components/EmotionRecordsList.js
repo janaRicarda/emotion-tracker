@@ -53,7 +53,7 @@ const StyledParagraph = styled.p`
 const StyledDetails = styled(StyledList)`
   display: grid;
   position: relative;
-  transition: grid-template-rows 300ms;
+  transition: grid-template-rows 600ms;
   grid-template-rows: ${({ $showDetails }) => ($showDetails ? "1fr" : "0fr")};
   overflow: hidden;
   padding: 0;
@@ -66,7 +66,7 @@ const StyledDetails = styled(StyledList)`
     height: 1px;
     width: ${({ $showDetails }) => ($showDetails ? "100%" : "0")};
     background-color: var(--main-dark);
-    transition: all 500ms;
+    transition: all 600ms;
   }
 `;
 
