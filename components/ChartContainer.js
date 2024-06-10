@@ -5,7 +5,7 @@ import Loader from "@/components/Loader";
 import ToggleSwitch from "./ToggleSwitch";
 import {
   chartPresets,
-  doTensionChartData,
+  calculateTensionChartData,
   countEmotions,
 } from "@/utils/chartUtils";
 import styled from "styled-components";
@@ -60,7 +60,6 @@ const StyledGraphButton = styled(StyledButton)`
 const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
-
   justify-content: space-between;
   height: 24px;
   padding: 0.2rem;
@@ -70,6 +69,7 @@ const ToggleContainer = styled.div`
   background-color: var(--section-background);
   border-radius: 6px;
 `;
+
 const SwitchSizer = styled.span`
   transform: scale(0.6);
 `;
@@ -87,7 +87,7 @@ const StyledGraphButtonsWrapper = styled.div`
     max-width: 50vw;
   }
 `;
-const Chartwrapper = styled(StyledFlexColumnWrapper)`
+const ChartWrapper = styled(StyledFlexColumnWrapper)`
   @media ${breakpoints.tablet} {
     margin-left: 10rem;
     max-width: 90vw;
@@ -104,8 +104,8 @@ export default function ChartContainer({ shownEntries, theme }) {
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
 
-  const xTensionValues = doTensionChartData(shownEntries).xValues;
-  const yTensionValues = doTensionChartData(shownEntries).yValues;
+  const xTensionValues = calculateTensionChartData(shownEntries).xValues;
+  const yTensionValues = calculateTensionChartData(shownEntries).yValues;
 
   const countResult = countEmotions(shownEntries);
   const xEmotions = countResult.map((element) => element.emotion);
@@ -157,7 +157,7 @@ export default function ChartContainer({ shownEntries, theme }) {
 
   return (
     <ChartSection>
-      <Chartwrapper>
+      <ChartWrapper>
         <EmotionChart
           theme={theme}
           type={type}
@@ -196,7 +196,7 @@ export default function ChartContainer({ shownEntries, theme }) {
             </StyledGraphButton>
           </StyledGraphButtonsWrapper>
         </StyledFlexColumnWrapper>
-      </Chartwrapper>
+      </ChartWrapper>
     </ChartSection>
   );
 }

@@ -23,9 +23,11 @@ export const chartPresets = {
 
 export function countEmotions(entries) {
   const emotionsToCount = emotionData.map((element) => element.name);
+
   function add(a, b) {
     return Number(a) + Number(b);
   }
+
   function getAverageValue(entries) {
     const averageValue =
       entries.length === 0
@@ -36,6 +38,7 @@ export function countEmotions(entries) {
           );
     return averageValue;
   }
+
   const preResults = emotionsToCount.map((element) => {
     const foundEntries = entries.filter((entry) => entry.emotion === element);
     const object = {
@@ -58,7 +61,7 @@ export function countEmotions(entries) {
   return countResults;
 }
 
-export function doTensionChartData(entries) {
+export function calculateTensionChartData(entries) {
   function compare(a, b) {
     if (a.isoDate < b.isoDate) {
       return -1;
@@ -68,6 +71,7 @@ export function doTensionChartData(entries) {
     }
     return 0;
   }
+
   const filteredData = entries.toSorted(compare);
   const lastIndex = filteredData.length - 1;
   const difference =

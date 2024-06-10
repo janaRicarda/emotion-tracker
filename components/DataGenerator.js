@@ -8,8 +8,6 @@ import {
 } from "@/SharedStyledComponents";
 import { exampleData } from "@/lib/db";
 
-export { generateCompleteData };
-
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;
   gap: 0.5rem;
@@ -275,3 +273,5 @@ export default function DataGenerator({
     </>
   );
 }
+
+export { generateCompleteData };

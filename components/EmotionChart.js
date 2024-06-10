@@ -62,14 +62,13 @@ export default function EmotionChart({
             },
             width: width,
             title: {
+              text: title,
               font: {
                 family: "system-ui",
-                weight: "bold",
               },
             },
             autosize: true,
             margin: { autoexpand: true, b: 40, l: 30, r: 30, t: 50 },
-            title: title,
           }}
         />
       )}

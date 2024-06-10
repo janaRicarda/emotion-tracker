@@ -25,13 +25,11 @@ const StyledLoadingSpinner = styled.div`
 
 export default function Loader({ itemText, fullScreen }) {
   return (
-    <>
-      <StyledFlexColumnWrapper>
-        <StyledLoadingSpinner />
-        <StyledConfirmText>
-          <b>{itemText}</b>
-        </StyledConfirmText>
-      </StyledFlexColumnWrapper>
-    </>
+    <StyledFlexColumnWrapper>
+      <StyledLoadingSpinner />
+      <StyledConfirmText>
+        <b>{itemText}</b>
+      </StyledConfirmText>
+    </StyledFlexColumnWrapper>
   );
 }
