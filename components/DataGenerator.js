@@ -8,8 +8,6 @@ import {
 } from "@/SharedStyledComponents";
 import { exampleData } from "@/lib/db";
 
-export { generateCompleteData };
-
 const StyledFlexWrapper = styled(StyledFlexColumnWrapper)`
   flex-direction: row;
   gap: 0.5rem;
@@ -160,17 +158,36 @@ function generateDetailedEntry() {
 
 function generateCompleteData(daysGoingBack) {
   const currentFullDate = new Date();
+  // const currentTimeStamp = currentFullDate.valueOf();
+  // console.log(currentTimeStamp);
+  const currentHour = currentFullDate.getHours();
+  const currentMinutes = currentFullDate.getMinutes();
   currentFullDate.setHours(0);
   currentFullDate.setMinutes(0);
   currentFullDate.setSeconds(0);
   const resetDate = new Date(currentFullDate);
   const daysTimestamp = resetDate.valueOf();
-  const daysToFill = [...Array(Number(daysGoingBack)).keys()];
+  const daysToFill = [...Array(Number(daysGoingBack - 1)).keys()];
   const dailyEntries = daysToFill.flatMap((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
     const array = [...generateDaysEntries(23, timeStamp)];
     return array;
   });
+
+  //construct special array for lastday so the conitinuity seem real
+  const arrayOfLastDay = generateDaysEntries(currentHour, daysTimestamp);
+  console.log(arrayOfLastDay[arrayOfLastDay.length - 1]);
+
+  const entryToChange = arrayOfLastDay[arrayOfLastDay.length - 1];
+  const correctedEntry = {
+    ...entryToChange,
+    time: currentHour + ":" + currentMinutes.toString().padStart(2, "0"),
+    timeAndDate: entryToChange.timeAndDate.split(":")[0] + ":" + currentMinutes,
+  };
+  console.log(correctedEntry);
+  arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);
+
+  const completeDailyEntries = [...dailyEntries, ...arrayOfLastDay];
 
   function compare(a, b) {
     if (a.timeStamp < b.timeStamp) {
@@ -182,7 +199,7 @@ function generateCompleteData(daysGoingBack) {
     return 0;
   }
 
-  const completeSortedEntries = dailyEntries.sort(compare).reverse();
+  const completeSortedEntries = completeDailyEntries.sort(compare).reverse();
   return completeSortedEntries;
 }
 
@@ -247,7 +264,7 @@ export default function DataGenerator({
             max={365}
             onChange={(event) => setDaysGoingBack(event.target.value)}
           />
-          <span>{"  "}</span>
+          <span> </span>
           {dayZ}
         </label>
         <StyledDevButton type="button" onClick={handleGenerate}>
@@ -275,3 +292,5 @@ export default function DataGenerator({
     </>
   );
 }
+
+export { generateCompleteData };
