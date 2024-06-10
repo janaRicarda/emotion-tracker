@@ -195,7 +195,13 @@ export default function EmotionForm({
   }
 
   return (
-    <StyledEmotionForm $color={colorValue} onSubmit={handleSubmit}>
+    <StyledEmotionForm
+      $color={
+        theme === darkTheme ? "var(--section-background)" : `${colorValue}`
+      }
+      $text={theme === darkTheme ? `${colorValue}` : "var(--contrast-text)"}
+      onSubmit={handleSubmit}
+    >
       <StyledTitle>
         {editMode
           ? emotionValue

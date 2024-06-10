@@ -9,6 +9,7 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
@@ -16,6 +17,7 @@ import ToggleSwitch from "@/components/ToggleSwitch";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
+  loading: () => <Loader itemText="... loading" />,
 });
 
 const StyledTensionForm = styled(StyledForm)`
@@ -150,14 +152,13 @@ export default function HomePage({
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
-
   useEffect(() => {
     handleToolTip({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
     });
   }, []);
 
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -272,17 +273,13 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-
-        {chartIsShown && (
-          <TensionChart
-            emotionEntries={emotionEntries}
-            theme={theme}
-            xValues={xValues}
-            yValues={yValues}
-            title="Daily Tension Graph"
-          />
-        )}
-
+        <TensionChart
+          emotionEntries={emotionEntries}
+          theme={theme}
+          xValues={xValues}
+          yValues={yValues}
+          title="Daily Tension Graph"
+        />
         <StyledGraphButton type="button" onClick={handleChart}>
           {chartIsShown === true ? "Hide chart" : "Show chart"}
         </StyledGraphButton>

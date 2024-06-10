@@ -55,7 +55,7 @@ const StyledLinkWrapper = styled.article`
   flex-direction: column;
   @media ${breakpoints.laptop} {
     padding-top: 1rem;
-    flex-direction: row;    
+    flex-direction: row;    }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
