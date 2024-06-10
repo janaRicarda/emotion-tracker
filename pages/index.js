@@ -9,6 +9,7 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
@@ -17,6 +18,7 @@ import { useSession } from "next-auth/react";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
+  loading: () => <Loader itemText="... loading" />,
 });
 
 const StyledTensionForm = styled(StyledForm)`
@@ -278,17 +280,13 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-
-        {chartIsShown && (
-          <TensionChart
-            emotionEntries={emotionEntries}
-            theme={theme}
-            xValues={xValues}
-            yValues={yValues}
-            title="Daily Tension Graph"
-          />
-        )}
-
+        <TensionChart
+          emotionEntries={emotionEntries}
+          theme={theme}
+          xValues={xValues}
+          yValues={yValues}
+          title="Daily Tension Graph"
+        />
         <StyledGraphButton type="button" onClick={handleChart}>
           {chartIsShown === true ? "Hide chart" : "Show chart"}
         </StyledGraphButton>

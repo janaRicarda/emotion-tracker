@@ -1,9 +1,11 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import ScrollToTop from "react-scroll-to-top";
+import Loader from "./Loader";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import ErrorMessage from "./ErrorMessage";
 import Tooltip from "./Tooltip";
 import { useSession } from "next-auth/react";
 import DemoLayout from "./DemoLayout";
@@ -38,12 +40,13 @@ export default function Layout({
   isScrollDown,
   demoMode,
   handleDemoMode,
+  emotionEntriesAreLoading,
+  errorFetchingEmotionEntries,
 }) {
   const { data: session } = useSession();
 
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
-  //const [emotionColor, setEmotionColor] = useState(`var(--${slug})`);
 
   function listenScrollEvent(position) {
     const colors = [
@@ -85,8 +88,13 @@ export default function Layout({
         switchTheme={switchTheme}
         demoMode={demoMode}
       />
-
-      {children}
+      {(emotionEntriesAreLoading && (
+        <Loader itemText={"App is loading..."} />
+      )) ||
+        (errorFetchingEmotionEntries && (
+          <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
+        )) ||
+        children}
       <Footer />
       {toolTip && <Tooltip toolTip={toolTip} />}
       <StyledToTopButton
