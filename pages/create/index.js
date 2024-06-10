@@ -13,7 +13,7 @@ export default function CreateIndexPage({
   onAddEmotionDetails,
   handleToolTip,
 }) {
-  const { t: translate } = useTranslation(["create-emotions"]);
+  const { t: translate } = useTranslation(["emotions"]);
 
   const router = useRouter();
   const id = router.query.id;
