@@ -124,11 +124,18 @@
   "chooseIntensity": "Wähle dein Anspannungslevel ein auf einer Skala zwischen 0 und 100:",
   "selectEmotion": "Wähle eine Emotion:",
   "inputSelectEmotion": "--wähle Emotion--",
-  "selectSubemotion": "Select Subemotion:",
+  "selectSubemotion": "Wähle eine Subemotion:",
   "inputSelectSubemotion": "--wähle Subemotion--",
   "emotionIntensity": "Intensität der Emotion:",
   "associationCategory": "Assoziationskategorie:",
   "trigger": "Auslöser:",
   "notes": "Notizen: ",
-  "successConfirmation": "Deine Änderungen wurden erfolgreich gespeichert!"
+  "successConfirmation": "Deine Änderungen wurden erfolgreich gespeichert!",
+  "keepEditing": "weiter bearbeiten",
+  "goToEmotionRecords": "Gehe zu den aufgezeichneten Emotionen",
+  "submitChanges": "Abschicken",
+  "pleasant": "angenehm",
+  "neutral": "neutral",
+  "unpleasant": "unangenehm",
+  "furtherDetailsToCreateEmotionTooltip": "Gib weitere Details zu deinem Emotionserlebnis mit dem Emotionsformular ein. Hier kannst du deine anfängliche Auswahl verfeinern, indem du bei Bedarf die Emotion änderst, eine Unteremotion angibst und die Intensität deiner Emotion auf einer Skala von 0 bis 100 misst. Klassifiziere die Emotion als unangenehm, neutral oder angenehm und gib optional Informationen zu Auslösern und Notizen ein, um deine emotionale Einsicht und Reflexion zu verbessern."
 }

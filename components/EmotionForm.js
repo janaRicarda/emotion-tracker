@@ -380,17 +380,17 @@ export default function EmotionForm({
       />
       <StyledWrapper>
         <StyledSpan>
-          {emotionValue ? (toggleCategory ? "unpleasant" : "") : ""}
+          {emotionValue ? (toggleCategory ? translate("unpleasant") : "") : ""}
         </StyledSpan>
         <StyledSpan>
           {emotionValue
             ? toggleCategory
-              ? "neutral"
+              ? translate("neutral")
               : "Disabled"
             : "Disabled"}
         </StyledSpan>
         <StyledSpan>
-          {emotionValue ? (toggleCategory ? "pleasant" : "") : ""}
+          {emotionValue ? (toggleCategory ? translate("pleasant") : "") : ""}
         </StyledSpan>
       </StyledWrapper>
       <label htmlFor="trigger">{translate("trigger")}</label>
@@ -412,7 +412,7 @@ export default function EmotionForm({
           theme === darkTheme ? `black` : `var(--text-on-bright)`
         }
       >
-        Submit
+        {translate("submitChanges")}
       </StyledSubmitButton>
       {showConfirmMessage && (
         <ConfirmMessage
@@ -420,8 +420,8 @@ export default function EmotionForm({
           confirmFunction={() => {
             router.push("/emotion-records");
           }}
-          cancelButtonText={"Keep editing"}
-          confirmButtonText={"Go to emotion records"}
+          cancelButtonText={translate("Keep editing")}
+          confirmButtonText={translate("Go to emotion records")}
           cancelButtonColor={"var(--red)"}
           confirmButtonColor={"var(--green)"}
         >

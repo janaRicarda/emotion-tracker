@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { emotionData } from "@/lib/db";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import ErrorMessage from "@/components/ErrorMessage";
+import { useTranslation } from "next-i18next";
 
 export default function EmotionEntry({
   theme,
@@ -15,14 +16,16 @@ export default function EmotionEntry({
   handleToolTip,
   useExampleData,
 }) {
-  useEffect(() => {
-    handleToolTip({
-      text: " Enter further details about your emotion experience with the emotion form. Here, you can fine-tune your initial selection by switching the emotion if needed, specifying a subemotion, and gauging the intensity of your emotion on a scale from 0 to 100. Classify the emotion as unpleasant, neutral, or pleasant, and optionally provide input on triggers and notes to enhance your emotional insight and reflection.",
-    });
-  }, []);
+  const { t: translate } = useTranslation(["emotions"]);
 
   const router = useRouter();
   const { id, slug } = router.query;
+
+  useEffect(() => {
+    handleToolTip({
+      text: `${translate("furtherDetailsToCreateEmotionTooltip")}`,
+    });
+  }, [translate]);
 
   const {
     data: correspondingDbEmotionEntry,

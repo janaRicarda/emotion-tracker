@@ -27,7 +27,7 @@ const fetcher = async (url) => {
   return response.json();
 };
 
-export function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
