@@ -2,7 +2,6 @@ import {
   StyledButton,
   StyledFlexColumnWrapper,
   StyledStandardLink,
-  StyledWrapper,
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
