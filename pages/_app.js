@@ -9,10 +9,26 @@ import { generateCompleteData } from "@/components/DataGenerator";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
+import { useRouter } from "next/router";
 
-const fetcher = (url) => fetch(url).then((response) => response.json());
+const fetcher = async (url) => {
+  const response = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!response.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await response.json();
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.json();
+};
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
@@ -109,11 +125,10 @@ export default function App({ Component, pageProps }) {
 
   const {
     data: dbEmotionEntries,
-    isLoading,
+    isLoading: emotionEntriesAreLoading,
+    error: errorFetchingEmotionEntries,
     mutate,
   } = useSWR("/api/emotionEntries", fetcher);
-
-  if (isLoading) return <h1>Loading...</h1>;
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -125,6 +140,16 @@ export default function App({ Component, pageProps }) {
 
   function handleToolTip(toolTipData) {
     setToolTip(toolTipData);
+  }
+
+  function handleError(error) {
+    router.push(
+      {
+        pathname: "/error",
+        query: { text: error, currentURL: router.pathname },
+      },
+      "/error"
+    );
   }
 
   async function handleAddEmotionEntry(data, id) {
@@ -163,6 +188,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -194,6 +220,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -231,12 +258,14 @@ export default function App({ Component, pageProps }) {
         }
         if (!response.ok) {
           console.error("Server declined: Highlighting item failed");
+          alert("Server declined: Highlighting item failed");
         }
       } catch (error) {
         console.error(
           "Your request got rejected before reaching the Server:",
-          error
+          error.message
         );
+        handleError(error.message);
       }
     }
   }
@@ -261,6 +290,7 @@ export default function App({ Component, pageProps }) {
           "Your request got rejected before reaching the Server:",
           error
         );
+        handleError(error.message);
       }
     }
   }
@@ -288,6 +318,8 @@ export default function App({ Component, pageProps }) {
           scrollPosition={scrollPosition}
           toggleTheme={toggleTheme}
           switchTheme={switchTheme}
+          emotionEntriesAreLoading={emotionEntriesAreLoading}
+          errorFetchingEmotionEntries={errorFetchingEmotionEntries}
         >
           <Component
             isScrollDown={isScrollDown}
