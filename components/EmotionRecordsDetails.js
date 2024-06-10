@@ -30,7 +30,7 @@ const TableWrapper = styled.div`
   & > * hr {
     position: relative;
     border: none;
-    border-top: 2px double white;
+    border-top: 2px double var(--main-dark);
     margin: 1rem 0;
     width: ${({ $showDetails }) => ($showDetails ? "100%" : "0%")};
     transition: width 700ms;

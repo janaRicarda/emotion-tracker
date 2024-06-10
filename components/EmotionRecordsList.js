@@ -41,6 +41,18 @@ const StyledItemInfo = styled.article`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: ${({ $showDetails }) => ($showDetails ? "none" : "block")};
+    position: absolute;
+    bottom: 1px;
+    height: 5px;
+    width: ${({ $width }) => `${$width}%`};
+    max-width: 82%;
+    background-color: var(--main-dark);
+  }
 `;
 
 const StyledParagraph = styled.p`
@@ -167,7 +179,10 @@ export default function EmotionRecordsList({
               return (
                 <section key={useExampleData ? id : _id}>
                   <StyledRecordListItem>
-                    <StyledItemInfo>
+                    <StyledItemInfo
+                      $showDetails={showDetails[useExampleData ? id : _id]}
+                      $width={tensionLevel}
+                    >
                       {isHighlighted ? (
                         <StyledMarkedHighlight
                           onClick={() =>
