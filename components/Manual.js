@@ -142,6 +142,10 @@ export default function Manual() {
     window.addEventListener("scroll", listenSrollEvent);
   });
 
+  const [detailsOpen, setDetailsOpen] = useState({});
+
+  console.log(detailsOpen);
+
   return (
     <StyledSection>
       <StyledManualTitle>
@@ -152,8 +156,20 @@ export default function Manual() {
         better. Below are some guidelines to help you navigate the app
         effectively:
       </StyledText>
-      {manualData.map(({ question, text, answers }) => (
-        <StyledDetails key={question} $itemColor={itemColor}>
+      {manualData.map(({ question, text, answers }, index) => (
+        <StyledDetails
+          open={detailsOpen.item === index ? detailsOpen.show : false}
+          onClick={(event) => {
+            event.preventDefault();
+            setDetailsOpen((prev) => ({
+              ...prev,
+              [index]: !prev[index],
+              show: !detailsOpen.show,
+            }));
+          }}
+          key={question}
+          $itemColor={itemColor}
+        >
           <StyledSummary>{question}</StyledSummary>
           <StyledDetailText>{text}</StyledDetailText>
           <StyledOl>
