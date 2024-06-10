@@ -21,6 +21,7 @@ export default function App({
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
+  const [demoMode, setDemoMode] = useState(false);
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -32,8 +33,6 @@ export default function App({
       defaultValue: [],
     }
   );
-
-  const [demoMode, setDemoMode] = useState(false);
 
   // use-effect for mediaquery
   useEffect(() => {

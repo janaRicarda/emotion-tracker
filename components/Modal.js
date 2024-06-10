@@ -35,7 +35,7 @@ const StyledLoginButton = styled.button`
   color: var(--main-dark);
 `;
 
-const StyledP = styled.p`
+const StyledParagraph = styled.p`
   width: auto;
   height: auto;
 `;
@@ -44,9 +44,9 @@ export default function StartModal({ demoMode, handleDemoMode }) {
   return (
     <StyledOverlay $display={demoMode}>
       <StyledArticle>
-        <StyledP>Login with credentials</StyledP>
+        <StyledParagraph>Login with credentials</StyledParagraph>
         <StyledLoginButton onClick={() => signIn()}>Login</StyledLoginButton>
-        <StyledP>or use app in demo-mode</StyledP>
+        <StyledParagraph>or use app in demo-mode</StyledParagraph>
         <StyledLoginButton onClick={handleDemoMode}>
           demo-mode
         </StyledLoginButton>

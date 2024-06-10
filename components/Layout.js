@@ -77,7 +77,7 @@ export default function Layout({
       {!session && (
         <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
       )}
-      {demoMode === true && <DemoLayout />}
+      {demoMode && <DemoLayout />}
       <Header
         isScrollDown={isScrollDown}
         theme={theme}
