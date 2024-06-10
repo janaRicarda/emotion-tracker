@@ -5,9 +5,10 @@ import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import HighlightIcon from "../public/highlight-icon.svg";
 import { breakpoints } from "@/utils/breakpoints";
 import DetailsSection from "./EmotionRecordsDetails";
+import HighlightIcon from "../public/icons/highlight-icon.svg";
+import HighlightIconMarked from "../public/icons/highlight-icon-marked.svg";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -92,9 +93,12 @@ const StyledEditButton = styled(PencilIcon)`
 const StyledHighlight = styled(HighlightIcon)`
   width: 2.5rem;
   height: 2.5rem;
-  fill: var(--main-dark);
-  stroke: var(--main-dark);
-  color: var(--main-dark);
+  border-radius: 50%;
+`;
+
+const StyledMarkedHighlight = styled(HighlightIconMarked)`
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
 `;
 
@@ -164,12 +168,20 @@ export default function EmotionRecordsList({
                 <section key={useExampleData ? id : _id}>
                   <StyledRecordListItem>
                     <StyledItemInfo>
-                      <StyledHighlight
-                        onClick={() =>
-                          toggleHighlight(useExampleData ? id : _id)
-                        }
-                        $highlighted={isHighlighted}
-                      />
+                      {isHighlighted ? (
+                        <StyledMarkedHighlight
+                          onClick={() =>
+                            toggleHighlight(useExampleData ? id : _id)
+                          }
+                        />
+                      ) : (
+                        <StyledHighlight
+                          onClick={() =>
+                            toggleHighlight(useExampleData ? id : _id)
+                          }
+                        />
+                      )}
+
                       <StyledParagraph
                         onClick={() =>
                           handleShowDetails(useExampleData ? id : _id)

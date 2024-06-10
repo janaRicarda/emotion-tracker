@@ -33,6 +33,8 @@ export const lightTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
+  highlightBackground: "#030352",
+  highlightedLines: "#f1eaea",
 };
 
 export const darkTheme = {
@@ -70,6 +72,8 @@ export const darkTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
   boxShadowTooltip: "10px 10px 15px black",
+  highlightBackground: "#f1eaea",
+  highlightedLines: "#322e44",
 };
 
 export const warmTheme = {
@@ -107,6 +111,8 @@ export const warmTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
   boxShadowTooltip: "10px 10px 15px black",
+  highlightBackground: "#762e72",
+  highlightedLines: "#f7e9cb",
 };
 
 export const coldTheme = {
@@ -144,6 +150,8 @@ export const coldTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #92aaab",
   boxShadowTooltip: "10px 10px 15px black",
+  highlightBackground: "#0F1555",
+  highlightedLines: "#D3F6F8",
 };
 
 export const neutralTheme = {
@@ -179,6 +187,8 @@ export const neutralTheme = {
   emotionBorder: "0.5px solid black",
   circleBorder: "1px solid black",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
+  highlightBackground: "black",
+  highlightedLines: "white",
 };
 
 export const highContrastTheme = {
@@ -215,4 +225,6 @@ export const highContrastTheme = {
   circleBorder: "1px solid yellow",
   boxShadowFilter: "none",
   boxShadowTooltip: "10px 10px 15px black",
+  highlightBackground: "yellow",
+  highlightedLines: "black",
 };
