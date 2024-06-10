@@ -144,8 +144,6 @@ export default function Manual() {
 
   const [detailsOpen, setDetailsOpen] = useState({});
 
-  console.log(detailsOpen);
-
   return (
     <StyledSection>
       <StyledManualTitle>
@@ -158,13 +156,12 @@ export default function Manual() {
       </StyledText>
       {manualData.map(({ question, text, answers }, index) => (
         <StyledDetails
-          open={detailsOpen.item === index ? detailsOpen.show : false}
+          open={detailsOpen[index] === index ? detailsOpen.show : false}
           onClick={(event) => {
             event.preventDefault();
             setDetailsOpen((prev) => ({
-              ...prev,
-              [index]: !prev[index],
-              show: !detailsOpen.show,
+              [index]: index,
+              show: prev[index] === index ? !prev.show : true,
             }));
           }}
           key={question}
