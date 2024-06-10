@@ -9,6 +9,7 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   const session = await getServerSession(request, response, AuthOptions);
+
   if (!session) {
     response.status(401).json({ status: "Not authorized" });
     return;
@@ -29,7 +30,7 @@ export default async function handler(request, response) {
       const updateEmotionEntry = request.body;
       await EmotionEntries.findByIdAndUpdate(id, updateEmotionEntry);
 
-      response
+      return response
         .status(200)
         .json({ status: "Emotion Entry successfully updated" });
     } catch (error) {

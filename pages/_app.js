@@ -41,7 +41,7 @@ export default function App({
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
-    false
+    true
   );
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
@@ -75,6 +75,8 @@ export default function App({
   useEffect(() => {
     if (session) {
       setUseExampleDate(false);
+    } else {
+      setUseExampleDate(true);
     }
   }, [session]);
 
@@ -145,7 +147,8 @@ export default function App({
     isLoading: emotionEntriesAreLoading,
     error: errorFetchingEmotionEntries,
     mutate,
-  } = useSWR("/api/emotionEntries", fetcher);
+  } = useSWR(session && "/api/emotionEntries", fetcher);
+  console.log(dbEmotionEntries);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
