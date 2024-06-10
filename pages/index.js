@@ -16,12 +16,9 @@ import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
 
 import {
-  doTensionChartData,
-  countEmotions,
   getAveragePerDay,
   getTimeSinceLastEntry,
 } from "@/utils/dataAndChartUtils";
-import EmotionChart from "@/components/EmotionChart";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -201,7 +198,6 @@ export default function HomePage({
   emotionEntries,
   toggleExampleData,
   useExampleData,
-  theme,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
@@ -265,19 +261,7 @@ export default function HomePage({
           <DashboardLink href="/emotion-records">emotion records</DashboardLink>
         </GridElement>
         <GridElement>4</GridElement>
-        <ChartElement>
-          {/* <EmotionChart
-            theme={theme}
-            type={type}
-            xValues={xValues}
-            yValues={yValues}
-            xTitle={xTitle}
-            yTitle={yTitle}
-            title={title}
-            width={width}
-            height={height}
-          /> */}
-        </ChartElement>
+        <ChartElement></ChartElement>
         {/* <GridElement>5</GridElement>
         <GridElement>6</GridElement> */}
       </DashboardSection>
