@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/icons/trash-icon.svg";
 import PencilIcon from "../public/icons/pencil.svg";
@@ -104,10 +104,15 @@ export default function EmotionRecordsList({
   toggleHighlight,
   editFromDevControls,
   useExampleData,
+  buttonState,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
+
+  useEffect(() => {
+    setShowDetails(false);
+  }, [buttonState]);
 
   const router = useRouter();
 

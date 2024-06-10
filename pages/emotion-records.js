@@ -293,6 +293,7 @@ export default function EmotionRecords({
       {shownEntries.length !== 0 && (
         <ControlPadding>
           <EmotionRecordsList
+            buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
