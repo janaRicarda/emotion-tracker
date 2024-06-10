@@ -8,5 +8,6 @@
   "graphTitle": "Tages-Spannungskurve",
   "hideChart": "Diagramm verbergen",
   "showChart": "Diagramm anzeigen",
-  "toolTipText": "Auf dieser Seite können Sie Ihr Spannungsniveau auf einer Skala von 0 bis 100 angeben. Drücken Sie anschließend einfach auf die Schaltfläche „Speichern“, um Ihre Eingaben zu speichern."
+  "toolTipText": "Auf dieser Seite können Sie Ihr Spannungsniveau auf einer Skala von 0 bis 100 angeben. Drücken Sie anschließend einfach auf die Schaltfläche „Speichern“, um Ihre Eingaben zu speichern.",
+  "exampleData": "Verwende Beispieldaten"
 }

@@ -120,5 +120,15 @@
   ],
 
   "createEmotionTitle": "Wähle eine der Emotionen",
-  "createEmotionTooltip": "Wähle die Emotion aus, die am besten widerspiegelt, wie du dich gerade fühlst. Nutze die bereitgestellten visuellen Hinweise, kurzen Beschreibungen und Beispiele, um deine Wahl zu treffen."
+  "createEmotionTooltip": "Wähle die Emotion aus, die am besten widerspiegelt, wie du dich gerade fühlst. Nutze die bereitgestellten visuellen Hinweise, kurzen Beschreibungen und Beispiele, um deine Wahl zu treffen.",
+  "chooseIntensity": "Wähle dein Anspannungslevel ein auf einer Skala zwischen 0 und 100:",
+  "selectEmotion": "Wähle eine Emotion:",
+  "inputSelectEmotion": "--wähle Emotion--",
+  "selectSubemotion": "Select Subemotion:",
+  "inputSelectSubemotion": "--wähle Subemotion--",
+  "emotionIntensity": "Intensität der Emotion:",
+  "associationCategory": "Assoziationskategorie:",
+  "trigger": "Auslöser:",
+  "notes": "Notizen: ",
+  "successConfirmation": "Deine Änderungen wurden erfolgreich gespeichert!"
 }

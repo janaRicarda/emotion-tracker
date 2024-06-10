@@ -219,7 +219,7 @@ export default function EmotionForm({
         {editMode ? `Entry from:` : "Date: "} {timeAndDate}
       </p>
       <TensionLabelEdit htmlFor="tension-level">
-        Choose a tension level between 0 and 100:
+        {translate("chooseIntensity")}{" "}
       </TensionLabelEdit>
       <StyledEmotionInput
         aria-label="Adjust tension level between 0 and 100"
@@ -247,7 +247,7 @@ export default function EmotionForm({
         <StyledSpan>{tensionValue}</StyledSpan>
         <StyledSpan>100</StyledSpan>
       </StyledWrapper>
-      <label htmlFor="emotion">Select an emotion:</label>
+      <label htmlFor="emotion">{translate("selectEmotion")}</label>
       <StyledSelect
         id="emotion"
         name="emotion"
@@ -256,14 +256,14 @@ export default function EmotionForm({
           handleChangeEmotion(event.target.value);
         }}
       >
-        <option value={""}>--select emotion--</option>
+        <option value={""}>{translate("inputSelectEmotion")}</option>
         {emotionData.map((emotion) => (
           <option key={emotion.name} value={emotion.name}>
             {emotion.name}
           </option>
         ))}
       </StyledSelect>
-      <label htmlFor="subemotion">Select Subemotion:</label>
+      <label htmlFor="subemotion">{translate("selectSubemotion")}</label>
       <StyledSelect
         disabled={emotionValue ? false : true}
         value={`${selectedSubemotionValue}`}
@@ -276,7 +276,7 @@ export default function EmotionForm({
           })
         }
       >
-        <option value={""}>--select subemotion--</option>
+        <option value={""}>{translate("inputSelectSubemotion")}</option>
         {subemotionOptions.map((sub) => (
           <option key={sub} value={sub}>
             {sub}
@@ -284,7 +284,7 @@ export default function EmotionForm({
         ))}
       </StyledSelect>
       <StyledLabel htmlFor="intensity">
-        Emotion Intensity:{" "}
+        {translate("emotionIntensity")}{" "}
         {emotionValue && (
           <ToggleSwitch
             aria-label="Switch intensity input on and off"
@@ -337,7 +337,7 @@ export default function EmotionForm({
         </StyledSpan>
       </StyledWrapper>
       <StyledLabel htmlFor="category">
-        Association Category:{" "}
+        {translate("associationCategory")}{" "}
         {emotionValue && (
           <ToggleSwitch
             aria-label="Switch association category input on and off"
@@ -393,13 +393,13 @@ export default function EmotionForm({
           {emotionValue ? (toggleCategory ? "pleasant" : "") : ""}
         </StyledSpan>
       </StyledWrapper>
-      <label htmlFor="trigger">Trigger:</label>
+      <label htmlFor="trigger">{translate("trigger")}</label>
       <StyledTextarea
         id="trigger"
         name="trigger"
         defaultValue={triggerValue}
       ></StyledTextarea>
-      <label htmlFor="notes">Notes: </label>
+      <label htmlFor="notes">{translate("notes")}</label>
       <StyledTextarea
         id="notes"
         name="notes"
@@ -425,7 +425,7 @@ export default function EmotionForm({
           cancelButtonColor={"var(--red)"}
           confirmButtonColor={"var(--green)"}
         >
-          Your changes were saved successfully!
+          {translate("successConfirmation")}
         </ConfirmMessage>
       )}
     </StyledEmotionForm>

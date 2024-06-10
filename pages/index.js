@@ -223,7 +223,7 @@ export default function HomePage({
           <ToggleSwitch
             handleSwitch={toggleExampleData}
             isChecked={useExampleData}
-            text={"Use Example data"}
+            text={translate("exampleData")}
           />
         </ToggleSwitchWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
