@@ -17,7 +17,6 @@ export default function EmotionListPage({ handleToolTip }) {
     });
   }, [translate]);
 
-
   return (
     <>
       <Head>

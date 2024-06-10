@@ -1,7 +1,8 @@
 import EmotionForm from "@/components/EmotionForm";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 
 export default function EditPage({
   theme,
@@ -11,13 +12,14 @@ export default function EditPage({
   useExampleData,
 }) {
   const router = useRouter();
+  const { t: translate } = useTranslation(["emotions"]);
 
   const { id } = router.query;
   useEffect(() => {
     handleToolTip({
-      text: "  Refine your emotion entry with the editing form. Adjust your initial selection by switching the emotion if necessary, selecting a subemotion, and updating the intensity of your emotion on a scale from 0 to 100. Re-classify the emotion as unpleasant, neutral, or pleasant, and optionally revise any triggers or notes to further enrich your emotional record.",
+      text: `${translate("editEmotionEntryTooltip")}`,
     });
-  }, []);
+  }, [translate]);
 
   const correspondingEntry = useExampleData
     ? emotionEntries.find((entry) => entry.id === id)

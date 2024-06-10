@@ -209,10 +209,10 @@ export default function EmotionForm({
       <StyledTitle>
         {editMode
           ? emotionValue
-            ? `Edit your ${emotionValue}`
+            ? `${translate("editYour")} ${emotionValue}`
             : `Edit your Emotion-Entry`
           : emotionValue
-          ? `Record your ${emotionValue}`
+          ? `${translate("recordYour")} ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledTitle>
       <p aria-label="Date and time">
@@ -420,8 +420,8 @@ export default function EmotionForm({
           confirmFunction={() => {
             router.push("/emotion-records");
           }}
-          cancelButtonText={translate("Keep editing")}
-          confirmButtonText={translate("Go to emotion records")}
+          cancelButtonText={translate("keepEditing")}
+          confirmButtonText={translate("goToEmotionRecords")}
           cancelButtonColor={"var(--red)"}
           confirmButtonColor={"var(--green)"}
         >

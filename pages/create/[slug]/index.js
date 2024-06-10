@@ -33,7 +33,7 @@ export default function EmotionEntry({
     error,
   } = useSWR(!useExampleData && `/api/emotionEntries/${id}`);
 
-  if (isLoading) return <Loader itemText={"Is Loading"} />;
+  if (isLoading) return <Loader itemText={translate("isLoading")} />;
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
 
