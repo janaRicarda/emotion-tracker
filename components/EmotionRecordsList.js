@@ -50,7 +50,7 @@ const StyledItemInfo = styled.article`
     bottom: 1px;
     height: 5px;
     width: ${({ $width }) => `${$width}%`};
-    max-width: 82%;
+    /* max-width: 82%; */
     background-color: var(--main-dark);
   }
 `;
@@ -181,7 +181,7 @@ export default function EmotionRecordsList({
                   <StyledRecordListItem>
                     <StyledItemInfo
                       $showDetails={showDetails[useExampleData ? id : _id]}
-                      $width={tensionLevel}
+                      $width={(tensionLevel / 100) * 0.82 * 100}
                     >
                       {isHighlighted ? (
                         <StyledMarkedHighlight

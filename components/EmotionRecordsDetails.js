@@ -70,7 +70,6 @@ const ProgressBar = styled.div`
   &::after {
     content: "";
     position: absolute;
-    left: 1%;
     top: 20%;
     height: 60%;
     width: ${({ $progress, $showDetails }) =>
