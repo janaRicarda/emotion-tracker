@@ -27,7 +27,7 @@ const fetcher = async (url) => {
   return response.json();
 };
 
-export default function App({ Component, pageProps }) {
+export function App({ Component, pageProps }) {
   const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
@@ -342,4 +342,4 @@ export default function App({ Component, pageProps }) {
   );
 }
 
-appWithTranslation(App);
+export default appWithTranslation(App);
