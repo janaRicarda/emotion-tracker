@@ -1,10 +1,12 @@
 import EmotionForm from "@/components/EmotionForm";
+import Loader from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Head from "next/head";
 import useSWR from "swr";
 import { emotionData } from "@/lib/db";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import ErrorMessage from "@/components/ErrorMessage";
 
 export default function EmotionEntry({
   theme,
@@ -20,14 +22,17 @@ export default function EmotionEntry({
   }, []);
 
   const router = useRouter();
-  const { id } = router.query;
-  const { slug } = router.query;
+  const { id, slug } = router.query;
 
-  const { data: correspondingDbEmotionEntry, isLoading } = useSWR(
-    !useExampleData && `/api/emotionEntries/${id}`
-  );
+  const {
+    data: correspondingDbEmotionEntry,
+    isLoading,
+    error,
+  } = useSWR(!useExampleData && `/api/emotionEntries/${id}`);
 
-  if (isLoading) return <h2>Is Loading...</h2>;
+  if (isLoading) return <Loader itemText={"Is Loading"} />;
+
+  if (error) return <ErrorMessage errorMessage={error.message} />;
 
   if (!router.query) {
     return null;

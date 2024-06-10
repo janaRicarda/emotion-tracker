@@ -9,6 +9,7 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import Loader from "@/components/Loader";
 import dynamic from "next/dynamic";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -18,6 +19,7 @@ import ToggleSwitch from "@/components/ToggleSwitch";
 
 const TensionChart = dynamic(() => import("../components/TensionChart"), {
   ssr: false,
+  loading: () => <Loader itemText="... loading" />,
 });
 
 const StyledTensionForm = styled(StyledForm)`
@@ -152,8 +154,6 @@ export default function HomePage({
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
-
   const { t: translate } = useTranslation("common");
 
   useEffect(() => {
@@ -162,6 +162,7 @@ export default function HomePage({
     });
   }, [translate]);
 
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);

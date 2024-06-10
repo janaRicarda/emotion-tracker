@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { emotionData } from "@/lib/db";
 import { useState } from "react";
 import Circle from "../public/icons/circle.svg";
 import ConfirmMessage from "./ConfirmMessage";
@@ -204,7 +203,7 @@ export default function EmotionForm({
       $color={
         theme === darkTheme ? "var(--section-background)" : `${colorValue}`
       }
-      $text={theme === darkTheme ? `${colorValue}` : "var(--text-on-bright)"}
+      $text={theme === darkTheme ? `${colorValue}` : "var(--contrast-text)"}
       onSubmit={handleSubmit}
     >
       <StyledTitle>

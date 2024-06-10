@@ -84,8 +84,8 @@ const StyledLogoLink = styled(StyledStandardLink)`
 const StyledLogo = styled(Logo)`
   max-width: 8rem;
   max-height: 8rem;
-  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
-  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "6rem")};
+  width: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
+  height: ${({ $isScrollDown }) => ($isScrollDown ? "4rem" : "8rem")};
   ${transition}
 `;
 
