@@ -1,6 +1,26 @@
 import styled from "styled-components";
 
-const StyledWrapper = styled.div`
+const StyledDetailsSection = styled.section`
+  display: grid;
+  position: relative;
+  transition: grid-template-rows 600ms;
+  grid-template-rows: ${({ $showDetails }) => ($showDetails ? "1fr" : "0fr")};
+  overflow: hidden;
+  padding: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: ${({ $showDetails }) => ($showDetails ? "100%" : "0")};
+    background-color: var(--main-dark);
+    transition: all 600ms;
+  }
+`;
+
+const TableWrapper = styled.div`
   overflow: hidden;
 
   & > * span {
@@ -54,14 +74,15 @@ const ProgressBar = styled.div`
     top: 20%;
     height: 60%;
     width: ${({ $progress, $showDetails }) =>
-      $showDetails ? `${$progress}%` : "0px"};
+      $showDetails ? `${$progress}%` : "0"};
     background: var(--button-background);
     border-radius: 6px;
-    transition: width 400ms 600ms;
+    transition: width 400ms;
+    transition-delay: ${({ $showDetails }) => ($showDetails ? "500ms" : "0ms")};
   }
 `;
 
-export default function DetailsList({ listItems, showDetails }) {
+export default function DetailsSection({ listItems, showDetails }) {
   const {
     tensionLevel,
     emotion,
@@ -73,65 +94,67 @@ export default function DetailsList({ listItems, showDetails }) {
   } = listItems;
 
   return (
-    <StyledWrapper $showDetails={showDetails}>
-      <table>
-        {tensionLevel && (
-          <tr>
-            <td>Tension:</td>
-            <td>
-              <ProgressBar
-                $showDetails={showDetails}
-                $progress={tensionLevel}
-              />
-              <span>{tensionLevel}%</span>
-            </td>
-          </tr>
-        )}
-        {emotion && (
-          <tr>
-            <td>Emotion:</td>
-            <td>
-              {emotion}
-              {subemotion && `, ${subemotion}`}
-            </td>
-          </tr>
-        )}
-        {intensity && (
-          <tr>
-            <td>Intensity:</td>
-            <td>
-              <ProgressBar $showDetails={showDetails} $progress={intensity} />
-              <span>{intensity} %</span>
-            </td>
-          </tr>
-        )}
-        {category && (
-          <tr>
-            <td>Pleasantn.:</td>
-            <td>
-              <ProgressBar $showDetails={showDetails} $progress={category} />
-              <span>{category}%</span>
-            </td>
-          </tr>
-        )}
-        {(trigger || notes) && <hr />}
-        {trigger && (
-          <>
+    <StyledDetailsSection $showDetails={showDetails}>
+      <TableWrapper $showDetails={showDetails}>
+        <table>
+          {tensionLevel && (
             <tr>
-              <b>Trigger:</b>
+              <td>Tension:</td>
+              <td>
+                <ProgressBar
+                  $showDetails={showDetails}
+                  $progress={tensionLevel}
+                />
+                <span>{tensionLevel}%</span>
+              </td>
             </tr>
-            <tr>{trigger}</tr>
-          </>
-        )}
-        {notes && (
-          <>
+          )}
+          {emotion && (
             <tr>
-              <b>Notes:</b>
+              <td>Emotion:</td>
+              <td>
+                {emotion}
+                {subemotion && `, ${subemotion}`}
+              </td>
             </tr>
-            <tr>{notes}</tr>
-          </>
-        )}
-      </table>
-    </StyledWrapper>
+          )}
+          {intensity && (
+            <tr>
+              <td>Intensity:</td>
+              <td>
+                <ProgressBar $showDetails={showDetails} $progress={intensity} />
+                <span>{intensity} %</span>
+              </td>
+            </tr>
+          )}
+          {category && (
+            <tr>
+              <td>Pleasantn.:</td>
+              <td>
+                <ProgressBar $showDetails={showDetails} $progress={category} />
+                <span>{category}%</span>
+              </td>
+            </tr>
+          )}
+          {(trigger || notes) && <hr />}
+          {trigger && (
+            <>
+              <tr>
+                <b>Trigger:</b>
+              </tr>
+              <tr>{trigger}</tr>
+            </>
+          )}
+          {notes && (
+            <>
+              <tr>
+                <b>Notes:</b>
+              </tr>
+              <tr>{notes}</tr>
+            </>
+          )}
+        </table>
+      </TableWrapper>
+    </StyledDetailsSection>
   );
 }

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
 import HighlightIcon from "../public/highlight-icon.svg";
 import { breakpoints } from "@/utils/breakpoints";
-import DetailsList from "./EmotionRecordsDetails";
+import DetailsSection from "./EmotionRecordsDetails";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -48,26 +48,6 @@ const StyledParagraph = styled.p`
   margin: 0.5rem auto;
   padding: 0.5rem;
   cursor: pointer;
-`;
-
-const StyledDetails = styled(StyledList)`
-  display: grid;
-  position: relative;
-  transition: grid-template-rows 600ms;
-  grid-template-rows: ${({ $showDetails }) => ($showDetails ? "1fr" : "0fr")};
-  overflow: hidden;
-  padding: 0;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 1px;
-    width: ${({ $showDetails }) => ($showDetails ? "100%" : "0")};
-    background-color: var(--main-dark);
-    transition: all 600ms;
-  }
 `;
 
 const StyledIconWrapper = styled.article`
@@ -212,31 +192,18 @@ export default function EmotionRecordsList({
                         />
                       </StyledIconWrapper>
                     </StyledItemInfo>
-                    <StyledDetails
-                      $showDetails={showDetails[useExampleData ? id : _id]}
-                    >
-                      <DetailsList
-                        listItems={{
-                          tensionLevel,
-                          emotion,
-                          subemotion,
-                          intensity,
-                          category,
-                          trigger,
-                          notes,
-                        }}
-                        showDetails={showDetails[useExampleData ? id : _id]}
-                      />
-                      {/* <div>
-                        <li>Tension Level: {tensionLevel}%</li>
-                        {emotion && <li>Emotion: {emotion}</li>}
-                        {subemotion && <li>Subemotion: {subemotion}</li>}
-                        {intensity && <li>Intensity: {intensity}%</li>}
-                        {category && <li>Pleasantness: {category}%</li>}
-                        {trigger && <li>Trigger: {trigger}</li>}
-                        {notes && <li>Notes: {notes}</li>}
-                      </div> */}
-                    </StyledDetails>
+                    <DetailsSection
+                      listItems={{
+                        tensionLevel: `${tensionLevel}`,
+                        emotion,
+                        subemotion,
+                        intensity,
+                        category,
+                        trigger,
+                        notes,
+                      }}
+                      showDetails={showDetails[useExampleData ? id : _id]}
+                    />
                   </StyledRecordListItem>
                   {showConfirmMessage[useExampleData ? id : _id] && (
                     <ConfirmMessage
