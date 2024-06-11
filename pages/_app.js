@@ -4,7 +4,6 @@ import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
-import generateExampleData from "@/utils/exampleData";
 import { generateCompleteData } from "@/components/DataGenerator";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";

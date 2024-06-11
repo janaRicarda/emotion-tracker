@@ -5,7 +5,8 @@ import Loader from "@/components/Loader";
 import ToggleSwitch from "./ToggleSwitch";
 import {
   chartPresets,
-  doTensionChartData,
+  calculateTensionChartData,
+  getFilteredEntriesV2,
   countEmotions,
 } from "@/utils/dataAndChartUtils";
 import styled from "styled-components";
@@ -24,10 +25,10 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 92vw;
-  min-height: 450px;
+  width: 90vw;
+  min-height: 100px;
   max-height: fit-content;
-  margin-top: 5rem;
+  margin: 1rem;
   align-items: center;
   border-radius: 18px;
   justify-content: center;
@@ -36,16 +37,8 @@ const ChartSection = styled.section`
   @media ${breakpoints.mobileLandscape} {
   }
   @media ${breakpoints.tablet} {
-    display: block;
-    padding: 1rem;
-    left: 5rem;
-    width: 92vw;
   }
   @media ${breakpoints.laptop} {
-    display: block;
-    padding: 1rem;
-    left: 5rem;
-    width: 92vw;
   }
 `;
 
@@ -64,8 +57,8 @@ const ToggleContainer = styled.div`
   justify-content: space-between;
   height: 24px;
   padding: 0.2rem;
-  width: inherit;
-  margin: 0 0 0.8rem;
+  width: 8rem;
+  margin: 0;
   gap: 0.1rem;
   background-color: var(--section-background);
   border-radius: 6px;
@@ -74,42 +67,18 @@ const SwitchSizer = styled.span`
   transform: scale(0.6);
 `;
 
-const StyledGraphButtonsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr;
-  gap: 0.3rem;
-  max-width: 90vw;
-  align-items: center;
-  @media ${breakpoints.tablet} {
-    max-width: 50vw;
-  }
-  @media ${breakpoints.laptop} {
-    max-width: 50vw;
-  }
-`;
-const Chartwrapper = styled(StyledFlexColumnWrapper)`
-  @media ${breakpoints.tablet} {
-    margin-left: 10rem;
-    max-width: 90vw;
-  }
-  @media ${breakpoints.laptop} {
-    margin-left: 20rem;
-  }
-`;
-
 export default function ChartContainerV2({
   shownEntries,
   theme,
   heightFactor,
+  xValues,
+  yValues,
 }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
   const [chartState, setChartState] = useState(tension);
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
-
-  const xValues = doTensionChartData(shownEntries).xValues;
-  const yValues = doTensionChartData(shownEntries).yValues;
 
   //make chart responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -122,7 +91,7 @@ export default function ChartContainerV2({
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const width = Math.max(280, Math.round(windowWidth / 2));
+  const width = Math.max(240, Math.round(windowWidth / 2));
 
   const height = Math.round(width * Number(heightFactor));
   function handleChartType() {
@@ -146,31 +115,30 @@ export default function ChartContainerV2({
 
   return (
     <ChartSection>
-      <EmotionChart
-        theme={theme}
-        type={type}
-        xValues={xValues}
-        yValues={yValues}
-        xTitle={xTitle}
-        yTitle={yTitle}
-        title={title}
-        width={width}
-        height={height}
-      />
-
       <StyledFlexColumnWrapper>
-        <ToggleContainer>
-          <Icon path={mdiChartLine} size={1} />
-          <SwitchSizer>
-            <ToggleSwitch
-              handleSwitch={handleChartType}
-              isChecked={!scatter}
-              useButtonColor={true}
-            />
-          </SwitchSizer>
-          <Icon path={mdiChartBar} size={1} />
-        </ToggleContainer>
+        <EmotionChart
+          theme={theme}
+          type={type}
+          xValues={xValues}
+          yValues={yValues}
+          xTitle={xTitle}
+          yTitle={yTitle}
+          title={title}
+          width={width}
+          height={height}
+        />
       </StyledFlexColumnWrapper>
+      <ToggleContainer>
+        <Icon path={mdiChartLine} size={1} />
+        <SwitchSizer>
+          <ToggleSwitch
+            handleSwitch={handleChartType}
+            isChecked={!scatter}
+            useButtonColor={true}
+          />
+        </SwitchSizer>
+        <Icon path={mdiChartBar} size={1} />
+      </ToggleContainer>
     </ChartSection>
   );
 }

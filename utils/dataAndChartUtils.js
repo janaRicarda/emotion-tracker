@@ -92,7 +92,7 @@ export function countEmotions(entries) {
   return countResults;
 }
 
-export function doTensionChartData(entries) {
+export function calculateTensionChartData(entries) {
   function compare(a, b) {
     if (a.isoDate < b.isoDate) {
       return -1;
@@ -114,4 +114,12 @@ export function doTensionChartData(entries) {
   const tensionYValues = filteredData.map((entry) => entry.tensionLevel);
   const tensionChartData = { xValues: tensionXValues, yValues: tensionYValues };
   return tensionChartData;
+}
+
+//helper functions
+export function getFilteredEntriesV2(chosenDate, entries) {
+  const filteredEntries = entries.filter((entry) =>
+    entry.isoDate.slice(0, 10) === chosenDate.slice(0, 10) ? entry : null
+  );
+  return filteredEntries;
 }

@@ -6,21 +6,14 @@ import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import Loader from "@/components/Loader";
 import {
   getAveragePerDay,
   getTimeSinceLastEntry,
-  doTensionChartData,
-  chartPresets,
+  calculateTensionChartData,
+  getFilteredEntriesV2,
 } from "@/utils/dataAndChartUtils";
 
-import dynamic from "next/dynamic";
 import ChartContainerV2 from "@/components/ChartContainerV2";
-
-const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
-  ssr: false,
-  loading: () => <Loader itemText="... loading" />,
-});
 
 const ToggleSwitchWrapper = styled.div`
   display: flex;
@@ -72,12 +65,11 @@ const DashboardSection = styled.section`
   gap: 0.5rem;
   width: 92vw;
   min-height: 420px;
-  max-height: fit-content;
+  max-height: 1200px;
   margin: 0;
   align-items: center;
   border-radius: 18px;
   justify-content: center;
-  /* background-color: var(--section-background); */
 
   @media ${breakpoints.mobileLandscape} {
   }
@@ -86,11 +78,12 @@ const DashboardSection = styled.section`
   @media ${breakpoints.laptop} {
     display: block;
     padding: 1rem;
-    left: 5rem;
     width: 92vw;
   }
 `;
 const GridElement = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: 18px;
   padding: 0.5rem;
   border: 1px solid var(--main-dark);
@@ -136,18 +129,22 @@ export default function HomePage({
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
+  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+
   //for dashboard
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
 
   //chart
-  const { title, xTitle, yTitle, scatter } = chartPresets.tension;
-
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+  // const { title, xTitle, yTitle, scatter } = chartPresets.tension;
+  const today = new Date().toISOString();
+  const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
+  const xValues = calculateTensionChartData(filteredEntries).xValues;
+  const yValues = calculateTensionChartData(filteredEntries).yValues;
 
   useEffect(() => {
     handleToolTip({
-      text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
+      text: "This is your dashboard ...",
     });
   }, []);
 
@@ -226,8 +223,10 @@ export default function HomePage({
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            heightFactor={0.5}
+            heightFactor={0.25}
             shownEntries={emotionEntries}
+            xValues={xValues}
+            yValues={yValues}
           ></ChartContainerV2>
         </ChartElement>
         {/* <GridElement>5</GridElement>
