@@ -66,7 +66,7 @@ export default function ConfirmMessage({
   cancelButtonColor,
   confirmButtonColor,
 }) {
-  // for animation-state, useEffect and timeeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
+  // for animation-state, useEffect and timeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
   //
   const [animation, setAnimation] = useState(false);
 
