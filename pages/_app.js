@@ -41,7 +41,7 @@ export default function App({
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
-    true
+    false
   );
 
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
@@ -73,13 +73,15 @@ export default function App({
     };
   }, []);
 
-  useEffect(() => {
+  //useEffect kann weg useExampleData wird jetzt beim sign in auf false gesetzt?
+
+  /*   useEffect(() => {
     if (session) {
       setUseExampleDate(false);
     } else {
       setUseExampleDate(true);
     }
-  }, [session]);
+  }, [session]); */
 
   const initialData = generateExampleData();
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
@@ -141,6 +143,11 @@ export default function App({
   function handleDemoMode() {
     setDemoMode(true);
     setUseExampleDate(true);
+  }
+
+  function handleDemoModeOff() {
+    setDemoMode(false);
+    setUseExampleDate(false);
   }
 
   const {
@@ -324,8 +331,7 @@ export default function App({
   function restoreFromBackup() {
     setEmotionEntries(backupEntries);
   }
-  console.log(dbEmotionEntries);
-  console.log(emotionEntries);
+
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
@@ -334,6 +340,7 @@ export default function App({
           <Layout
             demoMode={demoMode}
             handleDemoMode={handleDemoMode}
+            handleDemoModeOff={handleDemoModeOff}
             toolTip={toolTip}
             theme={theme}
             isScrollDown={isScrollDown}
@@ -358,7 +365,6 @@ export default function App({
               onRestore={restoreFromBackup}
               backupEntries={backupEntries}
               toggleHighlight={toggleHighlight}
-              toggleExampleData={handleUseExampleData}
               useExampleData={useExampleData}
               demoMode={demoMode}
               scrollPosition={scrollPosition}

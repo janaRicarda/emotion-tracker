@@ -10,7 +10,7 @@ const StyledParagraph = styled.p`
   margin-right: 0.8rem;
 `;
 
-export default function Login() {
+export default function Login({ handleDemoModeOff }) {
   const { data: session } = useSession();
 
   if (session) {
@@ -24,7 +24,13 @@ export default function Login() {
     );
   }
   return (
-    <StyledButton $login onClick={() => signIn()}>
+    <StyledButton
+      $login
+      onClick={() => {
+        signIn();
+        handleDemoModeOff();
+      }}
+    >
       Sign in
     </StyledButton>
   );

@@ -40,6 +40,7 @@ export default function Layout({
   isScrollDown,
   demoMode,
   handleDemoMode,
+  handleDemoModeOff,
   emotionEntriesAreLoading,
   errorFetchingEmotionEntries,
 }) {
@@ -78,7 +79,11 @@ export default function Layout({
   return (
     <>
       {!session && (
-        <StartModal demoMode={demoMode} handleDemoMode={handleDemoMode} />
+        <StartModal
+          demoMode={demoMode}
+          handleDemoMode={handleDemoMode}
+          handleDemoModeOff={handleDemoModeOff}
+        />
       )}
       {demoMode && <DemoLayout />}
       <Header
@@ -87,6 +92,7 @@ export default function Layout({
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
         demoMode={demoMode}
+        handleDemoModeOff={handleDemoModeOff}
       />
       {(emotionEntriesAreLoading && (
         <Loader itemText={"App is loading..."} />

@@ -92,6 +92,7 @@ export default function Header({
   toggleTheme,
   switchTheme,
   isScrollDown,
+  handleDemoModeOff,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -105,7 +106,7 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        <Login />
+        <Login handleDemoModeOff={handleDemoModeOff} />
         <StyledIconWrapper $isScrollDown={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (
             <StyledToggleTheme type="button" onClick={toggleTheme}>
