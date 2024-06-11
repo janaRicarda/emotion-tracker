@@ -154,7 +154,9 @@ export default function HomePage({
   const [showInfoBox, setShowInfoBox] = useState(false);
   console.log(emotionEntries);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
+  const newestDbEntryID = emotionEntries?.length
+    ? emotionEntries[emotionEntries.length - 1]?._id
+    : null;
 
   const { data: session } = useSession();
 
@@ -188,13 +190,16 @@ export default function HomePage({
     return 0;
   }
   const filteredData = emotionEntries
-    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .sort(compare);
+    ? emotionEntries
+        .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
+        .sort(compare)
+    : [];
   const xValues = filteredData.map((entry) => entry.timeAndDate.slice(-5));
   const yValues = filteredData.map((entry) => entry.tensionLevel);
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+
   return (
     <>
       <Head>
