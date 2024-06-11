@@ -86,7 +86,7 @@ const StyledIconWrapper = styled.article`
 `;
 
 const StyledDeleteButton = styled(TrashIcon)`
-  width: 1.6rem;
+  width: 2rem;
 
   fill: var(--main-dark);
   &:hover {
@@ -95,7 +95,7 @@ const StyledDeleteButton = styled(TrashIcon)`
 `;
 
 const StyledEditButton = styled(PencilIcon)`
-  width: 1.6rem;
+  width: 2rem;
 
   fill: var(--main-dark);
   &:hover {
