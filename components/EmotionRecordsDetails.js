@@ -23,6 +23,10 @@ const StyledDetailsSection = styled.section`
 const TableWrapper = styled.div`
   overflow: hidden;
 
+  & > table {
+    width: 100%;
+  }
+
   & > * span {
     font-size: 0.8rem;
   }
