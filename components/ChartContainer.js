@@ -26,7 +26,9 @@ const ChartSection = styled.section`
   margin: 0.5rem 0 2rem;
   border-radius: 18px;
   background-color: var(--section-background);
-  width: ${({ $width }) => `${$width}px`};
+  width: 80vw;
+  min-width: ${({ $width }) => `${$width}px`};
+  max-width: 575px;
 `;
 
 const StyledGraphButton = styled(StyledButton)`

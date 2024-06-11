@@ -136,20 +136,19 @@ const StyledDateSpan = styled.span`
 `;
 
 const StyledListContainer = styled.div`
-  width: 70vw;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   @media ${breakpoints.tablet} {
-    width: 50vw;
     margin-top: 0;
-    margin-left: 30vw;
+    margin-left: 35%;
   }
   @media ${breakpoints.laptop} {
     margin-top: 0;
-    margin-left: 35%;
+    margin-left: 40%;
   }
 `;
 
