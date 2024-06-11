@@ -6,11 +6,21 @@ import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
-
+import Loader from "@/components/Loader";
 import {
   getAveragePerDay,
   getTimeSinceLastEntry,
+  doTensionChartData,
+  chartPresets,
 } from "@/utils/dataAndChartUtils";
+
+import dynamic from "next/dynamic";
+import ChartContainerV2 from "@/components/ChartContainerV2";
+
+const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
+  ssr: false,
+  loading: () => <Loader itemText="... loading" />,
+});
 
 const ToggleSwitchWrapper = styled.div`
   display: flex;
@@ -121,6 +131,7 @@ export default function HomePage({
   emotionEntries,
   toggleExampleData,
   useExampleData,
+  theme,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
@@ -128,6 +139,9 @@ export default function HomePage({
   //for dashboard
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
+
+  //chart
+  const { title, xTitle, yTitle, scatter } = chartPresets.tension;
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
@@ -209,7 +223,13 @@ export default function HomePage({
           <DashboardLink href="/emotion-records">emotion records</DashboardLink>
         </GridElement>
         <GridElement>4</GridElement>
-        <ChartElement></ChartElement>
+        <ChartElement>
+          <ChartContainerV2
+            theme={theme}
+            heightFactor={0.5}
+            shownEntries={emotionEntries}
+          ></ChartContainerV2>
+        </ChartElement>
         {/* <GridElement>5</GridElement>
         <GridElement>6</GridElement> */}
       </DashboardSection>

@@ -158,8 +158,6 @@ function generateDetailedEntry() {
 
 function generateCompleteData(daysGoingBack) {
   const currentFullDate = new Date();
-  // const currentTimeStamp = currentFullDate.valueOf();
-  // console.log(currentTimeStamp);
   const currentHour = currentFullDate.getHours();
   const currentMinutes = currentFullDate.getMinutes();
   currentFullDate.setHours(0);
@@ -176,17 +174,15 @@ function generateCompleteData(daysGoingBack) {
 
   //construct special array for lastday so the conitinuity seem real
   const arrayOfLastDay = generateDaysEntries(currentHour, daysTimestamp);
-  console.log(arrayOfLastDay[arrayOfLastDay.length - 1]);
-
   const entryToChange = arrayOfLastDay[arrayOfLastDay.length - 1];
+
   const correctedEntry = {
     ...entryToChange,
     time: currentHour + ":" + currentMinutes.toString().padStart(2, "0"),
     timeAndDate: entryToChange.timeAndDate.split(":")[0] + ":" + currentMinutes,
   };
-  console.log(correctedEntry);
-  arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);
 
+  arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);
   const completeDailyEntries = [...dailyEntries, ...arrayOfLastDay];
 
   function compare(a, b) {
