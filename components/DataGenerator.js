@@ -211,7 +211,6 @@ export default function DataGenerator({
       return setSmallMessage("Please use a number below 366!");
 
     setSmallMessage(`Generated data for ${daysGoingBack} ${dayZ}`);
-    console.log(newData);
   }
 
   function handleDeleteAll() {
@@ -274,3 +273,5 @@ export default function DataGenerator({
     </>
   );
 }
+
+export { generateCompleteData };

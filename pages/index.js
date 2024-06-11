@@ -9,16 +9,10 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import Loader from "@/components/Loader";
-import dynamic from "next/dynamic";
+
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
-
-const TensionChart = dynamic(() => import("../components/TensionChart"), {
-  ssr: false,
-  loading: () => <Loader itemText="... loading" />,
-});
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -105,12 +99,6 @@ const StyledMessage = styled.p`
   margin: 1rem auto;
 `;
 
-const StyledGraphButton = styled(StyledButton)`
-  width: fit-content;
-  padding: 0.5rem;
-  border-style: none;
-`;
-
 const StyledButtonWrapper = styled(StyledWrapper)`
   justify-content: center;
 `;
@@ -142,14 +130,12 @@ export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
-  theme,
   toggleExampleData,
   useExampleData,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-  const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
   useEffect(() => {
@@ -169,26 +155,6 @@ export default function HomePage({
     onAddEmotionEntry(data, newId);
     setId(newId);
     setIsFormSubmitted(!isFormSubmitted);
-  }
-
-  //logic for Graph
-  const currentShortDate = new Date().toISOString().slice(0, 10);
-  function compare(a, b) {
-    if (a.isoDate < b.isoDate) {
-      return -1;
-    }
-    if (a.isoDate > b.isoDate) {
-      return 1;
-    }
-    return 0;
-  }
-  const filteredData = emotionEntries
-    .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-    .sort(compare);
-  const xValues = filteredData.map((entry) => entry.timeAndDate.slice(-5));
-  const yValues = filteredData.map((entry) => entry.tensionLevel);
-  function handleChart() {
-    setChartIsShown(!chartIsShown);
   }
 
   return (
@@ -273,16 +239,6 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-        <TensionChart
-          emotionEntries={emotionEntries}
-          theme={theme}
-          xValues={xValues}
-          yValues={yValues}
-          title="Daily Tension Graph"
-        />
-        <StyledGraphButton type="button" onClick={handleChart}>
-          {chartIsShown === true ? "Hide chart" : "Show chart"}
-        </StyledGraphButton>
       </StyledFlexColumnWrapper>
     </>
   );
