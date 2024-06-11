@@ -152,6 +152,7 @@ export default function HomePage({
   const [tension, setTension] = useState(0);
   const [chartIsShown, setChartIsShown] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
+  console.log(emotionEntries);
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
 

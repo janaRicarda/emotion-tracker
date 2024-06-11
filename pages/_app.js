@@ -43,6 +43,7 @@ export default function App({
     "useExampleData",
     true
   );
+
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -148,7 +149,6 @@ export default function App({
     error: errorFetchingEmotionEntries,
     mutate,
   } = useSWR(session && "/api/emotionEntries", fetcher);
-  console.log(dbEmotionEntries);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -324,7 +324,8 @@ export default function App({
   function restoreFromBackup() {
     setEmotionEntries(backupEntries);
   }
-
+  console.log(dbEmotionEntries);
+  console.log(emotionEntries);
   return (
     <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
