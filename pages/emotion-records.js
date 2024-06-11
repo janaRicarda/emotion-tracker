@@ -1,11 +1,15 @@
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
+import ToggleSwitch from "@/components/ToggleSwitch";
 import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
+import ChartContainer from "@/components/ChartContainer";
+import Icon from "@mdi/react";
+import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 
@@ -73,14 +77,14 @@ const Background = styled.div`
   z-index: 2;
 `;
 const AnimatedPanel = styled.div`
-  width: 90vw;
+  width: 92vw;
   margin: 0 0.5rem;
   border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
   ${transition}
-  z-index: 1;
+  z-index: 2;
 `;
 
 const StyledTextMessage = styled.article`
@@ -135,12 +139,41 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
+const SwitchSizer = styled.span`
+  transform: scale(0.6);
+`;
+
+const GraphToggleWrapper = styled.div`
+  display: flex;
+  flex-flow: row;
+  position: relative;
+  top: -36px;
+  left: 64%;
+  width: 8rem;
+  height: 26px;
+  padding: 0.3rem;
+  gap: 0.1rem;
+  justify-content: space-between;
+  margin: 0;
+  z-index: 2;
+  @media ${breakpoints.mobileLandscape} {
+    left: 80%;
+  }
+  @media ${breakpoints.tablet} {
+    left: 84%;
+  }
+  @media ${breakpoints.laptop} {
+    left: 84%;
+  }
+`;
+
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
   handleToolTip,
   isScrollDown,
+  theme,
   useExampleData,
 }) {
   const [searchTerm, setSearchTerm] = useState();
@@ -156,10 +189,11 @@ export default function EmotionRecords({
   });
 
   const [showFilter, setShowFilter] = useState(false);
+  const [chartIsShown, setChartIsShown] = useState(false);
 
   useEffect(() => {
     handleToolTip({
-      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month.",
+      text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month. Above the list to the right is a switch to display the data as chart instead of the list.",
     });
   }, []);
 
@@ -225,6 +259,9 @@ export default function EmotionRecords({
     }
   }
 
+  function handleChart() {
+    setChartIsShown(!chartIsShown);
+  }
   return (
     <>
       <Head>
@@ -261,7 +298,23 @@ export default function EmotionRecords({
           DisplayDate={DisplayDate}
           selectedTime={selectedTime}
         />
+        <GraphToggleWrapper>
+          <Icon path={mdiFormatListBulleted} size={1} />
+          <SwitchSizer>
+            <ToggleSwitch
+              handleSwitch={handleChart}
+              isChecked={chartIsShown}
+              useButtonColor={true}
+            />
+          </SwitchSizer>
+          <Icon path={mdiChartLine} size={1} />
+        </GraphToggleWrapper>
       </AnimatedPanel>
+
+      {chartIsShown && (
+        <ChartContainer shownEntries={shownEntries} theme={theme} />
+      )}
+
       {buttonState.datePicker ? (
         selectedTime ? (
           <DisplayDate textAlign="center" />
@@ -290,7 +343,7 @@ export default function EmotionRecords({
           <StyledTextMessage>sorry, nothing found</StyledTextMessage>
         ))}
 
-      {shownEntries.length !== 0 && (
+      {shownEntries.length !== 0 && !chartIsShown && (
         <ControlPadding>
           <EmotionRecordsList
             onDeleteEmotionEntry={onDeleteEmotionEntry}

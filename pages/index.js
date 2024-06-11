@@ -9,15 +9,9 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-import Loader from "@/components/Loader";
-import dynamic from "next/dynamic";
+
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
-
-const TensionChart = dynamic(() => import("../components/TensionChart"), {
-  ssr: false,
-  loading: () => <Loader itemText="... loading" />,
-});
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -59,12 +53,6 @@ const StyledMessage = styled.p`
   text-align: center;
   font-weight: 600;
   margin: 1rem auto;
-`;
-
-const StyledGraphButton = styled(StyledButton)`
-  width: fit-content;
-  padding: 0.5rem;
-  border-style: none;
 `;
 
 const StyledButtonWrapper = styled(StyledWrapper)`
@@ -130,28 +118,6 @@ export default function HomePage({
     setIsFormSubmitted(!isFormSubmitted);
   }
 
-  //logic for Graph
-  const currentShortDate = new Date().toISOString().slice(0, 10);
-  function compare(a, b) {
-    if (a.isoDate < b.isoDate) {
-      return -1;
-    }
-    if (a.isoDate > b.isoDate) {
-      return 1;
-    }
-    return 0;
-  }
-  const filteredData = emotionEntries
-    ? emotionEntries
-        .filter((entry) => currentShortDate === entry.isoDate?.slice(0, 10))
-        .sort(compare)
-    : [];
-  const xValues = filteredData.map((entry) => entry.timeAndDate.slice(-5));
-  const yValues = filteredData.map((entry) => entry.tensionLevel);
-  function handleChart() {
-    setChartIsShown(!chartIsShown);
-  }
-
   return (
     <>
       <Head>
@@ -210,16 +176,6 @@ export default function HomePage({
             </>
           )}
         </StyledTensionForm>
-        <TensionChart
-          emotionEntries={emotionEntries}
-          theme={theme}
-          xValues={xValues}
-          yValues={yValues}
-          title="Daily Tension Graph"
-        />
-        <StyledGraphButton type="button" onClick={handleChart}>
-          {chartIsShown === true ? "Hide chart" : "Show chart"}
-        </StyledGraphButton>
       </StyledFlexColumnWrapper>
     </>
   );
