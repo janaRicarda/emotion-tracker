@@ -5,7 +5,6 @@ import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import { breakpoints } from "@/utils/breakpoints";
 import DetailsSection from "./EmotionRecordsDetails";
 import HighlightIcon from "../public/icons/highlight-icon.svg";
 import HighlightIconMarked from "../public/icons/highlight-icon-marked.svg";
@@ -17,17 +16,8 @@ const StyledRecordsList = styled(StyledList)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 86vw;
-  @media ${breakpoints.tablet} {
-    width: 50vw;
-    margin-top: 0;
-    margin-left: 30vw;
-  }
-  @media ${breakpoints.laptop} {
-    width: 40vw;
-    margin-top: 0;
-    margin-left: 40%;
-  }
+  width: 80vw;
+  max-width: 575px;
 `;
 
 const StyledRecordListItem = styled.li`
@@ -88,7 +78,7 @@ const StyledIconWrapper = styled.article`
 `;
 
 const StyledDeleteButton = styled(TrashIcon)`
-  width: 2rem;
+  width: 1.5rem;
 
   fill: var(--main-dark);
   &:hover {
@@ -97,7 +87,7 @@ const StyledDeleteButton = styled(TrashIcon)`
 `;
 
 const StyledEditButton = styled(PencilIcon)`
-  width: 2rem;
+  width: 1.5rem;
 
   fill: var(--main-dark);
   &:hover {
@@ -176,7 +166,6 @@ export default function EmotionRecordsList({
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
-        {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
         {shownEntries
           .sort(sortEntries)
           .map(

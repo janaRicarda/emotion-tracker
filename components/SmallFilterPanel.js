@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Icon from "@mdi/react";
-
 import { mdiFilter } from "@mdi/js";
 
 const StyledMinimalPanel = styled.section`
   background-color: var(--main-bright);
+  width: 100vw;
   display: flex;
   flex-direction: row;
   align-items: center;

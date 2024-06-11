@@ -13,6 +13,7 @@ const EmotionEntrySchema = new Schema({
   trigger: { type: String },
   notes: { type: String },
   isHighlighted: { type: Boolean },
+  timeStamp: { type: Number },
 });
 
 const EmotionEntries =
