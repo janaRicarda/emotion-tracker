@@ -9,9 +9,9 @@ import {
   StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
-
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
+import useSWR from "swr";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -86,13 +86,11 @@ export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
-  theme,
   useExampleData,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-  const [chartIsShown, setChartIsShown] = useState(false);
 
   const newestDbEntryID = emotionEntries?.length
     ? emotionEntries[emotionEntries.length - 1]?._id

@@ -8,8 +8,7 @@ import { generateCompleteData } from "@/components/DataGenerator";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
-import { SessionProvider, useSession } from "next-auth/react";
-
+import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const fetcher = async (url) => {
@@ -24,7 +23,6 @@ const fetcher = async (url) => {
     error.status = response.status;
     throw error;
   }
-
   return response.json();
 };
 
@@ -51,7 +49,7 @@ export default function App({
       defaultValue: [],
     }
   );
-  console.log(session);
+
   // use-effect for mediaquery
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -147,7 +145,7 @@ export default function App({
     isLoading: emotionEntriesAreLoading,
     error: errorFetchingEmotionEntries,
     mutate,
-  } = useSWR(session && "/api/emotionEntries", fetcher);
+  } = useSWR("/api/emotionEntries/", fetcher);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -325,9 +323,9 @@ export default function App({
   function restoreFromBackup() {
     setEmotionEntries(backupEntries);
   }
-  console.log(dbEmotionEntries);
+
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
         <SWRConfig value={{ fetcher }}>
           <GlobalStyle />
