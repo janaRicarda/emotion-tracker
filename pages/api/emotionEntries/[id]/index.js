@@ -1,14 +1,14 @@
 import dbConnect from "@/db/connect";
 import EmotionEntries from "@/db/models/emotionEntries";
 import { getServerSession } from "next-auth/next";
-import { AuthOptions } from "../../auth/[...nextauth]";
+import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
   await dbConnect();
 
   const { id } = request.query;
 
-  const session = await getServerSession(request, response, AuthOptions);
+  const session = await getServerSession(request, response, authOptions);
 
   if (!session) {
     response.status(401).json({ status: "Not authorized" });
