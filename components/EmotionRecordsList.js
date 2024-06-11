@@ -58,8 +58,9 @@ const StyledItemInfo = styled.article`
 const StyledParagraph = styled.p`
   color: var(--main-dark);
   border-radius: 6px;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  width: 100%;
   cursor: pointer;
 `;
 
@@ -156,6 +157,20 @@ export default function EmotionRecordsList({
     return 0;
   }
 
+  function getLabel(time, formattedTime) {
+    const today = new Date();
+    const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+    const entryDate = new Date(time);
+
+    if (today.toDateString() === entryDate.toDateString()) {
+      return `Today, ${formattedTime.slice(-5)}`;
+    } else if (yesterday.toDateString() === entryDate.toDateString()) {
+      return `Yesterday, ${formattedTime.slice(-5)}`;
+    } else {
+      return formattedTime;
+    }
+  }
+
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
@@ -168,6 +183,7 @@ export default function EmotionRecordsList({
               _id,
               timeAndDate,
               tensionLevel,
+              isoDate,
               trigger,
               intensity,
               notes,
@@ -202,7 +218,7 @@ export default function EmotionRecordsList({
                           handleShowDetails(useExampleData ? id : _id)
                         }
                       >
-                        {timeAndDate}
+                        {getLabel(isoDate, timeAndDate)}
                       </StyledParagraph>
                       <StyledIconWrapper>
                         <StyledEditButton
