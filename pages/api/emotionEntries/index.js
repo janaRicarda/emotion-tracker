@@ -14,9 +14,7 @@ export default async function handler(request, response) {
 
   if (request.method === `GET`) {
     if (session) {
-      const emotionEntries = await EmotionEntries.find({
-        owner: session.user.email,
-      });
+      const emotionEntries = await EmotionEntries.find();
       return response.status(200).json(emotionEntries);
     }
     /*  try {

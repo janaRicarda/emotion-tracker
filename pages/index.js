@@ -117,7 +117,7 @@ export default function HomePage({
     setId(newId);
     setIsFormSubmitted(!isFormSubmitted);
   }
-
+  console.log(newestDbEntryID);
   return (
     <>
       <Head>
