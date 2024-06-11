@@ -50,7 +50,6 @@ const StyledItemInfo = styled.article`
     bottom: 1px;
     height: 5px;
     width: ${({ $width }) => `${$width}%`};
-    /* max-width: 82%; */
     background-color: var(--main-dark);
   }
 `;
@@ -58,17 +57,20 @@ const StyledItemInfo = styled.article`
 const StyledParagraph = styled.p`
   color: var(--main-dark);
   border-radius: 6px;
-  padding: 1.5rem;
-  text-align: center;
-  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  width: 90%;
   cursor: pointer;
 `;
 
 const StyledIconWrapper = styled.article`
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 0 1rem;
   position: relative;
+  width: 20%;
 
   & > svg {
     padding: 0.3rem 0;
@@ -104,14 +106,14 @@ const StyledEditButton = styled(PencilIcon)`
 `;
 
 const StyledHighlight = styled(HighlightIcon)`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
 `;
 
 const StyledMarkedHighlight = styled(HighlightIconMarked)`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
 `;
 

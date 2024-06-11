@@ -33,8 +33,8 @@ export const lightTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
-  highlightBackground: "#030352",
-  highlightedLines: "#f1eaea",
+  highlightBackground: "var(--button-background)",
+  highlightedLines: "var(--contrast-text)",
 };
 
 export const darkTheme = {
@@ -72,8 +72,8 @@ export const darkTheme = {
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
   boxShadowTooltip: "10px 10px 15px black",
-  highlightBackground: "#f1eaea",
-  highlightedLines: "#322e44",
+  highlightBackground: "var(--button-background)",
+  highlightedLines: "var(--contrast-text)",
 };
 
 export const warmTheme = {
@@ -112,7 +112,7 @@ export const warmTheme = {
   boxShadowFilter: "0px 0px 10px 10px #aaa18c",
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "#762e72",
-  highlightedLines: "#f7e9cb",
+  highlightedLines: "#fdfcd7",
 };
 
 export const coldTheme = {
