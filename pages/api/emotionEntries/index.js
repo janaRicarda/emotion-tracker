@@ -20,7 +20,7 @@ export default async function handler(request, response) {
       }
     } catch (error) {
       console.error(error);
-      response.status(500).json({ error: error.message });
+      // response.status(500).json({ error: error.message });
     }
   }
   if (request.method === `POST`) {

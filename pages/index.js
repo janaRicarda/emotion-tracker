@@ -11,7 +11,6 @@ import {
 } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
-import useSWR from "swr";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;

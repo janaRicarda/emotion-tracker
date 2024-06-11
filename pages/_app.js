@@ -124,10 +124,6 @@ export default function App({
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  function handleUseExampleData() {
-    setUseExampleDate(!useExampleData);
-  }
-
   // function for StartModal
 
   function handleDemoMode() {
