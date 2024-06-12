@@ -143,5 +143,8 @@
   "recordYour": "Protokolliere deine",
   "editEmotionEntryTooltip": "Verfeinere deinen Emotions-Eintrag mit dem Bearbeitungsformular. Passe deine anfängliche Auswahl an, indem du bei Bedarf die Emotion änderst, eine Unteremotion auswählst und die Intensität deiner Emotion auf einer Skala von 0 bis 100 aktualisierst. Klassifiziere die Emotion erneut als unangenehm, neutral oder angenehm und überarbeite optional alle Auslöser oder Notizen, um deinen Emotions-Eintrag weiter zu bereichern.",
   "entryFrom": "Eintrag vom",
-  "date": "Datum"
+  "date": "Datum",
+  "deleteEntryConfirmationQuestion": "Möchtest du diesen Eintrag wirklich löschen?",
+  "keepEntry": "Eintrag behalten!",
+  "deleteEntry": "Eintrag löschen!"
 }

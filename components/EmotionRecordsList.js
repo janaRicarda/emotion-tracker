@@ -8,6 +8,7 @@ import { StyledList } from "@/SharedStyledComponents";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import HeartFilledIcon from "../public/icons/heart-filled.svg";
 import { breakpoints } from "@/utils/breakpoints";
+import { useTranslation } from "next-i18next";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -102,6 +103,7 @@ export default function EmotionRecordsList({
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
   const router = useRouter();
+  const { t: translate } = useTranslation("emotions");
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -192,12 +194,12 @@ export default function EmotionRecordsList({
                       itemId={useExampleData ? id : _id}
                       itemText={timeAndDate}
                       confirmFunction={onDeleteEmotionEntry}
-                      cancelButtonText={"Keep it!"}
-                      confirmButtonText={"Delete it!"}
+                      cancelButtonText={translate("keepEntry")}
+                      confirmButtonText={translate("deleteEntry")}
                       cancelButtonColor={"var(--green)"}
                       confirmButtonColor={"var(--red)"}
                     >
-                      Do you want to delete this entry?
+                      {translate("deleteEntryConfirmationQuestion")}
                     </ConfirmMessage>
                   )}
                   <StyledDetails
