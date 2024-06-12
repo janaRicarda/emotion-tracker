@@ -152,10 +152,6 @@ const StyledListContainer = styled.div`
   }
 `;
 
-const SwitchSizer = styled.span`
-  transform: scale(0.6);
-`;
-
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -167,6 +163,7 @@ const StyledWrapper = styled.div`
 const GraphToggleWrapper = styled.div`
   display: flex;
   padding: 0.3rem;
+
   & > label {
     transform: scale(0.6);
   }
@@ -303,23 +300,7 @@ export default function EmotionRecords({
           DisplayDate={DisplayDate}
           selectedTime={selectedTime}
         />
-        <GraphToggleWrapper>
-          <Icon path={mdiFormatListBulleted} size={1} />
-          <SwitchSizer>
-            <ToggleSwitch
-              handleSwitch={handleChart}
-              isChecked={chartIsShown}
-              useButtonColor={true}
-            />
-          </SwitchSizer>
-          <Icon path={mdiChartLine} size={1} />
-        </GraphToggleWrapper>
       </AnimatedPanel>
-
-      {chartIsShown && (
-        <ChartContainer shownEntries={shownEntries} theme={theme} />
-      )}
-
       {buttonState.datePicker ? (
         selectedTime ? (
           <DisplayDate textAlign="center" />

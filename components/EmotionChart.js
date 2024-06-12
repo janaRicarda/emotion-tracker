@@ -7,7 +7,7 @@ const StyledChartSection = styled.section`
   color: var(--contrast-text);
   border-radius: 6px;
   border: var(--circle-border);
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
 `;
 
@@ -20,6 +20,8 @@ export default function EmotionChart({
   theme,
   type,
   width,
+  height,
+  autosize,
 }) {
   return (
     <StyledChartSection>
@@ -60,14 +62,15 @@ export default function EmotionChart({
               },
             },
             width: width,
+            height: height,
             title: {
               text: title,
               font: {
                 family: "system-ui",
               },
             },
-            autosize: true,
-            margin: { autoexpand: true, b: 40, l: 30, r: 30, t: 50 },
+            autosize: autosize,
+            margin: { autoexpand: true, b: 30, l: 30, r: 30, t: 30 },
           }}
         />
       )}

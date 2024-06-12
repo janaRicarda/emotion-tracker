@@ -1,19 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { uid } from "uid";
-import {
-  StyledWrapper,
-  StyledButton,
-  StyledStandardLink,
-  StyledInput,
-  StyledForm,
-  StyledTitle,
-  StyledFlexColumnWrapper,
-} from "@/SharedStyledComponents";
-
-import { breakpoints } from "@/utils/breakpoints";
+import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import Head from "next/head";
 import ToggleSwitch from "@/components/ToggleSwitch";
+import ChartContainerV2 from "@/components/ChartContainerV2";
 import {
   getAveragePerDay,
   getTimeSinceLastEntry,
@@ -21,16 +11,14 @@ import {
   getFilteredEntriesV2,
 } from "@/utils/dataAndChartUtils";
 
-import ChartContainerV2 from "@/components/ChartContainerV2";
-
 const ToggleSwitchWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.3rem;
   position: relative;
-  top: 0px;
-  left: 100px;
+  top: -30px;
+  left: -27%;
   transform: scale(0.7);
   padding: 0.1rem;
 `;
@@ -66,28 +54,24 @@ const StyledInfoBox = styled.div`
   }
 `;
 
+const DashboardTitle = styled(StyledTitle)`
+  margin-top: -10px;
+`;
+
 const DashboardSection = styled.section`
   display: grid;
   grid-template-columns: 6fr 6fr;
-  grid-template-rows: 6fr 6fr 6fr;
+  grid-template-rows: 4fr 4fr 8fr;
   gap: 0.5rem;
   width: 92vw;
-  min-height: 420px;
+  min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
+  height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
+  min-height: 360px;
   max-height: 1200px;
   margin: 0;
   align-items: center;
   border-radius: 18px;
   justify-content: center;
-
-  @media ${breakpoints.mobileLandscape} {
-  }
-  @media ${breakpoints.tablet} {
-  }
-  @media ${breakpoints.laptop} {
-    display: block;
-    padding: 1rem;
-    width: 92vw;
-  }
 `;
 const GridElement = styled.div`
   display: flex;
@@ -95,7 +79,8 @@ const GridElement = styled.div`
   border-radius: 18px;
   padding: 0.5rem;
   border: 1px solid var(--main-dark);
-  min-height: 136px;
+  min-height: 110px;
+  height: 100%;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
@@ -105,15 +90,18 @@ const ChartElement = styled.div`
   border-radius: 18px;
   padding: 0.5rem;
   border: 1px solid var(--main-dark);
-  min-height: 136px;
+  /* min-height: 136px; */
+  min-height: 150px;
+  height: 100%;
+  max-height: 270px;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
 `;
 const ElementText = styled.p`
   font-size: 0.9rem;
-  padding: 0.3rem;
-  margin: 0.3rem;
+  padding: 0.2rem;
+  margin: 0.2rem;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -127,24 +115,37 @@ const DashboardLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 export default function HomePage({
-  onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
   toggleExampleData,
   useExampleData,
   theme,
 }) {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [showInfoBox, setShowInfoBox] = useState(false);
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+
+  //make dashboard responsive
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  function updateWidth() {
+    setWindowWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  const dashboardWidth = Math.max(360, Math.round(windowWidth / 2));
+  const dashboardHeight = Math.round(dashboardWidth * 1.3);
+  console.log(dashboardHeight);
 
   //for dashboard
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
 
   //chart
-  // const { title, xTitle, yTitle, scatter } = chartPresets.tension;
+
   const today = new Date().toISOString();
   const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
   const xValues = calculateTensionChartData(filteredEntries).xValues;
@@ -155,18 +156,6 @@ export default function HomePage({
       text: "This is your dashboard ...",
     });
   }, []);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const newId = uid();
-
-    onAddEmotionEntry(data, newId);
-    setId(newId);
-    setIsFormSubmitted(!isFormSubmitted);
-  }
 
   return (
     <>
@@ -196,12 +185,15 @@ export default function HomePage({
         <ToggleSwitch
           handleSwitch={toggleExampleData}
           isChecked={useExampleData}
-          text={"Use Example data"}
+          text={"Use Example data "}
         />
       </ToggleSwitchWrapper>
 
-      <StyledTitle>Dashboard</StyledTitle>
-      <DashboardSection>
+      <DashboardTitle>Dashboard</DashboardTitle>
+      <DashboardSection
+        $dashboardWidth={dashboardWidth}
+        $dashboardHeight={dashboardHeight}
+      >
         <GridElement>
           {/* click for more */}
           <ElementText>
@@ -216,25 +208,30 @@ export default function HomePage({
           </p> */}
         </GridElement>
         <GridElement>
-          <p>Your last entry is {timeSinceLastEntry} hours ago. </p>
-          <br></br>
+          <ElementText>
+            Your last entry is {timeSinceLastEntry} hours ago.{" "}
+          </ElementText>
           <DashboardLink href="/add-entry">add new entry</DashboardLink>
         </GridElement>
         <GridElement>
           <ElementText>
-            Great job! Your average rate is {averageEntriesPerDay} entries per
-            day.
+            Your average rate is {averageEntriesPerDay} entries per day.
           </ElementText>
           <DashboardLink href="/emotion-records">emotion records</DashboardLink>
         </GridElement>
-        <GridElement>4</GridElement>
+        <GridElement>
+          {" "}
+          <ElementText>Last recorded feeling</ElementText>
+        </GridElement>
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            heightFactor={0.25}
+            heightFactor={0.5}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
+            autosize={false}
+            showSwitches={false}
           ></ChartContainerV2>
         </ChartElement>
         {/* <GridElement>5</GridElement>

@@ -15,7 +15,6 @@ import {
   StyledButton,
 } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
-import { breakpoints } from "@/utils/breakpoints";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   ssr: false,
@@ -25,21 +24,14 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 90vw;
-  min-height: 100px;
-  max-height: fit-content;
-  margin: 1rem;
-  align-items: center;
-  border-radius: 18px;
   justify-content: center;
+  align-items: center;
+  /* margin: 0.5rem 0 2rem; */
+  border-radius: 18px;
   background-color: var(--section-background);
-
-  @media ${breakpoints.mobileLandscape} {
-  }
-  @media ${breakpoints.tablet} {
-  }
-  @media ${breakpoints.laptop} {
-  }
+  width: 80vw;
+  min-width: ${({ $width }) => `${$width}px`};
+  max-width: 575px;
 `;
 
 const StyledGraphButton = styled(StyledButton)`
@@ -53,12 +45,10 @@ const StyledGraphButton = styled(StyledButton)`
 const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
-
   justify-content: space-between;
-  height: 24px;
-  padding: 0.2rem;
-  width: 8rem;
-  margin: 0;
+  align-items: center;
+  padding: 0.4rem;
+  margin: -1.3rem 0 0.8rem;
   gap: 0.1rem;
   background-color: var(--section-background);
   border-radius: 6px;
@@ -68,11 +58,12 @@ const SwitchSizer = styled.span`
 `;
 
 export default function ChartContainerV2({
-  shownEntries,
   theme,
   heightFactor,
   xValues,
   yValues,
+  autosize,
+  showSwitches,
 }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
@@ -91,9 +82,9 @@ export default function ChartContainerV2({
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const width = Math.max(240, Math.round(windowWidth / 2));
+  const width = Math.max(330, Math.round(windowWidth / 1.7));
 
-  const height = Math.round(width * Number(heightFactor));
+  // const height = Math.round(width * Number(heightFactor));
   function handleChartType() {
     setChartState({
       ...chartState,
@@ -114,7 +105,7 @@ export default function ChartContainerV2({
   }
 
   return (
-    <ChartSection>
+    <ChartSection $width={width + 20}>
       <StyledFlexColumnWrapper>
         <EmotionChart
           theme={theme}
@@ -125,20 +116,23 @@ export default function ChartContainerV2({
           yTitle={yTitle}
           title={title}
           width={width}
-          height={height}
+          height={width * heightFactor}
+          // autosize={autosize}
         />
       </StyledFlexColumnWrapper>
-      <ToggleContainer>
-        <Icon path={mdiChartLine} size={1} />
-        <SwitchSizer>
-          <ToggleSwitch
-            handleSwitch={handleChartType}
-            isChecked={!scatter}
-            useButtonColor={true}
-          />
-        </SwitchSizer>
-        <Icon path={mdiChartBar} size={1} />
-      </ToggleContainer>
+      {showSwitches && (
+        <ToggleContainer>
+          <Icon path={mdiChartLine} size={1} />
+          <SwitchSizer>
+            <ToggleSwitch
+              handleSwitch={handleChartType}
+              isChecked={!scatter}
+              useButtonColor={true}
+            />
+          </SwitchSizer>
+          <Icon path={mdiChartBar} size={1} />
+        </ToggleContainer>
+      )}
     </ChartSection>
   );
 }
