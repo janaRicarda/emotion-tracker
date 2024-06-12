@@ -8,10 +8,12 @@ const EmotionEntrySchema = new Schema({
   isoDate: { type: String },
   emotion: { type: String },
   subemotion: { type: String },
+  category: { type: String },
   intensity: { type: String },
   trigger: { type: String },
   notes: { type: String },
   isHighlighted: { type: Boolean },
+  timeStamp: { type: Number },
 });
 
 const EmotionEntries =

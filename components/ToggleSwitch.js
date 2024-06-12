@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Label = styled.label`
   display: flex;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
 `;
 
@@ -35,7 +34,6 @@ const Input = styled.input`
   display: none;
 
   &:checked + ${Switch} {
-    /* background: var(--toggle-active); */
     background: ${({ $useButtonColor }) =>
       $useButtonColor ? "var(--button-background)" : "var(--toggle-active)"};
     &::before {

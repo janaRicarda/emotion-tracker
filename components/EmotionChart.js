@@ -5,7 +5,6 @@ const StyledChartSection = styled.section`
   background-color: var(--section-background);
   align-self: center;
   color: var(--contrast-text);
-  width: fit-content;
   border-radius: 6px;
   border: var(--circle-border);
   margin: 1rem;
@@ -62,14 +61,13 @@ export default function EmotionChart({
             },
             width: width,
             title: {
+              text: title,
               font: {
                 family: "system-ui",
-                weight: "bold",
               },
             },
             autosize: true,
             margin: { autoexpand: true, b: 40, l: 30, r: 30, t: 50 },
-            title: title,
           }}
         />
       )}

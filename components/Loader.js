@@ -21,12 +21,10 @@ const StyledLoadingSpinner = styled.div`
   animation: spin 1.5s linear infinite;
 `;
 
-//change so if prop fullscreen= true has blurred screen like conf message
-
-export default function Loader({ itemText, fullScreen }) {
+export default function Loader({ itemText }) {
   return (
     <>
-      <StyledFlexColumnWrapper>
+      <StyledFlexColumnWrapper style={{ marginTop: "5rem" }}>
         <StyledLoadingSpinner />
         <StyledConfirmText>
           <b>{itemText}</b>

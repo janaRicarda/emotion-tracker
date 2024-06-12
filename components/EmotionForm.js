@@ -159,8 +159,16 @@ export default function EmotionForm({
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    const updatedIntensity = toggleIntensity ? intensityValue : "";
-    const updatedCategory = toggleCategory ? categoryValue : "";
+    const updatedIntensity = emotionValue
+      ? toggleIntensity
+        ? intensityValue
+        : null
+      : null;
+    const updatedCategory = emotionValue
+      ? toggleCategory
+        ? categoryValue
+        : null
+      : null;
 
     const updatedData = {
       ...data,

@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { uid } from "uid";
-import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
+import {
+  StyledWrapper,
+  StyledButton,
+  StyledStandardLink,
+  StyledInput,
+  StyledForm,
+  StyledTitle,
+  StyledFlexColumnWrapper,
+} from "@/SharedStyledComponents";
 
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
