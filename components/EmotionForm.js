@@ -121,9 +121,13 @@ export default function EmotionForm({
       color: "lightgray",
       subemotions: [],
     };
-    const { color, subemotions } = emotion
+
+    const foundEmotion = emotion
       ? emotionData.find((emotionObject) => emotionObject.name === emotion)
       : inCaseOfNoEmotion;
+
+    const { color, subemotions } = foundEmotion || inCaseOfNoEmotion;
+
     return {
       tensionValue: tensionLevel,
       emotionValue: emotion,
@@ -216,10 +220,11 @@ export default function EmotionForm({
           : `Record your Emotion-Entry`}
       </StyledTitle>
       <p aria-label="Date and time">
-        {editMode ? `Entry from:` : "Date: "} {timeAndDate}
+        {editMode ? `${translate("entryFrom")}: ` : `${translate("date")}: `}
+        {timeAndDate}
       </p>
       <TensionLabelEdit htmlFor="tension-level">
-        {translate("chooseIntensity")}{" "}
+        {translate("chooseIntensity")}
       </TensionLabelEdit>
       <StyledEmotionInput
         aria-label="Adjust tension level between 0 and 100"
@@ -251,7 +256,7 @@ export default function EmotionForm({
       <StyledSelect
         id="emotion"
         name="emotion"
-        value={`${emotionValue}`}
+        value={emotionValue}
         onChange={(event) => {
           handleChangeEmotion(event.target.value);
         }}
@@ -266,7 +271,7 @@ export default function EmotionForm({
       <label htmlFor="subemotion">{translate("selectSubemotion")}</label>
       <StyledSelect
         disabled={emotionValue ? false : true}
-        value={`${selectedSubemotionValue}`}
+        value={selectedSubemotionValue}
         id="subemotion"
         name="subemotion"
         onChange={(event) =>
@@ -277,14 +282,14 @@ export default function EmotionForm({
         }
       >
         <option value={""}>{translate("inputSelectSubemotion")}</option>
-        {subemotionOptions.map((sub) => (
-          <option key={sub} value={sub}>
-            {sub}
+        {subemotionOptions.map((subemotion) => (
+          <option key={subemotion} value={subemotion}>
+            {subemotion}
           </option>
         ))}
       </StyledSelect>
       <StyledLabel htmlFor="intensity">
-        {translate("emotionIntensity")}{" "}
+        {translate("emotionIntensity")}
         {emotionValue && (
           <ToggleSwitch
             aria-label="Switch intensity input on and off"
@@ -337,7 +342,7 @@ export default function EmotionForm({
         </StyledSpan>
       </StyledWrapper>
       <StyledLabel htmlFor="category">
-        {translate("associationCategory")}{" "}
+        {translate("associationCategory")}
         {emotionValue && (
           <ToggleSwitch
             aria-label="Switch association category input on and off"
@@ -380,17 +385,25 @@ export default function EmotionForm({
       />
       <StyledWrapper>
         <StyledSpan>
-          {emotionValue ? (toggleCategory ? translate("unpleasant") : "") : ""}
+          {emotionValue
+            ? toggleCategory
+              ? `${translate("unpleasant")}`
+              : ""
+            : ""}
         </StyledSpan>
         <StyledSpan>
           {emotionValue
             ? toggleCategory
-              ? translate("neutral")
+              ? `${translate("neutral")}`
               : "Disabled"
             : "Disabled"}
         </StyledSpan>
         <StyledSpan>
-          {emotionValue ? (toggleCategory ? translate("pleasant") : "") : ""}
+          {emotionValue
+            ? toggleCategory
+              ? `${translate("pleasant")}`
+              : ""
+            : ""}
         </StyledSpan>
       </StyledWrapper>
       <label htmlFor="trigger">{translate("trigger")}</label>
@@ -420,12 +433,12 @@ export default function EmotionForm({
           confirmFunction={() => {
             router.push("/emotion-records");
           }}
-          cancelButtonText={translate("keepEditing")}
-          confirmButtonText={translate("goToEmotionRecords")}
+          cancelButtonText="keepEditing"
+          confirmButtonText="goToEmotionRecords"
           cancelButtonColor={"var(--red)"}
           confirmButtonColor={"var(--green)"}
         >
-          {translate("successConfirmation")}
+          successConfirmation
         </ConfirmMessage>
       )}
     </StyledEmotionForm>

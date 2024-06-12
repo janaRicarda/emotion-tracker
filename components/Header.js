@@ -7,9 +7,7 @@ import Sun from "../public/icons/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
-
 import { useRouter } from "next/router";
-
 import { breakpoints } from "@/utils/breakpoints";
 
 // used for all transition in this component
@@ -98,10 +96,10 @@ export default function Header({
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
-  const { locale, locales } = router;
+  const { pathname, asPath, query, locales } = router;
 
   function handleChangeLanguage(newLocale) {
-    router.push(router.pathname, router.asPath, { locale: newLocale });
+    router.push({ pathname, query }, asPath, { locale: newLocale });
   }
 
   function handleToggleMenu() {
