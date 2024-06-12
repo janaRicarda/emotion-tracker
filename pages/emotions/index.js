@@ -9,7 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 
 export default function EmotionListPage({ handleToolTip }) {
-  const { t: translate } = useTranslation(["emotions"]);
+  const { t: translate } = useTranslation(["emotions", "common"]);
 
   useEffect(() => {
     handleToolTip({

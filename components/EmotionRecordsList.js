@@ -103,7 +103,7 @@ export default function EmotionRecordsList({
   const [showConfirmMessage, setShowConfirmMessage] = useState(false);
 
   const router = useRouter();
-  const { t: translate } = useTranslation("emotions");
+  const { t: translate } = useTranslation(["common"]);
 
   function handleShowDetails(id) {
     setShowDetails((prevShow) => ({
@@ -132,7 +132,11 @@ export default function EmotionRecordsList({
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
-        {shownEntries.length !== 0 && <p>Results: {shownEntries.length}</p>}
+        {shownEntries.length !== 0 && (
+          <p>
+            {translate("results")} {shownEntries.length}
+          </p>
+        )}
         {shownEntries
           .sort(sortEntries)
           .map(
