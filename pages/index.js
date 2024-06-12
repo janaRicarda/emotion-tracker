@@ -157,8 +157,6 @@ export default function HomePage({
     setIsFormSubmitted(!isFormSubmitted);
   }
 
-  console.log(newestDbEntryID);
-
   return (
     <>
       <Head>
