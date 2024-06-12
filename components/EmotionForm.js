@@ -433,12 +433,12 @@ export default function EmotionForm({
           confirmFunction={() => {
             router.push("/emotion-records");
           }}
-          cancelButtonText="keepEditing"
-          confirmButtonText="goToEmotionRecords"
+          cancelButtonText={translate("keepEditing")}
+          confirmButtonText={translate("goToEmotionRecords")}
           cancelButtonColor={"var(--red)"}
           confirmButtonColor={"var(--green)"}
         >
-          successConfirmation
+          {translate("successConfirmation")}
         </ConfirmMessage>
       )}
     </StyledEmotionForm>
