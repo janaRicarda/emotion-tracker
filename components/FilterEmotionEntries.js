@@ -6,6 +6,7 @@ import CalendarIcon from "/public/icons/calendar.svg";
 import Fuse from "fuse.js";
 import { StyledButton } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
+import { useTranslation } from "next-i18next";
 
 const StyledContainer = styled.div`
   height: auto;
@@ -145,25 +146,43 @@ export default function FilterEmotionEntries({
   changeSelectedTime,
   selectedTime,
 }) {
+  const { t: translate } = useTranslation(["common"]);
+
   const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
   const [month, setMonth] = useState(new Date());
 
   const filterButtons = [
-    { name: "allButton", label: "All" },
-    { name: "todayButton", label: "Today", singleComparison: true, daysAgo: 0 },
+    { name: "allButton", label: `${translate("filterButtonAll")}` },
+    {
+      name: "todayButton",
+      label: `${translate("filterButtonToday")}`,
+      singleComparison: true,
+      daysAgo: 0,
+    },
     {
       name: "yesterdayButton",
-      label: "Yesterday",
+      label: `${translate("filterButtonYesterday")}`,
       singleComparison: true,
       daysAgo: 1,
     },
-    { name: "weekButton", label: " Last Week", daysAgo: 7 },
-    { name: "monthButton", label: "Last Month", daysAgo: 30 },
-    { name: "highlightedButton", label: "Highlighted" },
+    {
+      name: "weekButton",
+      label: `${translate("filterButtonLastWeek")}`,
+      daysAgo: 7,
+    },
+    {
+      name: "monthButton",
+      label: `${translate("filterButtonLastMonth")}`,
+      daysAgo: 30,
+    },
+    {
+      name: "highlightedButton",
+      label: `${translate("filterButtonHighlighted")}`,
+    },
     {
       name: "datePicker",
-      label: `Custom`,
+      label: `${translate("filterButtonCustom")}`,
       icon: <StyledCalendarIcon />,
       setShow: true,
     },
@@ -288,13 +307,13 @@ export default function FilterEmotionEntries({
         <StyledContainer>
           <StyledInput
             $showSearchBar={showSearchBar}
-            aria-label="Search"
+            aria-label={translate("searchAriaLabel")}
             maxLength={15}
             type="search"
             id="searchTerm"
             name="searchTerm"
-            placeholder="Search for Tensionlevel, Emotion, Trigger..."
-            aria-placeholder="Search for Tensionlevel, Emotion, Trigger..."
+            placeholder={translate("placeholder")}
+            aria-placeholder={translate("placeholderAriaLabel")}
             onChange={(event) => onSearch(event.target.value)}
           />
           <StyledMagnifier onClick={handleShowSearchBar} />

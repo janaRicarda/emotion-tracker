@@ -219,7 +219,7 @@ export default function EmotionForm({
           ? `${translate("recordYour")} ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledTitle>
-      <p aria-label="Date and time">
+      <p aria-label={translate("dateTimeAriaLabel")}>
         {editMode ? `${translate("entryFrom")}: ` : `${translate("date")}: `}
         {timeAndDate}
       </p>
@@ -227,7 +227,7 @@ export default function EmotionForm({
         {translate("chooseIntensity")}
       </TensionLabelEdit>
       <StyledEmotionInput
-        aria-label="Adjust tension level between 0 and 100"
+        aria-label={translate("adjustTensionLevelAriaLabel")}
         id="tension-level"
         name="tensionLevel"
         type="range"
@@ -292,7 +292,7 @@ export default function EmotionForm({
         {translate("emotionIntensity")}
         {emotionValue && (
           <ToggleSwitch
-            aria-label="Switch intensity input on and off"
+            aria-label={translate("switchTensionInputAriaLabel")}
             $color={toggleIntensity}
             onClick={() =>
               setTogggleRangeInputs({
@@ -345,7 +345,7 @@ export default function EmotionForm({
         {translate("associationCategory")}
         {emotionValue && (
           <ToggleSwitch
-            aria-label="Switch association category input on and off"
+            aria-label={translate("switchAssociationInputAriaLabel")}
             $color={toggleCategory}
             onClick={() =>
               setTogggleRangeInputs({

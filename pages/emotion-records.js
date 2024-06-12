@@ -146,6 +146,8 @@ export default function EmotionRecords({
   isScrollDown,
   useExampleData,
 }) {
+  const { t: translate } = useTranslation(["emotion-records"]);
+
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
@@ -153,14 +155,12 @@ export default function EmotionRecords({
   const [buttonState, setButtonState] = useState({
     todayButton: true,
     name: "todayButton",
-    label: "Today",
+    label: `${translate("filterButtonToday")}`,
     singleComparison: true,
     daysAgo: 0,
   });
 
   const [showFilter, setShowFilter] = useState(false);
-
-  const { t: translate } = useTranslation(["emotion-records"]);
 
   useEffect(() => {
     handleToolTip({

@@ -149,5 +149,9 @@
   "recordYour": "Record your",
   "editEmotionEntryTooltip": "Refine your emotion entry with the editing form. Adjust your initial selection by switching the emotion if necessary, selecting a subemotion, and updating the intensity of your emotion on a scale from 0 to 100. Re-classify the emotion as unpleasant, neutral, or pleasant, and optionally revise any triggers or notes to further enrich your emotional record.",
   "entryFrom": "Entry from",
-  "date": "Date"
+  "date": "Date",
+  "dateTimeAriaLabel": "Date and time",
+  "adjustTensionLevelAriaLabel": "Adjust tension level between 0 and 100",
+  "switchTensionInputAriaLabel": "Switch intensity input on and off",
+  "switchAssociationInputAriaLabel": "Switch association category input on and off"
 }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { StyledButton, StyledWrapper } from "@/SharedStyledComponents";
+import { useTranslation } from "next-i18next";
 
 const StyledBackground = styled.div`
   background: rgba(255, 255, 255, 0);
@@ -66,6 +67,7 @@ export default function ConfirmMessage({
   cancelButtonColor,
   confirmButtonColor,
 }) {
+  const { t: translate } = useTranslation(["common"]);
   // for animation-state, useEffect and timeeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
   //
   const [animation, setAnimation] = useState(false);
@@ -96,14 +98,14 @@ export default function ConfirmMessage({
         </StyledConfirmText>
         <StyledConfirmButtonWrapper>
           <StyledConfirmOrCancelButton
-            aria-label="cancel"
+            aria-label={translate("cancelAriaLabel")}
             $color={cancelButtonColor}
             onClick={() => handleCancel(itemId)}
           >
             {cancelButtonText}
           </StyledConfirmOrCancelButton>
           <StyledConfirmOrCancelButton
-            aria-label="confirm"
+            aria-label={translate("confirmAriaLabel")}
             $color={confirmButtonColor}
             onClick={() => {
               handleConfirm(itemId);

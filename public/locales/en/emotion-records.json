@@ -8,5 +8,6 @@
   "toHighlightEntry": "on a Entry to highlight it.",
   "noEntriesMadeToday": "You haven't made any Entries today.",
   "addEntry": "add Entry →",
-  "nothingFound": "sorry, nothing found"
+  "nothingFound": "sorry, nothing found",
+  "filterButtonToday": "Today"
 }

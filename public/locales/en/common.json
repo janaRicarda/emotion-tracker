@@ -21,5 +21,17 @@
   "keepEntry": "Keep it!",
   "deleteEntry": "Delete it!",
   "editEmotionAriaLabel": "Edit emotion entry",
-  "deleteEmotionAriaLabel": "Delete Emotion Entry"
+  "deleteEmotionAriaLabel": "Delete Emotion Entry",
+  "cancelAriaLabel": "cancel",
+  "confirmAriaLabel": "confirm",
+  "searchAriaLabel": "Search",
+  "placeholder": "Search for Tensionlevel, Emotion, Trigger...",
+  "placeholderAriaLabel": "Search for Tensionlevel, Emotion, Trigger...",
+  "filterButtonAll": "All",
+  "filterButtonToday": "Today",
+  "filterButtonYesterday": "Yesterday",
+  "filterButtonLastWeek": "Last Week",
+  "filterButtonLastMonth": "Last Month",
+  "filterButtonHighlighted": "Highlighted",
+  "filterButtonCustom": "custom"
 }
