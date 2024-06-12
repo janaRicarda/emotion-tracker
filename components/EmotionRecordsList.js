@@ -164,7 +164,7 @@ export default function EmotionRecordsList({
                       {timeAndDate}
                     </StyledParagraph>
                     <StyledEditButton
-                      aria-label="Edit emotion entry"
+                      aria-label={translate("editEmotionAriaLabel")}
                       onClick={() =>
                         editFromDevControls
                           ? router.push(`edit/${useExampleData ? id : _id}`)
@@ -173,7 +173,7 @@ export default function EmotionRecordsList({
                     />
                     <StyledDeleteButton
                       type="button"
-                      aria-label="Delete Emotion Entry"
+                      aria-label={translate("deleteEmotionAriaLabel")}
                       onClick={() => {
                         handleShowConfirmMessage(useExampleData ? id : _id);
                       }}

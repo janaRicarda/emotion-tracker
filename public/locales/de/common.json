@@ -19,5 +19,7 @@
   "results": "Ergebnisse:",
   "deleteEntryConfirmationQuestion": "Möchtest du diesen Eintrag wirklich löschen?",
   "keepEntry": "Eintrag behalten!",
-  "deleteEntry": "Eintrag löschen!"
+  "deleteEntry": "Eintrag löschen!",
+  "editEmotionAriaLabel": "Edit emotion entry",
+  "deleteEmotionAriaLabel": "Delete Emotion Entry"
 }
