@@ -10,6 +10,7 @@ import {
   calculateTensionChartData,
   getFilteredEntriesV2,
 } from "@/utils/dataAndChartUtils";
+import { emotionData } from "@/lib/db";
 
 const ToggleSwitchWrapper = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const DashboardSection = styled.section`
   width: 92vw;
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
   height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
-  min-height: 360px;
+  /* min-height: 360px; */
   max-height: 1200px;
   margin: 0;
   align-items: center;
@@ -78,30 +79,36 @@ const GridElement = styled.div`
   flex-direction: column;
   border-radius: 18px;
   padding: 0.5rem;
-  border: 1px solid var(--main-dark);
-  min-height: 110px;
+  /* border: 1px solid var(--main-dark); */
+  min-height: 108px;
   height: 100%;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
+  box-shadow: var(--box-shadow);
 `;
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
   padding: 0.5rem;
-  border: 1px solid var(--main-dark);
-  /* min-height: 136px; */
-  min-height: 150px;
+  /* border: 1px solid var(--main-dark); */
+  min-height: 144px;
   height: 100%;
-  max-height: 270px;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
+  box-shadow: var(--box-shadow);
 `;
 const ElementText = styled.p`
   font-size: 0.9rem;
   padding: 0.2rem;
   margin: 0.2rem;
+  /* background-color: ${({ $bgcolor }) => $bgcolor};
+  background: ${({ $bgcolor }) => $bgcolor}; */
+`;
+
+const EmotionText = styled.p`
+  color: ${({ $bgcolor }) => $bgcolor};
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -137,15 +144,18 @@ export default function HomePage({
   }, []);
 
   const dashboardWidth = Math.max(360, Math.round(windowWidth / 2));
-  const dashboardHeight = Math.round(dashboardWidth * 1.3);
+  const dashboardHeight = Math.round(dashboardWidth * 1.25);
   console.log(dashboardHeight);
 
   //for dashboard
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
-
+  const sevenEmotions = emotionData.map((element) => element.name);
+  const newestEmotionEntry = emotionEntries.find(
+    (entry) => sevenEmotions.includes(entry.emotion) === true
+  );
+  const { emotion, intensity, slug } = newestEmotionEntry;
   //chart
-
   const today = new Date().toISOString();
   const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
   const xValues = calculateTensionChartData(filteredEntries).xValues;
@@ -192,6 +202,7 @@ export default function HomePage({
       <DashboardTitle>Dashboard</DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
+        // $dashboardWidth={dashboardWidth.toString() + "px"}
         $dashboardHeight={dashboardHeight}
       >
         <GridElement>
@@ -209,7 +220,7 @@ export default function HomePage({
         </GridElement>
         <GridElement>
           <ElementText>
-            Your last entry is {timeSinceLastEntry} hours ago.{" "}
+            Your newest entry is {timeSinceLastEntry} hours ago.{" "}
           </ElementText>
           <DashboardLink href="/add-entry">add new entry</DashboardLink>
         </GridElement>
@@ -220,13 +231,16 @@ export default function HomePage({
           <DashboardLink href="/emotion-records">emotion records</DashboardLink>
         </GridElement>
         <GridElement>
-          {" "}
-          <ElementText>Last recorded feeling</ElementText>
+          <EmotionText $bgcolor={`var(--${slug})`}>
+            Last recorded emotion:<br></br>
+            {emotion}
+            <br></br>Intensity: {intensity} %
+          </EmotionText>
         </GridElement>
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            heightFactor={0.5}
+            heightFactor={0.48}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
