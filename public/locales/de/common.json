@@ -14,5 +14,6 @@
   "gotRedirected": "Du wurdest umgeleitet.",
   "typeOfErrorMessage": "Fehlermeldung:",
   "tryAgainButton": "Nochmal versuchen",
-  "backToHomepageButton": "Homepage"
+  "backToHomepageButton": "Homepage",
+  "appIsLoading": "App wird geladen..."
 }

@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import ErrorMessage from "./ErrorMessage";
 import Tooltip from "./Tooltip";
+import { useTranslation } from "next-i18next";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -63,6 +64,8 @@ export default function Layout({
 
   const { slug } = router.query;
 
+  const { t: translate } = useTranslation("common");
+
   const isAppManual = router.pathname === "/app-manual";
   const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
   const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
@@ -77,7 +80,7 @@ export default function Layout({
         switchTheme={switchTheme}
       />
       {(emotionEntriesAreLoading && (
-        <Loader itemText={"App is loading..."} />
+        <Loader itemText={translate("appIsLoading")} />
       )) ||
         (errorFetchingEmotionEntries && (
           <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
