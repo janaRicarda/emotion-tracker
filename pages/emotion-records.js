@@ -152,6 +152,10 @@ const StyledListContainer = styled.div`
   }
 `;
 
+const SwitchSizer = styled.span`
+  transform: scale(0.6);
+`;
+
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
