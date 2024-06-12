@@ -95,8 +95,6 @@ export default function HomePage({
     ? emotionEntries[emotionEntries.length - 1]?._id
     : null;
 
-  //const newestDbEntryID = emotionEntries[emotionEntries.length - 1]?._id;
-
   useEffect(() => {
     handleToolTip({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
@@ -114,7 +112,7 @@ export default function HomePage({
     setId(newId);
     setIsFormSubmitted(!isFormSubmitted);
   }
-  console.log(newestDbEntryID);
+
   return (
     <>
       <Head>

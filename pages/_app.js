@@ -129,6 +129,7 @@ export default function App({
   function handleDemoMode() {
     setDemoMode(true);
     setUseExampleDate(true);
+    router.push("/");
   }
 
   function handleDemoModeOff() {
@@ -141,7 +142,7 @@ export default function App({
     isLoading: emotionEntriesAreLoading,
     error: errorFetchingEmotionEntries,
     mutate,
-  } = useSWR("/api/emotionEntries/", fetcher);
+  } = useSWR(!demoMode && "/api/emotionEntries/", fetcher);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);

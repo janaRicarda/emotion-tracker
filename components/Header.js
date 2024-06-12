@@ -9,6 +9,7 @@ import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
 import Login from "./Login";
 import { breakpoints } from "@/utils/breakpoints";
+import { useRouter } from "next/router";
 
 // used for all transition in this component
 const transition = css`
@@ -95,10 +96,14 @@ export default function Header({
   handleDemoModeOff,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
+  const createPath =
+    (router.pathname === "/create" || router.pathname === "/create/[slug]") &&
+    true;
 
   return (
     <>
@@ -106,7 +111,7 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        <Login handleDemoModeOff={handleDemoModeOff} />
+        <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} />
         <StyledIconWrapper $isScrollDown={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (
             <StyledToggleTheme type="button" onClick={toggleTheme}>

@@ -11,6 +11,7 @@ const StyledButton = styled.button`
   border-radius: 6px;
   margin: 1rem;
   padding: ${({ $login }) => ($login ? "0" : "1rem")};
+  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
 `;
 
 const StyledSubmitButton = styled(StyledButton)`

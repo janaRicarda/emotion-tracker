@@ -1,6 +1,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { StyledButton } from "@/SharedStyledComponents";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const StyledParagraph = styled.p`
   font-size: 0.8rem;
@@ -10,14 +11,24 @@ const StyledParagraph = styled.p`
   margin-right: 0.8rem;
 `;
 
-export default function Login({ handleDemoModeOff }) {
+export default function Login({ handleDemoModeOff, disable }) {
   const { data: session } = useSession();
-
+  const router = useRouter();
   if (session) {
     return (
       <>
         <StyledParagraph>Signed in as {session.user.name}</StyledParagraph>
-        <StyledButton $login onClick={() => signOut()}>
+        <StyledButton
+          $login
+          $disable={disable}
+          onClick={() => {
+            if (disable) {
+              return;
+            }
+            router.push("/");
+            signOut();
+          }}
+        >
           Sign out
         </StyledButton>
       </>
@@ -26,8 +37,12 @@ export default function Login({ handleDemoModeOff }) {
   return (
     <StyledButton
       $login
+      $disable={disable}
       onClick={() => {
-        signIn();
+        if (disable) {
+          return;
+        }
+        router.push("/");
         handleDemoModeOff();
       }}
     >
