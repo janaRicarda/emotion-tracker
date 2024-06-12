@@ -24,7 +24,9 @@ const TableWrapper = styled.div`
   overflow: hidden;
 
   & > table {
-    width: 100%;
+    width: 80vw;
+    table-layout: fixed;
+    padding-right: .3rem;
   }
 
   & > * span {
@@ -43,7 +45,7 @@ const TableWrapper = styled.div`
   & > * tr {
     display: flex;
     margin: 0.5rem 0;
-    padding: 0 0.3rem;
+    padding: 0 0 0 0.3rem;
   }
 
   & > * td {
