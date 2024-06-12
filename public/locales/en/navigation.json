@@ -3,5 +3,9 @@
   "navigationBasicEmotions": "7 basic emotions",
   "navigationAddEntry": "add entry",
   "navigationEmotionRecords": "emotion records",
-  "navigationColorSchemes": "color schemes"
+  "navigationColorSchemes": "color schemes",
+  "warmTheme": "warm",
+  "coldTheme": "cold",
+  "neutralTheme": "neutral",
+  "highContrastTheme": "high contrast"
 }

@@ -56,7 +56,8 @@ const StyledLinkWrapper = styled.article`
   flex-direction: column;
   @media ${breakpoints.laptop} {
     padding-top: 1rem;
-    flex-direction: row;    }
+    flex-direction: row;
+  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -122,15 +123,15 @@ const ThemeButton = styled(StyledButton)`
 `;
 
 export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
+  const { t: translate } = useTranslation(["navigation"]);
+
   const colorSchemes = [
     { title: "what a feeling", name: lightTheme },
-    { title: "warm", name: warmTheme },
-    { title: "cold", name: coldTheme },
-    { title: "neutral", name: neutralTheme },
-    { title: "high contrast", name: highContrastTheme },
+    { title: `${translate("warmTheme")}`, name: warmTheme },
+    { title: `${translate("coldTheme")}`, name: coldTheme },
+    { title: `${translate("neutralTheme")}`, name: neutralTheme },
+    { title: `${translate("highContrastTheme")}`, name: highContrastTheme },
   ];
-
-  const { t: translate } = useTranslation(["navigation"]);
 
   // delay of isOpen-state to give time for animation
   const [delayOpen, setDelayedOpen] = useState(false);
