@@ -7,10 +7,11 @@ const StyledButton = styled.button`
   background: var(--button-background);
   color: var(--contrast-text);
   width: 6rem;
-  border: 1px solid var(--main-dark);
+  border: ${({ $login }) => ($login ? "none" : "1px solid var(--main-dark)")};
   border-radius: 6px;
   margin: 1rem;
-  padding: 1rem;
+  padding: ${({ $login }) => ($login ? "0" : "1rem")};
+  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
 `;
 
 const StyledSubmitButton = styled(StyledButton)`

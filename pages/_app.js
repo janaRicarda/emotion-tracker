@@ -4,11 +4,11 @@ import GlobalStyle from "../styles";
 import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
-import generateExampleData from "@/utils/exampleData";
 import { generateCompleteData } from "@/components/DataGenerator";
 import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
+import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 
 const fetcher = async (url) => {
@@ -23,22 +23,26 @@ const fetcher = async (url) => {
     error.status = response.status;
     throw error;
   }
-
   return response.json();
 };
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
+  const [demoMode, setDemoMode] = useState(false);
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
     false
   );
+
   const [emotionEntries, setEmotionEntries] = useLocalStorageState(
     "emotionEntries",
     {
@@ -69,6 +73,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   const initialData = generateCompleteData(40);
+
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
@@ -119,8 +124,17 @@ export default function App({ Component, pageProps }) {
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  function handleUseExampleData() {
-    setUseExampleDate(!useExampleData);
+  // function for StartModal
+
+  function handleDemoMode() {
+    setDemoMode(true);
+    setUseExampleDate(true);
+    router.push("/");
+  }
+
+  function handleDemoModeOff() {
+    setDemoMode(false);
+    setUseExampleDate(false);
   }
 
   const {
@@ -128,7 +142,7 @@ export default function App({ Component, pageProps }) {
     isLoading: emotionEntriesAreLoading,
     error: errorFetchingEmotionEntries,
     mutate,
-  } = useSWR("/api/emotionEntries", fetcher);
+  } = useSWR(!demoMode && "/api/emotionEntries/", fetcher);
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
@@ -308,39 +322,48 @@ export default function App({ Component, pageProps }) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <SWRConfig value={{ fetcher }}>
-        <GlobalStyle />
-        <Layout
-          toolTip={toolTip}
-          theme={theme}
-          isScrollDown={isScrollDown}
-          scrollPosition={scrollPosition}
-          toggleTheme={toggleTheme}
-          switchTheme={switchTheme}
-          emotionEntriesAreLoading={emotionEntriesAreLoading}
-          errorFetchingEmotionEntries={errorFetchingEmotionEntries}
-        >
-          <Component
-            isScrollDown={isScrollDown}
-            handleToolTip={handleToolTip}
+    <SessionProvider session={demoMode ? null : session}>
+      <ThemeProvider theme={theme}>
+        <SWRConfig value={{ fetcher }}>
+          <GlobalStyle />
+          <Layout
+            demoMode={demoMode}
+            handleDemoMode={handleDemoMode}
+            handleDemoModeOff={handleDemoModeOff}
+            toolTip={toolTip}
             theme={theme}
+            isScrollDown={isScrollDown}
+            scrollPosition={scrollPosition}
+            toggleTheme={toggleTheme}
             switchTheme={switchTheme}
-            onAddEmotionDetails={handleAddEmotionDetails}
-            emotionEntries={useExampleData ? emotionEntries : dbEmotionEntries}
-            onAddEmotionEntry={handleAddEmotionEntry}
-            onDeleteEmotionEntry={handleDeleteEmotionEntry}
-            onReplaceUserData={handleReplaceAndBackup}
-            onDeleteAll={handleDeleteAll}
-            onRestore={restoreFromBackup}
-            backupEntries={backupEntries}
-            toggleHighlight={toggleHighlight}
-            toggleExampleData={handleUseExampleData}
-            useExampleData={useExampleData}
-            {...pageProps}
-          />
-        </Layout>
-      </SWRConfig>
-    </ThemeProvider>
+            emotionEntriesAreLoading={emotionEntriesAreLoading}
+            errorFetchingEmotionEntries={errorFetchingEmotionEntries}
+          >
+            <Component
+              isScrollDown={isScrollDown}
+              handleToolTip={handleToolTip}
+              theme={theme}
+              onAddEmotionDetails={handleAddEmotionDetails}
+              emotionEntries={
+                useExampleData ? emotionEntries : dbEmotionEntries
+              }
+              onAddEmotionEntry={handleAddEmotionEntry}
+              onDeleteEmotionEntry={handleDeleteEmotionEntry}
+              onReplaceUserData={handleReplaceAndBackup}
+              onDeleteAll={handleDeleteAll}
+              onRestore={restoreFromBackup}
+              backupEntries={backupEntries}
+              toggleHighlight={toggleHighlight}
+              useExampleData={useExampleData}
+              demoMode={demoMode}
+              scrollPosition={scrollPosition}
+              toggleTheme={toggleTheme}
+              switchTheme={switchTheme}
+              {...pageProps}
+            />
+          </Layout>
+        </SWRConfig>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
