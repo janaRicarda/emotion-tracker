@@ -47,9 +47,13 @@ export function getTimeSinceLastEntry(entries) {
 }
 
 export function getAveragePerDay(entries) {
-  const allDays =
-    Math.abs(entries[entries.length - 1]?.timeStamp - entries[0]?.timeStamp) /
-    (24 * 3600000);
+  console.log(entries.length);
+  const timeDifference =
+    Number(entries[entries.length - 1]?.timeStamp) -
+    Number(entries[0]?.timeStamp);
+  console.log(timeDifference);
+  const allDays = timeDifference / (24 * 3600000);
+  console.log(allDays);
   const average = entries.length / allDays;
   const averageString = average.toFixed(1);
   return averageString;

@@ -96,6 +96,8 @@ export default function HomePage({ handleToolTip, emotionEntries, theme }) {
   // console.log(dashboardHeight);
 
   //for dashboard
+
+  console.log(emotionEntries);
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
   const sevenEmotions = emotionData.map((element) => element.name);
