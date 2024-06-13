@@ -101,7 +101,7 @@ export default function Layout({
           <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
         )) ||
         children}
-      <Footer />
+      <Footer handleDemoModeOff={handleDemoModeOff} />
       {toolTip && <Tooltip toolTip={toolTip} />}
       <StyledToTopButton
         $background={

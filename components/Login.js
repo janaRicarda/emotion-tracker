@@ -1,37 +1,43 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { StyledButton, StyledStandardLink } from "@/SharedStyledComponents";
+import { StyledButton } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import Profile from "../public/icons/account.svg";
+import Logout from "../public/icons/logout.svg";
 
 const StyledParagraph = styled.p`
   font-size: 0.8rem;
-  position: absolute;
-  top: 0;
-  right: 0;
   margin-right: 1.5rem;
+  z-index: 2;
+  display: ${({ $navigation }) => ($navigation ? "none" : "block")};
+`;
+
+const StyledLogoutButton = styled.button`
+  color: var(--contrast-text);
+  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
+  border-style: none;
+  background: transparent;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  font-size: ${({ $navigation }) => ($navigation ? "1.4rem" : "1rem")};
 `;
 
-const StyledProfile = styled(Profile)`
-  width: 1.5rem;
-  fill: var(--main-dark);
+const StyledLogout = styled(Logout)`
+  width: 1rem;
+  fill: var(--contrast-text);
 `;
 
-export default function Login({ handleDemoModeOff, disable }) {
+export default function Login({ handleDemoModeOff, disable, navigation }) {
   const { data: session } = useSession();
   const router = useRouter();
   if (session) {
     return (
       <>
-        <StyledParagraph>
+        <StyledParagraph $navigation={navigation}>
           Signed in as {session.user.name}{" "}
-          <StyledStandardLink href="/profile-page">
-            <StyledProfile />
-          </StyledStandardLink>
         </StyledParagraph>
-        <StyledButton
+        <StyledLogoutButton
+          $navigation={navigation}
           $login
           $disable={disable}
           onClick={() => {
@@ -42,8 +48,8 @@ export default function Login({ handleDemoModeOff, disable }) {
             signOut();
           }}
         >
-          Sign out
-        </StyledButton>
+          <StyledLogout /> Sign out
+        </StyledLogoutButton>
       </>
     );
   }

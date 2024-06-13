@@ -10,6 +10,8 @@ import { Fade as Hamburger } from "hamburger-react";
 import Login from "./Login";
 import { breakpoints } from "@/utils/breakpoints";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import ProfileLink from "./ProfileLink";
 
 // used for all transition in this component
 const transition = css`
@@ -17,12 +19,9 @@ const transition = css`
 `;
 
 const StyledToggleTheme = styled.button`
-  //border-radius: 50%;
-  //border: 1px solid var(--main-dark);
   border-style: none;
   background-color: transparent;
   z-index: 3;
-  //padding: 0.3rem;
   aspect-ratio: 1/1;
 `;
 
@@ -98,6 +97,7 @@ export default function Header({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
@@ -112,7 +112,7 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} />
+        {/*  <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} /> */}
         <StyledIconWrapper $isScrollDown={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (
             <StyledToggleTheme type="button" onClick={toggleTheme}>
@@ -124,6 +124,7 @@ export default function Header({
           >
             <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
           </StyledMenu>
+          {session && <ProfileLink />}
         </StyledIconWrapper>
         <Navigation
           isOpen={isOpen}

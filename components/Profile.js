@@ -79,7 +79,7 @@ const ThemeButton = styled(StyledButton)`
   gap: 0.5rem;
   color: var(--main-dark);
   background: transparent;
-  border: 0 0 1px solid var(--text-on-bright) 0;
+
   border-radius: 0;
   padding: 0.1rem 0.1rem 0.1rem 0.5rem;
   margin: 0;
@@ -97,7 +97,6 @@ const ThemeButton = styled(StyledButton)`
     font-size: 0.8rem;
     color: var(--contrast-text);
     background: var(--section-background-contrast);
-    border: 1px solid var(--contrast-text);
   }
 `;
 
