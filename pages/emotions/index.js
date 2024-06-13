@@ -13,6 +13,7 @@ export default function EmotionListPage({ handleToolTip }) {
     });
   }, []);
 
+
   return (
     <>
       <Head>
