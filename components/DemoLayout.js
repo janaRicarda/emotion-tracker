@@ -8,7 +8,7 @@ const StyledDemoFrame = styled.article`
   top: 0;
 `;
 const StyledMessage = styled.p`
-  color: var(--main-dark);
+  color: var(--contrast-text);
   text-align: center;
 `;
 

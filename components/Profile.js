@@ -17,29 +17,38 @@ import {
 import { breakpoints } from "@/utils/breakpoints";
 import Circle from "../public/icons/circle.svg";
 
-const StyledP = styled.p`
+const StyledParagraph = styled.p`
   text-align: center;
   padding: 1rem;
 `;
 
 const StyledSettingsWrapper = styled.article`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 `;
 
 const StyledColorSchemesButton = styled(StyledButton)`
+  background: none;
   border: none;
   width: auto;
   padding: 0.2rem;
+  margin-top: 0;
+  border-radius: 0;
+  color: var(--main-dark);
+  border-bottom: 1px solid var(--main-dark);
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
   background: var(--section-background);
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   gap: 0.2rem;
+  @media ${breakpoints.mobileLandscape} {
+    align-items: flex-start;
+  }
 `;
 
 const StyledCircle = styled(Circle)`
@@ -52,15 +61,10 @@ const StyledCircle = styled(Circle)`
 
 const ThemeButton = styled(StyledButton)`
   display: flex;
-  //justify-content: center;
   align-items: center;
   gap: 0.5rem;
   color: var(--main-dark);
-  //color: var(--button-background);
   background: transparent;
-  //background-color: var(--contrast-text);
-  //background: ${({ $background }) => $background};
-  //color: ${({ $text }) => $text};
   border: 0 0 1px solid var(--text-on-bright) 0;
   border-radius: 0;
   padding: 0.1rem 0.1rem 0.1rem 0.5rem;
@@ -70,7 +74,7 @@ const ThemeButton = styled(StyledButton)`
   @media ${breakpoints.mobileLandscape} {
     padding: 0 0.5rem;
     width: auto;
-    text-align: center;
+    //text-align: center;
   }
   @media ${breakpoints.laptop} {
     padding: 0 1rem;
@@ -84,7 +88,7 @@ const ThemeButton = styled(StyledButton)`
 `;
 
 export default function Profile({ theme, switchTheme }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
   const colorSchemes = [
     {
@@ -128,17 +132,21 @@ export default function Profile({ theme, switchTheme }) {
   function handleShowThemes() {
     setShowThemes(!showThemes);
   }
+  console.log(session);
+  if (status !== "authenticated") {
+    return <h2>Access denied! You have to be logged in, to see this page</h2>;
+  }
   return (
     <StyledFlexColumnWrapper>
       <StyledTitle>Hi {session.user.name},</StyledTitle>
       <p>this is your profile-page</p>
-      <StyledP>Account-name: {session.user.email}</StyledP>
-      <StyledP>
+      <StyledParagraph>Account-name: {session.user.email}</StyledParagraph>
+      <StyledParagraph>
         Make yourself at home and turn on your favorite illumination
-      </StyledP>
+      </StyledParagraph>
       <StyledSettingsWrapper>
         <StyledColorSchemesButton onClick={handleShowThemes}>
-          Preferred Theme
+          Choose your preferred theme
         </StyledColorSchemesButton>
         {showThemes && (
           <ThemeWrapper>
@@ -156,9 +164,6 @@ export default function Profile({ theme, switchTheme }) {
                 {title}
               </ThemeButton>
             ))}
-            <StyledP>
-              You`re choice will be saved but you can always change
-            </StyledP>
           </ThemeWrapper>
         )}
       </StyledSettingsWrapper>
