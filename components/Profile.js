@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import {
   StyledFlexColumnWrapper,
@@ -30,6 +31,7 @@ const StyledSettingsWrapper = styled.article`
 const StyledColorSchemesButton = styled(StyledButton)`
   border: none;
   width: auto;
+  padding: 0.2rem;
 `;
 
 const ThemeWrapper = styled(StyledFlexColumnWrapper)`
@@ -82,6 +84,7 @@ const ThemeButton = styled(StyledButton)`
 `;
 
 export default function Profile({ theme, switchTheme }) {
+  const { data: session } = useSession();
   const [showThemes, setShowThemes] = useState(false);
   const colorSchemes = [
     {
@@ -127,9 +130,9 @@ export default function Profile({ theme, switchTheme }) {
   }
   return (
     <StyledFlexColumnWrapper>
-      <StyledTitle>Hi user,</StyledTitle>
+      <StyledTitle>Hi {session.user.name},</StyledTitle>
       <p>this is your profile-page</p>
-      <StyledP>Account-name: user@example.com</StyledP>
+      <StyledP>Account-name: {session.user.email}</StyledP>
       <StyledP>
         Make yourself at home and turn on your favorite illumination
       </StyledP>
@@ -153,10 +156,12 @@ export default function Profile({ theme, switchTheme }) {
                 {title}
               </ThemeButton>
             ))}
+            <StyledP>
+              You`re choice will be saved but you can always change
+            </StyledP>
           </ThemeWrapper>
         )}
       </StyledSettingsWrapper>
-      <StyledP>You`re choice will be saved but you can always change</StyledP>
     </StyledFlexColumnWrapper>
   );
 }

@@ -17,11 +17,12 @@ const transition = css`
 `;
 
 const StyledToggleTheme = styled.button`
-  border-radius: 50%;
-  border: 1px solid var(--main-dark);
+  //border-radius: 50%;
+  //border: 1px solid var(--main-dark);
+  border-style: none;
   background-color: transparent;
   z-index: 3;
-  padding: 0.3rem;
+  //padding: 0.3rem;
   aspect-ratio: 1/1;
 `;
 
@@ -64,7 +65,7 @@ const StyledIconWrapper = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  //gap: 1rem;
   width: auto;
   z-index: 3;
   transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
