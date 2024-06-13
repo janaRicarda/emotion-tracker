@@ -17,6 +17,20 @@ import {
 import { breakpoints } from "@/utils/breakpoints";
 import Circle from "../public/icons/circle.svg";
 
+const StyledProfileCircle = styled(Circle)`
+  width: 8rem;
+  border-radius: 50%;
+  fill: transparent;
+  background: var(--profile);
+`;
+
+const StyledTitleWrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 const StyledParagraph = styled.p`
   text-align: center;
   padding: 1rem;
@@ -137,9 +151,13 @@ export default function Profile({ theme, switchTheme }) {
     return <h2>Access denied! You have to be logged in, to see this page</h2>;
   }
   return (
-    <StyledFlexColumnWrapper>
-      <StyledTitle>Hi {session.user.name},</StyledTitle>
-      <p>this is your profile-page</p>
+    <>
+      <StyledTitleWrapper>
+        <StyledTitle>Hi {session.user.name}!</StyledTitle>
+        <StyledProfileCircle />
+        <StyledParagraph>this is your profile-page</StyledParagraph>
+      </StyledTitleWrapper>
+
       <StyledParagraph>Account-name: {session.user.email}</StyledParagraph>
       <StyledParagraph>
         Make yourself at home and turn on your favorite illumination
@@ -167,6 +185,6 @@ export default function Profile({ theme, switchTheme }) {
           </ThemeWrapper>
         )}
       </StyledSettingsWrapper>
-    </StyledFlexColumnWrapper>
+    </>
   );
 }

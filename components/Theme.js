@@ -35,6 +35,8 @@ export const lightTheme = {
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
+  //profile: "linear-gradient(#e8e87d,  #c5a3f5)",
+  profile: "conic-gradient(#e8e87d, #7de8cd, #c5a3f5)",
 };
 
 export const darkTheme = {
@@ -74,6 +76,7 @@ export const darkTheme = {
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
+  profile: "linear-gradient(#e8e87d, #7de8cd, #c5a3f5)",
 };
 
 export const warmTheme = {
@@ -113,6 +116,7 @@ export const warmTheme = {
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "#762e72",
   highlightedLines: "#fdfcd7",
+  profile: "linear-gradient(to bottom left, #fbe050, #fbbd50, #f673a4)",
 };
 
 export const coldTheme = {
@@ -152,6 +156,7 @@ export const coldTheme = {
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "#0F1555",
   highlightedLines: "#D3F6F8",
+  profile: "linear-gradient(to bottom left,#50cfe2, #9996fa)",
 };
 
 export const neutralTheme = {
@@ -189,6 +194,7 @@ export const neutralTheme = {
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   highlightBackground: "black",
   highlightedLines: "white",
+  profile: "linear-gradient(lightgrey, white)",
 };
 
 export const highContrastTheme = {
@@ -227,4 +233,5 @@ export const highContrastTheme = {
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "yellow",
   highlightedLines: "black",
+  profile: "yellow",
 };
