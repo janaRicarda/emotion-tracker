@@ -55,7 +55,8 @@ const StyledLinkWrapper = styled.article`
   flex-direction: column;
   @media ${breakpoints.laptop} {
     padding-top: 1rem;
-    flex-direction: row;    }
+    flex-direction: row;
+  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -148,13 +149,16 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
       {delayOpen && (
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
+            <StyledLink onClick={handleToggleMenu} href="/">
+              dashboard
+            </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">
               manual
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotions">
               7 basic emotions
             </StyledLink>
-            <StyledLink onClick={handleToggleMenu} href="/">
+            <StyledLink onClick={handleToggleMenu} href="/add-entry">
               add entry
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">

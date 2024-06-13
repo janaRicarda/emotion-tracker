@@ -79,7 +79,6 @@ const GridElement = styled.div`
   flex-direction: column;
   border-radius: 18px;
   padding: 0.5rem;
-  /* border: 1px solid var(--main-dark); */
   min-height: 108px;
   height: 100%;
   align-content: center;
@@ -90,8 +89,7 @@ const GridElement = styled.div`
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
-  padding: 0.5rem;
-  /* border: 1px solid var(--main-dark); */
+  padding: 0.2rem;
   min-height: 144px;
   height: 100%;
   align-content: center;
@@ -101,25 +99,22 @@ const ChartElement = styled.div`
 `;
 const ElementText = styled.p`
   font-size: 0.9rem;
+  line-height: 1.2rem;
+  text-align: left;
   padding: 0.2rem;
-  margin: 0.2rem;
-  /* background-color: ${({ $bgcolor }) => $bgcolor};
-  background: ${({ $bgcolor }) => $bgcolor}; */
-`;
-
-const EmotionText = styled.p`
-  color: ${({ $bgcolor }) => $bgcolor};
+  margin: 0.1rem;
+  background: ${({ $color }) =>
+    $color ? $color : "var(--section-background)"};
+  border-radius: 6px;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
   font-size: 0.9rem;
-  color: var(--contrast-text);
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  height: 100%;
   align-self: center;
-  padding: 0.5rem;
-  background-color: var(--button-background);
+  padding: 0;
+  /* border: 1px solid var(--main-dark); */
 `;
 export default function HomePage({
   handleToolTip,
@@ -145,7 +140,7 @@ export default function HomePage({
 
   const dashboardWidth = Math.max(360, Math.round(windowWidth / 2));
   const dashboardHeight = Math.round(dashboardWidth * 1.25);
-  console.log(dashboardHeight);
+  // console.log(dashboardHeight);
 
   //for dashboard
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
@@ -154,8 +149,12 @@ export default function HomePage({
   const newestEmotionEntry = emotionEntries.find(
     (entry) => sevenEmotions.includes(entry.emotion) === true
   );
-  const { emotion, intensity, slug } = newestEmotionEntry;
-  //chart
+  const { emotion, intensity } = newestEmotionEntry;
+  const slug = emotionData
+    .filter((element) => element.name === emotion)
+    .map((element) => element.slug);
+
+  //chart logic
   const today = new Date().toISOString();
   const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
   const xValues = calculateTensionChartData(filteredEntries).xValues;
@@ -199,17 +198,19 @@ export default function HomePage({
         />
       </ToggleSwitchWrapper>
 
-      <DashboardTitle>Dashboard</DashboardTitle>
+      <DashboardTitle>Hallo emotion lover</DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
-        // $dashboardWidth={dashboardWidth.toString() + "px"}
         $dashboardHeight={dashboardHeight}
       >
         <GridElement>
-          {/* click for more */}
-          <ElementText>
-            Welcome to What a Feeling! Track and explore your feelings ...
-          </ElementText>
+          <DashboardLink href="/app-manual">
+            <ElementText>
+              Track and explore your feelings ... how? You can look at the
+              manual!
+            </ElementText>
+          </DashboardLink>
+
           {/* <p>
             Welcome to What a Feeling! Track and explore your feelings
             effortlessly. Log your tension level and dive into the depths of
@@ -219,23 +220,30 @@ export default function HomePage({
           </p> */}
         </GridElement>
         <GridElement>
-          <ElementText>
-            Your newest entry is {timeSinceLastEntry} hours ago.{" "}
-          </ElementText>
-          <DashboardLink href="/add-entry">add new entry</DashboardLink>
+          <DashboardLink href="/add-entry">
+            {" "}
+            <ElementText>
+              Your newest entry is {timeSinceLastEntry} hours ago. Do you want
+              to record a new entry?
+            </ElementText>
+          </DashboardLink>
+        </GridElement>
+        <GridElement>
+          <DashboardLink href="/emotion-records">
+            <ElementText>
+              Your average rate is {averageEntriesPerDay} entries per day. Click
+              to see your recorded emotions.
+            </ElementText>
+          </DashboardLink>
         </GridElement>
         <GridElement>
           <ElementText>
-            Your average rate is {averageEntriesPerDay} entries per day.
-          </ElementText>
-          <DashboardLink href="/emotion-records">emotion records</DashboardLink>
-        </GridElement>
-        <GridElement>
-          <EmotionText $bgcolor={`var(--${slug})`}>
             Last recorded emotion:<br></br>
+          </ElementText>
+          <ElementText $color={`var(--${slug})`}>
             {emotion}
             <br></br>Intensity: {intensity} %
-          </EmotionText>
+          </ElementText>
         </GridElement>
         <ChartElement>
           <ChartContainerV2
