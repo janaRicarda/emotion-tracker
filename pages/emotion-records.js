@@ -80,20 +80,17 @@ const AnimatedPanel = styled.div`
   position: fixed;
   top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "164px")};
   ${transition}
-  z-index: 2;
+  z-index: 1;
 `;
 
 const StyledTextMessage = styled.article`
-  margin-top: 8rem;
+  /* margin-top: 8rem; */
   text-align: center;
   line-height: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media ${breakpoints.laptop} {
-    margin-left: 10%;
-  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -112,13 +109,13 @@ const StyledHeartSymbol = styled(HeartOutlineIcon)`
 
 const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
+  margin: 1rem;
   display: inline;
   vertical-align: bottom;
   fill: var(--main-dark);
 `;
 
 const StyledDateIndicator = styled.article`
-  margin: 2rem auto 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -137,17 +134,16 @@ const StyledDateSpan = styled.span`
 
 const StyledListContainer = styled.div`
   width: 80vw;
+  margin-top: 7rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   @media ${breakpoints.tablet} {
-    margin-top: 0;
     margin-left: 35%;
   }
   @media ${breakpoints.laptop} {
-    margin-top: 0;
     margin-left: 40%;
   }
 `;
@@ -156,7 +152,6 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 7rem;
   width: 100%;
   max-width: 575px;
 `;
@@ -301,34 +296,31 @@ export default function EmotionRecords({
           selectedTime={selectedTime}
         />
       </AnimatedPanel>
-      {buttonState.datePicker ? (
-        selectedTime ? (
-          <DisplayDate textAlign="center" />
-        ) : (
-          <StyledDateIndicator>
-            Click the calendar <StyledCalendarIcon /> and select a date
-          </StyledDateIndicator>
-        )
-      ) : null}
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              You haven&apos;t made any Entries today.<br></br>
-              <StyledLink href="./">add Entry &rarr;</StyledLink>
-            </StyledTextMessage>
+
+      <StyledListContainer>
+
+        {shownEntries.length === 0 &&
+          (filteredEntries.length === 0 ? (
+            buttonState.highlightedButton ? (
+              <StyledTextMessage>
+                You haven&apos;t highlighted any Entries yet. Click the{" "}
+                <StyledHeartSymbol /> on a Entry to highlight it.
+              </StyledTextMessage>
+            ) : buttonState.todayButton ? (
+              <StyledTextMessage>
+                You haven&apos;t made any Entries today.<br></br>
+                <StyledLink href="./">add Entry &rarr;</StyledLink>
+              </StyledTextMessage>
+            ) : buttonState.datePicker && !selectedTime ? (
+              <StyledDateIndicator>
+                Click the calendar <StyledCalendarIcon /> and select a date
+              </StyledDateIndicator>
+            ) : (
+              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+            )
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-        ))}
-      <StyledListContainer>
+          ))}
         {shownEntries.length !== 0 && (
           <StyledWrapper>
             <p>Results: {shownEntries.length}</p>

@@ -3,15 +3,24 @@ import Icon from "@mdi/react";
 import { mdiFilter } from "@mdi/js";
 
 const StyledMinimalPanel = styled.section`
-  background-color: var(--main-bright);
   width: 100vw;
+  padding: 0.6rem;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  font-size: 0.8rem;
-  padding: 0 0.6rem;
   z-index: 1;
+  font-size: 0.8rem;
+  background-color: var(--main-bright);
+
+  & > :nth-child(1) {
+    margin: 5px;
+  }
+
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
 `;
 
 const StyledFilterIcon = styled(Icon)`
@@ -38,14 +47,15 @@ export default function SmallFilterPanel({
   return (
     <StyledMinimalPanel>
       <StyledFilterIcon path={mdiFilter} size={1} />
-
-      <StyledPanelItem>{buttonState.label}</StyledPanelItem>
-      {searchTerm && <StyledPanelItem>{searchTerm}</StyledPanelItem>}
-      {selectedTime && buttonState.datePicker && (
-        <StyledPanelItem>
-          <DisplayDate />
-        </StyledPanelItem>
-      )}
+      <div>
+        <StyledPanelItem>{buttonState.label}</StyledPanelItem>
+        {searchTerm && <StyledPanelItem>{searchTerm}</StyledPanelItem>}
+        {selectedTime && buttonState.datePicker && (
+          <StyledPanelItem>
+            <DisplayDate />
+          </StyledPanelItem>
+        )}
+      </div>
     </StyledMinimalPanel>
   );
 }
