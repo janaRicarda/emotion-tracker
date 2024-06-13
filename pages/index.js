@@ -10,7 +10,8 @@ import {
   getFilteredEntriesV2,
 } from "@/utils/dataAndChartUtils";
 import { emotionData } from "@/lib/db";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
 
 const DashboardTitle = styled(StyledTitle)`
   margin-top: -10px;
@@ -75,10 +76,42 @@ const DashboardLink = styled(StyledStandardLink)`
   padding: 0;
   /* border: 1px solid var(--main-dark); */
 `;
-export default function HomePage({ handleToolTip, emotionEntries, theme }) {
+
+const fetcher = async (url) => {
+  const response = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!response.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await response.json();
+    error.status = response.status;
+    throw error;
+  }
+  return response.json();
+};
+
+export default function HomePage({
+  handleToolTip,
+  emotionEntries,
+  theme,
+  demoMode,
+}) {
   const { data: session } = useSession();
 
-  // const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+  console.log(emotionEntries);
+  // const [dashboardData, setDashboardData] = useState(...emotionEntries);
+
+  // console.log(dashboardData);
+
+  const {
+    data: dbEmotionEntries,
+    isLoading: emotionEntriesAreLoading,
+    error: errorFetchingEmotionEntries,
+    mutate,
+  } = useSWR(!demoMode && "/api/emotionEntries/", fetcher);
+  console.log(data);
 
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -97,9 +130,9 @@ export default function HomePage({ handleToolTip, emotionEntries, theme }) {
 
   //for dashboard
 
-  console.log(emotionEntries);
   const averageEntriesPerDay = getAveragePerDay(emotionEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
+
   const sevenEmotions = emotionData.map((element) => element.name);
   const newestEmotionEntry = emotionEntries.find(
     (entry) => sevenEmotions.includes(entry.emotion) === true
