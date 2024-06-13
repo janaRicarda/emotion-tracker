@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import Logout from "../public/icons/logout.svg";
 
 const StyledParagraph = styled.p`
-  font-size: 0.8rem;
-  margin-right: 1.5rem;
-  z-index: 2;
+  font-size: 0.7rem;
   display: ${({ $navigation }) => ($navigation ? "none" : "block")};
 `;
 
@@ -16,15 +14,28 @@ const StyledLogoutButton = styled.button`
   opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
   border-style: none;
   background: transparent;
+  text-align: center;
+  padding-right: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: ${({ $navigation }) => ($navigation ? "1.4rem" : "1rem")};
+  font-size: ${({ $navigation }) => ($navigation ? "1.4rem" : "0.7rem")};
+  font-weight: ${({ $navigation }) => ($navigation ? "500" : "400")};
 `;
 
 const StyledLogout = styled(Logout)`
-  width: 1rem;
+  width: ${({ $navigation }) => ($navigation ? "1.4rem" : "0.7rem")};
   fill: var(--contrast-text);
+`;
+const StyledLoginButton = styled.button`
+  border-style: none;
+  background: transparent;
+  color: var(--contrast-text);
+  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 3;
 `;
 
 export default function Login({ handleDemoModeOff, disable, navigation }) {
@@ -48,13 +59,13 @@ export default function Login({ handleDemoModeOff, disable, navigation }) {
             signOut();
           }}
         >
-          <StyledLogout /> Sign out
+          <StyledLogout $navigation={navigation} /> Sign out
         </StyledLogoutButton>
       </>
     );
   }
   return (
-    <StyledButton
+    <StyledLoginButton
       $login
       $disable={disable}
       onClick={() => {
@@ -65,7 +76,7 @@ export default function Login({ handleDemoModeOff, disable, navigation }) {
         handleDemoModeOff();
       }}
     >
-      Sign in
-    </StyledButton>
+      quit to log in
+    </StyledLoginButton>
   );
 }

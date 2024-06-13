@@ -29,14 +29,15 @@ export const lightTheme = {
   manual7: "hsl(10, 80%, 70%)",
   boxShadow:
     "-5px -5px 15px 0 #ffffff, 5px 5px 15px 0 #a6a1a1, inset -5px -5px 5px 0 #a6a1a1, inset 5px 5px 5px 0 #ffffff",
-  emotionBorder: "none",
+  emotionBorder: "0.1px solid #e9e3e3",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px rgba(0, 0, 0, 0.2)",
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
   //profile: "linear-gradient(#e8e87d,  #c5a3f5)",
-  profile: "conic-gradient(#e8e87d, #7de8cd, #c5a3f5)",
+  profile:
+    "conic-gradient(#e8e87d, #baf0a8, #7de8cd, #75c7f0, #c5a3f5, #f075db, #f08a75, #e8e87d)",
 };
 
 export const darkTheme = {
@@ -70,13 +71,14 @@ export const darkTheme = {
   manual7: "hsl(10, 80%, 70%)",
   boxShadow:
     "-3px -3px 15px 0 #454653, 5px 5px 15px 0 #111215, inset -5px -5px 5px 0 #111215, inset 5px 5px 5px 0 #454653",
-  emotionBorder: "none",
+  emotionBorder: "0.1px solid #2B2C34",
   circleBorder: "none",
   boxShadowFilter: "0px 0px 10px 10px #111215",
   boxShadowTooltip: "10px 10px 15px black",
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
-  profile: "linear-gradient(#e8e87d, #7de8cd, #c5a3f5)",
+  profile:
+    "conic-gradient(#e8e87d, #baf0a8, #7de8cd, #75c7f0, #c5a3f5, #f075db, #f08a75, #e8e87d)",
 };
 
 export const warmTheme = {

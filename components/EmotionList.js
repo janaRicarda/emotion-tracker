@@ -33,6 +33,7 @@ const StyledCircle = styled.article`
 
 const StyledEmotionList = styled.ul`
   border: var(--emotion-border);
+  background: var(--profile);
   padding: 0;
   position: relative;
   width: 80vw;
@@ -60,7 +61,7 @@ const StyledEmotionList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
-  background: ${({ $color }) => $color};
+  //background: ${({ $color }) => $color};
   border: var(--emotion-border);
   overflow: hidden;
   position: absolute;

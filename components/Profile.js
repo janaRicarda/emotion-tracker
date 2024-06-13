@@ -17,14 +17,28 @@ import {
 import { breakpoints } from "@/utils/breakpoints";
 import Circle from "../public/icons/circle.svg";
 
-const StyledProfileCircle = styled(Circle)`
+/* const StyledProfileCircle = styled(Circle)`
   width: 8rem;
   border-radius: 50%;
   fill: transparent;
   background: var(--profile);
+`; */
+
+const StyledProfileCircle = styled.article`
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: var(--profile);
+  font-size: 4rem;
+  font-weight: 100;
+  color: var(--text-on-bright);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledTitleWrapper = styled.article`
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -41,6 +55,7 @@ const StyledSettingsWrapper = styled.article`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 1rem;
 `;
 
 const StyledColorSchemesButton = styled(StyledButton)`
@@ -79,7 +94,7 @@ const ThemeButton = styled(StyledButton)`
   gap: 0.5rem;
   color: var(--main-dark);
   background: transparent;
-
+  border: none;
   border-radius: 0;
   padding: 0.1rem 0.1rem 0.1rem 0.5rem;
   margin: 0;
@@ -153,7 +168,7 @@ export default function Profile({ theme, switchTheme }) {
     <>
       <StyledTitleWrapper>
         <StyledTitle>Hi {session.user.name}!</StyledTitle>
-        <StyledProfileCircle />
+        <StyledProfileCircle>NF</StyledProfileCircle>
         <StyledParagraph>this is your profile-page</StyledParagraph>
       </StyledTitleWrapper>
 

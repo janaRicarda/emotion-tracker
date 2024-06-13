@@ -9,22 +9,21 @@ const StyledFooter = styled.footer`
   align-content: flex-end;
   padding: 0.5rem;
   //font-size: 0.8rem;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   text-align: center;
   background-color: var(--main-bright);
   border-top: 1px solid var(--main-dark);
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `;
 
-export default function Footer({ handleDemoModeOff }) {
+export default function Footer({ handleDemoModeOff, demoMode }) {
   const router = useRouter();
   const createPath =
     (router.pathname === "/create" || router.pathname === "/create/[slug]") &&
     true;
   return (
-    <StyledFooter>
+    <StyledFooter $demoMode={demoMode}>
       <p>© {new Date().getFullYear()} What a feeling</p>
       <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} />
     </StyledFooter>

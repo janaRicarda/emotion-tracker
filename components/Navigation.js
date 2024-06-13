@@ -44,6 +44,7 @@ const StyledArticle = styled.article`
 const StyledLinkWrapper = styled.article`
   display: flex;
   flex-direction: column;
+  align-items: center;
   @media ${breakpoints.laptop} {
     padding-top: 1rem;
     flex-direction: row;
