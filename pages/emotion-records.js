@@ -2,20 +2,25 @@ import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
 import ChartContainer from "@/components/ChartContainer";
 import Icon from "@mdi/react";
-import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
+import { mdiChartLine, mdiFormatListBulleted, mdiFilePdfBox } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
+import { ExportAsPdf } from "react-export-table";
 
 // used for all transitions
 const transition = css`
   transition: all 300ms ease;
+`;
+
+const StyledExportButton = styled(Icon)`
+  margin-right: 1rem;
 `;
 
 const GridWrapper = styled.section`
@@ -259,6 +264,38 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+
+  function pdfExport(data) {
+    const pdfData = data.map(
+      ({
+        timeAndDate,
+        tensionLevel,
+        emotion,
+        subemotion,
+        intensity,
+        notes,
+        trigger,
+      }) => {
+        const time = timeAndDate.slice(-5);
+        const date = timeAndDate.slice(0, -8).split(/^\w+./g)[1];
+
+        const objectToExport = {
+          date,
+          time,
+          tensionLevel,
+          emotion: emotion ? emotion : "/",
+          subemotion: subemotion ? subemotion : "/",
+          intensity: intensity ? intensity : "/",
+          notes: notes ? notes : "/",
+          trigger: trigger ? trigger : "/",
+        };
+        return objectToExport;
+      }
+    );
+
+    return pdfData;
+  }
+
   return (
     <>
       <Head>
@@ -298,7 +335,6 @@ export default function EmotionRecords({
       </AnimatedPanel>
 
       <StyledListContainer>
-
         {shownEntries.length === 0 &&
           (filteredEntries.length === 0 ? (
             buttonState.highlightedButton ? (
@@ -325,6 +361,39 @@ export default function EmotionRecords({
           <StyledWrapper>
             <p>Results: {shownEntries.length}</p>
             <GraphToggleWrapper>
+              <ExportAsPdf
+                data={pdfExport(shownEntries)}
+                fileName={`WhataFeeling-Data (downloaded ${new Date().toDateString()})`}
+                title={`Your Summary of ${
+                  (buttonState.datePicker && selectedTime) || buttonState.label
+                } (items: ${shownEntries.length})`}
+                headers={[
+                  "Date",
+                  "Time  ",
+                  "Tension",
+                  "Emotion  ",
+                  "Subemotion",
+                  "Intensity",
+                  "Notes",
+                  "Trigger",
+                ]}
+                headerStyles={{
+                  fontStyle: "bold",
+                  halign: "center",
+                  cellWidth: "wrap",
+                }}
+                styles={{
+                  halign: "center",
+                  valign: "middle",
+                  // cellWidth: "wrap",
+                }}
+              >
+                {(props) => (
+                  <StyledExportButton path={mdiFilePdfBox} size={1} {...props}>
+                    Export as PDF
+                  </StyledExportButton>
+                )}
+              </ExportAsPdf>
               <Icon path={mdiFormatListBulleted} size={1} />
               <ToggleSwitch
                 handleSwitch={handleChart}
