@@ -14,7 +14,7 @@ const StyledTooltipQuestionmark = styled(Info)`
   position: fixed;
   top: 100px;
   right: 1.5rem;
-  z-index: 1;
+  z-index: 2;
   transition: all 300ms ease;
 `;
 

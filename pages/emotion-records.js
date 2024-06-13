@@ -32,13 +32,13 @@ const GridWrapper = styled.section`
   background-color: var(--section-background-contrast);
   z-index: 2;
   @media ${breakpoints.mobileLandscape} {
-    top: 100px;
+    top: 200px;
   }
   @media ${breakpoints.tablet} {
     display: block;
     box-shadow: none;
     padding: 1rem;
-    top: 200px;
+    top: 270px;
     left: 3rem;
     width: 25%;
   }
@@ -53,10 +53,6 @@ const GridWrapper = styled.section`
 
 const ControllOverflow = styled.div`
   overflow: hidden;
-`;
-
-const ControlPadding = styled.div`
-  margin-top: 5rem;
 `;
 
 const StyledHeading = styled(StyledTitle)`
@@ -82,22 +78,19 @@ const AnimatedPanel = styled.div`
   border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "164px")};
   ${transition}
-  z-index: 2;
+  z-index: 1;
 `;
 
 const StyledTextMessage = styled.article`
-  margin-top: 8rem;
+  /* margin-top: 8rem; */
   text-align: center;
   line-height: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media ${breakpoints.laptop} {
-    margin-left: 10%;
-  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -116,13 +109,13 @@ const StyledHeartSymbol = styled(HeartOutlineIcon)`
 
 const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
+  margin: 1rem;
   display: inline;
   vertical-align: bottom;
   fill: var(--main-dark);
 `;
 
 const StyledDateIndicator = styled.article`
-  margin: 2rem auto 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,31 +132,35 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
-const SwitchSizer = styled.span`
-  transform: scale(0.6);
-`;
-
-const GraphToggleWrapper = styled.div`
+const StyledListContainer = styled.div`
+  width: 80vw;
+  margin-top: 7rem;
   display: flex;
-  flex-flow: row;
-  position: relative;
-  top: -36px;
-  left: 64%;
-  width: 8rem;
-  height: 26px;
-  padding: 0.3rem;
-  gap: 0.1rem;
-  justify-content: space-between;
-  margin: 0;
-  z-index: 2;
-  @media ${breakpoints.mobileLandscape} {
-    left: 80%;
-  }
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   @media ${breakpoints.tablet} {
-    left: 84%;
+    margin-left: 35%;
   }
   @media ${breakpoints.laptop} {
-    left: 84%;
+    margin-left: 40%;
+  }
+`;
+
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 575px;
+`;
+const GraphToggleWrapper = styled.div`
+  display: flex;
+  padding: 0.3rem;
+
+  & > label {
+    transform: scale(0.6);
   }
 `;
 
@@ -298,62 +295,60 @@ export default function EmotionRecords({
           DisplayDate={DisplayDate}
           selectedTime={selectedTime}
         />
-        <GraphToggleWrapper>
-          <Icon path={mdiFormatListBulleted} size={1} />
-          <SwitchSizer>
-            <ToggleSwitch
-              handleSwitch={handleChart}
-              isChecked={chartIsShown}
-              useButtonColor={true}
-            />
-          </SwitchSizer>
-          <Icon path={mdiChartLine} size={1} />
-        </GraphToggleWrapper>
       </AnimatedPanel>
 
-      {chartIsShown && (
-        <ChartContainer shownEntries={shownEntries} theme={theme} />
-      )}
+      <StyledListContainer>
 
-      {buttonState.datePicker ? (
-        selectedTime ? (
-          <DisplayDate textAlign="center" />
-        ) : (
-          <StyledDateIndicator>
-            Click the calendar <StyledCalendarIcon /> and select a date
-          </StyledDateIndicator>
-        )
-      ) : null}
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              You haven&apos;t highlighted any Entries yet. Click the{" "}
-              <StyledHeartSymbol /> on a Entry to highlight it.
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              You haven&apos;t made any Entries today.<br></br>
-              <StyledLink href="./">add Entry &rarr;</StyledLink>
-            </StyledTextMessage>
+        {shownEntries.length === 0 &&
+          (filteredEntries.length === 0 ? (
+            buttonState.highlightedButton ? (
+              <StyledTextMessage>
+                You haven&apos;t highlighted any Entries yet. Click the{" "}
+                <StyledHeartSymbol /> on a Entry to highlight it.
+              </StyledTextMessage>
+            ) : buttonState.todayButton ? (
+              <StyledTextMessage>
+                You haven&apos;t made any Entries today.<br></br>
+                <StyledLink href="./">add Entry &rarr;</StyledLink>
+              </StyledTextMessage>
+            ) : buttonState.datePicker && !selectedTime ? (
+              <StyledDateIndicator>
+                Click the calendar <StyledCalendarIcon /> and select a date
+              </StyledDateIndicator>
+            ) : (
+              <StyledTextMessage>sorry, nothing found</StyledTextMessage>
+            )
           ) : (
             <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>sorry, nothing found</StyledTextMessage>
-        ))}
-
-      {shownEntries.length !== 0 && !chartIsShown && (
-        <ControlPadding>
+          ))}
+        {shownEntries.length !== 0 && (
+          <StyledWrapper>
+            <p>Results: {shownEntries.length}</p>
+            <GraphToggleWrapper>
+              <Icon path={mdiFormatListBulleted} size={1} />
+              <ToggleSwitch
+                handleSwitch={handleChart}
+                isChecked={chartIsShown}
+                useButtonColor={true}
+              />
+              <Icon path={mdiChartLine} size={1} />
+            </GraphToggleWrapper>
+          </StyledWrapper>
+        )}
+        {shownEntries.length !== 0 && !chartIsShown && (
           <EmotionRecordsList
+            buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
           />
-        </ControlPadding>
-      )}
+        )}
+        {chartIsShown && (
+          <ChartContainer shownEntries={shownEntries} theme={theme} />
+        )}
+      </StyledListContainer>
     </>
   );
 }

@@ -9,10 +9,7 @@ import {
   countEmotions,
 } from "@/utils/chartUtils";
 import styled from "styled-components";
-import {
-  StyledFlexColumnWrapper,
-  StyledButton,
-} from "@/SharedStyledComponents";
+import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
 import { breakpoints } from "@/utils/breakpoints";
 
@@ -24,29 +21,14 @@ const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
 const ChartSection = styled.section`
   display: flex;
   flex-direction: column;
-  width: 92vw;
-  min-height: 450px;
-  max-height: fit-content;
-  margin-top: 5rem;
-  align-items: center;
-  border-radius: 18px;
   justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0 2rem;
+  border-radius: 18px;
   background-color: var(--section-background);
-
-  @media ${breakpoints.mobileLandscape} {
-  }
-  @media ${breakpoints.tablet} {
-    display: block;
-    padding: 1rem;
-    left: 5rem;
-    width: 92vw;
-  }
-  @media ${breakpoints.laptop} {
-    display: block;
-    padding: 1rem;
-    left: 5rem;
-    width: 92vw;
-  }
+  width: 80vw;
+  min-width: ${({ $width }) => `${$width}px`};
+  max-width: 575px;
 `;
 
 const StyledGraphButton = styled(StyledButton)`
@@ -61,9 +43,8 @@ const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 24px;
-  padding: 0.2rem;
-  width: inherit;
+  align-items: center;
+  padding: 0.4rem;
   margin: 0 0 0.8rem;
   gap: 0.1rem;
   background-color: var(--section-background);
@@ -85,15 +66,6 @@ const StyledGraphButtonsWrapper = styled.div`
   }
   @media ${breakpoints.laptop} {
     max-width: 50vw;
-  }
-`;
-const ChartWrapper = styled(StyledFlexColumnWrapper)`
-  @media ${breakpoints.tablet} {
-    margin-left: 10rem;
-    max-width: 90vw;
-  }
-  @media ${breakpoints.laptop} {
-    margin-left: 20rem;
   }
 `;
 
@@ -156,47 +128,40 @@ export default function ChartContainer({ shownEntries, theme }) {
   }
 
   return (
-    <ChartSection>
-      <ChartWrapper>
-        <EmotionChart
-          theme={theme}
-          type={type}
-          xValues={xValues}
-          yValues={yValues}
-          xTitle={xTitle}
-          yTitle={yTitle}
-          title={title}
-          width={width}
-          height={height}
-        />
-
-        <StyledFlexColumnWrapper>
-          <ToggleContainer>
-            <Icon path={mdiChartLine} size={1} />
-            <SwitchSizer>
-              <ToggleSwitch
-                handleSwitch={handleChartType}
-                isChecked={!scatter}
-                useButtonColor={true}
-              />
-            </SwitchSizer>
-            <Icon path={mdiChartBar} size={1} />
-          </ToggleContainer>
-        </StyledFlexColumnWrapper>
-        <StyledFlexColumnWrapper>
-          <StyledGraphButtonsWrapper>
-            <StyledGraphButton type="button" onClick={handleTensionChart}>
-              Tension
-            </StyledGraphButton>
-            <StyledGraphButton type="button" onClick={handleEmotionChart}>
-              Emotions
-            </StyledGraphButton>
-            <StyledGraphButton type="button" onClick={handleIntensityChart}>
-              Intensity
-            </StyledGraphButton>
-          </StyledGraphButtonsWrapper>
-        </StyledFlexColumnWrapper>
-      </ChartWrapper>
+    <ChartSection $width={width + 20}>
+      <EmotionChart
+        theme={theme}
+        type={type}
+        xValues={xValues}
+        yValues={yValues}
+        xTitle={xTitle}
+        yTitle={yTitle}
+        title={title}
+        width={width}
+        height={height}
+      />
+      <ToggleContainer>
+        <Icon path={mdiChartLine} size={1} />
+        <SwitchSizer>
+          <ToggleSwitch
+            handleSwitch={handleChartType}
+            isChecked={!scatter}
+            useButtonColor={true}
+          />
+        </SwitchSizer>
+        <Icon path={mdiChartBar} size={1} />
+      </ToggleContainer>
+      <StyledGraphButtonsWrapper>
+        <StyledGraphButton type="button" onClick={handleTensionChart}>
+          Tension
+        </StyledGraphButton>
+        <StyledGraphButton type="button" onClick={handleEmotionChart}>
+          Emotions
+        </StyledGraphButton>
+        <StyledGraphButton type="button" onClick={handleIntensityChart}>
+          Intensity
+        </StyledGraphButton>
+      </StyledGraphButtonsWrapper>
     </ChartSection>
   );
 }
