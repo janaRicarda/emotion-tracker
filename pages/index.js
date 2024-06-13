@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import Head from "next/head";
-import ToggleSwitch from "@/components/ToggleSwitch";
 import ChartContainerV2 from "@/components/ChartContainerV2";
 import {
   getAveragePerDay,
@@ -11,49 +10,7 @@ import {
   getFilteredEntriesV2,
 } from "@/utils/dataAndChartUtils";
 import { emotionData } from "@/lib/db";
-
-const ToggleSwitchWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-  position: relative;
-  top: -30px;
-  left: -27%;
-  transform: scale(0.7);
-  padding: 0.1rem;
-`;
-
-const StyledInfoIcon = styled.span`
-  background-color: var(--button-background);
-  color: var(--contrast-text);
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0 0.1rem;
-  line-height: 1.5rem;
-  text-align: center;
-`;
-
-const StyledInfoBox = styled.div`
-  display: ${({ $show }) => ($show ? "block" : "none")};
-  position: absolute;
-  left: -6rem;
-  top: 3rem;
-  border: 1px solid white;
-  border-radius: 6px;
-  padding: 0.5rem;
-  background-color: var(--button-background);
-  color: var(--contrast-text);
-
-  & > span {
-    display: block;
-  }
-
-  & > :nth-child(2) {
-    margin-top: 1rem;
-  }
-`;
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const DashboardTitle = styled(StyledTitle)`
   margin-top: -10px;
@@ -63,6 +20,7 @@ const DashboardSection = styled.section`
   display: grid;
   grid-template-columns: 6fr 6fr;
   grid-template-rows: 4fr 4fr 8fr;
+  color: var(--main-dark);
   gap: 0.5rem;
   width: 92vw;
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
@@ -76,6 +34,7 @@ const DashboardSection = styled.section`
 `;
 const GridElement = styled.div`
   display: flex;
+  color: var(--main-dark);
   flex-direction: column;
   border-radius: 18px;
   padding: 0.5rem;
@@ -116,16 +75,10 @@ const DashboardLink = styled(StyledStandardLink)`
   padding: 0;
   /* border: 1px solid var(--main-dark); */
 `;
-export default function HomePage({
-  handleToolTip,
-  emotionEntries,
-  toggleExampleData,
-  useExampleData,
-  theme,
-}) {
-  const [showInfoBox, setShowInfoBox] = useState(false);
+export default function HomePage({ handleToolTip, emotionEntries, theme }) {
+  const { data: session } = useSession();
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+  // const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -172,33 +125,9 @@ export default function HomePage({
         <title>Home</title>
       </Head>
 
-      <ToggleSwitchWrapper>
-        <StyledInfoIcon
-          onClick={() => {
-            setShowInfoBox(!showInfoBox);
-          }}
-        >
-          &#8505;
-        </StyledInfoIcon>
-        <StyledInfoBox
-          onClick={() => {
-            setShowInfoBox(false);
-          }}
-          $show={showInfoBox}
-        >
-          <span>
-            OFF: Displayed Data is real and comes from your own database.
-          </span>
-          <span> ON: Data is generated locally and fictional.</span>
-        </StyledInfoBox>
-        <ToggleSwitch
-          handleSwitch={toggleExampleData}
-          isChecked={useExampleData}
-          text={"Use Example data "}
-        />
-      </ToggleSwitchWrapper>
-
-      <DashboardTitle>Hallo emotion lover</DashboardTitle>
+      <DashboardTitle>
+        Hallo {session ? session.user.name : "demo user"}
+      </DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}

@@ -12,7 +12,6 @@ import {
 
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
-import ToggleSwitch from "@/components/ToggleSwitch";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -31,49 +30,6 @@ const StyledTensionForm = styled(StyledForm)`
   }
   @media ${breakpoints.laptop} {
     width: 40vw;
-  }
-`;
-
-const ToggleSwitchWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-  position: relative;
-  top: 0px;
-  left: 100px;
-  transform: scale(0.7);
-  padding: 0.1rem;
-`;
-
-const StyledInfoIcon = styled.span`
-  background-color: var(--button-background);
-  color: var(--contrast-text);
-  border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0 0.1rem;
-  line-height: 1.5rem;
-  text-align: center;
-`;
-
-const StyledInfoBox = styled.div`
-  display: ${({ $show }) => ($show ? "block" : "none")};
-  position: absolute;
-  left: -6rem;
-  top: 3rem;
-  border: 1px solid white;
-  border-radius: 6px;
-  padding: 0.5rem;
-  background-color: var(--button-background);
-  color: var(--contrast-text);
-
-  & > span {
-    display: block;
-  }
-
-  & > :nth-child(2) {
-    margin-top: 1rem;
   }
 `;
 
@@ -130,13 +86,11 @@ export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
-  toggleExampleData,
   useExampleData,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-  const [showInfoBox, setShowInfoBox] = useState(false);
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
@@ -164,31 +118,6 @@ export default function HomePage({
         <title>Home</title>
       </Head>
       <StyledFlexColumnWrapper>
-        <ToggleSwitchWrapper>
-          <StyledInfoIcon
-            onClick={() => {
-              setShowInfoBox(!showInfoBox);
-            }}
-          >
-            &#8505;
-          </StyledInfoIcon>
-          <StyledInfoBox
-            onClick={() => {
-              setShowInfoBox(false);
-            }}
-            $show={showInfoBox}
-          >
-            <span>
-              OFF: Displayed Data is real and comes from your own database.
-            </span>
-            <span> ON: Data is generated locally and fictional.</span>
-          </StyledInfoBox>
-          <ToggleSwitch
-            handleSwitch={toggleExampleData}
-            isChecked={useExampleData}
-            text={"Use Example data"}
-          />
-        </ToggleSwitchWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
             On a scale from 0 to 100, how tense do you feel in this moment?
