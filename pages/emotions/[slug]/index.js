@@ -2,8 +2,13 @@ import { emotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 import Head from "next/head";
+import { useEffect } from "react";
 
-export default function EmotionDetailsPage({ theme }) {
+export default function EmotionDetailsPage({ theme, handleToolTip }) {
+  useEffect(() => {
+    handleToolTip(false);
+  });
+
   const router = useRouter();
   if (!router.query) {
     return null;

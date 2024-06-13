@@ -14,6 +14,7 @@ const EmotionEntrySchema = new Schema({
   notes: { type: String },
   isHighlighted: { type: Boolean },
   timeStamp: { type: Number },
+  owner: { type: String, required: true },
 });
 
 const EmotionEntries =
