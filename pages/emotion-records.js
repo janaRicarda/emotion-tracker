@@ -9,18 +9,14 @@ import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
 import ChartContainer from "@/components/ChartContainer";
 import Icon from "@mdi/react";
-import { mdiChartLine, mdiFormatListBulleted, mdiFilePdfBox } from "@mdi/js";
+import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
-import { ExportAsPdf } from "react-export-table";
+import Export from "@/components/Export";
 
 // used for all transitions
 const transition = css`
   transition: all 300ms ease;
-`;
-
-const StyledExportButton = styled(Icon)`
-  margin-right: 1rem;
 `;
 
 const GridWrapper = styled.section`
@@ -167,6 +163,10 @@ const GraphToggleWrapper = styled.div`
   & > label {
     transform: scale(0.6);
   }
+
+  & > :nth-child(1) {
+    margin: 0 1.5rem;
+  }
 `;
 
 export default function EmotionRecords({
@@ -265,37 +265,6 @@ export default function EmotionRecords({
     setChartIsShown(!chartIsShown);
   }
 
-  function pdfExport(data) {
-    const pdfData = data.map(
-      ({
-        timeAndDate,
-        tensionLevel,
-        emotion,
-        subemotion,
-        intensity,
-        notes,
-        trigger,
-      }) => {
-        const time = timeAndDate.slice(-5);
-        const date = timeAndDate.slice(0, -8).split(/^\w+./g)[1];
-
-        const objectToExport = {
-          date,
-          time,
-          tensionLevel,
-          emotion: emotion ? emotion : "/",
-          subemotion: subemotion ? subemotion : "/",
-          intensity: intensity ? intensity : "/",
-          notes: notes ? notes : "/",
-          trigger: trigger ? trigger : "/",
-        };
-        return objectToExport;
-      }
-    );
-
-    return pdfData;
-  }
-
   return (
     <>
       <Head>
@@ -361,39 +330,11 @@ export default function EmotionRecords({
           <StyledWrapper>
             <p>Results: {shownEntries.length}</p>
             <GraphToggleWrapper>
-              <ExportAsPdf
-                data={pdfExport(shownEntries)}
-                fileName={`WhataFeeling-Data (downloaded ${new Date().toDateString()})`}
-                title={`Your Summary of ${
-                  (buttonState.datePicker && selectedTime) || buttonState.label
-                } (items: ${shownEntries.length})`}
-                headers={[
-                  "Date",
-                  "Time  ",
-                  "Tension",
-                  "Emotion  ",
-                  "Subemotion",
-                  "Intensity",
-                  "Notes",
-                  "Trigger",
-                ]}
-                headerStyles={{
-                  fontStyle: "bold",
-                  halign: "center",
-                  cellWidth: "wrap",
-                }}
-                styles={{
-                  halign: "center",
-                  valign: "middle",
-                  // cellWidth: "wrap",
-                }}
-              >
-                {(props) => (
-                  <StyledExportButton path={mdiFilePdfBox} size={1} {...props}>
-                    Export as PDF
-                  </StyledExportButton>
-                )}
-              </ExportAsPdf>
+              <Export
+                exportData={shownEntries}
+                buttonState={buttonState}
+                selectedCustomDate={selectedTime}
+              />
               <Icon path={mdiFormatListBulleted} size={1} />
               <ToggleSwitch
                 handleSwitch={handleChart}
