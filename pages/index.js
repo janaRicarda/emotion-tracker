@@ -67,6 +67,9 @@ const ElementText = styled.p`
     $color ? $color : "var(--section-background)"};
   border-radius: 6px;
 `;
+const BoldText = styled.span`
+  font-weight: 600;
+`;
 
 const DashboardLink = styled(StyledStandardLink)`
   font-size: 0.9rem;
@@ -77,41 +80,8 @@ const DashboardLink = styled(StyledStandardLink)`
   /* border: 1px solid var(--main-dark); */
 `;
 
-const fetcher = async (url) => {
-  const response = await fetch(url);
-
-  // If the status code is not in the range 200-299,
-  // we still try to parse and throw it.
-  if (!response.ok) {
-    const error = new Error("An error occurred while fetching the data.");
-    // Attach extra info to the error object.
-    error.info = await response.json();
-    error.status = response.status;
-    throw error;
-  }
-  return response.json();
-};
-
-export default function HomePage({
-  handleToolTip,
-  emotionEntries,
-  theme,
-  demoMode,
-}) {
+export default function HomePage({ handleToolTip, emotionEntries, theme }) {
   const { data: session } = useSession();
-
-  console.log(emotionEntries);
-  // const [dashboardData, setDashboardData] = useState(...emotionEntries);
-
-  // console.log(dashboardData);
-
-  const {
-    data: dbEmotionEntries,
-    isLoading: emotionEntriesAreLoading,
-    error: errorFetchingEmotionEntries,
-    mutate,
-  } = useSWR(!demoMode && "/api/emotionEntries/", fetcher);
-  console.log(data);
 
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -171,7 +141,7 @@ export default function HomePage({
           <DashboardLink href="/app-manual">
             <ElementText>
               Track and explore your feelings ... how? You can look at the
-              manual!
+              <BoldText> manual</BoldText>!
             </ElementText>
           </DashboardLink>
 
@@ -185,18 +155,17 @@ export default function HomePage({
         </GridElement>
         <GridElement>
           <DashboardLink href="/add-entry">
-            {" "}
             <ElementText>
-              Your newest entry is {timeSinceLastEntry} hours ago. Do you want
-              to record a new entry?
+              Your newest entry is <BoldText>{timeSinceLastEntry}</BoldText>{" "}
+              hours ago. Do you want to record a <BoldText>new entry</BoldText>?
             </ElementText>
           </DashboardLink>
         </GridElement>
         <GridElement>
           <DashboardLink href="/emotion-records">
             <ElementText>
-              Your average rate is {averageEntriesPerDay} entries per day. Click
-              to see your recorded emotions.
+              Your average rate is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
+              entries per day. Click to see your recorded emotions.
             </ElementText>
           </DashboardLink>
         </GridElement>

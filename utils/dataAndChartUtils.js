@@ -47,18 +47,17 @@ export function getTimeSinceLastEntry(entries) {
 }
 
 export function getAveragePerDay(entries) {
-  console.log(entries.length);
   const timeDifference =
-    Number(entries[entries.length - 1]?.timeStamp) -
-    Number(entries[0]?.timeStamp);
-  console.log(timeDifference);
-  const allDays = timeDifference / (24 * 3600000);
+    Number(entries[0]?.timeStamp) -
+    Number(entries[entries.length - 1]?.timeStamp);
+  const allDays = timeDifference <= 0 ? 1 : timeDifference / (24 * 3600000);
   console.log(allDays);
-  const average = entries.length / allDays;
+  const average = entries.length === 0 ? 0 : entries.length / allDays;
   const averageString = average.toFixed(1);
   return averageString;
 }
 
+//chart
 export function countEmotions(entries) {
   const emotionsToCount = emotionData.map((element) => element.name);
   function add(a, b) {
