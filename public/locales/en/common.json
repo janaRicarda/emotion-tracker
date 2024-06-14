@@ -35,5 +35,10 @@
   "filterButtonCustom": "custom",
   "selectSingleDate": "Select a single date or a range of dates",
   "reset": "Reset",
-  "ok": "Ok"
+  "ok": "Ok",
+  "404": "404",
+  "pageDoesntExist": "Sorry, this page doesn&apos;t exist",
+  "backToPreviousPage": "Previous Page",
+  "loginCredentials": "Login with credentials",
+  "useAppDemo": "or use app in demo-mode"
 }

@@ -5,7 +5,6 @@ import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
 import { StyledList } from "@/SharedStyledComponents";
-import { breakpoints } from "@/utils/breakpoints";
 import { useTranslation } from "next-i18next";
 import DetailsSection from "./EmotionRecordsDetails";
 import HighlightIcon from "../public/icons/highlight-icon.svg";

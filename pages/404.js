@@ -5,6 +5,8 @@ import {
 } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Wrapper = styled(StyledFlexColumnWrapper)`
   margin-top: 4rem;
@@ -31,18 +33,31 @@ const StyledBackButton = styled(StyledButton)`
 `;
 
 export default function Custom404() {
+  const { t: translate } = useTranslation("common");
+
   const router = useRouter();
 
   return (
     <Wrapper>
-      <h2>404</h2>
-      <h2>Sorry, this page doesn&apos;t exist </h2>
+      <h2>{translate("404")}</h2>
+      <h2>{translate("pageDoesntExist")}</h2>
       <LinkWrapper>
-        <StyledLink href={"/"}>Homepage</StyledLink>
+        <StyledLink href={"/"}>{translate("backToHomepageButton")}</StyledLink>
         <StyledBackButton onClick={() => router.back()}>
-          Previous Page
+          {translate("backToPreviousPage")}
         </StyledBackButton>
       </LinkWrapper>
     </Wrapper>
   );
+}
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "emotions",
+        "common",
+        "navigation",
+      ])),
+    },
+  };
 }

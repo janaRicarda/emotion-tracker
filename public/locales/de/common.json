@@ -35,5 +35,10 @@
   "filterButtonCustom": "Datum anpassen",
   "selectSingleDate": "Wählen Sie ein einzelnes Datum oder einen Datumsbereich",
   "reset": "Zurücksetzen",
-  "ok": "Ok"
+  "ok": "Ok",
+  "404": "404",
+  "pageDoesntExist": "Entschuldige, diese Seite existiert nicht",
+  "backToPreviousPage": "Vorherige Seite",
+  "loginCredentials": "Mit Anmeldedaten einloggen",
+  "useAppDemo": "oder die App im Demo-Modus verwenden"
 }

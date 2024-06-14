@@ -1,5 +1,6 @@
 import { signIn } from "next-auth/react";
 import styled from "styled-components";
+import { useTranslation } from "next-i18next";
 
 const StyledOverlay = styled.section`
   width: 100vw;
@@ -45,10 +46,12 @@ export default function StartModal({
   handleDemoMode,
   handleDemoModeOff,
 }) {
+  const { t: translate } = useTranslation(["common"]);
+
   return (
     <StyledOverlay $display={demoMode}>
       <StyledArticle>
-        <StyledParagraph>Login with credentials</StyledParagraph>
+        <StyledParagraph>{translate("loginCredentials")}</StyledParagraph>
         <StyledLoginButton
           onClick={() => {
             signIn();
@@ -57,7 +60,7 @@ export default function StartModal({
         >
           Login
         </StyledLoginButton>
-        <StyledParagraph>or use app in demo-mode</StyledParagraph>
+        <StyledParagraph>{translate("useAppDemo")}</StyledParagraph>
         <StyledLoginButton onClick={handleDemoMode}>
           demo-mode
         </StyledLoginButton>
