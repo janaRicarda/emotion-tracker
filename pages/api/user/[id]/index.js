@@ -1,7 +1,7 @@
 import dbConnect from "@/db/connect";
 import User from "@/db/models/user";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -14,7 +14,7 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const user = await User.find({
+    const user = await User.findById({
       owner: session.user.email,
     });
     return response.status(200).json(user);
@@ -22,7 +22,7 @@ export default async function handler(request, response) {
   if (request.method === "PUT") {
     try {
       const userData = request.body;
-      await User.find({ ...userData, owner: session.user.email });
+      await User.findById({ ...userData, owner: session.user.email });
       response.status(200).json({ status: "User updated successfully" });
     } catch (error) {
       console.error(error);

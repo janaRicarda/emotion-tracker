@@ -112,7 +112,8 @@ const ThemeButton = styled(StyledButton)`
 export default function Profile({ theme, switchTheme }) {
   const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
-
+  const { mutate } = useSWR(`api/user/${id}`);
+  console.log(session);
   //function to render the users Initials
   const username = `${session.user.name}`;
 
@@ -127,10 +128,25 @@ export default function Profile({ theme, switchTheme }) {
   const userNameInitials = getInitials(username);
 
   //function to set the Theme
-  async function handleChooseTheme() {}
+  async function handleChooseTheme(event) {
+    event.preventDeafault();
+    const formData = new FormData(event.target);
+    const userData = Object.fromEntries(formData);
+
+    const response = await fetch(`api/user/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    if (response.ok) {
+      mutate();
+    }
+  }
 
   const colorSchemes = [
-    {
+    /*   {
       title: "light",
       name: lightTheme,
       background: "conic-gradient(#e9e3e3 50%, #030352)",
@@ -141,6 +157,10 @@ export default function Profile({ theme, switchTheme }) {
       name: darkTheme,
       background: "conic-gradient(#322e44 50%, #f1eaea)",
       text: "#f1eaea",
+    }, */
+    {
+      title: "default",
+      name: "default",
     },
     {
       title: "warm",
@@ -190,7 +210,19 @@ export default function Profile({ theme, switchTheme }) {
         <StyledColorSchemesButton onClick={handleShowThemes}>
           Choose your preferred theme
         </StyledColorSchemesButton>
-        {showThemes && (
+        <form onSubmit={handleChooseTheme}>
+          <p>Select your preferred theme</p>
+          {colorSchemes.map(({ title, name }) => (
+            <div key={name}>
+              <input type="radio" id={name} name="theme" value={name} />
+              <label htmlFor={name}>{title}</label>
+            </div>
+          ))}
+
+          <button type="submit">submit</button>
+        </form>
+
+        {/*  {showThemes && (
           <ThemeWrapper>
             {colorSchemes.map(({ title, name, background, text }) => (
               <ThemeButton
@@ -207,7 +239,7 @@ export default function Profile({ theme, switchTheme }) {
               </ThemeButton>
             ))}
           </ThemeWrapper>
-        )}
+        )} */}
       </StyledSettingsWrapper>
     </>
   );

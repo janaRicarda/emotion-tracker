@@ -3,11 +3,9 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  owner: { type: String, required: true },
-  isWarmTheme: { type: Boolean },
-  isColdTheme: { type: Boolean },
-  isNeutralTheme: { type: Boolean },
-  isHighContrastTheme: { type: Boolean },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  theme: { type: String, required: true },
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
