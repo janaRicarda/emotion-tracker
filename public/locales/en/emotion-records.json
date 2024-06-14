@@ -10,5 +10,6 @@
   "addEntry": "add Entry →",
   "nothingFound": "sorry, nothing found",
   "filterButtonToday": "Today",
-  "results": "Results:"
+  "results": "Results:",
+  "selectedDate": "Selected Date"
 }

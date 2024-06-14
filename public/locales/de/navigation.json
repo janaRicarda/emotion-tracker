@@ -2,10 +2,10 @@
   "navigationManual": "Handbuch",
   "navigationBasicEmotions": "7 Basis Emotionen",
   "navigationAddEntry": "Eintrag hinzufügen",
-  "navigationEmotionRecords": "Aufgezeichnete Emotionen",
+  "navigationEmotionRecords": "Emotionseinträge",
   "navigationColorSchemes": "Farbschemata",
-  "warmTheme": "warm",
-  "coldTheme": "kalt",
-  "neutralTheme": "neutral",
-  "highContrastTheme": "hoher Kontrast"
+  "warmTheme": "Warm",
+  "coldTheme": "Kalt",
+  "neutralTheme": "Neutral",
+  "highContrastTheme": "Hoher Kontrast"
 }
