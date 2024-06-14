@@ -2,10 +2,10 @@ import NextAuth from "next-auth/next";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-/* export const authOptions = {
+export const authOptions = {
   providers: [
     GithubProvider({
-      clientID: process.env.GITHUB_ID,
+      clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
     CredentialsProvider({
@@ -33,9 +33,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
       },
     }),
   ],
-}; */
+};
 
-export const authOptions = {
+/* export const authOptions = {
   providers: [
     process.env.VERCEL_ENV === "preview"
       ? CredentialsProvider({
@@ -67,6 +67,6 @@ export const authOptions = {
           clientSecret: process.env.GITHUB_SECRET,
         }),
   ],
-};
+}; */
 
 export default NextAuth(authOptions);

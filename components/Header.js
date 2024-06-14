@@ -7,7 +7,7 @@ import Sun from "../public/icons/sun.svg";
 import { lightTheme, darkTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
-import Login from "./Login";
+
 import { breakpoints } from "@/utils/breakpoints";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";

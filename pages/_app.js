@@ -32,6 +32,7 @@ export default function App({
 }) {
   const router = useRouter();
   const defaultTheme = lightTheme || darkTheme;
+
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);

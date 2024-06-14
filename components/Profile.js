@@ -109,11 +109,10 @@ const ThemeButton = styled(StyledButton)`
   }
 `;
 
-export default function Profile({ theme, switchTheme }) {
+export default function Profile({ theme, customTheme, switchTheme }) {
   const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
-  const { mutate } = useSWR(`api/user/${id}`);
-  console.log(session);
+
   //function to render the users Initials
   const username = `${session.user.name}`;
 
@@ -128,7 +127,7 @@ export default function Profile({ theme, switchTheme }) {
   const userNameInitials = getInitials(username);
 
   //function to set the Theme
-  async function handleChooseTheme(event) {
+  /*  async function handleChooseTheme(event) {
     event.preventDeafault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
@@ -143,7 +142,7 @@ export default function Profile({ theme, switchTheme }) {
     if (response.ok) {
       mutate();
     }
-  }
+  } */
 
   const colorSchemes = [
     /*   {
@@ -210,7 +209,8 @@ export default function Profile({ theme, switchTheme }) {
         <StyledColorSchemesButton onClick={handleShowThemes}>
           Choose your preferred theme
         </StyledColorSchemesButton>
-        <form onSubmit={handleChooseTheme}>
+
+        {/*  <form onSubmit={handleChooseTheme}>
           <p>Select your preferred theme</p>
           {colorSchemes.map(({ title, name }) => (
             <div key={name}>
@@ -220,9 +220,9 @@ export default function Profile({ theme, switchTheme }) {
           ))}
 
           <button type="submit">submit</button>
-        </form>
+        </form> */}
 
-        {/*  {showThemes && (
+        {showThemes && (
           <ThemeWrapper>
             {colorSchemes.map(({ title, name, background, text }) => (
               <ThemeButton
@@ -239,7 +239,7 @@ export default function Profile({ theme, switchTheme }) {
               </ThemeButton>
             ))}
           </ThemeWrapper>
-        )} */}
+        )}
       </StyledSettingsWrapper>
     </>
   );
