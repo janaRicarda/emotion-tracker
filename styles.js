@@ -51,6 +51,8 @@ html {
   --circle-border: ${({ theme }) => theme.circleBorder};
   --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
   --box-shadow-tooltip: ${({ theme }) => theme.boxShadowTooltip};
+  --highlight-background: ${({ theme }) => theme.highlightBackground};
+  --highlight-lines: ${({ theme }) => theme.highlightedLines};
 }
   body {
     margin: 0;

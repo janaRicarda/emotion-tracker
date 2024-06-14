@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import ErrorMessage from "./ErrorMessage";
 import Tooltip from "./Tooltip";
 import { useTranslation } from "next-i18next";
+import { useSession } from "next-auth/react";
+import DemoLayout from "./DemoLayout";
+import StartModal from "./Modal";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -36,9 +39,14 @@ export default function Layout({
   toolTip,
   scrollPosition,
   isScrollDown,
+  demoMode,
+  handleDemoMode,
+  handleDemoModeOff,
   emotionEntriesAreLoading,
   errorFetchingEmotionEntries,
 }) {
+  const { data: session } = useSession();
+
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
 
@@ -73,11 +81,21 @@ export default function Layout({
 
   return (
     <>
+      {!session && (
+        <StartModal
+          demoMode={demoMode}
+          handleDemoMode={handleDemoMode}
+          handleDemoModeOff={handleDemoModeOff}
+        />
+      )}
+      {demoMode && <DemoLayout />}
       <Header
         isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
         switchTheme={switchTheme}
+        demoMode={demoMode}
+        handleDemoModeOff={handleDemoModeOff}
       />
       {(emotionEntriesAreLoading && (
         <Loader itemText={translate("appIsLoading")} />

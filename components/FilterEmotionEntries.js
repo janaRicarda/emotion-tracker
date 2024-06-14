@@ -11,16 +11,19 @@ import { useTranslation } from "next-i18next";
 const StyledContainer = styled.div`
   height: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  margin: 0.5rem;
+  margin: 0.5rem auto;
+  width: 100%;
 `;
 
 const StyledMagnifier = styled(Magnifier)`
   width: 1.8rem;
   fill: var(--main-dark);
-  position: absolute;
+  position: relative;
   top: calc(50% - 15px);
-  left: 3px;
+  left: 2rem;
 `;
 
 const StyledInput = styled.input`
@@ -34,9 +37,6 @@ const StyledInput = styled.input`
   border: 1px solid var(--contrast-text);
   transition: width 600ms linear;
   @media ${breakpoints.tablet} {
-    width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
-  }
-  @media ${breakpoints.laptop} {
     width: ${({ $showSearchBar }) => ($showSearchBar ? "100%" : "35px")};
   }
 `;
@@ -323,6 +323,7 @@ export default function FilterEmotionEntries({
     <>
       <StyledFilterSection>
         <StyledContainer>
+          <StyledMagnifier onClick={handleShowSearchBar} />
           <StyledInput
             $showSearchBar={showSearchBar}
             aria-label={translate("searchAriaLabel")}
@@ -334,7 +335,6 @@ export default function FilterEmotionEntries({
             aria-placeholder={translate("placeholderAriaLabel")}
             onChange={(event) => onSearch(event.target.value)}
           />
-          <StyledMagnifier onClick={handleShowSearchBar} />
         </StyledContainer>
         <StyledButtonGroup>
           {filterButtons.map(

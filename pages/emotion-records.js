@@ -1,12 +1,15 @@
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-
+import ToggleSwitch from "@/components/ToggleSwitch";
 import { useState, useCallback, useEffect, useRef } from "react";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
 import SmallFilterPanel from "@/components/SmallFilterPanel";
+import ChartContainer from "@/components/ChartContainer";
+import Icon from "@mdi/react";
+import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
@@ -31,13 +34,13 @@ const GridWrapper = styled.section`
   background-color: var(--section-background-contrast);
   z-index: 2;
   @media ${breakpoints.mobileLandscape} {
-    top: 100px;
+    top: 200px;
   }
   @media ${breakpoints.tablet} {
     display: block;
     box-shadow: none;
     padding: 1rem;
-    top: 200px;
+    top: 270px;
     left: 3rem;
     width: 25%;
   }
@@ -52,10 +55,6 @@ const GridWrapper = styled.section`
 
 const ControllOverflow = styled.div`
   overflow: hidden;
-`;
-
-const ControlPadding = styled.div`
-  margin-top: 5rem;
 `;
 
 const StyledHeading = styled(StyledTitle)`
@@ -76,27 +75,24 @@ const Background = styled.div`
   z-index: 2;
 `;
 const AnimatedPanel = styled.div`
-  width: 90vw;
+  width: 92vw;
   margin: 0 0.5rem;
   border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "166px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "164px")};
   ${transition}
   z-index: 1;
 `;
 
 const StyledTextMessage = styled.article`
-  margin-top: 8rem;
+  /* margin-top: 8rem; */
   text-align: center;
   line-height: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  @media ${breakpoints.laptop} {
-    margin-left: 10%;
-  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -115,13 +111,13 @@ const StyledHeartSymbol = styled(HeartOutlineIcon)`
 
 const StyledCalendarIcon = styled(CalendarIcon)`
   width: 1.5rem;
+  margin: 1rem;
   display: inline;
   vertical-align: bottom;
   fill: var(--main-dark);
 `;
 
 const StyledDateIndicator = styled.article`
-  margin: 6rem auto 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,12 +134,45 @@ const StyledDateSpan = styled.span`
   padding: 0 0.5rem;
 `;
 
+const StyledListContainer = styled.div`
+  width: 80vw;
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media ${breakpoints.tablet} {
+    margin-left: 35%;
+  }
+  @media ${breakpoints.laptop} {
+    margin-left: 40%;
+  }
+`;
+
+const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 575px;
+`;
+const GraphToggleWrapper = styled.div`
+  display: flex;
+  padding: 0.3rem;
+
+  & > label {
+    transform: scale(0.6);
+  }
+`;
+
 export default function EmotionRecords({
   emotionEntries,
   onDeleteEmotionEntry,
   toggleHighlight,
   handleToolTip,
   isScrollDown,
+  theme,
   useExampleData,
 }) {
   const { t: translate } = useTranslation(["emotion-records"]);
@@ -161,6 +190,7 @@ export default function EmotionRecords({
   });
 
   const [showFilter, setShowFilter] = useState(false);
+  const [chartIsShown, setChartIsShown] = useState(false);
 
   useEffect(() => {
     handleToolTip({
@@ -237,6 +267,9 @@ export default function EmotionRecords({
     }
   }
 
+  function handleChart() {
+    setChartIsShown(!chartIsShown);
+  }
   return (
     <>
       <Head>
@@ -274,47 +307,60 @@ export default function EmotionRecords({
           selectedTime={selectedTime}
         />
       </AnimatedPanel>
-      {buttonState.datePicker ? (
-        selectedTime ? (
-          <DisplayDate textAlign="center" />
-        ) : (
-          <StyledDateIndicator>
-            {translate("clickTheCalendar")} <StyledCalendarIcon />{" "}
-            {translate("selectADate")}
-          </StyledDateIndicator>
-        )
-      ) : null}
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              {translate("noEntriesHighlighted")} <StyledHeartSymbol />{" "}
-              {translate("toHighlightEntry")}
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              {translate("noEntriesMadeToday")}
-              <br></br>
-              <StyledLink href="./">{translate("addEntry")}</StyledLink>
-            </StyledTextMessage>
+
+      <StyledListContainer>
+        {shownEntries.length === 0 &&
+          (filteredEntries.length === 0 ? (
+            buttonState.highlightedButton ? (
+              <StyledTextMessage>
+                {translate("noEntriesHighlighted")} <StyledHeartSymbol />{" "}
+                {translate("toHighlightEntry")}
+              </StyledTextMessage>
+            ) : buttonState.todayButton ? (
+              <StyledTextMessage>
+                {translate("noEntriesMadeToday")}
+                <br></br>
+                <StyledLink href="./">{translate("addEntry")}</StyledLink>
+              </StyledTextMessage>
+            ) : buttonState.datePicker && !selectedTime ? (
+              <StyledDateIndicator>
+                {translate("clickTheCalendar")} <StyledCalendarIcon />{" "}
+                {translate("selectADate")}
+              </StyledDateIndicator>
+            ) : (
+              <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
+            )
           ) : (
             <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
-        ))}
-
-      {shownEntries.length !== 0 && (
-        <ControlPadding>
+          ))}
+        {shownEntries.length !== 0 && (
+          <StyledWrapper>
+            <p>Results: {shownEntries.length}</p>
+            <GraphToggleWrapper>
+              <Icon path={mdiFormatListBulleted} size={1} />
+              <ToggleSwitch
+                handleSwitch={handleChart}
+                isChecked={chartIsShown}
+                useButtonColor={true}
+              />
+              <Icon path={mdiChartLine} size={1} />
+            </GraphToggleWrapper>
+          </StyledWrapper>
+        )}
+        {shownEntries.length !== 0 && !chartIsShown && (
           <EmotionRecordsList
+            buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
           />
-        </ControlPadding>
-      )}
+        )}
+        {chartIsShown && (
+          <ChartContainer shownEntries={shownEntries} theme={theme} />
+        )}
+      </StyledListContainer>
     </>
   );
 }

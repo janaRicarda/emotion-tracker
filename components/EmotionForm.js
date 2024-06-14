@@ -167,8 +167,16 @@ export default function EmotionForm({
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    const updatedIntensity = toggleIntensity ? intensityValue : "";
-    const updatedCategory = toggleCategory ? categoryValue : "";
+    const updatedIntensity = emotionValue
+      ? toggleIntensity
+        ? intensityValue
+        : null
+      : null;
+    const updatedCategory = emotionValue
+      ? toggleCategory
+        ? categoryValue
+        : null
+      : null;
 
     const updatedData = {
       ...data,
@@ -204,10 +212,8 @@ export default function EmotionForm({
 
   return (
     <StyledEmotionForm
-      $color={
-        theme === darkTheme ? "var(--section-background)" : `${colorValue}`
-      }
-      $text={theme === darkTheme ? `${colorValue}` : "var(--contrast-text)"}
+      $color={theme === darkTheme ? "var(--section-background)" : colorValue}
+      $text={theme === darkTheme ? colorValue : "var(--contrast-text)"}
       onSubmit={handleSubmit}
     >
       <StyledTitle>
@@ -231,12 +237,8 @@ export default function EmotionForm({
         id="tension-level"
         name="tensionLevel"
         type="range"
-        $inputColor={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-        }
-        $inputCircle={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-        }
+        $inputColor={theme === darkTheme ? colorValue : `var(--text-on-bright)`}
+        $inputCircle={theme === darkTheme ? colorValue : `var(--text-on-dark)`}
         value={tensionValue}
         $value={tensionValue}
         max={100}
@@ -312,12 +314,8 @@ export default function EmotionForm({
         name="intensity"
         value={intensityValue}
         $value={intensityValue}
-        $inputColor={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-        }
-        $inputCircle={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-        }
+        $inputColor={theme === darkTheme ? colorValue : `var(--text-on-bright)`}
+        $inputCircle={theme === darkTheme ? colorValue : `var(--text-on-dark)`}
         max={100}
         onChange={(event) =>
           setFormValues({
@@ -369,12 +367,8 @@ export default function EmotionForm({
         name="category"
         value={categoryValue}
         $value={categoryValue}
-        $inputColor={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-bright)`
-        }
-        $inputCircle={
-          theme === darkTheme ? `${colorValue}` : `var(--text-on-dark)`
-        }
+        $inputColor={theme === darkTheme ? colorValue : `var(--text-on-bright)`}
+        $inputCircle={theme === darkTheme ? colorValue : `var(--text-on-dark)`}
         max={100}
         onChange={(event) =>
           setFormValues({

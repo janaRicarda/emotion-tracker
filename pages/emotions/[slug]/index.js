@@ -2,13 +2,18 @@ import { emotionData as libEmotionData } from "@/lib/db";
 import { useRouter } from "next/router";
 import EmotionDetails from "@/components/EmotionDetail";
 import Head from "next/head";
+import { useEffect } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-export default function EmotionDetailsPage({ theme }) {
+export default function EmotionDetailsPage({ theme, handleToolTip }) {
   const { t: translate } = useTranslation("emotions");
 
   const emotionData = translate("emotionData", { returnObjects: true });
+
+  useEffect(() => {
+    handleToolTip(false);
+  });
 
   const router = useRouter();
   if (!router.query) {

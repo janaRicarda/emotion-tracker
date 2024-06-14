@@ -69,7 +69,6 @@ export default function ConfirmMessage({
 }) {
   const { t: translate } = useTranslation(["common"]);
   // for animation-state, useEffect and timeeOuts: animation needs to be triggered after on-mount and before dis-mount of component in order to work with conditional rendering
-  //
   const [animation, setAnimation] = useState(false);
 
   useEffect(() => {

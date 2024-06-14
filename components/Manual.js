@@ -146,13 +146,25 @@ export default function Manual() {
     window.addEventListener("scroll", listenSrollEvent);
   });
 
+  const [detailsOpen, setDetailsOpen] = useState({});
+
   return (
     <StyledSection>
       <StyledManualTitle>{translate("title")}</StyledManualTitle>
       <StyledText>{translate("intro")}</StyledText>
-
-      {manualData.map(({ question, text, answers }) => (
-        <StyledDetails key={question}>
+      {manualData.map(({ question, text, answers }, index) => (
+        <StyledDetails
+          open={detailsOpen[index] === index ? detailsOpen.show : false}
+          onClick={(event) => {
+            event.preventDefault();
+            setDetailsOpen((prev) => ({
+              [index]: index,
+              show: prev[index] === index ? !prev.show : true,
+            }));
+          }}
+          key={question}
+          $itemColor={itemColor}
+        >
           <StyledSummary>{question}</StyledSummary>
 
           {text && <StyledDetailText>{text}</StyledDetailText>}

@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Label = styled.label`
   display: flex;
   align-items: center;
-  gap: 10px;
   cursor: pointer;
 `;
 
@@ -35,18 +34,29 @@ const Input = styled.input`
   display: none;
 
   &:checked + ${Switch} {
-    background: var(--toggle-active);
+    background: ${({ $useButtonColor }) =>
+      $useButtonColor ? "var(--button-background)" : "var(--toggle-active)"};
     &::before {
       transform: translate(24px, -50%);
     }
   }
 `;
 
-export default function ToggleSwitch({ text, handleSwitch, isChecked }) {
+export default function ToggleSwitch({
+  text,
+  handleSwitch,
+  isChecked,
+  useButtonColor,
+}) {
   return (
     <Label>
       <span>{text}</span>
-      <Input onChange={handleSwitch} checked={isChecked} type="checkbox" />
+      <Input
+        onChange={handleSwitch}
+        checked={isChecked}
+        type="checkbox"
+        $useButtonColor={useButtonColor}
+      />
       <Switch />
     </Label>
   );
