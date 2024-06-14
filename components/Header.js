@@ -112,7 +112,6 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        {/*  <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} /> */}
         <StyledIconWrapper $isScrollDown={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (
             <StyledToggleTheme type="button" onClick={toggleTheme}>

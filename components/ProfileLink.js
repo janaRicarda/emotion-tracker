@@ -22,10 +22,5 @@ const StyledProfile = styled(Circle)`
 `;
 
 export default function ProfileLink() {
-  return (
-    <StyledProfileLink href="/profile-page">
-      {/*  <StyledProfile /> */}
-      NF
-    </StyledProfileLink>
-  );
+  return <StyledProfileLink href="/profile-page">NF</StyledProfileLink>;
 }
