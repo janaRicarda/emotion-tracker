@@ -158,13 +158,14 @@ const StyledWrapper = styled.div`
 `;
 const GraphToggleWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: 0.3rem;
 
   & > label {
     transform: scale(0.6);
   }
 
-  & > :nth-child(1) {
+  & > svg:nth-child(2) {
     margin: 0 1.5rem;
   }
 `;

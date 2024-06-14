@@ -1,5 +1,5 @@
 import Icon from "@mdi/react";
-import { mdiDownload } from "@mdi/js";
+import { mdiDownload, mdiClose } from "@mdi/js";
 import { ExportAsPdf, ExportAsExcel } from "react-export-table";
 import { useState } from "react";
 import styled from "styled-components";
@@ -16,6 +16,7 @@ const StyledModal = styled.div`
   overflow-y: hidden;
 
   & > div {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,6 +44,12 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 6px;
   color: var(--main-dark);
+`;
+
+const CloseButton = styled.button`
+  position: relative;
+  top: 0;
+  right: 0;
 `;
 
 export default function Export({
@@ -120,12 +127,14 @@ export default function Export({
 
   return (
     <>
-      <div onClick={() => setShowModal(true)}>
-        <Icon path={mdiDownload} size={1}>
-          Export as PDF
-        </Icon>
-      </div>
+      <div onClick={() => setShowModal(true)}></div>
+      <Icon path={mdiDownload} size={1}>
+        Export as PDF
+      </Icon>
       <StyledModal onClick={() => setShowModal(false)} $showModal={showModal}>
+        <CloseButton onClick={() => setShowModal(false)}>
+          <Icon path={mdiClose} size={1} />
+        </CloseButton>
         <div>
           <b>How would you like to download your data?</b>
           <ButtonContainer>
