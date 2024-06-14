@@ -33,5 +33,8 @@
   "filterButtonLastWeek": "Letzte Woche",
   "filterButtonLastMonth": "Letzter Monat",
   "filterButtonHighlighted": "Markiert",
-  "filterButtonCustom": "Datum anpassen"
+  "filterButtonCustom": "Datum anpassen",
+  "selectSingleDate": "Wählen Sie ein einzelnes Datum oder einen Datumsbereich",
+  "reset": "Zurücksetzen",
+  "ok": "Ok"
 }

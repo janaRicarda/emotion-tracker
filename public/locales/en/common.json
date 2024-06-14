@@ -33,5 +33,8 @@
   "filterButtonLastWeek": "Last Week",
   "filterButtonLastMonth": "Last Month",
   "filterButtonHighlighted": "Highlighted",
-  "filterButtonCustom": "custom"
+  "filterButtonCustom": "custom",
+  "selectSingleDate": "Select a single date or a range of dates",
+  "reset": "Reset",
+  "ok": "Ok"
 }

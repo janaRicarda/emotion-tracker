@@ -150,44 +150,58 @@ export default function FilterEmotionEntries({
 
   const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("todayButton");
   const [month, setMonth] = useState(new Date());
 
   const filterButtons = [
-    { name: "allButton", label: `${translate("filterButtonAll")}` },
+    {
+      name: "allButton",
+      label: `${translate("filterButtonAll")}`,
+      isActive: isButtonSelected("allButton"),
+    },
     {
       name: "todayButton",
       label: `${translate("filterButtonToday")}`,
       singleComparison: true,
       daysAgo: 0,
+      isActive: isButtonSelected("todayButton"),
     },
     {
       name: "yesterdayButton",
       label: `${translate("filterButtonYesterday")}`,
       singleComparison: true,
       daysAgo: 1,
+      isActive: isButtonSelected("yesterdayButton"),
     },
     {
       name: "weekButton",
       label: `${translate("filterButtonLastWeek")}`,
       daysAgo: 7,
+      isActive: isButtonSelected("weekButton"),
     },
     {
       name: "monthButton",
       label: `${translate("filterButtonLastMonth")}`,
       daysAgo: 30,
+      isActive: isButtonSelected("monthButton"),
     },
     {
       name: "highlightedButton",
       label: `${translate("filterButtonHighlighted")}`,
+      isActive: isButtonSelected("highlightedButton"),
     },
     {
       name: "datePicker",
       label: `${translate("filterButtonCustom")}`,
       icon: <StyledCalendarIcon />,
       setShow: true,
+      isActive: isButtonSelected("datePicker"),
     },
   ];
 
+  function isButtonSelected(name) {
+    return name === selectedButton;
+  }
   // sets filteredEntries useState in emotion-records.js according to buttonState; reacts to changes of emotionEntries e.g. deletion
   useEffect(() => {
     // helper functions
@@ -220,6 +234,10 @@ export default function FilterEmotionEntries({
     //
 
     changeFilterEntries(() => {
+      console.log(buttonState, "buttonstate");
+      if (buttonState.allButton) {
+        return emotionEntries;
+      }
       if (
         buttonState.todayButton ||
         buttonState.yesterdayButton ||
@@ -320,11 +338,20 @@ export default function FilterEmotionEntries({
         </StyledContainer>
         <StyledButtonGroup>
           {filterButtons.map(
-            ({ name, label, singleComparison, daysAgo, setShow, icon }) => (
+            ({
+              name,
+              label,
+              singleComparison,
+              daysAgo,
+              setShow,
+              icon,
+              isActive,
+            }) => (
               <StyledFilterButton
                 key={name}
-                $active={buttonState[name] && true}
+                $active={isActive}
                 onClick={() => {
+                  setSelectedButton(name);
                   changeButtonState({
                     [name]: true,
                     label: label,
@@ -358,9 +385,7 @@ export default function FilterEmotionEntries({
             {selectedTime ? (
               <DisplayDate />
             ) : (
-              <StyledParagraph>
-                Select a single date or a range of dates
-              </StyledParagraph>
+              <StyledParagraph>{translate("selectSingleDate")}</StyledParagraph>
             )}
             <WrapperForNavigation>
               <StyledNavButton
@@ -369,16 +394,16 @@ export default function FilterEmotionEntries({
                 }
                 onClick={() => setMonth(new Date())}
               >
-                Today
+                {translate("filterButtonToday")}
               </StyledNavButton>
               <StyledNavButton
                 disabled={selectedTime ? false : true}
                 onClick={() => changeSelectedTime()}
               >
-                Reset
+                {translate("reset")}
               </StyledNavButton>
               <StyledNavButton onClick={() => setShowDayPicker(false)}>
-                Ok
+                {translate("ok")}
               </StyledNavButton>
             </WrapperForNavigation>
           </WrapperForDayPicker>

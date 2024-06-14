@@ -184,6 +184,13 @@ export default function EmotionRecords({
     setButtonState(buttonObject);
   }
 
+  useEffect(() => {
+    setButtonState((prevState) => ({
+      ...prevState,
+      label: translate("filterButtonToday"),
+    }));
+  }, [translate]);
+
   function handleSetSelectedTime(time) {
     setSelectedTime(time);
   }
