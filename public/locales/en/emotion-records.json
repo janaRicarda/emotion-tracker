@@ -9,5 +9,6 @@
   "noEntriesMadeToday": "You haven't made any Entries today.",
   "addEntry": "add Entry →",
   "nothingFound": "sorry, nothing found",
-  "filterButtonToday": "Today"
+  "filterButtonToday": "Today",
+  "results": "Results:"
 }

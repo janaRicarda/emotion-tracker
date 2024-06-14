@@ -335,7 +335,9 @@ export default function EmotionRecords({
           ))}
         {shownEntries.length !== 0 && (
           <StyledWrapper>
-            <p>Results: {shownEntries.length}</p>
+            <p>
+              {translate("results")} {shownEntries.length}
+            </p>
             <GraphToggleWrapper>
               <Icon path={mdiFormatListBulleted} size={1} />
               <ToggleSwitch

@@ -169,11 +169,11 @@ export default function EmotionRecordsList({
   return (
     <>
       <StyledRecordsList $showConfirmMessage={showConfirmMessage}>
-        {shownEntries.length !== 0 && (
+        {/* {shownEntries.length !== 0 && (
           <p>
             {translate("results")} {shownEntries.length}
           </p>
-        )}
+        )} */}
         {shownEntries
           .sort(sortEntries)
           .map(
