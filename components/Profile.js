@@ -118,6 +118,19 @@ const ThemeButton = styled(StyledButton)`
 export default function Profile({ theme, switchTheme }) {
   const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
+
+  const username = `${session.user.name}`;
+
+  function getInitials(string) {
+    const names = string.split(" ");
+    const firstName = names[0];
+    const lastName = names[names.length - 1];
+    let initials = firstName[0] + lastName[0];
+    return initials.toUpperCase();
+  }
+
+  const userNameInitials = getInitials(username);
+
   const colorSchemes = [
     {
       title: "light",
@@ -160,7 +173,7 @@ export default function Profile({ theme, switchTheme }) {
   function handleShowThemes() {
     setShowThemes(!showThemes);
   }
-  console.log(session);
+
   if (status !== "authenticated") {
     return <h2>Access denied! You have to be logged in, to see this page</h2>;
   }
@@ -168,10 +181,9 @@ export default function Profile({ theme, switchTheme }) {
     <>
       <StyledTitleWrapper>
         <StyledTitle>Hi {session.user.name}!</StyledTitle>
-        <StyledProfileCircle>NF</StyledProfileCircle>
+        <StyledProfileCircle>{userNameInitials}</StyledProfileCircle>
         <StyledParagraph>this is your profile-page</StyledParagraph>
       </StyledTitleWrapper>
-
       <StyledParagraph>Account-name: {session.user.email}</StyledParagraph>
       <StyledParagraph>
         Make yourself at home and turn on your favorite illumination
