@@ -31,7 +31,7 @@ const StyledCircle = styled.article`
   }
 `;
 
-const StyledEmotionList = styled.ul`
+/* const StyledEmotionList = styled.ul`
   border: var(--emotion-border);
   background: var(--profile);
   padding: 0;
@@ -42,6 +42,39 @@ const StyledEmotionList = styled.ul`
   list-style: none;
   overflow: hidden;
   transform: rotate(${({ $rotation }) => $rotation}deg);
+  @media ${breakpoints.mobileLandscape} {
+    width: 54vh;
+    height: 54vh;
+  }
+  @media ${breakpoints.largeMobile} {
+    width: 54vh;
+    height: 54vh;
+  }
+  @media ${breakpoints.tablet} {
+    width: 46vh;
+    height: 46vh;
+  }
+  @media ${breakpoints.laptop} {
+    width: 54vh;
+    height: 54vh;
+  }
+`; */
+
+const StyledEmotionList = styled.ul.attrs(({ $rotation }) => ({
+  style: {
+    transform: $rotation,
+  },
+}))`
+  border: var(--emotion-border);
+  background: var(--profile);
+  padding: 0;
+  position: relative;
+  width: 80vw;
+  height: 80vw;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+
   @media ${breakpoints.mobileLandscape} {
     width: 54vh;
     height: 54vh;
@@ -125,7 +158,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   function handleScroll(event) {
-    event.preventDefault();
+    //event.preventDefault();
     const { deltaY } = event;
     const newRotation = deltaY > 0 ? rotation - 5 : rotation + 5;
     setRotation(newRotation);
@@ -170,7 +203,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          $rotation={rotation}
+          $rotation={`rotate(${rotation}deg)`}
         >
           {emotionData.map(({ slug, name }) => (
             <StyledListItem

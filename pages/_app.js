@@ -145,6 +145,8 @@ export default function App({
     mutate,
   } = useSWR(!demoMode && "/api/emotionEntries/", fetcher);
 
+  const { data: user } = useSWR(!demoMode && `/api/user`, fetcher);
+
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
   }
@@ -360,6 +362,7 @@ export default function App({
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
               switchTheme={switchTheme}
+              user={user}
               {...pageProps}
             />
           </Layout>

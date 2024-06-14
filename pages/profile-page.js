@@ -7,6 +7,7 @@ export default function ProfilePage({
   switchTheme,
   customTheme,
   handleToolTip,
+  user,
 }) {
   useEffect(() => {
     handleToolTip(false);
@@ -20,6 +21,7 @@ export default function ProfilePage({
         theme={theme}
         customTheme={customTheme}
         switchTheme={switchTheme}
+        user={user}
       />
     </>
   );

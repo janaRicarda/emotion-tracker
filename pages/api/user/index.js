@@ -14,9 +14,7 @@ export default async function handler(request, response) {
 
   if (request.method === `GET`) {
     try {
-      const user = await User.find({
-        owner: session.user.email,
-      });
+      const user = await User.find();
       return response.status(200).json(user);
     } catch (error) {
       console.error(error);
@@ -26,11 +24,8 @@ export default async function handler(request, response) {
   if (request.method === `POST`) {
     try {
       const userData = request.body;
-      await User.create({
-        ...userData,
-        owner: session.user.email,
-      });
-      response.status(201).json({ status: "EmotionEntries created" });
+      await User.create();
+      response.status(201).json({ status: "User created" });
     } catch {
       console.error(error);
       response.status(400).json({ error: error.message });

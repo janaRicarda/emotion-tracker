@@ -14,15 +14,13 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const user = await User.findById({
-      owner: session.user.email,
-    });
+    const user = await User.findById(id);
     return response.status(200).json(user);
   }
   if (request.method === "PUT") {
     try {
       const userData = request.body;
-      await User.findById({ ...userData, owner: session.user.email });
+      await User.findByIdAndUpdate(id, userData);
       response.status(200).json({ status: "User updated successfully" });
     } catch (error) {
       console.error(error);
