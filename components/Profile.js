@@ -14,15 +14,9 @@ import {
   neutralTheme,
   highContrastTheme,
 } from "./Theme";
-import { breakpoints } from "@/utils/breakpoints";
 import Circle from "../public/icons/circle.svg";
-
-/* const StyledProfileCircle = styled(Circle)`
-  width: 8rem;
-  border-radius: 50%;
-  fill: transparent;
-  background: var(--profile);
-`; */
+import { breakpoints } from "@/utils/breakpoints";
+import useSWR from "swr";
 
 const StyledProfileCircle = styled.article`
   width: 8rem;
@@ -119,6 +113,7 @@ export default function Profile({ theme, switchTheme }) {
   const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
 
+  //function to render the users Initials
   const username = `${session.user.name}`;
 
   function getInitials(string) {
@@ -130,6 +125,9 @@ export default function Profile({ theme, switchTheme }) {
   }
 
   const userNameInitials = getInitials(username);
+
+  //function to set the Theme
+  async function handleChooseTheme() {}
 
   const colorSchemes = [
     {
