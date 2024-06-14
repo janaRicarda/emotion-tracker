@@ -252,12 +252,6 @@ export default function EmotionRecords({
     document.addEventListener("keydown", handleEscapeKey);
   });
 
-  function closeOnKey(event) {
-    if (event.code === "Enter") {
-      setShowFilter(false);
-    }
-  }
-
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
@@ -271,7 +265,7 @@ export default function EmotionRecords({
       <StyledHeading $isScrollDown={isScrollDown}>
         Recorded Emotions
       </StyledHeading>
-      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
+      <GridWrapper $show={showFilter}>
         <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}

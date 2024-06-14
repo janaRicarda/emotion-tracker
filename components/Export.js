@@ -1,7 +1,7 @@
 import Icon from "@mdi/react";
 import { mdiDownload, mdiClose } from "@mdi/js";
 import { ExportAsPdf, ExportAsExcel } from "react-export-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -132,6 +132,15 @@ export default function Export({
 
     return pdfData;
   }
+
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === "Escape") {
+        setShowModal(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscapeKey);
+  });
 
   return (
     <>
