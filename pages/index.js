@@ -8,10 +8,11 @@ import {
   getTimeSinceLastEntry,
   calculateTensionChartData,
   getFilteredEntriesV2,
+  getNewestEmotion,
+  compareHightToLow,
 } from "@/utils/dataAndChartUtils";
-import { emotionData } from "@/lib/db";
+
 import { useSession } from "next-auth/react";
-import useSWR from "swr";
 
 const DashboardTitle = styled(StyledTitle)`
   margin-top: -10px;
@@ -80,7 +81,12 @@ const DashboardLink = styled(StyledStandardLink)`
   /* border: 1px solid var(--main-dark); */
 `;
 
-export default function HomePage({ handleToolTip, emotionEntries, theme }) {
+export default function HomePage({
+  handleToolTip,
+  emotionEntries,
+  theme,
+  demoMode,
+}) {
   const { data: session } = useSession();
 
   //make dashboard responsive
@@ -96,21 +102,15 @@ export default function HomePage({ handleToolTip, emotionEntries, theme }) {
 
   const dashboardWidth = Math.max(360, Math.round(windowWidth / 2));
   const dashboardHeight = Math.round(dashboardWidth * 1.25);
-  // console.log(dashboardHeight);
+  //console.log(dashboardHeight);
 
-  //for dashboard
+  //dashboard logic
 
-  const averageEntriesPerDay = getAveragePerDay(emotionEntries);
-  const timeSinceLastEntry = getTimeSinceLastEntry(emotionEntries);
+  const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
 
-  const sevenEmotions = emotionData.map((element) => element.name);
-  const newestEmotionEntry = emotionEntries.find(
-    (entry) => sevenEmotions.includes(entry.emotion) === true
-  );
-  const { emotion, intensity } = newestEmotionEntry;
-  const slug = emotionData
-    .filter((element) => element.name === emotion)
-    .map((element) => element.slug);
+  const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
+  const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
+  const { emotion, intensity, slug } = getNewestEmotion(dashboardEntries);
 
   //chart logic
   const today = new Date().toISOString();
@@ -120,7 +120,7 @@ export default function HomePage({ handleToolTip, emotionEntries, theme }) {
 
   useEffect(() => {
     handleToolTip({
-      text: "This is your dashboard ...",
+      text: "This is your dashboard. You can use it to get an overview abouzt what th app can do for you and what you did with it recently.",
     });
   }, []);
 
@@ -165,7 +165,8 @@ export default function HomePage({ handleToolTip, emotionEntries, theme }) {
           <DashboardLink href="/emotion-records">
             <ElementText>
               Your average rate is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
-              entries per day. Click to see your recorded emotions.
+              entries per day. Click to see your{" "}
+              <BoldText>recorded emotions</BoldText>.
             </ElementText>
           </DashboardLink>
         </GridElement>

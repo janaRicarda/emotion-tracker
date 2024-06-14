@@ -21,7 +21,7 @@ export const chartPresets = {
   },
 };
 
-function compare(a, b) {
+export function compareLowToHigh(a, b) {
   if (a < b) {
     return -1;
   }
@@ -31,14 +31,37 @@ function compare(a, b) {
   return 0;
 }
 
+export function compareHightToLow(a, b) {
+  if (a.timeStamp < b.timeStamp) {
+    return 1;
+  }
+  if (a.timeStamp > b.timeStamp) {
+    return -1;
+  }
+  return 0;
+}
+
 //dashboard
 //folgendes noch einfacher machen wenn generator angepasst ist
-export function getTimeSinceLastEntry(entries) {
-  const lastEntryTimeStamp = entries.toSorted(compare)[0].timeStamp;
 
+export function getNewestEmotion(entries) {
+  const sevenEmotions = emotionData.map((element) => element.name);
+  const newestEmotionEntry = entries.find(
+    (entry) => sevenEmotions.includes(entry.emotion) === true
+  );
+  const { emotion } = newestEmotionEntry;
+  const slug = emotionData
+    .filter((element) => element.name === emotion)
+    .map((element) => element.slug);
+  const newestEmotionObject = { ...newestEmotionEntry, slug };
+  return newestEmotionObject;
+}
+
+export function getTimeSinceLastEntry(entries) {
+  const lastEntryTimeStamp = entries.toSorted(compareHightToLow)[0].timeStamp;
   const timeStampNow = Date.now();
   const minutesSinceLastEntry = Math.round(
-    Math.abs(timeStampNow - lastEntryTimeStamp) / 60000
+    (timeStampNow - lastEntryTimeStamp) / 60000
   );
   const hours = Math.floor(minutesSinceLastEntry / 60);
   const minutesPart = (minutesSinceLastEntry % 60).toString().padStart(2, "0");
@@ -51,7 +74,6 @@ export function getAveragePerDay(entries) {
     Number(entries[0]?.timeStamp) -
     Number(entries[entries.length - 1]?.timeStamp);
   const allDays = timeDifference <= 0 ? 1 : timeDifference / (24 * 3600000);
-  console.log(allDays);
   const average = entries.length === 0 ? 0 : entries.length / allDays;
   const averageString = average.toFixed(1);
   return averageString;

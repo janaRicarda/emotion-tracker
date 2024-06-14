@@ -115,6 +115,7 @@ function generateDaysEntries(endHour, daysTimestamp) {
           : chance.bool({ likelihood: 5 }),
 
       toBeDetailed: chance.bool({ likelihood: 20 }),
+      isGenerated: true,
     };
 
     return object;
@@ -175,11 +176,13 @@ function generateCompleteData(daysGoingBack) {
   //construct special array for lastday so the conitinuity seem real
   const arrayOfLastDay = generateDaysEntries(currentHour, daysTimestamp);
   const entryToChange = arrayOfLastDay[arrayOfLastDay.length - 1];
-
+  const correctedTimeStamp =
+    daysTimestamp + currentHour * 3600000 + currentMinutes * 60000;
   const correctedEntry = {
     ...entryToChange,
     time: currentHour + ":" + currentMinutes.toString().padStart(2, "0"),
     timeAndDate: entryToChange.timeAndDate.split(":")[0] + ":" + currentMinutes,
+    timStamp: correctedTimeStamp,
   };
 
   arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);
