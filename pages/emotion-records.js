@@ -164,10 +164,6 @@ const GraphToggleWrapper = styled.div`
   & > label {
     transform: scale(0.6);
   }
-
-  & > svg:nth-child(2) {
-    margin: 0 1.5rem;
-  }
 `;
 
 export default function EmotionRecords({

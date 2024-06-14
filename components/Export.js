@@ -46,10 +46,18 @@ const StyledButton = styled.button`
   color: var(--main-dark);
 `;
 
-const CloseButton = styled.button`
-  position: relative;
+const CloseButton = styled(StyledButton)`
+  background-color: transparent;
+  position: absolute;
   top: 0;
   right: 0;
+`;
+
+const StyledDownloadButton = styled(StyledButton)`
+  border: none;
+  background-color: transparent;
+  color: var(--main-dark);
+  margin-right: 1rem;
 `;
 
 export default function Export({
@@ -127,15 +135,16 @@ export default function Export({
 
   return (
     <>
-      <div onClick={() => setShowModal(true)}></div>
-      <Icon path={mdiDownload} size={1}>
-        Export as PDF
-      </Icon>
+      <StyledDownloadButton onClick={() => setShowModal(true)}>
+        <Icon path={mdiDownload} size={1}>
+          Export as PDF
+        </Icon>
+      </StyledDownloadButton>
       <StyledModal onClick={() => setShowModal(false)} $showModal={showModal}>
-        <CloseButton onClick={() => setShowModal(false)}>
-          <Icon path={mdiClose} size={1} />
-        </CloseButton>
         <div>
+          <CloseButton onClick={() => setShowModal(false)}>
+            <Icon path={mdiClose} size={1} />
+          </CloseButton>
           <b>How would you like to download your data?</b>
           <ButtonContainer>
             <ExportAsPdf
