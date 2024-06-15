@@ -18,14 +18,19 @@ export default async function handler(request, response) {
     return response.status(200).json(user);
   }
 
-  if (request.method === "PUT") {
+  /* if (request.method === "PATCH") {
     try {
       const userData = request.body;
-      await User.findByIdAndUpdate(id, userData);
-      response.status(200).json({ status: "User updated successfully" });
+      await User.findByEmailAndUpdate({ email: email, userData });
+      return response.status(200).json({ status: "User updated successfully" });
     } catch (error) {
       console.error(error);
       return response.status(400).json({ error: error.message });
     }
+  } */
+  if (request.method === "PATCH") {
+    const userData = request.body;
+    await User.findByEmailAndUpdate({ email: email, userData });
+    return response.status(200).json({ status: "Theme updated successfully" });
   }
 }

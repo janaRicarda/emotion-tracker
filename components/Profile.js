@@ -113,46 +113,17 @@ const ThemeButton = styled(StyledButton)`
 export default function Profile({
   userNameInitials,
   userName,
+  userEmail,
+  handleEditTheme,
   user,
   theme,
   customTheme,
   switchTheme,
 }) {
-  const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
-  const router = useRouter();
-  const { id } = router.query;
-
-  //const { data, mutate } = useSWR(`/api/user/${id}`);
 
   //function to set the Theme
 
-  /* async function handleSubmitTheme(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const userData = Object.fromEntries(formData);
-
-    /*  const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });  */
-
-  /* const response = await fetch(`/api/user/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (response.ok) {
-      mutate();
-    }
-  }
- */
   const colorSchemes = [
     /*   {
       title: "light",
@@ -205,9 +176,6 @@ export default function Profile({
     setShowThemes(!showThemes);
   }
 
-  if (status !== "authenticated") {
-    return <h2>Access denied! You have to be logged in, to see this page</h2>;
-  }
   return (
     <>
       <StyledTitleWrapper>
@@ -215,7 +183,7 @@ export default function Profile({
         <StyledProfileCircle> {userNameInitials} </StyledProfileCircle>
         <StyledParagraph>this is your profile-page</StyledParagraph>
       </StyledTitleWrapper>
-      <StyledParagraph>Account-name: {session.user.email}</StyledParagraph>
+      <StyledParagraph>Account-name: {userEmail}</StyledParagraph>
       <StyledParagraph>
         Make yourself at home and turn on your favorite illumination
       </StyledParagraph>
@@ -224,7 +192,7 @@ export default function Profile({
           Choose your preferred theme
         </StyledColorSchemesButton>
 
-        {/* <form onSubmit={handleSubmitTheme}>
+        <form onSubmit={handleEditTheme}>
           <p>Select your preferred theme</p>
 
           <div>
@@ -237,7 +205,7 @@ export default function Profile({
           </div>
 
           <button type="submit">submit</button>
-        </form> */}
+        </form>
 
         {/*  {showThemes && (
           <ThemeWrapper>

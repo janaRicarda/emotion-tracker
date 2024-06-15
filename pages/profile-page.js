@@ -14,7 +14,7 @@ export default function ProfilePage({
   customTheme,
   handleToolTip,
 }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   useEffect(() => {
     handleToolTip(false);
   });
@@ -37,6 +37,7 @@ export default function ProfilePage({
         email: session.user.email,
         theme: "default",
       };
+
       const response = await fetch("/api/user/", {
         method: "POST",
         headers: {
@@ -48,10 +49,28 @@ export default function ProfilePage({
   }
   createUser();
   //if (!isLoading && currentUser.length == 0) createUser();
-  console.log(currentUser);
-  const currentOwner = emotionEntries[0].owner;
-  const currentUserLoggedin = session.user.email;
 
+  /* const currentOwner = emotionEntries[0].owner;
+  const currentUserLoggedin = session.user.email; */
+
+  async function handleEditTheme(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const userData = Object.fromEntries(formData);
+    console.log(userData);
+    const response = await fetch("/api/user/", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (response.ok) {
+      mutate();
+    }
+  }
+  console.log(currentUser);
   //function to render the users Initials
   const userName = session.user.name;
 
@@ -65,6 +84,11 @@ export default function ProfilePage({
 
   const userNameInitials = getInitials(userName);
 
+  const userEmail = session.user.email;
+
+  if (status !== "authenticated") {
+    return <h2>Access denied! You have to be logged in, to see this page</h2>;
+  }
   return (
     <>
       <Head>
@@ -76,7 +100,8 @@ export default function ProfilePage({
         switchTheme={switchTheme}
         userName={userName}
         userNameInitials={userNameInitials}
-        /*   user={currentUser} */
+        userEmail={userEmail}
+        handleEditTheme={handleEditTheme}
       />
     </>
   );
