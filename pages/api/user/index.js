@@ -24,7 +24,7 @@ export default async function handler(request, response) {
   if (request.method === `POST`) {
     try {
       const userData = request.body;
-      await User.create();
+      await User.create({ ...userData });
       response.status(201).json({ status: "User created" });
     } catch {
       console.error(error);

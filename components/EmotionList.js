@@ -165,7 +165,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   function handleTouchStart(event) {
-    event.preventDefault();
+    //event.preventDefault();
     setTouchStart(event.touches[0].clientY);
     setIsDragging(false);
   }
@@ -177,7 +177,7 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
       const newRotation = delta > 0 ? rotation + 5 : rotation - 5;
       if (Math.abs(delta) > 5) {
         setIsDragging(true);
-        event.preventDefault();
+        // event.preventDefault();
       }
       setRotation(newRotation);
       setTouchStart(touchCurrent);

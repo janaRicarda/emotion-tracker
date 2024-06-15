@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Circle from "../public/icons/circle.svg";
 import { StyledStandardLink } from "@/SharedStyledComponents";
+import { useSession } from "next-auth/react";
 
 const StyledProfileLink = styled(StyledStandardLink)`
   margin: 0.5rem;
@@ -14,13 +14,24 @@ const StyledProfileLink = styled(StyledStandardLink)`
   align-items: center;
 `;
 
-const StyledProfile = styled(Circle)`
-  width: 2rem;
-  border-radius: 50%;
-  fill: transparent;
-  background: var(--profile);
-`;
-
 export default function ProfileLink() {
-  return <StyledProfileLink href="/profile-page">NF</StyledProfileLink>;
+  const { data: session } = useSession();
+
+  const username = session.user.name;
+
+  function getInitials(string) {
+    const names = string.split(" ");
+    const firstName = names[0];
+    const lastName = names[names.length - 1];
+    let initials = firstName[0] + lastName[0];
+    return initials.toUpperCase();
+  }
+
+  const userNameInitials = getInitials(username);
+
+  return (
+    <StyledProfileLink href="/profile-page">
+      {userNameInitials}
+    </StyledProfileLink>
+  );
 }

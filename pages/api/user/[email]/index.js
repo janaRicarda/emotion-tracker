@@ -5,7 +5,7 @@ import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
   await dbConnect();
-  const { id } = request.query;
+  const { email } = request.query;
 
   const session = await getServerSession(request, response, authOptions);
   if (!session) {
@@ -14,9 +14,10 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const user = await User.findById(id);
+    const user = await User.find({ email: email });
     return response.status(200).json(user);
   }
+
   if (request.method === "PUT") {
     try {
       const userData = request.body;

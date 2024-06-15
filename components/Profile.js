@@ -110,31 +110,24 @@ const ThemeButton = styled(StyledButton)`
   }
 `;
 
-export default function Profile({ user, theme, customTheme, switchTheme }) {
+export default function Profile({
+  userNameInitials,
+  userName,
+  user,
+  theme,
+  customTheme,
+  switchTheme,
+}) {
   const { data: session, status } = useSession();
   const [showThemes, setShowThemes] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, mutate } = useSWR(`/api/user/${id}`);
-
-  //function to render the users Initials
-  const username = session.user.name;
-
-  function getInitials(string) {
-    const names = string.split(" ");
-    const firstName = names[0];
-    const lastName = names[names.length - 1];
-    let initials = firstName[0] + lastName[0];
-    return initials.toUpperCase();
-  }
-
-  const userNameInitials = getInitials(username);
-
-  //const currentEmail = user[0].email === session.user.email;
+  //const { data, mutate } = useSWR(`/api/user/${id}`);
 
   //function to set the Theme
-  async function handleSubmitTheme(event) {
+
+  /* async function handleSubmitTheme(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
@@ -147,19 +140,19 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
       body: JSON.stringify(userData),
     });  */
 
-    const response = await fetch(`/api/user/${id}`, {
+  /* const response = await fetch(`/api/user/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     });
-    console.log(userData);
+
     if (response.ok) {
       mutate();
     }
   }
-
+ */
   const colorSchemes = [
     /*   {
       title: "light",
@@ -218,7 +211,7 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
   return (
     <>
       <StyledTitleWrapper>
-        <StyledTitle>Hi {session.user.name}!</StyledTitle>
+        <StyledTitle>Hi {userName}!</StyledTitle>
         <StyledProfileCircle> {userNameInitials} </StyledProfileCircle>
         <StyledParagraph>this is your profile-page</StyledParagraph>
       </StyledTitleWrapper>
@@ -231,7 +224,7 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
           Choose your preferred theme
         </StyledColorSchemesButton>
 
-        <form onSubmit={handleSubmitTheme}>
+        {/* <form onSubmit={handleSubmitTheme}>
           <p>Select your preferred theme</p>
 
           <div>
@@ -244,7 +237,7 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
           </div>
 
           <button type="submit">submit</button>
-        </form>
+        </form> */}
 
         {/*  {showThemes && (
           <ThemeWrapper>
