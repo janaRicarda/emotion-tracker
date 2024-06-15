@@ -78,7 +78,7 @@ export const darkTheme = {
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
   profile:
-    "conic-gradient(#e8e87d, #baf0a8, #7de8cd, #75c7f0, #c5a3f5, #f075db, #f08a75, #e8e87d)",
+    "conic-gradient(#e8bb7d, #d8f0a8, #a8f0ba, #7ddfe8, #a8b4f0, #e4a8f0, #e87da1, #e8bb7d)",
 };
 
 export const warmTheme = {

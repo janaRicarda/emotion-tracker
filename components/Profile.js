@@ -131,7 +131,7 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
 
   const userNameInitials = getInitials(username);
 
-  const currentEmail = user[0].email === session.user.email;
+  //const currentEmail = user[0].email === session.user.email;
 
   //function to set the Theme
   async function handleSubmitTheme(event) {
@@ -139,13 +139,13 @@ export default function Profile({ user, theme, customTheme, switchTheme }) {
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
 
-    /* const response = await fetch("/api/user", {
+    /*  const response = await fetch("/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    }); */
+    });  */
 
     const response = await fetch(`/api/user/${id}`, {
       method: "PUT",
