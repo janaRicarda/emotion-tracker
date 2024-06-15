@@ -3,6 +3,7 @@ import { mdiDownload, mdiClose } from "@mdi/js";
 import { ExportAsPdf, ExportAsExcel } from "react-export-table";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Plotly from "plotly.js";
 
 const StyledModal = styled.div`
   display: ${({ $showModal }) => ($showModal ? "flex" : "none")};
@@ -14,6 +15,10 @@ const StyledModal = styled.div`
   inset: 0;
   z-index: 3;
   overflow-y: hidden;
+
+  & > * p {
+    margin-top: 2rem;
+  }
 
   & > div {
     position: relative;
@@ -33,10 +38,29 @@ const StyledModal = styled.div`
   }
 `;
 
+const Note = styled.p`
+  font-size: 0.8rem;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
   margin: 1rem;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+
+  & > span {
+    margin: 0.5rem;
+  }
+
+  & > input {
+    width: 3rem;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -64,8 +88,21 @@ export default function Export({
   exportData,
   buttonState,
   selectedCustomDate,
+  chartRefForDownload,
+  chartIsShown,
 }) {
   const [showModal, setShowModal] = useState(false);
+  const [inputValueOne, setInputValueOne] = useState(1000);
+  const [inputValueTwo, setInputValueTwo] = useState(1000);
+
+  useEffect(() => {
+    function handleEscapeKey(event) {
+      if (event.code === "Escape") {
+        setShowModal(false);
+      }
+    }
+    document.addEventListener("keydown", handleEscapeKey);
+  });
 
   function getIntlDate(timeData) {
     if (timeData) {
@@ -133,14 +170,20 @@ export default function Export({
     return pdfData;
   }
 
-  useEffect(() => {
-    function handleEscapeKey(event) {
-      if (event.code === "Escape") {
-        setShowModal(false);
-      }
-    }
-    document.addEventListener("keydown", handleEscapeKey);
-  });
+  function downloadChart(fileFormat) {
+    if (chartRefForDownload) {
+      Plotly.downloadImage(chartRefForDownload.current.el, {
+        format: fileFormat,
+        filename: `Your What a Feeling - Chart for ${
+          buttonState.label === "Custom" ? finalDateLabel : buttonState.label
+        } (downloaded: ${new Date().toDateString()}, items: ${
+          exportData.length
+        })`,
+        height: inputValueOne,
+        width: inputValueTwo,
+      });
+    } else return;
+  }
 
   return (
     <>
@@ -155,6 +198,7 @@ export default function Export({
             <Icon path={mdiClose} size={1} />
           </CloseButton>
           <b>How would you like to download your data?</b>
+          <p>Download List as:</p>
           <ButtonContainer>
             <ExportAsPdf
               data={pdfExport(exportData)}
@@ -216,6 +260,65 @@ export default function Export({
               {(props) => <StyledButton {...props}>Excel</StyledButton>}
             </ExportAsExcel>
           </ButtonContainer>
+          {!chartIsShown && (
+            <Note>
+              Note: You can also download a Chart after toggling the switch
+              above the list to &quot;Chart&quot;!
+            </Note>
+          )}
+          {chartIsShown && (
+            <>
+              <p>Download Chart as:</p>
+              <InputContainer>
+                <input
+                  type="number"
+                  min={0}
+                  max={2000}
+                  value={inputValueOne}
+                  onChange={() => {
+                    setInputValueOne(event.target.value);
+                  }}
+                />
+                <span>x</span>
+                <input
+                  type="number"
+                  min={0}
+                  max={2000}
+                  value={inputValueTwo}
+                  onChange={() => {
+                    setInputValueTwo(event.target.value);
+                  }}
+                />
+                <span>px</span>
+              </InputContainer>
+              <ButtonContainer>
+                <StyledButton
+                  onClick={() => {
+                    downloadChart("png");
+                  }}
+                  disabled={chartRefForDownload?.current === null && true}
+                >
+                  PNG
+                </StyledButton>
+                <StyledButton
+                  onClick={() => {
+                    downloadChart("svg");
+                  }}
+                  disabled={chartRefForDownload?.current === null && true}
+                >
+                  SVG
+                </StyledButton>
+                <StyledButton
+                  onClick={() => {
+                    downloadChart("jpeg");
+                  }}
+                  disabled={chartRefForDownload?.current === null && true}
+                >
+                  JPEG
+                </StyledButton>
+              </ButtonContainer>
+            </>
+          )}
         </div>
       </StyledModal>
     </>

@@ -190,6 +190,8 @@ export default function EmotionRecords({
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
 
+  const [chartRefForDownload, setChartRefForDownload] = useState(null);
+
   useEffect(() => {
     handleToolTip({
       text: "Navigate through your emotion records list, a comprehensive compilation of all your added emotion entries. You can easily search for specific entries, edit or delete them, and even highlight important moments. Also, you can search through your entries or filter them by the following options: today, last week, or last month. Above the list to the right is a switch to display the data as chart instead of the list.",
@@ -254,6 +256,10 @@ export default function EmotionRecords({
 
   function handleChart() {
     setChartIsShown(!chartIsShown);
+  }
+
+  function handleChartRef(ref) {
+    setChartRefForDownload(ref);
   }
 
   return (
@@ -322,6 +328,8 @@ export default function EmotionRecords({
             <p>Results: {shownEntries.length}</p>
             <GraphToggleWrapper>
               <Export
+                chartRefForDownload={chartRefForDownload}
+                chartIsShown={chartIsShown}
                 exportData={shownEntries}
                 buttonState={buttonState}
                 selectedCustomDate={selectedTime}
@@ -347,7 +355,11 @@ export default function EmotionRecords({
           />
         )}
         {chartIsShown && (
-          <ChartContainer shownEntries={shownEntries} theme={theme} />
+          <ChartContainer
+            handleChartRef={handleChartRef}
+            shownEntries={shownEntries}
+            theme={theme}
+          />
         )}
       </StyledListContainer>
     </>
