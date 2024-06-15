@@ -58,7 +58,7 @@ export default function ProfilePage({
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
     console.log(userData);
-    const response = await fetch("/api/user/", {
+    const response = await fetch(`/api/user/${session.user.email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
