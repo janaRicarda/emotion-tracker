@@ -31,7 +31,7 @@ export default function ProfilePage({
       const data = {
         name: session.user.name,
         email: session.user.email,
-        theme: "default",
+        theme: "light",
       };
 
       try {
@@ -55,7 +55,7 @@ export default function ProfilePage({
     error,
     mutate,
   } = useSWR(`/api/user/${session.user.email}`);
-  console.log(currentUser);
+  console.log("currentUser", currentUser);
   if (isLoading) return <Loader itemText={"Is Loading"} />;
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
@@ -97,19 +97,17 @@ export default function ProfilePage({
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
 
-    const response =
-      (currentUser,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+    const response = await fetch(`/api/user/${session.user.email}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
 
     const { theme: updatedTheme } = userData;
     const selectedTheme = colorSchemes[updatedTheme];
-
+    console.log("userData", userData);
     if (response.ok) {
       mutate();
     }

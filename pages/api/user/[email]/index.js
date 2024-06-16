@@ -21,7 +21,7 @@ export default async function handler(request, response) {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      response.status(409).json({ message: "User already exists" });
+      response.status(200).json({ message: "User already exists" });
       return;
     }
     try {
@@ -36,16 +36,11 @@ export default async function handler(request, response) {
   if (request.method === "PATCH") {
     try {
       const userData = request.body;
-      await User.findByEmailAndUpdate({ email: email, userData });
+      await User.findOneAndUpdate({ email: email }, userData);
       return response.status(200).json({ status: "User updated successfully" });
     } catch (error) {
       console.error(error);
       return response.status(400).json({ error: error.message });
     }
   }
-  /*  if (request.method === "PATCH") {
-    const userData = request.body;
-    await User.findByEmailAndUpdate({ email: email, userData });
-    return response.status(200).json({ status: "Theme updated successfully" });
-  } */
 }

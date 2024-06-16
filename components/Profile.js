@@ -4,6 +4,7 @@ import {
   StyledTitle,
   StyledButton,
 } from "@/SharedStyledComponents";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Circle from "../public/icons/circle.svg";
 import ArrowDown from "../public/icons/arrow-down-thin.svg";
@@ -112,6 +113,7 @@ export default function Profile({
   userEmail,
   handleEditTheme,
 }) {
+  const { data: session } = useSession();
   const [showThemes, setShowThemes] = useState(false);
 
   const colorSchemes = [
