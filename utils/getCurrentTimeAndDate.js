@@ -1,15 +1,23 @@
-export default function getCurrentTimeAndDate(locale, date) {
+export default function getCurrentTimeAndDate(locale, date, format) {
   const fullDate = date || new Date();
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    hour12: false,
-    minute: "numeric",
-  };
+  const options =
+    format === "chart"
+      ? {
+          month: "numeric",
+          day: "numeric",
+          hour: "numeric",
+          hour12: false,
+        }
+      : {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          hour12: false,
+          minute: "numeric",
+        };
 
   const localOption = locale === "en" ? "en-US" : "de-DE";
   const localAtWord = locale === "en" ? " at" : " um";

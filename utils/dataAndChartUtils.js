@@ -140,7 +140,14 @@ export function calculateTensionChartData(entries, locale) {
           const dateAndTime = getCurrentTimeAndDate(locale, entry.timeStamp);
           return dateAndTime.slice(-5);
         })
-      : filteredData.map((entry) => new Date(entry.timeStamp));
+      : filteredData.map((entry) => {
+          const dateAndTime = getCurrentTimeAndDate(
+            locale,
+            entry.timeStamp,
+            "chart"
+          );
+          return dateAndTime;
+        });
   const tensionYValues = filteredData.map((entry) => entry.tensionLevel);
   const tensionChartData = { xValues: tensionXValues, yValues: tensionYValues };
   return tensionChartData;

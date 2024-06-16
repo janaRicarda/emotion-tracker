@@ -347,7 +347,11 @@ export default function EmotionRecords({
           />
         )}
         {chartIsShown && (
-          <ChartContainer shownEntries={shownEntries} theme={theme} />
+          <ChartContainer
+            shownEntries={shownEntries}
+            theme={theme}
+            locale={locale}
+          />
         )}
       </StyledListContainer>
     </>

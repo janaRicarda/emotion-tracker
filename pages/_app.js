@@ -31,7 +31,8 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const router = useRouter();
-  const locale = "en";
+  // locale for testing, will be replaced w/ locale from translation branch soon
+  const locale = "de";
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();

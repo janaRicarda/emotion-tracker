@@ -85,7 +85,7 @@ export default function HomePage({
   handleToolTip,
   emotionEntries,
   theme,
-  demoMode,
+  locale,
 }) {
   const { data: session } = useSession();
 
@@ -188,6 +188,7 @@ export default function HomePage({
             yValues={yValues}
             autosize={false}
             showSwitches={false}
+            locale={locale}
           ></ChartContainerV2>
         </ChartElement>
         {/* <GridElement>5</GridElement>
