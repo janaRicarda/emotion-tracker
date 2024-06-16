@@ -26,13 +26,6 @@ export default function ProfilePage({
     handleToolTip(false);
   });
 
-  const {
-    data: currentUser,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR(`/api/user/${session.user.email}`);
-
   useEffect(() => {
     async function createUser() {
       const data = {
@@ -55,6 +48,13 @@ export default function ProfilePage({
     }
     createUser();
   }, [session.user.email, session.user.name]);
+
+  const {
+    data: currentUser,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR(`/api/user/${session.user.email}`);
 
   if (isLoading) return <Loader itemText={"Is Loading"} />;
 

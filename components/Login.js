@@ -1,5 +1,4 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { StyledButton } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Logout from "../public/icons/logout.svg";
@@ -27,7 +26,7 @@ const StyledLogout = styled(Logout)`
   width: ${({ $navigation }) => ($navigation ? "1.4rem" : "0.7rem")};
   fill: var(--contrast-text);
 `;
-const StyledLoginButton = styled.button`
+/* const StyledLoginButton = styled.button`
   border-style: none;
   background: transparent;
   color: var(--contrast-text);
@@ -36,9 +35,9 @@ const StyledLoginButton = styled.button`
   top: 0;
   right: 0;
   z-index: 3;
-`;
+`; */
 
-export default function Login({ handleDemoModeOff, disable, navigation }) {
+export default function Login({ disable, navigation }) {
   const { data: session } = useSession();
   const router = useRouter();
   if (session) {
@@ -64,8 +63,8 @@ export default function Login({ handleDemoModeOff, disable, navigation }) {
       </>
     );
   }
-  return (
-    <StyledLoginButton
+  return {
+    /* <StyledLoginButton
       $login
       $disable={disable}
       onClick={() => {
@@ -77,6 +76,6 @@ export default function Login({ handleDemoModeOff, disable, navigation }) {
       }}
     >
       quit to log in
-    </StyledLoginButton>
-  );
+    </StyledLoginButton> */
+  };
 }

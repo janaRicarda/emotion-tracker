@@ -34,7 +34,6 @@ export default function Layout({
   children,
   theme,
   toggleTheme,
-  switchTheme,
   toolTip,
   scrollPosition,
   isScrollDown,
@@ -85,14 +84,11 @@ export default function Layout({
           handleDemoModeOff={handleDemoModeOff}
         />
       )}
-      {demoMode && <DemoLayout />}
+      {demoMode && <DemoLayout handleDemoModeOff={handleDemoModeOff} />}
       <Header
         isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
-        switchTheme={switchTheme}
-        demoMode={demoMode}
-        handleDemoModeOff={handleDemoModeOff}
       />
       {(emotionEntriesAreLoading && (
         <Loader itemText={"App is loading..."} />

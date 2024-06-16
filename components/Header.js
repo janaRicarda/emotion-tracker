@@ -88,13 +88,7 @@ const StyledLogo = styled(Logo)`
   ${transition}
 `;
 
-export default function Header({
-  theme,
-  toggleTheme,
-  switchTheme,
-  isScrollDown,
-  handleDemoModeOff,
-}) {
+export default function Header({ theme, toggleTheme, isScrollDown }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
@@ -102,10 +96,10 @@ export default function Header({
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
-  const createPath =
+  /*  const createPath =
     (router.pathname === "/create" || router.pathname === "/create/[slug]") &&
     true;
-
+ */
   return (
     <>
       <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
@@ -125,11 +119,7 @@ export default function Header({
           </StyledMenu>
           {session && <ProfileLink />}
         </StyledIconWrapper>
-        <Navigation
-          isOpen={isOpen}
-          handleToggleMenu={handleToggleMenu}
-          switchTheme={switchTheme}
-        />
+        <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
       </StyledHeader>
       <PlaceholderHeader />
     </>
