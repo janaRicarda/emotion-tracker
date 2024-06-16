@@ -301,63 +301,67 @@ export default function EmotionRecords({
           selectedTime={selectedTime}
         />
       </AnimatedPanel>
-      {buttonState.datePicker ? (
-        selectedTime ? (
-          <DisplayDate textAlign="center" />
-        ) : (
-          <StyledDateIndicator>
-            {translate("clickTheCalendar")} <StyledCalendarIcon />{" "}
-            {translate("selectADate")}
-          </StyledDateIndicator>
-        )
-      ) : null}
-      {shownEntries.length === 0 &&
-        (filteredEntries.length === 0 ? (
-          buttonState.highlightedButton ? (
-            <StyledTextMessage>
-              {translate("noEntriesHighlighted")} <StyledHighlightIcon />{" "}
-              {translate("toHighlightEntry")}
-            </StyledTextMessage>
-          ) : buttonState.todayButton ? (
-            <StyledTextMessage>
-              {translate("noEntriesMadeToday")}
-              <br></br>
-              <StyledLink href="./">{translate("addEntry")}</StyledLink>
-            </StyledTextMessage>
+      <StyledListContainer>
+        {shownEntries.length === 0 &&
+          (filteredEntries.length === 0 ? (
+            buttonState.highlightedButton ? (
+              <StyledTextMessage>
+                {translate("noEntriesHighlighted")} <StyledHighlightIcon />{" "}
+                {translate("toHighlightEntry")}
+              </StyledTextMessage>
+            ) : buttonState.todayButton ? (
+              <StyledTextMessage>
+                {translate("noEntriesMadeToday")}
+                <br></br>
+                <StyledLink href="./">{translate("addEntry")}</StyledLink>
+              </StyledTextMessage>
+            ) : buttonState.datePicker && !selectedTime ? (
+              <StyledDateIndicator>
+                {translate("clickTheCalendar")} <StyledCalendarIcon />{" "}
+                {translate("selectADate")}
+              </StyledDateIndicator>
+            ) : (
+              <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
+            )
           ) : (
             <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
-          )
-        ) : (
-          <StyledTextMessage>{translate("nothingFound")}</StyledTextMessage>
-        ))}
+          ))}
 
-      {shownEntries.length !== 0 && (
-        <StyledWrapper>
-          <p>
-            {translate("results")} {shownEntries.length}
-          </p>
-          <GraphToggleWrapper>
-            <Icon path={mdiFormatListBulleted} size={1} />
-            <ToggleSwitch
-              handleSwitch={handleChart}
-              isChecked={chartIsShown}
-              useButtonColor={true}
-            />
-            <Icon path={mdiChartLine} size={1} />
-          </GraphToggleWrapper>
-        </StyledWrapper>
-      )}
+        {shownEntries.length !== 0 && (
+          <StyledWrapper>
+            <p>
+              {translate("results")} {shownEntries.length}
+            </p>
+            <GraphToggleWrapper>
+              <Icon path={mdiFormatListBulleted} size={1} />
+              <ToggleSwitch
+                handleSwitch={handleChart}
+                isChecked={chartIsShown}
+                useButtonColor={true}
+              />
+              <Icon path={mdiChartLine} size={1} />
+            </GraphToggleWrapper>
+          </StyledWrapper>
+        )}
 
-      {shownEntries.length !== 0 && (
-        <EmotionRecordsList
-          onDeleteEmotionEntry={onDeleteEmotionEntry}
-          toggleHighlight={toggleHighlight}
-          shownEntries={shownEntries}
-          filteredEntries={filteredEntries}
-          useExampleData={useExampleData}
-          locale={locale}
-        />
-      )}
+        {shownEntries.length !== 0 && !chartIsShown && (
+          <EmotionRecordsList
+            onDeleteEmotionEntry={onDeleteEmotionEntry}
+            toggleHighlight={toggleHighlight}
+            shownEntries={shownEntries}
+            filteredEntries={filteredEntries}
+            useExampleData={useExampleData}
+            locale={locale}
+          />
+        )}
+        {chartIsShown && (
+          <ChartContainer
+            shownEntries={shownEntries}
+            theme={theme}
+            locale={locale}
+          />
+        )}
+      </StyledListContainer>
     </>
   );
 }
