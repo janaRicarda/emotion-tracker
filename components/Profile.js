@@ -121,38 +121,32 @@ export default function Profile({
       title: "light",
       name: "lightTheme",
       background: "conic-gradient(#e9e3e3 50%, #030352)",
-      text: "#030352",
     },
     {
       title: "dark",
       name: "darkTheme",
       background: "conic-gradient(#322e44 50%, #f1eaea)",
-      text: "#f1eaea",
     },
 
     {
       title: "warm",
       name: "warmTheme",
       background: "conic-gradient(#fbe050, #fbbd50, #f673a4, #762e72 50%)",
-      text: "#762e72",
     },
     {
       title: "cold",
       name: "coldTheme",
       background: "conic-gradient(#50cfe2, #9996fa, #0F1555 50%)",
-      text: "#0F1555",
     },
     {
       title: "neutral",
       name: "neutralTheme",
       background: "conic-gradient(white 50%, black 50%)",
-      text: "black",
     },
     {
       title: "high contrast",
       name: "highContrastTheme",
       background: "conic-gradient(yellow 50%, black 50%)",
-      text: "black",
     },
   ];
 
@@ -177,9 +171,9 @@ export default function Profile({
       </StyledColorSchemesButton>
       {showThemes && (
         <StyledForm onSubmit={handleEditTheme}>
-          {colorSchemes.map(({ name, title, background, text }) => (
-            <StyledDiv key={title}>
-              <StyledCircle $background={background} $text={text} />
+          {colorSchemes.map(({ name, title, background, index }) => (
+            <StyledDiv key={index}>
+              <StyledCircle $background={background} />
               <StyledInput
                 type="radio"
                 id={name}
