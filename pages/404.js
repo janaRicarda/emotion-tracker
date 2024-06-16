@@ -38,7 +38,7 @@ export default function Custom404() {
       <h2>404</h2>
       <h2>Sorry, this page doesn&apos;t exist </h2>
       <LinkWrapper>
-        <StyledLink href={"/"}>Homepage</StyledLink>
+        <StyledLink href="/">Homepage</StyledLink>
         <StyledBackButton onClick={() => router.back()}>
           Previous Page
         </StyledBackButton>
