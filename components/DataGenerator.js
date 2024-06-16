@@ -77,8 +77,6 @@ const dateOptions = {
 function generateDaysEntries(endHour, daysTimestamp) {
   const fullDate = new Date(daysTimestamp);
 
-  const date = new Intl.DateTimeFormat("en-US", dateOptions).format(fullDate);
-
   //variables for sinus curve
   const a = chance.integer({ min: -50, max: 50 });
   const b = chance.floating({ min: -3, max: 3 });
@@ -94,9 +92,6 @@ function generateDaysEntries(endHour, daysTimestamp) {
 
     const object = {
       id: uid(),
-      date,
-      time,
-      timeAndDate: date + ", " + time,
       timeStamp: daysTimestamp + hour * 3600000 + minutes * 60000,
       tensionLevel: Math.max(
         chance.integer({ min: 0, max: 15 }),
@@ -180,8 +175,6 @@ function generateCompleteData(daysGoingBack) {
     daysTimestamp + currentHour * 3600000 + currentMinutes * 60000;
   const correctedEntry = {
     ...entryToChange,
-    time: currentHour + ":" + currentMinutes.toString().padStart(2, "0"),
-    timeAndDate: entryToChange.timeAndDate.split(":")[0] + ":" + currentMinutes,
     timStamp: correctedTimeStamp,
   };
 

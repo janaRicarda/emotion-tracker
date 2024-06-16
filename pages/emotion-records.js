@@ -171,6 +171,7 @@ export default function EmotionRecords({
   handleToolTip,
   isScrollDown,
   theme,
+  locale,
   useExampleData,
 }) {
   const [searchTerm, setSearchTerm] = useState();
@@ -298,7 +299,6 @@ export default function EmotionRecords({
       </AnimatedPanel>
 
       <StyledListContainer>
-
         {shownEntries.length === 0 &&
           (filteredEntries.length === 0 ? (
             buttonState.highlightedButton ? (
@@ -343,6 +343,7 @@ export default function EmotionRecords({
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
+            locale={locale}
           />
         )}
         {chartIsShown && (

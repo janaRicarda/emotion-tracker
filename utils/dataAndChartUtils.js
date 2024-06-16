@@ -1,4 +1,5 @@
 import { emotionData } from "@/lib/db";
+import getCurrentTimeAndDate from "./getCurrentTimeAndDate";
 
 export const chartPresets = {
   tension: {
@@ -117,7 +118,7 @@ export function countEmotions(entries) {
   return countResults;
 }
 
-export function calculateTensionChartData(entries) {
+export function calculateTensionChartData(entries, locale) {
   function compare(a, b) {
     if (a.isoDate < b.isoDate) {
       return -1;
@@ -128,13 +129,17 @@ export function calculateTensionChartData(entries) {
     return 0;
   }
   const filteredData = entries.toSorted(compare);
+  console.log(filteredData);
   const lastIndex = filteredData.length - 1;
   const difference =
     (filteredData[lastIndex]?.timeStamp - filteredData[0]?.timeStamp) / 3600000;
 
   const tensionXValues =
     difference < 48
-      ? filteredData.map((entry) => entry.timeAndDate.slice(-5))
+      ? filteredData.map((entry) => {
+          const dateAndTime = getCurrentTimeAndDate(locale, entry.timeStamp);
+          return dateAndTime.slice(-5);
+        })
       : filteredData.map((entry) => new Date(entry.timeStamp));
   const tensionYValues = filteredData.map((entry) => entry.tensionLevel);
   const tensionChartData = { xValues: tensionXValues, yValues: tensionYValues };

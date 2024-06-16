@@ -31,6 +31,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const router = useRouter();
+  const locale = "en";
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
@@ -168,13 +169,13 @@ export default function App({
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    const timeAndDate = getCurrentTimeAndDate(timeStamp);
+    // const timeAndDate = getCurrentTimeAndDate(timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
       timeStamp,
-      timeAndDate,
+      // timeAndDate,
       isoDate: new Date(timeStamp).toISOString(),
     };
 
@@ -359,6 +360,7 @@ export default function App({
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
               switchTheme={switchTheme}
+              locale={locale}
               {...pageProps}
             />
           </Layout>
