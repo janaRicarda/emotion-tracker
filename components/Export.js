@@ -5,36 +5,41 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Plotly from "plotly.js";
 
+const StyledBackground = styled.div`
+  display: ${({ $showModal }) => ($showModal ? "block" : "none")};
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0);
+  inset: 0;
+  position: fixed;
+  overflow-y: hidden;
+  z-index: 3;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+`;
+
 const StyledModal = styled.div`
   display: ${({ $showModal }) => ($showModal ? "flex" : "none")};
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: transparent;
+  background-color: var(--main-bright);
+  color: var(--main-dark);
+  width: 360px;
   position: fixed;
-  inset: 0;
-  z-index: 3;
+  right: calc(50% - 180px);
+  top: 20%;
+  box-shadow: 0 0 5px 0px;
+  border-radius: 10px;
+  z-index: 4;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem;
   overflow-y: hidden;
 
-  & > * p {
-    margin-top: 2rem;
-  }
-
-  & > div {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--main-dark);
-    width: 80%;
-    max-width: 500px;
-    min-width: 300px;
-    background-color: var(--section-background);
-    border: 2px solid var(--main-dark);
-    border-radius: 6px;
-    padding: 3rem;
+  & > p {
+    margin-top: 1.5rem;
   }
 `;
 
@@ -53,13 +58,26 @@ const InputContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1rem auto;
+  position: relative;
+
+  &:after {
+    content: "Min: 400, Max. 2000";
+    font-size: .7rem;
+    position: absolute;
+    bottom: -.8rem;
+  }
 
   & > span {
     margin: 0.5rem;
   }
 
+  & > span:nth-of-type(2) {
+    position: absolute;
+    right: -2rem;
+  }
+
   & > input {
-    width: 3rem;
+    width: 4rem;
   }
 `;
 
@@ -192,134 +210,152 @@ export default function Export({
           Export as PDF
         </Icon>
       </StyledDownloadButton>
-      <StyledModal onClick={() => setShowModal(false)} $showModal={showModal}>
-        <div>
-          <CloseButton onClick={() => setShowModal(false)}>
-            <Icon path={mdiClose} size={1} />
-          </CloseButton>
-          <b>How would you like to download your data?</b>
-          <p>Download List as:</p>
-          <ButtonContainer>
-            <ExportAsPdf
-              data={pdfExport(exportData)}
-              fileName={`WhataFeeling_PDF_Data_(downloaded_${new Date().toDateString()})`}
-              title={`Your Summary of ${
-                buttonState.label === "Custom"
-                  ? finalDateLabel
-                  : buttonState.label
-              } (items: ${exportData.length})`}
-              headers={[
-                "Date",
-                "Time",
-                "Tension",
-                "Emotion",
-                "Subemotion",
-                "Intensity",
-                "Notes",
-                "Trigger",
-              ]}
-              headerStyles={{
-                fontStyle: "bold",
-                halign: "center",
-                cellWidth: "wrap",
-              }}
-              styles={{
-                halign: "center",
-                valign: "middle",
-                minCellWidth: "20",
-              }}
-            >
-              {(props) => <StyledButton {...props}>PDF</StyledButton>}
-            </ExportAsPdf>
-            <ExportAsExcel
-              data={pdfExport(exportData)}
-              fileName={`WhataFeeling_Excel_Data_(downloaded_${getIntlDate(
-                new Date()
-              )})`}
-              name={`${
-                buttonState.label === "Custom"
-                  ? finalDateLabel
-                  : buttonState.label
-              }`}
-              title={`Your Summary of ${
-                buttonState.label === "Custom"
-                  ? finalDateLabel
-                  : buttonState.label
-              } (items: ${exportData.length})`}
-              headers={[
-                "Date",
-                "Time",
-                "Tension",
-                "Emotion",
-                "Subemotion",
-                "Intensity",
-                "Notes",
-                "Trigger",
-              ]}
-            >
-              {(props) => <StyledButton {...props}>Excel</StyledButton>}
-            </ExportAsExcel>
-          </ButtonContainer>
-          {!chartIsShown && (
-            <Note>
-              Note: You can also download a Chart after toggling the switch
-              above the list to &quot;Chart&quot;!
-            </Note>
-          )}
-          {chartIsShown && (
-            <>
-              <p>Download Chart as:</p>
-              <InputContainer>
-                <input
-                  type="number"
-                  min={0}
-                  max={2000}
-                  value={inputValueOne}
-                  onChange={() => {
-                    setInputValueOne(event.target.value);
-                  }}
-                />
-                <span>x</span>
-                <input
-                  type="number"
-                  min={0}
-                  max={2000}
-                  value={inputValueTwo}
-                  onChange={() => {
-                    setInputValueTwo(event.target.value);
-                  }}
-                />
-                <span>px</span>
-              </InputContainer>
-              <ButtonContainer>
-                <StyledButton
-                  onClick={() => {
-                    downloadChart("png");
-                  }}
-                  disabled={chartRefForDownload?.current === null && true}
-                >
-                  PNG
-                </StyledButton>
-                <StyledButton
-                  onClick={() => {
-                    downloadChart("svg");
-                  }}
-                  disabled={chartRefForDownload?.current === null && true}
-                >
-                  SVG
-                </StyledButton>
-                <StyledButton
-                  onClick={() => {
-                    downloadChart("jpeg");
-                  }}
-                  disabled={chartRefForDownload?.current === null && true}
-                >
-                  JPEG
-                </StyledButton>
-              </ButtonContainer>
-            </>
-          )}
-        </div>
+      <StyledBackground
+        onClick={() => setShowModal(false)}
+        $showModal={showModal}
+      />
+      <StyledModal $showModal={showModal}>
+        <CloseButton onClick={() => setShowModal(false)}>
+          <Icon path={mdiClose} size={1} />
+        </CloseButton>
+        <b>How would you like to download your data?</b>
+        <p>Download List as:</p>
+        <ButtonContainer>
+          <ExportAsPdf
+            data={pdfExport(exportData)}
+            fileName={`WhataFeeling_PDF_Data_(downloaded_${new Date().toDateString()})`}
+            title={`Your Summary of ${
+              buttonState.label === "Custom"
+                ? finalDateLabel
+                : buttonState.label
+            } (items: ${exportData.length})`}
+            headers={[
+              "Date",
+              "Time",
+              "Tension",
+              "Emotion",
+              "Subemotion",
+              "Intensity",
+              "Notes",
+              "Trigger",
+            ]}
+            headerStyles={{
+              fontStyle: "bold",
+              halign: "center",
+              cellWidth: "wrap",
+            }}
+            styles={{
+              halign: "center",
+              valign: "middle",
+              minCellWidth: "20",
+            }}
+          >
+            {(props) => <StyledButton {...props}>PDF</StyledButton>}
+          </ExportAsPdf>
+          <ExportAsExcel
+            data={pdfExport(exportData)}
+            fileName={`WhataFeeling_Excel_Data_(downloaded_${getIntlDate(
+              new Date()
+            )})`}
+            name={`${
+              buttonState.label === "Custom"
+                ? finalDateLabel
+                : buttonState.label
+            }`}
+            title={`Your Summary of ${
+              buttonState.label === "Custom"
+                ? finalDateLabel
+                : buttonState.label
+            } (items: ${exportData.length})`}
+            headers={[
+              "Date",
+              "Time",
+              "Tension",
+              "Emotion",
+              "Subemotion",
+              "Intensity",
+              "Notes",
+              "Trigger",
+            ]}
+          >
+            {(props) => <StyledButton {...props}>Excel</StyledButton>}
+          </ExportAsExcel>
+        </ButtonContainer>
+        {!chartIsShown && (
+          <Note>
+            Note: You can also download a Chart after toggling the switch above
+            the list to &quot;Chart&quot;!
+          </Note>
+        )}
+        {chartIsShown && (
+          <>
+            <p>Download Chart as:</p>
+            <InputContainer>
+              <input
+                type="number"
+                min="400"
+                max="2000"
+                value={inputValueOne}
+                onBlur={() => {
+                  if (event.target.value <= 400) {
+                    setInputValueOne(400);
+                  }
+                  if (event.target.value > 2000) {
+                    setInputValueOne(2000);
+                  }
+                }}
+                onChange={() => {
+                  setInputValueOne(event.target.value);
+                }}
+              />
+              <span>x</span>
+              <input
+                type="number"
+                min="400"
+                max="2000"
+                value={inputValueTwo}
+                onBlur={() => {
+                  if (event.target.value <= 400) {
+                    setInputValueOne(400);
+                  }
+                  if (event.target.value > 2000) {
+                    setInputValueOne(2000);
+                  }
+                }}
+                onChange={() => {
+                  setInputValueTwo(event.target.value);
+                }}
+              />
+              <span>px</span>
+            </InputContainer>
+            <ButtonContainer>
+              <StyledButton
+                onClick={() => {
+                  downloadChart("png");
+                }}
+                disabled={chartRefForDownload?.current === null && true}
+              >
+                PNG
+              </StyledButton>
+              <StyledButton
+                onClick={() => {
+                  downloadChart("svg");
+                }}
+                disabled={chartRefForDownload?.current === null && true}
+              >
+                SVG
+              </StyledButton>
+              <StyledButton
+                onClick={() => {
+                  downloadChart("jpeg");
+                }}
+                disabled={chartRefForDownload?.current === null && true}
+              >
+                JPEG
+              </StyledButton>
+            </ButtonContainer>
+          </>
+        )}
       </StyledModal>
     </>
   );
