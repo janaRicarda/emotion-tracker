@@ -148,7 +148,7 @@ export default function Export({
   const finalDateLabel =
     dateLabelStart + (dateLabelEnd ? " - " + dateLabelEnd : "");
 
-  function pdfExport(data) {
+  function listData(data) {
     const pdfData = data.map(
       ({
         timeStamp,
@@ -222,7 +222,7 @@ export default function Export({
         <p>Download List as:</p>
         <ButtonContainer>
           <ExportAsPdf
-            data={pdfExport(exportData)}
+            data={listData(exportData)}
             fileName={`WhataFeeling_PDF_Data_(downloaded_${new Date().toDateString()})`}
             title={`Your Summary of ${
               buttonState.label === "Custom"
@@ -253,7 +253,7 @@ export default function Export({
             {(props) => <StyledButton {...props}>PDF</StyledButton>}
           </ExportAsPdf>
           <ExportAsExcel
-            data={pdfExport(exportData)}
+            data={listData(exportData)}
             fileName={`WhataFeeling_Excel_Data_(downloaded_${getIntlDate(
               new Date()
             )})`}

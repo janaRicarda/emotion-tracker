@@ -1,5 +1,4 @@
 import Plot from "react-plotly.js";
-import Plotly from "plotly.js";
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
 
@@ -29,17 +28,6 @@ export default function EmotionChart({
   useEffect(() => {
     handleChartRef(chartRef);
   });
-
-  // console.log(chartRef);
-
-  // function handleDownload(fileFormat) {
-  //   Plotly.downloadImage(chartRef.current.el, {
-  //     format: fileFormat,
-  //     filename: "test",
-  //     height: 1000,
-  //     width: 1000,
-  //   });
-  // }
 
   return (
     <StyledChartSection>
