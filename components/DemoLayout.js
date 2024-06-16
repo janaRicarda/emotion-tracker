@@ -33,7 +33,6 @@ export default function DemoLayout({ handleDemoModeOff }) {
     <StyledDemoFrame>
       <StyledMessage>You are using demo mode</StyledMessage>
       <StyledQuitDemoModeButton
-        $login
         $disable={createPath}
         onClick={() => {
           if (disable) {
