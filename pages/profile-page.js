@@ -87,10 +87,10 @@ export default function ProfilePage({
     }
     const { theme: updatedTheme } = userData;
     const selectedTheme = colorSchemes[updatedTheme];
-    console.log("theme aus usedata", selectedTheme);
+    /*   console.log("theme aus usedata", selectedTheme);
     const userTheme = currentUser.theme;
     const usersPreferredTheme = colorSchemes[userTheme];
-    console.log("theme von gefetchtem user", usersPreferredTheme);
+    console.log("theme von gefetchtem user", usersPreferredTheme); */
 
     switchTheme(selectedTheme);
     mutate();
