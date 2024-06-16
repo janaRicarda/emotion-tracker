@@ -7,7 +7,8 @@ import {
   chartPresets,
   calculateTensionChartData,
   countEmotions,
-} from "@/utils/chartUtils";
+} from "@/utils/dataAndChartUtils";
+
 import styled from "styled-components";
 import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
@@ -50,7 +51,6 @@ const ToggleContainer = styled.div`
   background-color: var(--section-background);
   border-radius: 6px;
 `;
-
 const SwitchSizer = styled.span`
   transform: scale(0.6);
 `;
@@ -69,14 +69,17 @@ const StyledGraphButtonsWrapper = styled.div`
   }
 `;
 
-export default function ChartContainer({ shownEntries, theme }) {
+export default function ChartContainer({ shownEntries, theme, locale }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
   const [chartState, setChartState] = useState(tension);
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
 
-  const xTensionValues = calculateTensionChartData(shownEntries).xValues;
+  const xTensionValues = calculateTensionChartData(
+    shownEntries,
+    locale
+  ).xValues;
   const yTensionValues = calculateTensionChartData(shownEntries).yValues;
 
   const countResult = countEmotions(shownEntries);

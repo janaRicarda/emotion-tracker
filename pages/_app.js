@@ -29,6 +29,7 @@ const fetcher = async (url) => {
 
 function App({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
+  const { locale } = router;
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
@@ -166,7 +167,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    const timeAndDate = getCurrentTimeAndDate(timeStamp);
+    const timeAndDate = getCurrentTimeAndDate(locale, timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
@@ -341,6 +342,7 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
               isScrollDown={isScrollDown}
               handleToolTip={handleToolTip}
               theme={theme}
+              locale={locale}
               onAddEmotionDetails={handleAddEmotionDetails}
               emotionEntries={
                 useExampleData ? emotionEntries : dbEmotionEntries
