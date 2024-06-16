@@ -62,6 +62,7 @@ export default function ChartContainerV2({
   heightFactor,
   xValues,
   yValues,
+  width,
   autosize,
   showSwitches,
   locale,
@@ -83,7 +84,9 @@ export default function ChartContainerV2({
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const width = Math.max(330, Math.round(windowWidth / 1.7));
+  const chartWidth = autosize
+    ? Math.max(330, Math.round(windowWidth / 1.7))
+    : width;
 
   // const height = Math.round(width * Number(heightFactor));
   function handleChartType() {

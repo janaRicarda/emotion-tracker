@@ -12,6 +12,8 @@ import {
   compareHightToLow,
 } from "@/utils/dataAndChartUtils";
 
+import { useSession } from "next-auth/react";
+
 const ProgressBar = styled.div`
   width: 10rem;
   height: 0.8rem;
@@ -35,8 +37,6 @@ const ProgressBar = styled.div`
   }
 `;
 
-import { useSession } from "next-auth/react";
-
 const DashboardTitle = styled(StyledTitle)`
   margin-top: -10px;
 `;
@@ -44,10 +44,10 @@ const DashboardTitle = styled(StyledTitle)`
 const DashboardSection = styled.section`
   display: grid;
   grid-template-columns: 6fr 6fr;
-  grid-template-rows: 4fr 4fr 10fr;
+  grid-template-rows: 4fr 4fr 8fr;
   color: var(--main-dark);
   gap: ${({ $gap }) => `${$gap}px`};
-  width: 92vw;
+  width: 90vw;
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
   height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
   /* min-height: 360px; */
@@ -86,7 +86,7 @@ const ElementText = styled.p`
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
   padding: 0.2rem;
-  margin: 0.3rem;
+  margin: 0.1rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
   border-radius: 6px;
@@ -130,7 +130,7 @@ export default function HomePage({
     Math.max(360, Math.round(windowWidth / 2))
   );
   const dashboardHeight = Math.round(dashboardWidth * 1.25);
-  const fontSize = Math.min(1.4, Math.max(0.9, windowWidth / 1000));
+  const fontSize = Math.min(1.4, Math.max(0.85, windowWidth / 1000));
   const showDetails = true;
   console.log(windowWidth);
   console.log(dashboardWidth);
@@ -224,6 +224,7 @@ export default function HomePage({
         <ChartElement>
           <ChartContainerV2
             theme={theme}
+            width={dashboardWidth - 40}
             heightFactor={0.48}
             shownEntries={emotionEntries}
             xValues={xValues}
