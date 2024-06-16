@@ -129,7 +129,6 @@ export function calculateTensionChartData(entries, locale) {
     return 0;
   }
   const filteredData = entries.toSorted(compare);
-  console.log(filteredData);
   const lastIndex = filteredData.length - 1;
   const difference =
     (filteredData[lastIndex]?.timeStamp - filteredData[0]?.timeStamp) / 3600000;

@@ -64,6 +64,7 @@ export default function ChartContainerV2({
   yValues,
   autosize,
   showSwitches,
+  locale,
 }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;

@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import { generateCompleteData } from "@/components/DataGenerator";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
@@ -32,7 +31,7 @@ export default function App({
 }) {
   const router = useRouter();
   // locale for testing, will be replaced w/ locale from translation branch soon
-  const locale = "de";
+  const locale = "en";
   const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
@@ -170,13 +169,11 @@ export default function App({
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    // const timeAndDate = getCurrentTimeAndDate(timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
       timeStamp,
-      // timeAndDate,
       isoDate: new Date(timeStamp).toISOString(),
     };
 
