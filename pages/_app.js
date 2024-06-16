@@ -9,6 +9,7 @@ import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const fetcher = async (url) => {
   const response = await fetch(url);
@@ -169,10 +170,13 @@ export default function App({
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-
+    //löschen sobald wie möglich
+    const timeAndDate = getCurrentTimeAndDate(locale, timeStamp);
+    //löschen sobald wie möglich
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
+      timeAndDate,
       timeStamp,
       isoDate: new Date(timeStamp).toISOString(),
     };
