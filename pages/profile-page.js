@@ -4,6 +4,8 @@ import Head from "next/head";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import {
+  lightTheme,
+  darkTheme,
   warmTheme,
   coldTheme,
   neutralTheme,
@@ -25,6 +27,8 @@ export default function ProfilePage({
   });
 
   const colorSchemes = {
+    lightTheme,
+    darkTheme,
     warmTheme,
     coldTheme,
     neutralTheme,

@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import styled from "styled-components";
 import {
   StyledFlexColumnWrapper,
@@ -6,18 +5,8 @@ import {
   StyledButton,
 } from "@/SharedStyledComponents";
 import { useState } from "react";
-import {
-  lightTheme,
-  darkTheme,
-  warmTheme,
-  coldTheme,
-  neutralTheme,
-  highContrastTheme,
-} from "./Theme";
 import Circle from "../public/icons/circle.svg";
-import { breakpoints } from "@/utils/breakpoints";
-import useSWR from "swr";
-import { useRouter } from "next/router";
+import ArrowDown from "../public/icons/arrow-down-thin.svg";
 
 const StyledProfileCircle = styled.article`
   width: 8rem;
@@ -45,34 +34,21 @@ const StyledParagraph = styled.p`
   padding: 1rem;
 `;
 
-const StyledSettingsWrapper = styled.article`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-`;
-
 const StyledColorSchemesButton = styled(StyledButton)`
   background: none;
   border: none;
   width: auto;
   padding: 0.2rem;
-  margin-top: 0;
+  margin: 0;
   border-radius: 0;
   color: var(--main-dark);
-  border-bottom: 1px solid var(--main-dark);
+  display: flex;
+  align-items: center;
 `;
 
-const ThemeWrapper = styled(StyledFlexColumnWrapper)`
-  background: var(--section-background);
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  gap: 0.2rem;
-  @media ${breakpoints.mobileLandscape} {
-    align-items: flex-start;
-  }
+const StyledArrow = styled(ArrowDown)`
+  width: 1.5rem;
+  fill: var(--contrast-text);
 `;
 
 const StyledCircle = styled(Circle)`
@@ -81,55 +57,53 @@ const StyledCircle = styled(Circle)`
   background: ${({ $background }) => $background};
   fill: transparent;
   border-radius: 50%;
-`;
-
-const ThemeButton = styled(StyledButton)`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--main-dark);
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0.1rem 0.1rem 0.1rem 0.5rem;
-  margin: 0;
-  width: 100%;
-
-  @media ${breakpoints.mobileLandscape} {
-    padding: 0 0.5rem;
-    width: auto;
-    //text-align: center;
-  }
-  @media ${breakpoints.laptop} {
-    padding: 0 1rem;
-    width: auto;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--contrast-text);
-    background: var(--section-background-contrast);
-  }
+  border: 1px solid var(--section-background);
 `;
 
 const StyledForm = styled.form`
-  //border: 1px solid pink;
+  background: var(--section-background-contrast);
+  width: 80vw;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+`;
+const StyledDiv = styled.div`
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const StyledInput = styled.input`
   display: inline-block;
 
-  position: relative;
-  &:before {
+  //position: relative;
+  /*  &:before {
     content: "";
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.8rem;
+    height: 1.8rem;
     position: absolute;
     top: 0;
-    right: -4rem;
-    z-index: 5;
-    background: aqua;
+    left: 0;
+
+    background: ${({ $background }) => $background};
     border-radius: 50%;
-  }
+  } */
+`;
+
+const StyledLabel = styled.label`
+  color: var(--contrast-text);
+`;
+
+const StyledSubmit = styled.button`
+  margin-top: 0.5rem;
+  width: 100%;
+  background: var(--text-on-bright);
+  color: var(--text-on-dark);
+  border-style: none;
+  border-radius: 6px;
 `;
 
 export default function Profile({
@@ -137,60 +111,46 @@ export default function Profile({
   userName,
   userEmail,
   handleEditTheme,
-  user,
-  theme,
-  customTheme,
-  switchTheme,
 }) {
   const [showThemes, setShowThemes] = useState(false);
 
-  //function to set the Theme
-
   const colorSchemes = [
-    /*   {
+    {
       title: "light",
-      name: lightTheme,
+      name: "lightTheme",
       background: "conic-gradient(#e9e3e3 50%, #030352)",
       text: "#030352",
     },
     {
       title: "dark",
-      name: darkTheme,
+      name: "darkTheme",
       background: "conic-gradient(#322e44 50%, #f1eaea)",
       text: "#f1eaea",
-    }, */
-    {
-      title: "default",
-      name: "default",
-      key: "1",
     },
+
     {
       title: "warm",
-      name: warmTheme,
+      name: "warmTheme",
       background: "conic-gradient(#fbe050, #fbbd50, #f673a4, #762e72 50%)",
       text: "#762e72",
-      key: "2",
     },
     {
       title: "cold",
-      name: coldTheme,
+      name: "coldTheme",
       background: "conic-gradient(#50cfe2, #9996fa, #0F1555 50%)",
       text: "#0F1555",
-      key: "3",
     },
     {
       title: "neutral",
-      name: neutralTheme,
+      name: "neutralTheme",
       background: "conic-gradient(white 50%, black 50%)",
       text: "black",
-      key: "4",
     },
     {
       title: "high contrast",
-      name: highContrastTheme,
+      name: "highContrastTheme",
       background: "conic-gradient(yellow 50%, black 50%)",
       text: "black",
-      key: "5",
     },
   ];
 
@@ -209,66 +169,28 @@ export default function Profile({
       <StyledParagraph>
         Make yourself at home and turn on your favorite illumination
       </StyledParagraph>
-      <StyledSettingsWrapper>
-        <StyledColorSchemesButton onClick={handleShowThemes}>
-          Choose your preferred theme
-        </StyledColorSchemesButton>
 
+      <StyledColorSchemesButton onClick={handleShowThemes}>
+        Choose your preferred theme <StyledArrow />
+      </StyledColorSchemesButton>
+      {showThemes && (
         <StyledForm onSubmit={handleEditTheme}>
-          <p>Select your preferred theme</p>
-          <div>
-            <StyledInput
-              type="radio"
-              id="warmTheme"
-              name="theme"
-              value="warmTheme"
-            />
-            <label htmlFor="warmTheme">warm</label>
-          </div>
-          <div>
-            <input type="radio" id="coldTheme" name="theme" value="coldTheme" />
-            <label htmlFor="coldTheme">cold</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="neutralTheme"
-              name="theme"
-              value="neutralTheme"
-            />
-            <label htmlFor="neutralTheme">neutral</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              id="highContrastTheme"
-              name="theme"
-              value="highContrastTheme"
-            />
-            <label htmlFor="highContrastTheme">high contrast</label>
-          </div>
-          <button type="submit">submit</button>
-        </StyledForm>
-
-        {/*  {showThemes && (
-          <ThemeWrapper>
-            {colorSchemes.map(({ title, name, background, text }) => (
-              <ThemeButton
+          {colorSchemes.map(({ name, title, background, text }) => (
+            <StyledDiv key={title}>
+              <StyledCircle $background={background} $text={text} />
+              <StyledInput
+                type="radio"
+                id={name}
+                name="theme"
+                value={name}
                 $background={background}
-                $text={text}
-                key={title}
-                type="button"
-                onClick={() => {
-                  switchTheme(name);
-                }}
-              >
-                <StyledCircle $background={background} />
-                {title}
-              </ThemeButton>
-            ))}
-          </ThemeWrapper>
-        )} */}
-      </StyledSettingsWrapper>
+              />
+              <StyledLabel htmlFor={name}>{title}</StyledLabel>
+            </StyledDiv>
+          ))}
+          <StyledSubmit type="submit">submit</StyledSubmit>
+        </StyledForm>
+      )}
     </>
   );
 }
