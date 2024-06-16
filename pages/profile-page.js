@@ -3,7 +3,12 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-
+import {
+  warmTheme,
+  coldTheme,
+  neutralTheme,
+  highContrastTheme,
+} from "../components/Theme";
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
 
@@ -18,6 +23,13 @@ export default function ProfilePage({
   useEffect(() => {
     handleToolTip(false);
   });
+
+  const colorSchemes = {
+    warmTheme,
+    coldTheme,
+    neutralTheme,
+    highContrastTheme,
+  };
 
   const {
     data: currentUser,
@@ -57,20 +69,26 @@ export default function ProfilePage({
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
-    console.log(userData);
-    const response = await fetch(`/api/user/${session.user.email}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+
+    const response =
+      (currentUser,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+    const { theme: updatedTheme } = userData;
+    const selectedTheme = colorSchemes[updatedTheme];
 
     if (response.ok) {
       mutate();
     }
+    switchTheme(selectedTheme);
   }
-  console.log(currentUser);
+
   //function to render the users Initials
   const userName = session.user.name;
 

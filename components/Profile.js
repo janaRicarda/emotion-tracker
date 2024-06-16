@@ -110,6 +110,28 @@ const ThemeButton = styled(StyledButton)`
   }
 `;
 
+const StyledForm = styled.form`
+  //border: 1px solid pink;
+`;
+
+const StyledInput = styled.input`
+  display: inline-block;
+
+  position: relative;
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: -4rem;
+    z-index: 5;
+    background: aqua;
+    border-radius: 50%;
+  }
+`;
+
 export default function Profile({
   userNameInitials,
   userName,
@@ -192,20 +214,41 @@ export default function Profile({
           Choose your preferred theme
         </StyledColorSchemesButton>
 
-        <form onSubmit={handleEditTheme}>
+        <StyledForm onSubmit={handleEditTheme}>
           <p>Select your preferred theme</p>
-
           <div>
-            <input type="radio" id="warmTheme" name="theme" value="warmTheme" />
+            <StyledInput
+              type="radio"
+              id="warmTheme"
+              name="theme"
+              value="warmTheme"
+            />
             <label htmlFor="warmTheme">warm</label>
           </div>
           <div>
             <input type="radio" id="coldTheme" name="theme" value="coldTheme" />
             <label htmlFor="coldTheme">cold</label>
           </div>
-
+          <div>
+            <input
+              type="radio"
+              id="neutralTheme"
+              name="theme"
+              value="neutralTheme"
+            />
+            <label htmlFor="neutralTheme">neutral</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="highContrastTheme"
+              name="theme"
+              value="highContrastTheme"
+            />
+            <label htmlFor="highContrastTheme">high contrast</label>
+          </div>
           <button type="submit">submit</button>
-        </form>
+        </StyledForm>
 
         {/*  {showThemes && (
           <ThemeWrapper>
