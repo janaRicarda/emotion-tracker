@@ -26,6 +26,13 @@ export default function ProfilePage({
     handleToolTip(false);
   });
 
+  const {
+    data: currentUser,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR(`/api/user/${session.user.email}`);
+
   useEffect(() => {
     async function createUser() {
       const data = {
@@ -49,13 +56,6 @@ export default function ProfilePage({
     createUser();
   }, [session.user.email, session.user.name]);
 
-  const {
-    data: currentUser,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR(`/api/user/${session.user.email}`);
-  console.log("currentUser", currentUser);
   if (isLoading) return <Loader itemText={"Is Loading"} />;
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
@@ -68,29 +68,6 @@ export default function ProfilePage({
     neutralTheme,
     highContrastTheme,
   };
-
-  /* async function createUser() {
-    if (currentUser.length === 0) {
-      const data = {
-        name: session.user.name,
-        email: session.user.email,
-        theme: "default",
-      };
-
-      const response = await fetch("/api/user/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-    }
-  }
-  createUser(); */
-  //if (!isLoading && currentUser.length == 0) createUser();
-
-  /* const currentOwner = emotionEntries[0].owner;
-  const currentUserLoggedin = session.user.email; */
 
   async function handleEditTheme(event) {
     event.preventDefault();
@@ -105,15 +82,21 @@ export default function ProfilePage({
       body: JSON.stringify(userData),
     });
 
-    const { theme: updatedTheme } = userData;
-    const selectedTheme = colorSchemes[updatedTheme];
-    console.log("userData", userData);
     if (response.ok) {
       mutate();
     }
+    const { theme: updatedTheme } = userData;
+    const selectedTheme = colorSchemes[updatedTheme];
+    console.log("theme aus usedata", selectedTheme);
+    const userTheme = currentUser.theme;
+    const usersPreferredTheme = colorSchemes[userTheme];
+    console.log("theme von gefetchtem user", usersPreferredTheme);
+
     switchTheme(selectedTheme);
+    mutate();
   }
 
+  //switchTheme(usersPreferredTheme);
   //function to render the users Initials
   const userName = session.user.name;
 
