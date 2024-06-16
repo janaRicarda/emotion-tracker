@@ -42,7 +42,7 @@ export default function ProfilePage({
           },
           body: JSON.stringify(data),
         });
-      } catch {
+      } catch (error) {
         console.error(error);
       }
     }
@@ -96,7 +96,6 @@ export default function ProfilePage({
     mutate();
   }
 
-  //switchTheme(usersPreferredTheme);
   //function to render the users Initials
   const userName = session.user.name;
 
