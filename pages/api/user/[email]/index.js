@@ -14,11 +14,26 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "GET") {
-    const user = await User.find({ email: email });
+    const user = await User.findOne({ email: email });
     return response.status(200).json(user);
   }
+  if (request.method === "POST") {
+    const existingUser = await User.findOne({ email: email });
 
-  /* if (request.method === "PATCH") {
+    if (existingUser) {
+      response.status(409).json({ message: "User already exists" });
+      return;
+    }
+    try {
+      const userData = request.body;
+      await User.create({ ...userData });
+      response.status(201).json({ status: "User created" });
+    } catch {
+      console.error(error);
+      response.status(400).json({ error: error.message });
+    }
+  }
+  if (request.method === "PATCH") {
     try {
       const userData = request.body;
       await User.findByEmailAndUpdate({ email: email, userData });
@@ -27,10 +42,10 @@ export default async function handler(request, response) {
       console.error(error);
       return response.status(400).json({ error: error.message });
     }
-  } */
-  if (request.method === "PATCH") {
+  }
+  /*  if (request.method === "PATCH") {
     const userData = request.body;
     await User.findByEmailAndUpdate({ email: email, userData });
     return response.status(200).json({ status: "Theme updated successfully" });
-  }
+  } */
 }

@@ -15,16 +15,50 @@ import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
 
 export default function ProfilePage({
-  emotionEntries,
   theme,
   switchTheme,
   customTheme,
   handleToolTip,
 }) {
   const { data: session, status } = useSession();
+
   useEffect(() => {
     handleToolTip(false);
   });
+
+  useEffect(() => {
+    async function createUser() {
+      const data = {
+        name: session.user.name,
+        email: session.user.email,
+        theme: "default",
+      };
+
+      try {
+        const response = await fetch(`/api/user/${session.user.email}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+      } catch {
+        console.error(error);
+      }
+    }
+    createUser();
+  }, [session.user.email, session.user.name]);
+
+  const {
+    data: currentUser,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR(`/api/user/${session.user.email}`);
+  console.log(currentUser);
+  if (isLoading) return <Loader itemText={"Is Loading"} />;
+
+  if (error) return <ErrorMessage errorMessage={error.message} />;
 
   const colorSchemes = {
     lightTheme,
@@ -35,18 +69,7 @@ export default function ProfilePage({
     highContrastTheme,
   };
 
-  const {
-    data: currentUser,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR(`/api/user/${session.user.email}`);
-
-  if (isLoading) return <Loader itemText={"Is Loading"} />;
-
-  if (error) return <ErrorMessage errorMessage={error.message} />;
-
-  async function createUser() {
+  /* async function createUser() {
     if (currentUser.length === 0) {
       const data = {
         name: session.user.name,
@@ -63,7 +86,7 @@ export default function ProfilePage({
       });
     }
   }
-  createUser();
+  createUser(); */
   //if (!isLoading && currentUser.length == 0) createUser();
 
   /* const currentOwner = emotionEntries[0].owner;
