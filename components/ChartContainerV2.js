@@ -26,7 +26,7 @@ const ChartSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin: 0.5rem 0 2rem; */
+  margin: 0.5rem;
   border-radius: 18px;
   background-color: var(--section-background);
   width: 80vw;
@@ -119,9 +119,9 @@ export default function ChartContainerV2({
           xTitle={xTitle}
           yTitle={yTitle}
           title={title}
-          width={width}
-          height={width * heightFactor}
-          // autosize={autosize}
+          width={chartWidth}
+          height={chartWidth * heightFactor}
+          autosize={autosize}
         />
       </StyledFlexColumnWrapper>
       {showSwitches && (

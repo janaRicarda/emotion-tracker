@@ -15,7 +15,7 @@ import {
 import { useSession } from "next-auth/react";
 
 const ProgressBar = styled.div`
-  width: 10rem;
+  width: 90%;
   height: 0.8rem;
   border: 1px solid var(--main-dark);
   position: relative;
@@ -43,15 +43,16 @@ const DashboardTitle = styled(StyledTitle)`
 
 const DashboardSection = styled.section`
   display: grid;
-  grid-template-columns: 6fr 6fr;
-  grid-template-rows: 4fr 4fr 8fr;
+  grid-template-columns: 5fr 5fr;
+  grid-template-rows: 5.5fr 5.5fr 9fr;
   color: var(--main-dark);
-  gap: ${({ $gap }) => `${$gap}px`};
+  gap: ${({ $gap }) => `${$gap}rem`};
+  /* gap: 2rem; */
   width: 90vw;
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
   height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
-  /* min-height: 360px; */
-  max-height: 1200px;
+  max-width: 1200px;
+  max-height: 1000px;
   margin: 0;
   align-items: center;
   border-radius: 18px;
@@ -65,6 +66,7 @@ const GridElement = styled.div`
   padding: 0.5rem;
   min-height: 108px;
   height: 100%;
+  width: 100%;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
@@ -85,16 +87,21 @@ const ElementText = styled.p`
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
-  padding: 0.2rem;
+  padding: 0.6rem 0.4rem;
   margin: 0.1rem;
+  border-radius: 12px;
+`;
+
+const EmotionText = styled(ElementText)`
+  padding: 0.4rem;
+  margin: 0;
+  margin-top: -10px;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
-  border-radius: 6px;
+  width: 80%;
 `;
 const BoldText = styled.span`
   font-weight: 600;
-  /* font-size: ${({ $fontSize }) => `${$fontSize}rem`};
-  line-height: ${({ $lineHeight }) => `${$lineHeight}rem`}; */
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -127,19 +134,14 @@ export default function HomePage({
 
   const dashboardWidth = Math.min(
     1080,
-    Math.max(360, Math.round(windowWidth / 2))
+    Math.max(344, Math.round(windowWidth / 2))
   );
-  const dashboardHeight = Math.round(dashboardWidth * 1.25);
-  const fontSize = Math.min(1.4, Math.max(0.85, windowWidth / 1000));
+  const dashboardHeight = Math.round(dashboardWidth * 1.33);
+  const fontSize = Math.min(1.4, Math.max(0.8, windowWidth / 1000));
   const showDetails = true;
-  console.log(windowWidth);
-  console.log(dashboardWidth);
-  console.log(fontSize);
 
   //dashboard logic
-
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
-
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
   const { emotion, intensity, slug } = getNewestEmotion(dashboardEntries);
@@ -152,7 +154,7 @@ export default function HomePage({
 
   useEffect(() => {
     handleToolTip({
-      text: "This is your dashboard. You can use it to get an overview abouzt what th app can do for you and what you did with it recently.",
+      text: "This is your dashboard. You can use it to get an overview abouzt what the app can do for you and what you did with it recently.",
     });
   }, []);
 
@@ -168,7 +170,7 @@ export default function HomePage({
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
-        $gap={fontSize}
+        $gap={fontSize * 0.3}
       >
         <GridElement>
           <DashboardLink href="/app-manual">
@@ -201,30 +203,30 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/emotion-records">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Your average rate is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
-              entries per day. Click to see your{" "}
+              Your average is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
+              entries per day. You can go to your{" "}
               <BoldText>recorded emotions</BoldText>.
             </ElementText>
           </DashboardLink>
         </GridElement>
         <GridElement>
           <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-            Last recorded emotion:<br></br>
+            Last recorded emotion:
           </ElementText>
-          <ElementText
+          <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.33}
             $color={`var(--${slug})`}
           >
-            {emotion}
+            <BoldText>{emotion}</BoldText>
             <br></br>Intensity: {intensity} %<br></br>
             <ProgressBar $showDetails={showDetails} $progress={intensity} />
-          </ElementText>
+          </EmotionText>
         </GridElement>
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            width={dashboardWidth - 40}
+            width={dashboardWidth - 45}
             heightFactor={0.48}
             shownEntries={emotionEntries}
             xValues={xValues}

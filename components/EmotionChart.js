@@ -48,7 +48,7 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: xTitle },
               font: {
-                size: 15,
+                size: 12,
                 color: theme.text,
               },
               automargin: true,
@@ -57,7 +57,7 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: yTitle },
               font: {
-                size: 15,
+                size: 12,
                 color: theme.text,
               },
             },
@@ -70,7 +70,7 @@ export default function EmotionChart({
               },
             },
             autosize: autosize,
-            margin: { autoexpand: true, b: 30, l: 30, r: 30, t: 30 },
+            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 30 },
           }}
         />
       )}
