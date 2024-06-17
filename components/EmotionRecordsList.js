@@ -142,9 +142,8 @@ export default function EmotionRecordsList({
     }));
   }
 
-  //showing details of last entry
+  //showing details of last emotion entry when linked from dashboard
   useEffect(() => {
-    console.log("DashboardiD useeffekt: ", dashboardId);
     handleShowDetails(dashboardId);
   }, [dashboardId]);
 

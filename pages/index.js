@@ -13,6 +13,35 @@ import {
 } from "@/utils/dataAndChartUtils";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import EmotionList from "@/components/EmotionList";
+import { breakpoints } from "@/utils/breakpoints";
+
+const StyledSmallCircle = styled.article`
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  border: var(--circle-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+  @media ${breakpoints.mobileLandscape} {
+    width: 62vh;
+    height: 62vh;
+  }
+  @media ${breakpoints.largeMobile} {
+    width: 62vh;
+    height: 62vh;
+  }
+  @media ${breakpoints.tablet} {
+    width: 52vh;
+    height: 52vh;
+  }
+  @media ${breakpoints.laptop} {
+    width: 60vh;
+    height: 60vh;
+  }
+`;
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -229,13 +258,19 @@ export default function HomePage({
           </EmotionText>
           {/* </DashboardLink> */}
         </GridElement>
-        <GridElement>
+        {/* <GridElement>
           <DashboardLink href="/emotion-records">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
               Your average is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
               entries per day. You can go to your{" "}
               <BoldText>recorded emotions</BoldText>.
             </ElementText>
+          </DashboardLink>
+        </GridElement> */}
+        <GridElement>
+          <DashboardLink href="/emotions">
+            {/* <EmotionList /> */}
+            <StyledSmallCircle></StyledSmallCircle>
           </DashboardLink>
         </GridElement>
         <ChartElement>
