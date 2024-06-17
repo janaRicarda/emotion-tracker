@@ -38,16 +38,15 @@ const ProgressBar = styled.div`
 `;
 
 const DashboardTitle = styled(StyledTitle)`
-  margin-top: -10px;
+  margin-top: -1.5rem;
 `;
 
 const DashboardSection = styled.section`
   display: grid;
-  grid-template-columns: 5fr 5fr;
-  grid-template-rows: 5.5fr 5.5fr 9fr;
+  grid-template-columns: 6fr 6fr;
+  grid-template-rows: 3.8fr 3.8fr ${({ $gridFactor }) => `${$gridFactor}fr`};
   color: var(--main-dark);
   gap: ${({ $gap }) => `${$gap}rem`};
-  /* gap: 2rem; */
   width: 90vw;
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
   height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
@@ -64,7 +63,7 @@ const GridElement = styled.div`
   flex-direction: column;
   border-radius: 18px;
   padding: 0.5rem;
-  min-height: 108px;
+  min-height: 110px;
   height: 100%;
   width: 100%;
   align-content: center;
@@ -76,7 +75,7 @@ const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
   padding: 0.2rem;
-  min-height: 144px;
+  min-height: 175px;
   height: 100%;
   align-content: center;
   align-items: center;
@@ -87,18 +86,17 @@ const ElementText = styled.p`
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
-  padding: 0.6rem 0.4rem;
+  padding: 0.5rem 0.42rem;
   margin: 0.1rem;
   border-radius: 12px;
 `;
 
 const EmotionText = styled(ElementText)`
-  padding: 0.4rem;
-  margin: 0;
-  margin-top: -10px;
+  padding: 0.5rem;
+  margin: -4px 0.5rem 0.5rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
-  width: 80%;
+  width: 85%;
 `;
 const BoldText = styled.span`
   font-weight: 600;
@@ -110,7 +108,6 @@ const DashboardLink = styled(StyledStandardLink)`
   height: 100%;
   align-self: center;
   padding: 0;
-  /* border: 1px solid var(--main-dark); */
 `;
 
 export default function HomePage({
@@ -136,10 +133,14 @@ export default function HomePage({
     1080,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const dashboardHeight = Math.round(dashboardWidth * 1.33);
+  const dashboardHeight = Math.round(dashboardWidth * 1.4);
   const fontSize = Math.min(1.4, Math.max(0.8, windowWidth / 1000));
+  const gridFactor = 1.8 + windowWidth / 100;
   const showDetails = true;
 
+  console.log("Dashboardwidth:", dashboardWidth);
+  console.log(fontSize);
+  console.log("GRidfactor:", gridFactor);
   //dashboard logic
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
@@ -171,6 +172,7 @@ export default function HomePage({
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
         $gap={fontSize * 0.3}
+        $gridFactor={gridFactor}
       >
         <GridElement>
           <DashboardLink href="/app-manual">
@@ -200,6 +202,23 @@ export default function HomePage({
             </ElementText>
           </DashboardLink>
         </GridElement>
+
+        <GridElement>
+          <DashboardLink href="/emotion-records">
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
+              Last recorded emotion:
+            </ElementText>
+            <EmotionText
+              $fontSize={fontSize}
+              $lineHeight={fontSize * 1.33}
+              $color={`var(--${slug})`}
+            >
+              <BoldText>{emotion}</BoldText>
+              <br></br>Intensity: {intensity} %<br></br>
+              <ProgressBar $showDetails={showDetails} $progress={intensity} />
+            </EmotionText>
+          </DashboardLink>
+        </GridElement>
         <GridElement>
           <DashboardLink href="/emotion-records">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
@@ -209,24 +228,10 @@ export default function HomePage({
             </ElementText>
           </DashboardLink>
         </GridElement>
-        <GridElement>
-          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-            Last recorded emotion:
-          </ElementText>
-          <EmotionText
-            $fontSize={fontSize}
-            $lineHeight={fontSize * 1.33}
-            $color={`var(--${slug})`}
-          >
-            <BoldText>{emotion}</BoldText>
-            <br></br>Intensity: {intensity} %<br></br>
-            <ProgressBar $showDetails={showDetails} $progress={intensity} />
-          </EmotionText>
-        </GridElement>
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            width={dashboardWidth - 45}
+            width={Math.max(304, Math.round(76 + windowWidth / 2))}
             heightFactor={0.48}
             shownEntries={emotionEntries}
             xValues={xValues}

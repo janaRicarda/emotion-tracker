@@ -107,7 +107,7 @@ export default function ChartContainerV2({
   function handleIntensityChart() {
     setChartState(emotionIntensity);
   }
-
+  console.log("Width in ChartContainer:", width);
   return (
     <ChartSection $width={width + 20}>
       <StyledFlexColumnWrapper>
