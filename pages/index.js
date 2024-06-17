@@ -15,7 +15,8 @@ import {
 import { useSession } from "next-auth/react";
 
 const ProgressBar = styled.div`
-  width: 90%;
+  width: 42%;
+  max-width: 200px;
   height: 0.8rem;
   border: 1px solid var(--main-dark);
   position: relative;
@@ -92,18 +93,18 @@ const ElementText = styled.p`
 `;
 
 const EmotionText = styled(ElementText)`
-  padding: 0.5rem;
-  margin: -4px 0.5rem 0.5rem;
+  padding: 0.42rem;
+  margin: -5px 0.5rem 0.5rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
-  width: 85%;
+  width: 92%;
 `;
 const BoldText = styled.span`
   font-weight: 600;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
-  font-size: 0.9rem;
+  /* font-size: 0.8rem; */
   width: 100%;
   height: 100%;
   align-self: center;
@@ -140,7 +141,7 @@ export default function HomePage({
 
   console.log("Dashboardwidth:", dashboardWidth);
   console.log(fontSize);
-  console.log("GRidfactor:", gridFactor);
+  console.log("Gridfactor:", gridFactor);
   //dashboard logic
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
@@ -214,8 +215,9 @@ export default function HomePage({
               $color={`var(--${slug})`}
             >
               <BoldText>{emotion}</BoldText>
-              <br></br>Intensity: {intensity} %<br></br>
+              <br></br>Intensity:{" "}
               <ProgressBar $showDetails={showDetails} $progress={intensity} />
+              {intensity} %
             </EmotionText>
           </DashboardLink>
         </GridElement>
@@ -231,7 +233,7 @@ export default function HomePage({
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            width={Math.max(304, Math.round(76 + windowWidth / 2))}
+            width={Math.max(304, Math.round(50 + windowWidth / 2))}
             heightFactor={0.48}
             shownEntries={emotionEntries}
             xValues={xValues}

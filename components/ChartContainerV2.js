@@ -31,7 +31,7 @@ const ChartSection = styled.section`
   background-color: var(--section-background);
   width: 80vw;
   min-width: ${({ $width }) => `${$width}px`};
-  max-width: 575px;
+  max-width: 800px;
 `;
 
 const StyledGraphButton = styled(StyledButton)`
