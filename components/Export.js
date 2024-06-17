@@ -3,7 +3,7 @@ import { mdiDownload, mdiClose } from "@mdi/js";
 import { ExportAsPdf, ExportAsExcel } from "react-export-table";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Plotly from "plotly.js";
+// import Plotly from "plotly.js";
 
 const StyledBackground = styled.div`
   display: ${({ $showModal }) => ($showModal ? "block" : "none")};
@@ -62,9 +62,9 @@ const InputContainer = styled.div`
 
   &:after {
     content: "Min: 400, Max. 2000";
-    font-size: .7rem;
+    font-size: 0.7rem;
     position: absolute;
-    bottom: -.8rem;
+    bottom: -0.8rem;
   }
 
   & > span {
@@ -188,7 +188,9 @@ export default function Export({
     return pdfData;
   }
 
-  function downloadChart(fileFormat) {
+  async function downloadChart(fileFormat) {
+    const Plotly = (await import("plotly.js")).default;
+
     if (chartRefForDownload) {
       Plotly.downloadImage(chartRefForDownload.current.el, {
         format: fileFormat,

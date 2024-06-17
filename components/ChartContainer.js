@@ -73,6 +73,7 @@ export default function ChartContainer({
   shownEntries,
   theme,
   handleChartRef,
+  locale,
 }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
@@ -80,7 +81,10 @@ export default function ChartContainer({
   const { title, xTitle, yTitle, scatter } = chartState;
   const type = scatter ? "scatter" : "bar";
 
-  const xTensionValues = calculateTensionChartData(shownEntries).xValues;
+  const xTensionValues = calculateTensionChartData(
+    shownEntries,
+    locale
+  ).xValues;
   const yTensionValues = calculateTensionChartData(shownEntries).yValues;
 
   const countResult = countEmotions(shownEntries);

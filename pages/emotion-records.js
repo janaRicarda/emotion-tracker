@@ -174,6 +174,7 @@ export default function EmotionRecords({
   isScrollDown,
   theme,
   useExampleData,
+  locale,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -346,6 +347,7 @@ export default function EmotionRecords({
         )}
         {shownEntries.length !== 0 && !chartIsShown && (
           <EmotionRecordsList
+            locale={locale}
             buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
@@ -359,6 +361,7 @@ export default function EmotionRecords({
             handleChartRef={handleChartRef}
             shownEntries={shownEntries}
             theme={theme}
+            locale={locale}
           />
         )}
       </StyledListContainer>
