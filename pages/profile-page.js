@@ -96,7 +96,6 @@ export default function ProfilePage({
     mutate();
   }
 
-  //switchTheme(usersPreferredTheme);
   //function to render the users Initials
   const userName = session.user.name;
 
