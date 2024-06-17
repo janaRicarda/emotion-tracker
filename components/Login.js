@@ -1,5 +1,4 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import { StyledButton } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Logout from "../public/icons/logout.svg";
@@ -10,7 +9,8 @@ const StyledParagraph = styled.p`
 `;
 
 const StyledLogoutButton = styled.button`
-  color: var(--contrast-text);
+  color: ${({ $navigation }) =>
+    $navigation ? "var(--contrast-text)" : "var(--main-dark)"};
   opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
   border-style: none;
   background: transparent;
@@ -25,20 +25,11 @@ const StyledLogoutButton = styled.button`
 
 const StyledLogout = styled(Logout)`
   width: ${({ $navigation }) => ($navigation ? "1.4rem" : "0.7rem")};
-  fill: var(--contrast-text);
-`;
-const StyledLoginButton = styled.button`
-  border-style: none;
-  background: transparent;
-  color: var(--contrast-text);
-  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 3;
+  fill: ${({ $navigation }) =>
+    $navigation ? "var(--contrast-text)" : "var(--main-dark)"};
 `;
 
-export default function Login({ handleDemoModeOff, disable, navigation }) {
+export default function Login({ disable, navigation }) {
   const { data: session } = useSession();
   const router = useRouter();
   if (session) {
@@ -64,19 +55,4 @@ export default function Login({ handleDemoModeOff, disable, navigation }) {
       </>
     );
   }
-  return (
-    <StyledLoginButton
-      $login
-      $disable={disable}
-      onClick={() => {
-        if (disable) {
-          return;
-        }
-        router.push("/");
-        handleDemoModeOff();
-      }}
-    >
-      quit to log in
-    </StyledLoginButton>
-  );
 }

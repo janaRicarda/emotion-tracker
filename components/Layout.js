@@ -85,7 +85,7 @@ export default function Layout({
           handleDemoModeOff={handleDemoModeOff}
         />
       )}
-      {demoMode && <DemoLayout />}
+      {demoMode && <DemoLayout handleDemoModeOff={handleDemoModeOff} />}
       <Header
         isScrollDown={isScrollDown}
         theme={theme}
