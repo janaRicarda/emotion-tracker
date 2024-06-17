@@ -173,6 +173,7 @@ export default function EmotionRecords({
   theme,
   locale,
   useExampleData,
+  dashboardId,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -260,6 +261,7 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+
   return (
     <>
       <Head>
@@ -344,6 +346,7 @@ export default function EmotionRecords({
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
             locale={locale}
+            dashboardId={dashboardId}
           />
         )}
         {chartIsShown && (

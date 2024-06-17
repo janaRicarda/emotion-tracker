@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   ssr: false,
-  loading: () => <Loader itemText="... loading" />,
+  loading: () => <Loader itemText="... loading chart" />,
 });
 
 const ChartSection = styled.section`
@@ -107,7 +107,7 @@ export default function ChartContainerV2({
   function handleIntensityChart() {
     setChartState(emotionIntensity);
   }
-  console.log("Width in ChartContainer:", width);
+  // console.log("Width in ChartContainer:", width);
   return (
     <ChartSection $width={width + 20}>
       <StyledFlexColumnWrapper>

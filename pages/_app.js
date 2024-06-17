@@ -39,6 +39,7 @@ export default function App({
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
+  const [dashboardId, setDashboardId] = useState();
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -324,6 +325,10 @@ export default function App({
     setEmotionEntries(backupEntries);
   }
 
+  function deliverGridEmotion(id) {
+    setDashboardId(id);
+  }
+
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -363,6 +368,8 @@ export default function App({
               toggleTheme={toggleTheme}
               switchTheme={switchTheme}
               locale={locale}
+              onHandleGridEmotion={deliverGridEmotion}
+              dashboardId={dashboardId}
               {...pageProps}
             />
           </Layout>

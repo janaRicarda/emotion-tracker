@@ -123,6 +123,7 @@ export default function EmotionRecordsList({
   useExampleData,
   buttonState,
   locale,
+  dashboardId,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -140,6 +141,12 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
+  //showing details of last entry
+  useEffect(() => {
+    console.log("DashboardiD useeffekt: ", dashboardId);
+    handleShowDetails(dashboardId);
+  }, [dashboardId]);
 
   function handleShowConfirmMessage(id) {
     setShowConfirmMessage((prevShow) => ({

@@ -11,7 +11,7 @@ import {
   getNewestEmotion,
   compareHightToLow,
 } from "@/utils/dataAndChartUtils";
-
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 const ProgressBar = styled.div`
@@ -116,9 +116,10 @@ export default function HomePage({
   emotionEntries,
   theme,
   locale,
+  onHandleGridEmotion,
 }) {
   const { data: session } = useSession();
-
+  const router = useRouter();
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -134,19 +135,26 @@ export default function HomePage({
     1080,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const dashboardHeight = Math.round(dashboardWidth * 1.4);
+  const dashboardHeight = Math.round(dashboardWidth * 1.33);
   const fontSize = Math.min(1.4, Math.max(0.8, windowWidth / 1000));
   const gridFactor = 1.8 + windowWidth / 100;
   const showDetails = true;
 
-  console.log("Dashboardwidth:", dashboardWidth);
-  console.log(fontSize);
-  console.log("Gridfactor:", gridFactor);
+  // console.log("Dashboardwidth:", dashboardWidth);
+  // console.log(fontSize);
+  // console.log("Gridfactor:", gridFactor);
+
   //dashboard logic
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug } = getNewestEmotion(dashboardEntries);
+  const { emotion, intensity, slug, id, _id } =
+    getNewestEmotion(dashboardEntries);
+
+  function handleGridEmotion(id) {
+    router.push("/emotion-records");
+    onHandleGridEmotion(id);
+  }
 
   //chart logic
   const today = new Date().toISOString();
@@ -204,22 +212,22 @@ export default function HomePage({
           </DashboardLink>
         </GridElement>
 
-        <GridElement>
-          <DashboardLink href="/emotion-records">
-            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Last recorded emotion:
-            </ElementText>
-            <EmotionText
-              $fontSize={fontSize}
-              $lineHeight={fontSize * 1.33}
-              $color={`var(--${slug})`}
-            >
-              <BoldText>{emotion}</BoldText>
-              <br></br>Intensity:{" "}
-              <ProgressBar $showDetails={showDetails} $progress={intensity} />
-              {intensity} %
-            </EmotionText>
-          </DashboardLink>
+        <GridElement onClick={() => handleGridEmotion(_id)}>
+          {/* <DashboardLink href="/emotion-records"> */}
+          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
+            Last recorded emotion:
+          </ElementText>
+          <EmotionText
+            $fontSize={fontSize}
+            $lineHeight={fontSize * 1.33}
+            $color={`var(--${slug})`}
+          >
+            <BoldText>{emotion}</BoldText>
+            <br></br>Intensity:{" "}
+            <ProgressBar $showDetails={showDetails} $progress={intensity} />
+            {intensity} %
+          </EmotionText>
+          {/* </DashboardLink> */}
         </GridElement>
         <GridElement>
           <DashboardLink href="/emotion-records">
@@ -233,8 +241,8 @@ export default function HomePage({
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            width={Math.max(304, Math.round(50 + windowWidth / 2))}
-            heightFactor={0.48}
+            width={Math.max(300, Math.round(50 + windowWidth / 2))}
+            heightFactor={0.45}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
