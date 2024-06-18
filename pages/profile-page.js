@@ -5,22 +5,15 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
-import {
-  lightTheme,
-  darkTheme,
-  warmTheme,
-  coldTheme,
-  neutralTheme,
-  highContrastTheme,
-} from "@/components/Theme";
 
 export default function ProfilePage({
   theme,
   customTheme,
   handleToolTip,
-  handleTheme,
 }) {
   const { data: session, status } = useSession();
+
+  console.log(session);
 
   useEffect(() => {
     handleToolTip(false);
@@ -38,7 +31,8 @@ export default function ProfilePage({
       const data = {
         name: session.user.name,
         email: session.user.email,
-        theme: "light",
+        theme: "lightTheme",
+        lastPreferredTheme: "lightTheme",
       };
 
       try {
@@ -60,24 +54,12 @@ export default function ProfilePage({
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
 
-  const themes = {
-    darkTheme,
-    lightTheme,
-    warmTheme,
-    coldTheme,
-    coldTheme,
-    neutralTheme,
-    highContrastTheme,
-  };
-
   async function handleEditTheme(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const choosenTheme = Object.fromEntries(formData);
 
     const data = { ...choosenTheme, lastPreferredTheme: choosenTheme.theme };
-
-    console.log(data);
 
     const response = await fetch(`/api/user/${session.user.email}`, {
       method: "PATCH",
@@ -89,7 +71,6 @@ export default function ProfilePage({
 
     if (response.ok) {
       mutate();
-      // handleTheme(themes[choosenTheme.theme]);
     }
   }
 
