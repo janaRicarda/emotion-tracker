@@ -21,7 +21,7 @@ export default async function handler(request, response) {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      response.status(200).json({ message: "User already exists" });
+      response.status(409).json({ message: "User already exists" });
       return;
     }
     try {

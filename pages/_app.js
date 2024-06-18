@@ -51,28 +51,6 @@ export default function App({
     }
   );
 
-  // use-effect for mediaquery
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const userPrefersDark = mediaQuery.matches;
-
-    if (userPrefersDark) {
-      setTheme(darkTheme);
-    } else {
-      setTheme(lightTheme);
-    }
-
-    const handleChange = (event) => {
-      setTheme(event.matches ? darkTheme : lightTheme);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
-
   const initialData = generateCompleteData(40);
 
   // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
@@ -147,10 +125,6 @@ export default function App({
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
-  }
-
-  function switchTheme(customTheme) {
-    setTheme(customTheme);
   }
 
   function handleToolTip(toolTipData) {
@@ -322,6 +296,10 @@ export default function App({
     setEmotionEntries(backupEntries);
   }
 
+  function handleTheme(theme) {
+    setTheme(theme);
+  }
+
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -336,9 +314,9 @@ export default function App({
             isScrollDown={isScrollDown}
             scrollPosition={scrollPosition}
             toggleTheme={toggleTheme}
-            switchTheme={switchTheme}
             emotionEntriesAreLoading={emotionEntriesAreLoading}
             errorFetchingEmotionEntries={errorFetchingEmotionEntries}
+            handleTheme={handleTheme}
           >
             <Component
               isScrollDown={isScrollDown}
@@ -359,7 +337,7 @@ export default function App({
               demoMode={demoMode}
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
-              switchTheme={switchTheme}
+              handleTheme={handleTheme}
               {...pageProps}
             />
           </Layout>

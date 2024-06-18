@@ -10,6 +10,15 @@ import Tooltip from "./Tooltip";
 import { useSession } from "next-auth/react";
 import DemoLayout from "./DemoLayout";
 import StartModal from "./Modal";
+import useSWR from "swr";
+import {
+  lightTheme,
+  darkTheme,
+  warmTheme,
+  coldTheme,
+  neutralTheme,
+  highContrastTheme,
+} from "@/components/Theme";
 
 const StyledToTopButton = styled(ScrollToTop)`
   // &&& is equal to !important; needed to override ScrollToTop default css
@@ -34,7 +43,6 @@ export default function Layout({
   children,
   theme,
   toggleTheme,
-  switchTheme,
   toolTip,
   scrollPosition,
   isScrollDown,
@@ -43,8 +51,51 @@ export default function Layout({
   handleDemoModeOff,
   emotionEntriesAreLoading,
   errorFetchingEmotionEntries,
+  handleTheme,
 }) {
+  const themes = {
+    darkTheme,
+    lightTheme,
+    warmTheme,
+    coldTheme,
+    coldTheme,
+    neutralTheme,
+    highContrastTheme,
+  };
+
   const { data: session } = useSession();
+
+  const { data: currentUser, isLoading: userDataIsLoading } = useSWR(
+    session && `/api/user/${session.user.email}`
+  );
+
+  if (session && currentUser) handleTheme(themes[currentUser.lastPreferredTheme]);
+  // useEffect(() => {
+  // }, []);
+
+  // use-effect for setting theme to system preferences if no user logged in
+  useEffect(() => {
+    if (!session) {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const userPrefersDark = mediaQuery.matches;
+
+      if (userPrefersDark) {
+        handleTheme(darkTheme);
+      } else {
+        handleTheme(lightTheme);
+      }
+
+      const handleChange = (event) => {
+        handleTheme(event.matches ? darkTheme : lightTheme);
+      };
+
+      mediaQuery.addEventListener("change", handleChange);
+
+      return () => {
+        mediaQuery.removeEventListener("change", handleChange);
+      };
+    }
+  }, []);
 
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
@@ -90,13 +141,11 @@ export default function Layout({
         isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
-        switchTheme={switchTheme}
-        demoMode={demoMode}
-        handleDemoModeOff={handleDemoModeOff}
+        handleTheme={handleTheme}
+        themes={themes}
       />
-      {(emotionEntriesAreLoading && (
-        <Loader itemText={"App is loading..."} />
-      )) ||
+      {emotionEntriesAreLoading ||
+        (userDataIsLoading && <Loader itemText={"App is loading..."} />) ||
         (errorFetchingEmotionEntries && (
           <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
         )) ||

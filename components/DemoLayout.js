@@ -17,7 +17,7 @@ const StyledLoginButton = styled.button`
   border-style: none;
   background: transparent;
   color: var(--main-dark);
-  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
+  opacity: ${({ disable }) => (disable ? "0.5" : "1")};
 `;
 
 export default function DemoLayout({ handleDemoModeOff }) {
@@ -30,13 +30,11 @@ export default function DemoLayout({ handleDemoModeOff }) {
       <StyledMessage>You are using demo mode</StyledMessage>
       <StyledLoginButton
         $login
-        $disable={createPath}
-        //disable={createPath}
+        disabled={createPath ? true : false}
         onClick={() => {
           if (createPath) {
             return;
           }
-          router.push("/");
           handleDemoModeOff();
         }}
       >

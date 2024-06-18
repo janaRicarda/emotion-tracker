@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import Loader from "@/components/Loader";
+import ErrorMessage from "@/components/ErrorMessage";
 import {
   lightTheme,
   darkTheme,
@@ -10,15 +12,13 @@ import {
   coldTheme,
   neutralTheme,
   highContrastTheme,
-} from "../components/Theme";
-import Loader from "@/components/Loader";
-import ErrorMessage from "@/components/ErrorMessage";
+} from "@/components/Theme";
 
 export default function ProfilePage({
   theme,
-  switchTheme,
   customTheme,
   handleToolTip,
+  handleTheme,
 }) {
   const { data: session, status } = useSession();
 
@@ -54,16 +54,17 @@ export default function ProfilePage({
       }
     }
     createUser();
-  }, [session.user.email, session.user.name]);
+  }, [session.user.email, session.user.name, error]);
 
   if (isLoading) return <Loader itemText={"Is Loading"} />;
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
 
-  const colorSchemes = {
-    lightTheme,
+  const themes = {
     darkTheme,
+    lightTheme,
     warmTheme,
+    coldTheme,
     coldTheme,
     neutralTheme,
     highContrastTheme,
@@ -72,28 +73,24 @@ export default function ProfilePage({
   async function handleEditTheme(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const userData = Object.fromEntries(formData);
+    const choosenTheme = Object.fromEntries(formData);
+
+    const data = { ...choosenTheme, lastPreferredTheme: choosenTheme.theme };
+
+    console.log(data);
 
     const response = await fetch(`/api/user/${session.user.email}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(data),
     });
 
     if (response.ok) {
       mutate();
+      // handleTheme(themes[choosenTheme.theme]);
     }
-    const { theme: updatedTheme } = userData;
-    const selectedTheme = colorSchemes[updatedTheme];
-    console.log("theme aus usedata", selectedTheme);
-    const userTheme = currentUser.theme;
-    const usersPreferredTheme = colorSchemes[userTheme];
-    console.log("theme von gefetchtem user", usersPreferredTheme);
-
-    switchTheme(selectedTheme);
-    mutate();
   }
 
   //function to render the users Initials
@@ -122,11 +119,11 @@ export default function ProfilePage({
       <Profile
         theme={theme}
         customTheme={customTheme}
-        switchTheme={switchTheme}
         userName={userName}
         userNameInitials={userNameInitials}
         userEmail={userEmail}
         handleEditTheme={handleEditTheme}
+        currentUser={currentUser}
       />
     </>
   );

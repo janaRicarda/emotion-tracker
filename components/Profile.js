@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import {
-  StyledFlexColumnWrapper,
-  StyledTitle,
-  StyledButton,
-} from "@/SharedStyledComponents";
-import { useSession } from "next-auth/react";
+import { StyledTitle, StyledButton } from "@/SharedStyledComponents";
 import { useState } from "react";
 import Circle from "../public/icons/circle.svg";
 import ArrowDown from "../public/icons/arrow-down-thin.svg";
@@ -78,20 +73,6 @@ const StyledDiv = styled.div`
 
 const StyledInput = styled.input`
   display: inline-block;
-
-  //position: relative;
-  /*  &:before {
-    content: "";
-    display: inline-block;
-    width: 1.8rem;
-    height: 1.8rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    background: ${({ $background }) => $background};
-    border-radius: 50%;
-  } */
 `;
 
 const StyledLabel = styled.label`
@@ -112,24 +93,12 @@ export default function Profile({
   userName,
   userEmail,
   handleEditTheme,
+  currentUser,
 }) {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const [showThemes, setShowThemes] = useState(false);
 
   const colorSchemes = [
-    {
-      title: "light",
-      name: "lightTheme",
-      background: "conic-gradient(#e9e3e3 50%, #030352)",
-      text: "#030352",
-    },
-    {
-      title: "dark",
-      name: "darkTheme",
-      background: "conic-gradient(#322e44 50%, #f1eaea)",
-      text: "#f1eaea",
-    },
-
     {
       title: "warm",
       name: "warmTheme",
@@ -181,6 +150,7 @@ export default function Profile({
             <StyledDiv key={title}>
               <StyledCircle $background={background} $text={text} />
               <StyledInput
+                defaultChecked={currentUser.theme === name ? true : false}
                 type="radio"
                 id={name}
                 name="theme"

@@ -1,6 +1,5 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import Logout from "../public/icons/logout.svg";
 
 const StyledParagraph = styled.p`
@@ -11,7 +10,6 @@ const StyledParagraph = styled.p`
 const StyledLogoutButton = styled.button`
   color: ${({ $navigation }) =>
     $navigation ? "var(--contrast-text)" : "var(--main-dark)"};
-  opacity: ${({ $disable }) => ($disable ? "0.5" : "1")};
   border-style: none;
   background: transparent;
   text-align: center;
@@ -29,9 +27,8 @@ const StyledLogout = styled(Logout)`
     $navigation ? "var(--contrast-text)" : "var(--main-dark)"};
 `;
 
-export default function Login({ disable, navigation }) {
+export default function Login({ navigation }) {
   const { data: session } = useSession();
-  const router = useRouter();
   if (session) {
     return (
       <>
@@ -40,14 +37,8 @@ export default function Login({ disable, navigation }) {
         </StyledParagraph>
         <StyledLogoutButton
           $navigation={navigation}
-          $login
-          $disable={disable}
           onClick={() => {
-            if (disable) {
-              return;
-            }
-            router.push("/");
-            signOut();
+            signOut({ callbackUrl: "/" });
           }}
         >
           <StyledLogout $navigation={navigation} /> Sign out
