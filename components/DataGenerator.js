@@ -77,8 +77,6 @@ const dateOptions = {
 function generateDaysEntries(endHour, daysTimestamp) {
   const fullDate = new Date(daysTimestamp);
 
-  const date = new Intl.DateTimeFormat("en-US", dateOptions).format(fullDate);
-
   //variables for sinus curve
   const a = chance.integer({ min: -50, max: 50 });
   const b = chance.floating({ min: -3, max: 3 });
@@ -94,9 +92,6 @@ function generateDaysEntries(endHour, daysTimestamp) {
 
     const object = {
       id: uid(),
-      date,
-      time,
-      timeAndDate: date + ", " + time,
       timeStamp: daysTimestamp + hour * 3600000 + minutes * 60000,
       tensionLevel: Math.max(
         chance.integer({ min: 0, max: 15 }),
@@ -115,6 +110,7 @@ function generateDaysEntries(endHour, daysTimestamp) {
           : chance.bool({ likelihood: 5 }),
 
       toBeDetailed: chance.bool({ likelihood: 20 }),
+      isGenerated: true,
     };
 
     return object;
@@ -158,17 +154,32 @@ function generateDetailedEntry() {
 
 function generateCompleteData(daysGoingBack) {
   const currentFullDate = new Date();
+  const currentHour = currentFullDate.getHours();
+  const currentMinutes = currentFullDate.getMinutes();
   currentFullDate.setHours(0);
   currentFullDate.setMinutes(0);
   currentFullDate.setSeconds(0);
   const resetDate = new Date(currentFullDate);
   const daysTimestamp = resetDate.valueOf();
-  const daysToFill = [...Array(Number(daysGoingBack)).keys()];
+  const daysToFill = [...Array(Number(daysGoingBack - 1)).keys()];
   const dailyEntries = daysToFill.flatMap((day) => {
     const timeStamp = daysTimestamp - (daysGoingBack - 1 - day) * 24 * 3600000;
     const array = [...generateDaysEntries(23, timeStamp)];
     return array;
   });
+
+  //construct special array for lastday so the conitinuity seem real
+  const arrayOfLastDay = generateDaysEntries(currentHour, daysTimestamp);
+  const entryToChange = arrayOfLastDay[arrayOfLastDay.length - 1];
+  const correctedTimeStamp =
+    daysTimestamp + currentHour * 3600000 + currentMinutes * 60000;
+  const correctedEntry = {
+    ...entryToChange,
+    timStamp: correctedTimeStamp,
+  };
+
+  arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);
+  const completeDailyEntries = [...dailyEntries, ...arrayOfLastDay];
 
   function compare(a, b) {
     if (a.timeStamp < b.timeStamp) {
@@ -180,7 +191,7 @@ function generateCompleteData(daysGoingBack) {
     return 0;
   }
 
-  const completeSortedEntries = dailyEntries.sort(compare).reverse();
+  const completeSortedEntries = completeDailyEntries.sort(compare).reverse();
   return completeSortedEntries;
 }
 
@@ -245,7 +256,7 @@ export default function DataGenerator({
             max={365}
             onChange={(event) => setDaysGoingBack(event.target.value)}
           />
-          <span>{"  "}</span>
+          <span> </span>
           {dayZ}
         </label>
         <StyledDevButton type="button" onClick={handleGenerate}>

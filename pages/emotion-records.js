@@ -2,7 +2,7 @@ import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
 import FilterEmotionEntries from "@/components/FilterEmotionEntries";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import EmotionRecordsList from "../components/EmotionRecordsList";
@@ -12,6 +12,7 @@ import Icon from "@mdi/react";
 import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
+import Export from "@/components/Export";
 
 // used for all transitions
 const transition = css`
@@ -157,6 +158,7 @@ const StyledWrapper = styled.div`
 `;
 const GraphToggleWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: 0.3rem;
 
   & > label {
@@ -172,6 +174,7 @@ export default function EmotionRecords({
   isScrollDown,
   theme,
   useExampleData,
+  locale,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -187,6 +190,8 @@ export default function EmotionRecords({
 
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
+
+  const [chartRefForDownload, setChartRefForDownload] = useState(null);
 
   useEffect(() => {
     handleToolTip({
@@ -250,15 +255,14 @@ export default function EmotionRecords({
     document.addEventListener("keydown", handleEscapeKey);
   });
 
-  function closeOnKey(event) {
-    if (event.code === "Enter") {
-      setShowFilter(false);
-    }
-  }
-
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+
+  function handleChartRef(ref) {
+    setChartRefForDownload(ref);
+  }
+
   return (
     <>
       <Head>
@@ -268,7 +272,7 @@ export default function EmotionRecords({
       <StyledHeading $isScrollDown={isScrollDown}>
         Recorded Emotions
       </StyledHeading>
-      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
+      <GridWrapper $show={showFilter}>
         <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
@@ -298,7 +302,6 @@ export default function EmotionRecords({
       </AnimatedPanel>
 
       <StyledListContainer>
-
         {shownEntries.length === 0 &&
           (filteredEntries.length === 0 ? (
             buttonState.highlightedButton ? (
@@ -325,6 +328,13 @@ export default function EmotionRecords({
           <StyledWrapper>
             <p>Results: {shownEntries.length}</p>
             <GraphToggleWrapper>
+              <Export
+                chartRefForDownload={chartRefForDownload}
+                chartIsShown={chartIsShown}
+                exportData={shownEntries}
+                buttonState={buttonState}
+                selectedCustomDate={selectedTime}
+              />
               <Icon path={mdiFormatListBulleted} size={1} />
               <ToggleSwitch
                 handleSwitch={handleChart}
@@ -337,6 +347,7 @@ export default function EmotionRecords({
         )}
         {shownEntries.length !== 0 && !chartIsShown && (
           <EmotionRecordsList
+            locale={locale}
             buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
@@ -346,7 +357,12 @@ export default function EmotionRecords({
           />
         )}
         {chartIsShown && (
-          <ChartContainer shownEntries={shownEntries} theme={theme} />
+          <ChartContainer
+            handleChartRef={handleChartRef}
+            shownEntries={shownEntries}
+            theme={theme}
+            locale={locale}
+          />
         )}
       </StyledListContainer>
     </>

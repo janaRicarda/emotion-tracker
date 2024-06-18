@@ -10,7 +10,7 @@ const StyledBackground = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.42);
   position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
 `;
 const StyledPopUpMessage = styled.div`
   position: fixed;
