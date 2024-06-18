@@ -6,14 +6,8 @@ import useSWR from "swr";
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
 
-export default function ProfilePage({
-  theme,
-  customTheme,
-  handleToolTip,
-}) {
+export default function ProfilePage({ theme, customTheme, handleToolTip }) {
   const { data: session, status } = useSession();
-
-  console.log(session);
 
   useEffect(() => {
     handleToolTip(false);

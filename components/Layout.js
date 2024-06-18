@@ -70,8 +70,6 @@ export default function Layout({
   );
 
   if (session && currentUser) handleTheme(themes[currentUser.lastPreferredTheme]);
-  // useEffect(() => {
-  // }, []);
 
   // use-effect for setting theme to system preferences if no user logged in
   useEffect(() => {
@@ -141,8 +139,6 @@ export default function Layout({
         isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
-        handleTheme={handleTheme}
-        themes={themes}
       />
       {emotionEntriesAreLoading ||
         (userDataIsLoading && <Loader itemText={"App is loading..."} />) ||

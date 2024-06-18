@@ -4,7 +4,7 @@ import { useState } from "react";
 import Logo from "../public/icons/logo.svg";
 import Moon from "../public/icons/moon.svg";
 import Sun from "../public/icons/sun.svg";
-import { lightTheme, neutralTheme } from "../components/Theme";
+import { lightTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
 import Icon from "@mdi/react";
@@ -94,8 +94,6 @@ export default function Header({
   theme,
   toggleTheme,
   isScrollDown,
-  handleTheme,
-  themes,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -138,8 +136,6 @@ export default function Header({
     }
   }
 
-  console.log(currentUser?.theme);
-
   const themeButton = [
     {
       name: "darkTheme",
@@ -174,7 +170,6 @@ export default function Header({
                     type="button"
                     onClick={() => {
                       handleEditTheme(button.nextTheme);
-                      console.log(button.name);
                     }}
                   >
                     {button.icon}
