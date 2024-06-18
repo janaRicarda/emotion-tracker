@@ -1,5 +1,6 @@
 import Plot from "react-plotly.js";
 import styled from "styled-components";
+import { useRef, useEffect } from "react";
 
 const StyledChartSection = styled.section`
   background-color: var(--section-background);
@@ -11,6 +12,7 @@ const StyledChartSection = styled.section`
 `;
 
 export default function EmotionChart({
+  handleChartRef,
   xValues,
   yValues,
   title,
@@ -22,6 +24,12 @@ export default function EmotionChart({
   height,
   autosize,
 }) {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    handleChartRef(chartRef);
+  });
+
   return (
     <StyledChartSection>
       {xValues.length < 2 ? (
@@ -37,7 +45,7 @@ export default function EmotionChart({
               marker: { color: theme.buttonBackground },
             },
           ]}
-          config={{ displayModeBar: false, scrollZoom: true }}
+          config={{ displayModeBar: true, scrollZoom: true }}
           layout={{
             font: { color: theme.text },
             paper_bgcolor: theme.sectionBackground,
@@ -71,6 +79,9 @@ export default function EmotionChart({
             autosize: autosize,
             margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 30 },
           }}
+          ref={chartRef}
+          onInitialized={(graphDiv) => (chartRef.current = { el: graphDiv })}
+          onUpdate={(graphDiv) => (chartRef.current = { el: graphDiv })}
         />
       )}
     </StyledChartSection>

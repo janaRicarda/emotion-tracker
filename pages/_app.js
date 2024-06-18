@@ -171,13 +171,10 @@ export default function App({
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    //löschen sobald wie möglich
-    const timeAndDate = getCurrentTimeAndDate(locale, timeStamp);
-    //löschen sobald wie möglich
+
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
-      timeAndDate,
       timeStamp,
       isoDate: new Date(timeStamp).toISOString(),
     };

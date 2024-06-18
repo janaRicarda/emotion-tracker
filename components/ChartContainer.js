@@ -11,7 +11,7 @@ import {
 
 import styled from "styled-components";
 import { StyledButton } from "@/SharedStyledComponents";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { breakpoints } from "@/utils/breakpoints";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
@@ -70,7 +70,12 @@ const StyledGraphButtonsWrapper = styled.div`
   }
 `;
 
-export default function ChartContainer({ shownEntries, theme, locale }) {
+export default function ChartContainer({
+  shownEntries,
+  theme,
+  handleChartRef,
+  locale,
+}) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
   const [chartState, setChartState] = useState(tension);
@@ -97,6 +102,8 @@ export default function ChartContainer({ shownEntries, theme, locale }) {
       : title === "Emotion Shares"
       ? yEmotionCount
       : yAverageIntensities;
+
+  ////
 
   //make chart responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -134,6 +141,7 @@ export default function ChartContainer({ shownEntries, theme, locale }) {
   return (
     <ChartSection $width={width + 20}>
       <EmotionChart
+        handleChartRef={handleChartRef}
         theme={theme}
         type={type}
         xValues={xValues}
