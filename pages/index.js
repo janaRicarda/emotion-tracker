@@ -13,14 +13,13 @@ import {
 } from "@/utils/dataAndChartUtils";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import EmotionListDashboard from "@/components/EmotionListDashboard";
-import { breakpoints } from "@/utils/breakpoints";
+import ArrowBack from "./../public/icons/arrow-left.svg";
 
 const ProgressBar = styled.div`
   width: 42%;
   max-width: 200px;
   height: 0.8rem;
-  border: 1px solid var(--main-dark);
+  border: 1px solid var(--contrast-text);
   position: relative;
   display: inline-block;
   margin: 0 0.5rem 0 0;
@@ -54,7 +53,7 @@ const DashboardSection = styled.section`
   min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
   height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
   max-width: 1200px;
-  max-height: 1000px;
+  max-height: 1200px;
   margin: 0;
   align-items: center;
   border-radius: 18px;
@@ -73,19 +72,22 @@ const GridElement = styled.div`
   align-items: center;
   background-color: var(--section-background);
   box-shadow: var(--box-shadow);
+  border: var(--circle-border);
 `;
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
   padding: 0.2rem;
-  min-height: 175px;
+  min-height: 170px;
   height: 100%;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
   box-shadow: var(--box-shadow);
+  border: var(--circle-border);
 `;
 const ElementText = styled.p`
+  color: var(--main-dark);
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
@@ -95,6 +97,7 @@ const ElementText = styled.p`
 `;
 
 const EmotionText = styled(ElementText)`
+  color: var(--text-on-bright);
   padding: 0.42rem;
   margin: -5px 0.5rem 0.5rem;
   background: ${({ $color }) =>
@@ -105,8 +108,18 @@ const BoldText = styled.span`
   font-weight: 600;
 `;
 
+const StyledForwardArrow = styled(ArrowBack)`
+  width: 1rem;
+  transform: rotate(180deg);
+  fill: var(--main-dark);
+`;
+
+const ArrowWrapper = styled.div`
+  display: flex;
+  padding: 0.4rem 0;
+`;
+
 const DashboardLink = styled(StyledStandardLink)`
-  /* font-size: 0.8rem; */
   width: 100%;
   height: 100%;
   align-self: center;
@@ -119,6 +132,7 @@ export default function HomePage({
   theme,
   locale,
   onHandleGridEmotion,
+  demoMode,
 }) {
   const { data: session } = useSession();
   const router = useRouter();
@@ -138,14 +152,11 @@ export default function HomePage({
     1080,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const dashboardHeight = Math.round(dashboardWidth * 1.33);
+  const gridFactor = 1.4 + windowWidth / 80;
+  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 5);
   const fontSize = Math.min(1.4, Math.max(0.8, windowWidth / 1000));
-  const gridFactor = 1.8 + windowWidth / 100;
-  const showDetails = true;
 
-  // console.log("Dashboardwidth:", dashboardWidth);
-  // console.log(fontSize);
-  // console.log("Gridfactor:", gridFactor);
+  const showDetails = true;
 
   //dashboard logic
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
@@ -167,7 +178,7 @@ export default function HomePage({
 
   useEffect(() => {
     handleToolTip({
-      text: "This is your dashboard. You can use it to get an overview abouzt what the app can do for you and what you did with it recently.",
+      text: "This is your dashboard. You can use it to get an overview about what the app can do for you and what you did with it recently.",
     });
   }, []);
 
@@ -183,42 +194,46 @@ export default function HomePage({
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
-        $gap={fontSize * 0.3}
+        $gap={fontSize * 0.25}
         $gridFactor={gridFactor}
       >
         <GridElement>
           <DashboardLink href="/app-manual">
-            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Track and explore your feelings. Start your journey today ... how?
-              You can look at the
-              <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.35}>
+              Track and explore your feelings... how? <br></br>You can look at
+              the
+              <ArrowWrapper>
                 {" "}
-                manual
-              </BoldText>
-              !
+                <StyledForwardArrow />
+                <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
+                  {" "}
+                  manual
+                </BoldText>
+              </ArrowWrapper>
             </ElementText>
           </DashboardLink>
-
-          {/* <p>
-            Welcome to What a Feeling! Track and explore your feelings
-            effortlessly. Log your tension level and dive into the depths of
-            your emotions. From joy to sadness, our app helps you understand it
-            all. Start your journey today. Welcome to What a Feeling - where
-            emotions meet clarity.
-          </p> */}
         </GridElement>
         <GridElement>
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Your newest entry is <BoldText>{timeSinceLastEntry}</BoldText>{" "}
-              hours ago. Your average is{" "}
-              <BoldText>{averageEntriesPerDay}</BoldText> entries per day. Do
-              you want to record a <BoldText>new entry</BoldText>?
+              <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
+              hours ago. <br></br>
+              <BoldText>Average: </BoldText>
+              <br></br>
+              {averageEntriesPerDay} entries per day.
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>add new entry</BoldText>
+              </ArrowWrapper>
             </ElementText>
+            <ElementText
+              $fontSize={fontSize}
+              $lineHeight={fontSize * 0.5}
+            ></ElementText>
           </DashboardLink>
         </GridElement>
 
-        <GridElement onClick={() => handleGridEmotion(_id)}>
+        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
           <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
             Last recorded emotion:
           </ElementText>
@@ -234,19 +249,22 @@ export default function HomePage({
           </EmotionText>
         </GridElement>
         <GridElement>
-          <DashboardLink href="/emotions">
+          <DashboardLink href={`/emotions/${slug}`}>
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
               <BoldText>{emotion}</BoldText>
-              <br></br>
-              {description} Want to know more about the{" "}
-              <BoldText>7 basic emotions</BoldText>?
+              <br></br> {description}
+              <ArrowWrapper>
+                {" "}
+                <StyledForwardArrow />
+                <BoldText>more about {slug} </BoldText>
+              </ArrowWrapper>
             </ElementText>
           </DashboardLink>
         </GridElement>
         <ChartElement>
           <ChartContainerV2
             theme={theme}
-            width={Math.max(300, Math.round(50 + windowWidth / 2))}
+            width={Math.max(300, Math.round(36 + windowWidth / 1.6))}
             heightFactor={0.45}
             shownEntries={emotionEntries}
             xValues={xValues}

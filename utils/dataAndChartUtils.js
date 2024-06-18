@@ -57,7 +57,7 @@ export function getNewestEmotion(entries) {
   const emotionDescription = emotionData
     .filter((element) => element.name === emotion)
     .map((element) => element.description);
-  const shortDescription = emotionDescription[0].substring(0, 32) + " ...";
+  const shortDescription = emotionDescription[0].substring(0, 42) + " ...";
 
   const newestEmotionObject = {
     ...newestEmotionEntry,

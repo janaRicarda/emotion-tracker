@@ -3,17 +3,9 @@ import { mdiChartLine, mdiChartBar } from "@mdi/js";
 import dynamic from "next/dynamic";
 import Loader from "@/components/Loader";
 import ToggleSwitch from "./ToggleSwitch";
-import {
-  chartPresets,
-  calculateTensionChartData,
-  getFilteredEntriesV2,
-  countEmotions,
-} from "@/utils/dataAndChartUtils";
+import { chartPresets } from "@/utils/dataAndChartUtils";
 import styled from "styled-components";
-import {
-  StyledFlexColumnWrapper,
-  StyledButton,
-} from "@/SharedStyledComponents";
+import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
@@ -32,14 +24,6 @@ const ChartSection = styled.section`
   width: 80vw;
   min-width: ${({ $width }) => `${$width}px`};
   max-width: 800px;
-`;
-
-const StyledGraphButton = styled(StyledButton)`
-  width: 5rem;
-  padding: 0.3rem;
-  font-size: 0.8rem;
-  border-style: none;
-  margin: 0.4rem;
 `;
 
 const ToggleContainer = styled.div`

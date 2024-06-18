@@ -26,6 +26,7 @@ const ChartSection = styled.section`
   align-items: center;
   margin: 0.5rem 0 2rem;
   border-radius: 18px;
+  border: var(--circle-border);
   background-color: var(--section-background);
   width: 80vw;
   min-width: ${({ $width }) => `${$width}px`};
