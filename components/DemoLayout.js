@@ -16,7 +16,7 @@ const StyledMessage = styled.p`
 const StyledLoginButton = styled.button`
   border-style: none;
   background: transparent;
-  color: var(--main-dark);
+  color: var(--contrast-text);
   opacity: ${({ disable }) => (disable ? "0.5" : "1")};
 `;
 
