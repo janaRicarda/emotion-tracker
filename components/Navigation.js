@@ -149,9 +149,6 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
       {delayOpen && (
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
-            <StyledLink onClick={handleToggleMenu} href="/">
-              dashboard
-            </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">
               manual
             </StyledLink>

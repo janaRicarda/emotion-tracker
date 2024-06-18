@@ -13,35 +13,37 @@ import {
 } from "@/utils/dataAndChartUtils";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import EmotionList from "@/components/EmotionList";
+import EmotionListDashboard from "@/components/EmotionListDashboard";
 import { breakpoints } from "@/utils/breakpoints";
 
-const StyledSmallCircle = styled.article`
-  width: 50vw;
-  height: 50vw;
-  border-radius: 50%;
-  border: var(--circle-border);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: var(--box-shadow);
-  @media ${breakpoints.mobileLandscape} {
-    width: 62vh;
-    height: 62vh;
-  }
-  @media ${breakpoints.largeMobile} {
-    width: 62vh;
-    height: 62vh;
-  }
-  @media ${breakpoints.tablet} {
-    width: 52vh;
-    height: 52vh;
-  }
-  @media ${breakpoints.laptop} {
-    width: 60vh;
-    height: 60vh;
-  }
-`;
+// const StyledSmallCircle = styled.article`
+//   /* transform: scale(0.6); */
+//   width: 100px;
+//   height: 100px;
+//   /* width: ${({ $wheelWidth }) => ($wheelWidth ? "60px" : "90vW")};
+//   height: ${({ $wheelWidth }) => ($wheelWidth ? "60px" : "90vW")}; */
+//   max-width: 200px;
+//   border-radius: 50%;
+//   border: var(--circle-border);
+//   display: flex;
+//   margin: 0.5rem 0.5rem;
+//   justify-content: center;
+//   align-items: center;
+//   box-shadow: var(--box-shadow);
+// `;
+
+// const StyledEmotionList = styled.ul`
+//   transform: scale(0.6);
+//   border: var(--emotion-border);
+//   padding: 0;
+//   position: relative;
+//   width: 80vw;
+//   height: 80vw;
+//   border-radius: 50%;
+//   list-style: none;
+//   overflow: hidden;
+//   transform: rotate(${({ $rotation }) => $rotation}deg);
+// `;
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -149,6 +151,7 @@ export default function HomePage({
 }) {
   const { data: session } = useSession();
   const router = useRouter();
+
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -242,7 +245,6 @@ export default function HomePage({
         </GridElement>
 
         <GridElement onClick={() => handleGridEmotion(_id)}>
-          {/* <DashboardLink href="/emotion-records"> */}
           <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
             Last recorded emotion:
           </ElementText>
@@ -268,10 +270,33 @@ export default function HomePage({
           </DashboardLink>
         </GridElement> */}
         <GridElement>
-          <DashboardLink href="/emotions">
-            {/* <EmotionList /> */}
-            <StyledSmallCircle></StyledSmallCircle>
-          </DashboardLink>
+          <EmotionListDashboard />
+          {/* <StyledSmallCircle>   <StyledEmotionList
+          onWheel={handleScroll}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          $rotation={rotation}
+        > {emotionData.map(({ slug, name }) => (
+          <StyledListItem
+            onClick={createMode && (() => handleAddDetails(name, id))}
+            $color={`var(--${slug})`}
+            key={slug}
+          >
+            <EmotionLink
+              onClick={handleClickLink}
+              slug={slug}
+              href={
+                createMode
+                  ? { pathname: `/create/${slug}`, query: { id } }
+                  : `/emotions/${slug}`
+              }
+            >
+              {name}
+            </EmotionLink>
+          </StyledListItem>
+        ))}
+      </StyledEmotionList></StyledSmallCircle> */}
         </GridElement>
         <ChartElement>
           <ChartContainerV2
