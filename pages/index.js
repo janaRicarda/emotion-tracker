@@ -11,8 +11,6 @@ import {
 } from "@/SharedStyledComponents";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
-// import useSWR from "swr";
-// import { useSession } from "next-auth/react";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -103,17 +101,6 @@ export default function HomePage({
       text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
     });
   }, []);
-
-  // const { data: session } = useSession();
-
-  // const {
-  //   data: currentUser,
-  //   isLoading,
-  //   error,
-  //   mutate,
-  // } = useSWR(session && `/api/user/${session.user.email}`);
-
-  // if (session) getUserTheme(currentUser.theme);
 
   function handleSubmit(event) {
     event.preventDefault();

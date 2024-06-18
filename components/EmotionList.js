@@ -31,42 +31,13 @@ const StyledCircle = styled.article`
   }
 `;
 
-/* const StyledEmotionList = styled.ul`
-  border: var(--emotion-border);
-  background: var(--profile);
-  padding: 0;
-  position: relative;
-  width: 80vw;
-  height: 80vw;
-  border-radius: 50%;
-  list-style: none;
-  overflow: hidden;
-  transform: rotate(${({ $rotation }) => $rotation}deg);
-  @media ${breakpoints.mobileLandscape} {
-    width: 54vh;
-    height: 54vh;
-  }
-  @media ${breakpoints.largeMobile} {
-    width: 54vh;
-    height: 54vh;
-  }
-  @media ${breakpoints.tablet} {
-    width: 46vh;
-    height: 46vh;
-  }
-  @media ${breakpoints.laptop} {
-    width: 54vh;
-    height: 54vh;
-  }
-`; */
-
 const StyledEmotionList = styled.ul.attrs(({ $rotation }) => ({
   style: {
     transform: $rotation,
   },
 }))`
   border: var(--emotion-border);
-  background: var(--profile);
+
   padding: 0;
   position: relative;
   width: 80vw;
@@ -94,7 +65,7 @@ const StyledEmotionList = styled.ul.attrs(({ $rotation }) => ({
 `;
 
 const StyledListItem = styled.li`
-  //background: ${({ $color }) => $color};
+  background: ${({ $color }) => $color};
   border: var(--emotion-border);
   overflow: hidden;
   position: absolute;
@@ -158,14 +129,12 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
   }
 
   function handleScroll(event) {
-    //event.preventDefault();
     const { deltaY } = event;
     const newRotation = deltaY > 0 ? rotation - 5 : rotation + 5;
     setRotation(newRotation);
   }
 
   function handleTouchStart(event) {
-    //event.preventDefault();
     setTouchStart(event.touches[0].clientY);
     setIsDragging(false);
   }
@@ -177,7 +146,6 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
       const newRotation = delta > 0 ? rotation + 5 : rotation - 5;
       if (Math.abs(delta) > 5) {
         setIsDragging(true);
-        // event.preventDefault();
       }
       setRotation(newRotation);
       setTouchStart(touchCurrent);
