@@ -1,17 +1,23 @@
 import { signIn } from "next-auth/react";
 import styled from "styled-components";
+import Logo from "../public/icons/logo.svg";
 
 const StyledOverlay = styled.section`
   width: 100vw;
   height: 100vh;
   display: ${({ $display }) => ($display ? "none" : "flex")};
+  flex-direction: column;
   background: var(--button-background);
   position: fixed;
-  justify-content: center;
+  //justify-content: center;
   align-items: center;
   gap: 2rem;
   z-index: 3;
   top: 0;
+`;
+const StyledLogo = styled(Logo)`
+  width: 10rem;
+  height: 10rem;
 `;
 
 const StyledArticle = styled.article`
@@ -32,7 +38,7 @@ const StyledLoginButton = styled.button`
   border-radius: 6px;
   height: auto;
   background: var(--button-background);
-  color: var(--main-dark);
+  color: var(--contrast-text);
 `;
 
 const StyledParagraph = styled.p`
@@ -47,6 +53,7 @@ export default function StartModal({
 }) {
   return (
     <StyledOverlay $display={demoMode}>
+      <StyledLogo />
       <StyledArticle>
         <StyledParagraph>Login with credentials</StyledParagraph>
         <StyledLoginButton

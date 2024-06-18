@@ -106,8 +106,9 @@ const StyledInput = styled.input`
   outline: 0;
   width: 100%;
   height: 0.5rem;
-  border: 1px solid var(--button-background);
+  border: 1px solid var(--main-dark);
   border-radius: 12px;
+
   background: linear-gradient(
     to right,
     var(--button-background) 0%,
@@ -120,6 +121,7 @@ const StyledInput = styled.input`
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    border: 1px solid var(--main-dark);
     background-image: radial-gradient(
       circle,
       var(--contrast-text) 40%,
@@ -131,6 +133,7 @@ const StyledInput = styled.input`
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    border: 1px solid var(--main-dark);
     background-image: radial-gradient(
       circle,
       var(--contrast-text) 40%,
