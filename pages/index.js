@@ -16,35 +16,6 @@ import { useSession } from "next-auth/react";
 import EmotionListDashboard from "@/components/EmotionListDashboard";
 import { breakpoints } from "@/utils/breakpoints";
 
-// const StyledSmallCircle = styled.article`
-//   /* transform: scale(0.6); */
-//   width: 100px;
-//   height: 100px;
-//   /* width: ${({ $wheelWidth }) => ($wheelWidth ? "60px" : "90vW")};
-//   height: ${({ $wheelWidth }) => ($wheelWidth ? "60px" : "90vW")}; */
-//   max-width: 200px;
-//   border-radius: 50%;
-//   border: var(--circle-border);
-//   display: flex;
-//   margin: 0.5rem 0.5rem;
-//   justify-content: center;
-//   align-items: center;
-//   box-shadow: var(--box-shadow);
-// `;
-
-// const StyledEmotionList = styled.ul`
-//   transform: scale(0.6);
-//   border: var(--emotion-border);
-//   padding: 0;
-//   position: relative;
-//   width: 80vw;
-//   height: 80vw;
-//   border-radius: 50%;
-//   list-style: none;
-//   overflow: hidden;
-//   transform: rotate(${({ $rotation }) => $rotation}deg);
-// `;
-
 const ProgressBar = styled.div`
   width: 42%;
   max-width: 200px;
@@ -180,7 +151,7 @@ export default function HomePage({
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug, id, _id } =
+  const { emotion, intensity, slug, id, _id, description } =
     getNewestEmotion(dashboardEntries);
 
   function handleGridEmotion(id) {
@@ -218,7 +189,8 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/app-manual">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Track and explore your feelings ... how? You can look at the
+              Track and explore your feelings. Start your journey today ... how?
+              You can look at the
               <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
                 {" "}
                 manual
@@ -239,7 +211,9 @@ export default function HomePage({
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
               Your newest entry is <BoldText>{timeSinceLastEntry}</BoldText>{" "}
-              hours ago. Do you want to record a <BoldText>new entry</BoldText>?
+              hours ago. Your average is{" "}
+              <BoldText>{averageEntriesPerDay}</BoldText> entries per day. Do
+              you want to record a <BoldText>new entry</BoldText>?
             </ElementText>
           </DashboardLink>
         </GridElement>
@@ -258,45 +232,16 @@ export default function HomePage({
             <ProgressBar $showDetails={showDetails} $progress={intensity} />
             {intensity} %
           </EmotionText>
-          {/* </DashboardLink> */}
         </GridElement>
-        {/* <GridElement>
-          <DashboardLink href="/emotion-records">
+        <GridElement>
+          <DashboardLink href="/emotions">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
-              Your average is <BoldText>{averageEntriesPerDay}</BoldText>{" "}
-              entries per day. You can go to your{" "}
-              <BoldText>recorded emotions</BoldText>.
+              <BoldText>{emotion}</BoldText>
+              <br></br>
+              {description} Want to know more about the{" "}
+              <BoldText>7 basic emotions</BoldText>?
             </ElementText>
           </DashboardLink>
-        </GridElement> */}
-        <GridElement>
-          <EmotionListDashboard />
-          {/* <StyledSmallCircle>   <StyledEmotionList
-          onWheel={handleScroll}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          $rotation={rotation}
-        > {emotionData.map(({ slug, name }) => (
-          <StyledListItem
-            onClick={createMode && (() => handleAddDetails(name, id))}
-            $color={`var(--${slug})`}
-            key={slug}
-          >
-            <EmotionLink
-              onClick={handleClickLink}
-              slug={slug}
-              href={
-                createMode
-                  ? { pathname: `/create/${slug}`, query: { id } }
-                  : `/emotions/${slug}`
-              }
-            >
-              {name}
-            </EmotionLink>
-          </StyledListItem>
-        ))}
-      </StyledEmotionList></StyledSmallCircle> */}
         </GridElement>
         <ChartElement>
           <ChartContainerV2
@@ -311,8 +256,6 @@ export default function HomePage({
             locale={locale}
           ></ChartContainerV2>
         </ChartElement>
-        {/* <GridElement>5</GridElement>
-        <GridElement>6</GridElement> */}
       </DashboardSection>
     </>
   );

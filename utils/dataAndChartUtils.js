@@ -43,7 +43,7 @@ export function compareHightToLow(a, b) {
 }
 
 //dashboard
-//folgendes noch einfacher machen wenn generator angepasst ist
+export function getShortEmotionDescription(emotion) {}
 
 export function getNewestEmotion(entries) {
   const sevenEmotions = emotionData.map((element) => element.name);
@@ -54,7 +54,16 @@ export function getNewestEmotion(entries) {
   const slug = emotionData
     .filter((element) => element.name === emotion)
     .map((element) => element.slug);
-  const newestEmotionObject = { ...newestEmotionEntry, slug };
+  const emotionDescription = emotionData
+    .filter((element) => element.name === emotion)
+    .map((element) => element.description);
+  const shortDescription = emotionDescription[0].substring(0, 32) + " ...";
+
+  const newestEmotionObject = {
+    ...newestEmotionEntry,
+    slug,
+    description: shortDescription,
+  };
   return newestEmotionObject;
 }
 
