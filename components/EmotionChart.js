@@ -12,6 +12,7 @@ const StyledChartSection = styled.section`
 `;
 
 export default function EmotionChart({
+  isExportable,
   handleChartRef,
   xValues,
   yValues,
@@ -27,7 +28,7 @@ export default function EmotionChart({
   const chartRef = useRef(null);
 
   useEffect(() => {
-    handleChartRef(chartRef);
+    isExportable ? handleChartRef(chartRef) : null;
   });
 
   return (
@@ -45,9 +46,12 @@ export default function EmotionChart({
               marker: { color: theme.buttonBackground },
             },
           ]}
-          config={{ displayModeBar: true, scrollZoom: true }}
+          config={{
+            displayModeBar: isExportable ? true : false,
+            scrollZoom: true,
+          }}
           layout={{
-            font: { color: theme.text },
+            font: { color: theme.text, size: 10 },
             paper_bgcolor: theme.sectionBackground,
             border_radius: 6,
             plot_bgcolor: theme.background,
@@ -55,7 +59,8 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: xTitle },
               font: {
-                size: 12,
+                family: "system-ui",
+                size: 10,
                 color: theme.text,
               },
               automargin: true,
@@ -64,7 +69,8 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: yTitle },
               font: {
-                size: 12,
+                family: "system-ui",
+                size: 10,
                 color: theme.text,
               },
             },
@@ -74,6 +80,7 @@ export default function EmotionChart({
               text: title,
               font: {
                 family: "system-ui",
+                size: 15,
               },
             },
             autosize: autosize,

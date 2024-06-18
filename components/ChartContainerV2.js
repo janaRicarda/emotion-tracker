@@ -18,10 +18,12 @@ const ChartSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  left: calc(50% - ${({ $centerOffset }) => `${$centerOffset}px`});
   margin: 0.5rem;
   border-radius: 18px;
   background-color: var(--section-background);
-  width: 80vw;
+  width: ${({ $width }) => `${$width}px`};
   min-width: ${({ $width }) => `${$width}px`};
   max-width: 800px;
 `;
@@ -49,7 +51,6 @@ export default function ChartContainerV2({
   width,
   autosize,
   showSwitches,
-  locale,
 }) {
   //logic for Graph
   const { tension, emotionShares, emotionIntensity } = chartPresets;
@@ -71,7 +72,7 @@ export default function ChartContainerV2({
   const chartWidth = autosize
     ? Math.max(330, Math.round(windowWidth / 1.7))
     : width;
-
+  console.log(chartWidth);
   // const height = Math.round(width * Number(heightFactor));
   function handleChartType() {
     setChartState({
@@ -80,20 +81,8 @@ export default function ChartContainerV2({
     });
   }
 
-  function handleTensionChart() {
-    setChartState(tension);
-  }
-
-  function handleEmotionChart() {
-    setChartState(emotionShares);
-  }
-
-  function handleIntensityChart() {
-    setChartState(emotionIntensity);
-  }
-  // console.log("Width in ChartContainer:", width);
   return (
-    <ChartSection $width={width + 20}>
+    <ChartSection $width={width + 20} $centerOffset={chartWidth / 2 + 10}>
       <StyledFlexColumnWrapper>
         <EmotionChart
           theme={theme}

@@ -142,6 +142,7 @@ export default function ChartContainer({
     <ChartSection $width={width + 20}>
       <EmotionChart
         handleChartRef={handleChartRef}
+        isExportable
         theme={theme}
         type={type}
         xValues={xValues}
