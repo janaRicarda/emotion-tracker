@@ -26,7 +26,7 @@ const TableWrapper = styled.div`
   & > table {
     width: 80vw;
     table-layout: fixed;
-    padding-right: .3rem;
+    padding-right: 0.3rem;
   }
 
   & > * span {
@@ -70,7 +70,7 @@ const ProgressBar = styled.div`
   border: 1px solid var(--main-dark);
   position: relative;
   display: inline-block;
-  margin: 0 0.5rem 0 0;
+  margin: 0 0.4rem 0 0;
   border-radius: 6px;
 
   &::after {

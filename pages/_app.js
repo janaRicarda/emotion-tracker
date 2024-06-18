@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import { generateCompleteData } from "@/components/DataGenerator";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
@@ -37,6 +36,8 @@ export default function App({
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
+
+  const locale = "de";
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -168,13 +169,11 @@ export default function App({
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    const timeAndDate = getCurrentTimeAndDate(timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
       timeStamp,
-      timeAndDate,
       isoDate: new Date(timeStamp).toISOString(),
     };
 
@@ -359,6 +358,7 @@ export default function App({
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
               switchTheme={switchTheme}
+              locale={locale}
               {...pageProps}
             />
           </Layout>

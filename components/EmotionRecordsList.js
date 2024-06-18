@@ -8,6 +8,7 @@ import { StyledList } from "@/SharedStyledComponents";
 import DetailsSection from "./EmotionRecordsDetails";
 import HighlightIcon from "../public/icons/highlight-icon.svg";
 import HighlightIconMarked from "../public/icons/highlight-icon-marked.svg";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const StyledRecordsList = styled(StyledList)`
   padding: 0;
@@ -114,6 +115,7 @@ export default function EmotionRecordsList({
   editFromDevControls,
   useExampleData,
   buttonState,
+  locale,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -172,7 +174,7 @@ export default function EmotionRecordsList({
             ({
               id,
               _id,
-              timeAndDate,
+              timeStamp,
               tensionLevel,
               isoDate,
               trigger,
@@ -209,7 +211,10 @@ export default function EmotionRecordsList({
                           handleShowDetails(useExampleData ? id : _id)
                         }
                       >
-                        {getLabel(isoDate, timeAndDate)}
+                        {getLabel(
+                          isoDate,
+                          getCurrentTimeAndDate(locale, timeStamp)
+                        )}
                       </StyledParagraph>
                       <StyledIconWrapper>
                         <StyledEditButton
@@ -248,7 +253,7 @@ export default function EmotionRecordsList({
                     <ConfirmMessage
                       toggleMessage={handleShowConfirmMessage}
                       itemId={useExampleData ? id : _id}
-                      itemText={timeAndDate}
+                      itemText={getCurrentTimeAndDate(locale, timeStamp)}
                       confirmFunction={onDeleteEmotionEntry}
                       cancelButtonText={"Keep it!"}
                       confirmButtonText={"Delete it!"}
