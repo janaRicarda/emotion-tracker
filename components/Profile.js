@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { StyledTitle, StyledButton } from "@/SharedStyledComponents";
 import { useState } from "react";
 import Circle from "../public/icons/circle.svg";
-import ArrowDown from "../public/icons/arrow-down-thin.svg";
+import Icon from "@mdi/react";
+import { mdiMagicStaff } from "@mdi/js";
 
 const StyledProfileCircle = styled.article`
   width: 8rem;
@@ -40,11 +41,6 @@ const StyledColorSchemesButton = styled(StyledButton)`
   color: var(--main-dark);
   display: flex;
   align-items: center;
-`;
-
-const StyledArrow = styled(ArrowDown)`
-  width: 1.5rem;
-  fill: var(--contrast-text);
 `;
 
 const StyledCircle = styled(Circle)`
@@ -142,7 +138,8 @@ export default function Profile({
       </StyledParagraph>
 
       <StyledColorSchemesButton onClick={handleShowThemes}>
-        Choose your preferred theme <StyledArrow />
+        Choose your preferred theme{" "}
+        <Icon path={mdiMagicStaff} size={0.9} color="var(--main-dark)" />
       </StyledColorSchemesButton>
       {showThemes && (
         <StyledForm onSubmit={handleEditTheme}>
