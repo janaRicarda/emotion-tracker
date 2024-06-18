@@ -9,6 +9,7 @@ export default function EditPage({
   onAddEmotionDetails,
   handleToolTip,
   useExampleData,
+  locale,
 }) {
   const router = useRouter();
 
@@ -35,6 +36,7 @@ export default function EditPage({
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
+        locale={locale}
         editMode
       />
     </>
