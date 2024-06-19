@@ -37,7 +37,6 @@ export default function EditPage({
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
-        locale={locale}
         editMode
       />
     </>

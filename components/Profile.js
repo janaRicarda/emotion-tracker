@@ -91,7 +91,7 @@ export default function Profile({
   handleEditTheme,
   currentUser,
 }) {
-  // const { data: session } = useSession();
+
   const [showThemes, setShowThemes] = useState(false);
 
   const colorSchemes = [
