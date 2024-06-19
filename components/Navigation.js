@@ -1,18 +1,9 @@
 import styled, { css, keyframes } from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
-import {
-  lightTheme,
-  warmTheme,
-  coldTheme,
-  neutralTheme,
-  highContrastTheme,
-} from "./Theme";
-import {
-  StyledButton,
-  StyledFlexColumnWrapper,
-} from "../SharedStyledComponents";
 import { useEffect, useState } from "react";
 import { breakpoints } from "@/utils/breakpoints";
+import { useSession } from "next-auth/react";
+import Login from "./Login";
 
 const slideIn = keyframes`
 0% {transform: translateX(-100%)}
@@ -53,9 +44,11 @@ const StyledArticle = styled.article`
 const StyledLinkWrapper = styled.article`
   display: flex;
   flex-direction: column;
+  align-items: center;
   @media ${breakpoints.laptop} {
     padding-top: 1rem;
-    flex-direction: row;    }
+    flex-direction: row;
+  }
 `;
 
 const StyledLink = styled(StyledStandardLink)`
@@ -71,77 +64,16 @@ const StyledLink = styled(StyledStandardLink)`
   }
 `;
 
-const StyledColoSchemesButton = styled.button`
-  border-style: none;
-  background: transparent;
-  color: var(--contrast-text);
-  padding: 0.8rem;
-  font-size: 1.4rem;
-  font-weight: 500;
-  @media ${breakpoints.mobileLandscape} {
-    padding: 0.2rem;
-  }
-  @media ${breakpoints.laptop} {
-    padding: 0.8rem;
-  }
-`;
-
-const ThemeWrapper = styled(StyledFlexColumnWrapper)`
-  gap: 0.2rem;
-  @media ${breakpoints.mobileLandscape} {
-    flex-direction: row;
-  }
-  @media ${breakpoints.laptop} {
-    flex-direction: row;
-  }
-`;
-const ThemeButton = styled(StyledButton)`
-  text-align: left;
-  color: var(--button-background);
-  background-color: var(--contrast-text);
-  border: 0 0 1px solid var(--text-on-bright) 0;
-  border-radius: 0;
-  padding: 0.1rem 0.1rem 0.1rem 0.5rem;
-  margin: 0;
-  width: 100%;
-  @media ${breakpoints.mobileLandscape} {
-    padding: 0 0.5rem;
-    width: auto;
-    text-align: center;
-  }
-  @media ${breakpoints.laptop} {
-    padding: 0 1rem;
-    width: auto;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--contrast-text);
-    background: var(--section-background-contrast);
-    border: 1px solid var(--contrast-text);
-  }
-`;
-
-export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
-  const colorSchemes = [
-    { title: "what a feeling", name: lightTheme },
-    { title: "warm", name: warmTheme },
-    { title: "cold", name: coldTheme },
-    { title: "neutral", name: neutralTheme },
-    { title: "high contrast", name: highContrastTheme },
-  ];
-
+export default function Navigation({ handleToggleMenu, isOpen }) {
+  const { data: session } = useSession();
   // delay of isOpen-state to give time for animation
   const [delayOpen, setDelayedOpen] = useState(false);
-  const [showThemes, setShowThemes] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setDelayedOpen(isOpen);
     }, 200);
   }, [isOpen]);
-
-  function handleShowThemes() {
-    setShowThemes(!showThemes);
-  }
 
   return (
     <>
@@ -154,32 +86,14 @@ export default function Navigation({ handleToggleMenu, isOpen, switchTheme }) {
             <StyledLink onClick={handleToggleMenu} href="/emotions">
               7 basic emotions
             </StyledLink>
-            <StyledLink onClick={handleToggleMenu} href="/">
+            <StyledLink onClick={handleToggleMenu} href="/add-entry">
               add entry
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">
               emotion records
             </StyledLink>
-            <StyledColoSchemesButton onClick={handleShowThemes}>
-              color schemes
-            </StyledColoSchemesButton>
+            {session && <Login navigation />}
           </StyledLinkWrapper>
-          {showThemes && (
-            <ThemeWrapper>
-              {colorSchemes.map(({ title, name }) => (
-                <ThemeButton
-                  key={title}
-                  type="button"
-                  onClick={() => {
-                    switchTheme(name);
-                    handleToggleMenu();
-                  }}
-                >
-                  {title}
-                </ThemeButton>
-              ))}
-            </ThemeWrapper>
-          )}
         </StyledArticle>
       )}
     </>

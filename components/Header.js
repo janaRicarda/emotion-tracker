@@ -4,12 +4,17 @@ import { useState } from "react";
 import Logo from "../public/icons/logo.svg";
 import Moon from "../public/icons/moon.svg";
 import Sun from "../public/icons/sun.svg";
-import { lightTheme, darkTheme } from "../components/Theme";
+import { lightTheme } from "../components/Theme";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { Fade as Hamburger } from "hamburger-react";
-import Login from "./Login";
+import Icon from "@mdi/react";
+import { mdiMagicStaff } from "@mdi/js";
+import useSWR from "swr";
+import { useSession } from "next-auth/react";
+
 import { breakpoints } from "@/utils/breakpoints";
 import { useRouter } from "next/router";
+import ProfileLink from "./ProfileLink";
 
 // used for all transition in this component
 const transition = css`
@@ -17,11 +22,9 @@ const transition = css`
 `;
 
 const StyledToggleTheme = styled.button`
-  border-radius: 50%;
-  border: 1px solid var(--main-dark);
+  border-style: none;
   background-color: transparent;
   z-index: 3;
-  padding: 0.3rem;
   aspect-ratio: 1/1;
 `;
 
@@ -64,7 +67,6 @@ const StyledIconWrapper = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
   width: auto;
   z-index: 3;
   transform: ${({ $isScrollDown }) => $isScrollDown && "scale(0.7)"};
@@ -91,19 +93,66 @@ const StyledLogo = styled(Logo)`
 export default function Header({
   theme,
   toggleTheme,
-  switchTheme,
   isScrollDown,
-  handleDemoModeOff,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);
   }
-  const createPath =
-    (router.pathname === "/create" || router.pathname === "/create/[slug]") &&
-    true;
+
+  const { data: currentUser, mutate } = useSWR(
+    session && `/api/user/${session.user.email}`
+  );
+
+  async function handleEditTheme(choosenTheme) {
+    const data = { lastPreferredTheme: choosenTheme };
+
+    const response = await fetch(`/api/user/${session.user.email}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      mutate();
+    }
+  }
+
+  function getName() {
+    if (currentUser) {
+      if (currentUser.lastPreferredTheme === "coldTheme") return "coldTheme";
+      else if (currentUser.lastPreferredTheme === "neutralTheme")
+        return "neutralTheme";
+      else if (currentUser.lastPreferredTheme === "warmTheme")
+        return "warmTheme";
+      else if (currentUser.lastPreferredTheme === "highContrastTheme")
+        return "highContrastTheme";
+      else return "";
+    }
+  }
+
+  const themeButton = [
+    {
+      name: "darkTheme",
+      icon: <StyledMoon />,
+      nextTheme: "lightTheme",
+    },
+    {
+      name: "lightTheme",
+      icon: <StyledSun />,
+      nextTheme: currentUser && currentUser.theme,
+    },
+    {
+      name: getName(),
+      icon: <Icon path={mdiMagicStaff} size={1} color="var(--main-dark)" />,
+      nextTheme: "darkTheme",
+    },
+  ];
 
   return (
     <>
@@ -111,24 +160,36 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} />
         <StyledIconWrapper $isScrollDown={isScrollDown}>
-          {theme === lightTheme || theme === darkTheme ? (
+          {currentUser ? (
+            themeButton.map((button) => {
+              return (
+                button.name === currentUser.lastPreferredTheme && (
+                  <StyledToggleTheme
+                    key={button.name}
+                    type="button"
+                    onClick={() => {
+                      handleEditTheme(button.nextTheme);
+                    }}
+                  >
+                    {button.icon}
+                  </StyledToggleTheme>
+                )
+              );
+            })
+          ) : (
             <StyledToggleTheme type="button" onClick={toggleTheme}>
               {theme === lightTheme ? <StyledMoon /> : <StyledSun />}
             </StyledToggleTheme>
-          ) : null}
+          )}
           <StyledMenu
             $iconColor={isOpen ? `var(--contrast-text)` : `var(--main-dark)`}
           >
             <Hamburger toggled={isOpen} toggle={setIsOpen} direction="left" />
           </StyledMenu>
+          {session && <ProfileLink />}
         </StyledIconWrapper>
-        <Navigation
-          isOpen={isOpen}
-          handleToggleMenu={handleToggleMenu}
-          switchTheme={switchTheme}
-        />
+        <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
       </StyledHeader>
       <PlaceholderHeader />
     </>

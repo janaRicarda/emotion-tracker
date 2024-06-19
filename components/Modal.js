@@ -46,20 +46,25 @@ export default function StartModal({
   handleDemoMode,
   handleDemoModeOff,
 }) {
+
   return (
     <StyledOverlay $display={demoMode}>
       <StyledArticle>
         <StyledParagraph>Login with credentials</StyledParagraph>
         <StyledLoginButton
           onClick={() => {
-            signIn();
+            signIn(undefined, { callbackUrl: "/" });
             handleDemoModeOff();
           }}
         >
           Login
         </StyledLoginButton>
         <StyledParagraph>or use app in demo-mode</StyledParagraph>
-        <StyledLoginButton onClick={handleDemoMode}>
+        <StyledLoginButton
+          onClick={() => {
+            handleDemoMode();
+          }}
+        >
           demo-mode
         </StyledLoginButton>
       </StyledArticle>
