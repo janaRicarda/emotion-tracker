@@ -112,15 +112,6 @@ export default function HomePage({
 
   const { pathname, asPath, query, locale, defaultLocale } = router;
 
-  console.log(router);
-  function setStartLanguage() {
-    router.push({ pathname, query }, asPath, { locale: defaultLocale });
-  }
-
-  useEffect(() => {
-    setStartLanguage();
-  }, []);
-
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);

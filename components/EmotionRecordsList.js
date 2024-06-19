@@ -159,9 +159,11 @@ export default function EmotionRecordsList({
     const entryDate = new Date(time);
 
     if (today.toDateString() === entryDate.toDateString()) {
-      return `Today, ${formattedTime.slice(-5)}`;
+      return `${translate("filterButtonToday")}, ${formattedTime.slice(-5)}`;
     } else if (yesterday.toDateString() === entryDate.toDateString()) {
-      return `Yesterday, ${formattedTime.slice(-5)}`;
+      return `${translate("filterButtonYesterday")}, ${formattedTime.slice(
+        -5
+      )}`;
     } else {
       return formattedTime;
     }
