@@ -13,6 +13,7 @@ import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
 import Export from "@/components/Export";
+import Loader from "@/components/Loader";
 
 // used for all transitions
 const transition = css`
@@ -39,7 +40,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    top: 14rem;
+    top: 16rem;
     left: 3rem;
     width: 25%;
   }
@@ -47,7 +48,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    left: 9%;
+    left: 11%;
     width: 30%;
   }
 `;
@@ -76,7 +77,6 @@ const Background = styled.div`
 const AnimatedPanel = styled.div`
   width: 100vw;
   margin: 0 0.5rem;
-  /* border-top: 1px solid var(--main-dark); */
   background-color: var(--main-bright);
   display: flex;
   justify-content: center;
@@ -98,7 +98,6 @@ const AnimatedPanel = styled.div`
 `;
 
 const StyledTextMessage = styled.article`
-  /* margin-top: 8rem; */
   text-align: center;
   line-height: 3;
   display: flex;
@@ -158,7 +157,7 @@ const StyledListContainer = styled.div`
     margin-left: 35%;
   }
   @media ${breakpoints.laptop} {
-    margin-left: 45%;
+    margin-left: 40%;
   }
 `;
 
@@ -189,6 +188,7 @@ export default function EmotionRecords({
   useExampleData,
   locale,
 }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
@@ -205,6 +205,12 @@ export default function EmotionRecords({
   const [chartIsShown, setChartIsShown] = useState(false);
 
   const [chartRefForDownload, setChartRefForDownload] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  });
 
   useEffect(() => {
     handleToolTip({
@@ -275,6 +281,8 @@ export default function EmotionRecords({
   function handleChartRef(ref) {
     setChartRefForDownload(ref);
   }
+
+  if (isLoading) return <Loader itemText={"Records loading..."} />;
 
   return (
     <>

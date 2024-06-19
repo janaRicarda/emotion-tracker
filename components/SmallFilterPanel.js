@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Icon from "@mdi/react";
 import { mdiFilter } from "@mdi/js";
+import { breakpoints } from "@/utils/breakpoints";
 
 const StyledMinimalPanel = styled.section`
   width: 92%;
@@ -30,6 +31,10 @@ const StyledFilterIcon = styled(Icon)`
   padding: 2px;
   width: 1.5rem;
   height: 1.5rem;
+  @media ${breakpoints.tablet} {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
 `;
 
 const StyledPanelItem = styled.span`
@@ -38,6 +43,10 @@ const StyledPanelItem = styled.span`
   border-radius: 50px;
   padding: 0.1rem 0.5rem;
   margin: 0.4rem;
+
+  @media ${breakpoints.tablet} {
+    font-size: 1rem;
+  }
 `;
 
 export default function SmallFilterPanel({
