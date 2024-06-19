@@ -40,8 +40,6 @@ export default function App({
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
 
-  const locale = "de";
-
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
     false
