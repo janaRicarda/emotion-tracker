@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { StyledFlexColumnWrapper } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
 
-const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
+const EmotionChart = dynamic(() => import("./EmotionChart"), {
   ssr: false,
   loading: () => <Loader itemText="... loading chart" />,
 });
@@ -43,7 +43,7 @@ const SwitchSizer = styled.span`
   transform: scale(0.6);
 `;
 
-export default function ChartContainerV2({
+export default function DashboardChart({
   theme,
   heightFactor,
   xValues,

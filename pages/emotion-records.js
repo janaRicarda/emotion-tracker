@@ -176,6 +176,7 @@ export default function EmotionRecords({
   locale,
   useExampleData,
   dashboardId,
+  showChartForDashboardLink,
 }) {
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
@@ -258,6 +259,10 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+
+  useEffect(() => {
+    showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
+  }, [showChartForDashboardLink]);
 
   function handleChartRef(ref) {
     setChartRefForDownload(ref);

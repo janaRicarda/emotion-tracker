@@ -39,6 +39,7 @@ export default function App({
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
   const [dashboardId, setDashboardId] = useState();
+  const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -325,6 +326,10 @@ export default function App({
     setDashboardId(id);
   }
 
+  function deliverChartVisibility() {
+    setShowChartForDashboardLink(true);
+  }
+
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -365,7 +370,9 @@ export default function App({
               switchTheme={switchTheme}
               locale={locale}
               onHandleGridEmotion={deliverGridEmotion}
+              onHandleChartLink={deliverChartVisibility}
               dashboardId={dashboardId}
+              showChartForDashboardLink={showChartForDashboardLink}
               {...pageProps}
             />
           </Layout>

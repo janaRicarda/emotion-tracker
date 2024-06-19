@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
-import ChartContainerV2 from "@/components/ChartContainerV2";
 import {
   getAveragePerDay,
   getTimeSinceLastEntry,
@@ -15,6 +14,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import ArrowBack from "./../public/icons/arrow-left.svg";
 import { shortEmotionDescriptions } from "@/lib/db";
+import DashboardChart from "@/components/DashboardChart";
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -120,6 +120,15 @@ const ArrowWrapper = styled.div`
   padding: 0.4rem 0;
 `;
 
+const ChartLinkWrapper = styled.section`
+  margin-top: -2.5rem;
+  position: relative;
+  left: 5%;
+  width: 280px;
+  display: flex;
+  z-index: 3;
+`;
+
 const DashboardLink = styled(StyledStandardLink)`
   width: 100%;
   height: 100%;
@@ -133,6 +142,7 @@ export default function HomePage({
   theme,
   locale,
   onHandleGridEmotion,
+  onHandleChartLink,
   demoMode,
   handleChartRef,
 }) {
@@ -171,6 +181,11 @@ export default function HomePage({
   function handleGridEmotion(id) {
     router.push("/emotion-records");
     onHandleGridEmotion(id);
+  }
+
+  function handleChartLink() {
+    router.push("/emotion-records");
+    onHandleChartLink();
   }
 
   //chart logic
@@ -268,7 +283,7 @@ export default function HomePage({
           </DashboardLink>
         </GridElement>
         <ChartElement>
-          <ChartContainerV2
+          <DashboardChart
             theme={theme}
             width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
             heightFactor={0.46}
@@ -279,7 +294,18 @@ export default function HomePage({
             showSwitches={false}
             locale={locale}
             handleChartRef={handleChartRef}
-          ></ChartContainerV2>
+          />
+          <ChartLinkWrapper onClick={handleChartLink}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>more charts </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </ChartLinkWrapper>
         </ChartElement>
       </DashboardSection>
     </>
