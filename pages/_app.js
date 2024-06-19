@@ -30,6 +30,8 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const router = useRouter();
+  // locale for testing, will be replaced w/ locale from translation branch soon
+  const locale = "en";
   const defaultTheme = lightTheme || darkTheme;
 
   const [theme, setTheme] = useState(defaultTheme);
@@ -38,7 +40,7 @@ export default function App({
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
 
-  const locale = "en";
+  const locale = "de";
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -54,7 +56,7 @@ export default function App({
 
   const initialData = generateCompleteData(40);
 
-  // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
+  // use-effect with empty dependency-array so generateCompleteData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
 
@@ -295,10 +297,6 @@ export default function App({
     setEmotionEntries(backupEntries);
   }
 
-  function handleTheme(theme) {
-    setTheme(theme);
-  }
-
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -338,6 +336,10 @@ export default function App({
               toggleTheme={toggleTheme}
               handleTheme={handleTheme}
               locale={locale}
+              onHandleGridEmotion={deliverGridEmotion}
+              onHandleChartLink={deliverChartVisibility}
+              dashboardId={dashboardId}
+              showChartForDashboardLink={showChartForDashboardLink}
               {...pageProps}
             />
           </Layout>

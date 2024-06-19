@@ -86,7 +86,7 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
             <StyledLink onClick={handleToggleMenu} href="/emotions">
               7 basic emotions
             </StyledLink>
-            <StyledLink onClick={handleToggleMenu} href="/">
+            <StyledLink onClick={handleToggleMenu} href="/add-entry">
               add entry
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">

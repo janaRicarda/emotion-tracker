@@ -33,6 +33,7 @@ export default function EditPage({
       </Head>
       <EmotionForm
         theme={theme}
+        locale={locale}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
