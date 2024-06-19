@@ -86,7 +86,6 @@ export default function HomePage({
   handleToolTip,
   emotionEntries,
   useExampleData,
-  getUserTheme,
 }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
