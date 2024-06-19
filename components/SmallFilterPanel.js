@@ -3,7 +3,7 @@ import Icon from "@mdi/react";
 import { mdiFilter } from "@mdi/js";
 
 const StyledMinimalPanel = styled.section`
-  width: 100vw;
+  width: 92%;
   padding: 0.6rem;
   display: flex;
   z-index: 1;
@@ -28,6 +28,8 @@ const StyledFilterIcon = styled(Icon)`
   background-color: var(--button-background);
   color: var(--contrast-text);
   padding: 2px;
+  width: 1.5rem;
+  height: 1.5rem;
 `;
 
 const StyledPanelItem = styled.span`
@@ -46,7 +48,7 @@ export default function SmallFilterPanel({
 }) {
   return (
     <StyledMinimalPanel>
-      <StyledFilterIcon path={mdiFilter} size={1} />
+      <StyledFilterIcon path={mdiFilter} />
       <div>
         <StyledPanelItem>{buttonState.label}</StyledPanelItem>
         {searchTerm && <StyledPanelItem>{searchTerm}</StyledPanelItem>}

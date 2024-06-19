@@ -39,7 +39,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    top: 270px;
+    top: 14rem;
     left: 3rem;
     width: 25%;
   }
@@ -47,7 +47,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    left: 5rem;
+    left: 9%;
     width: 30%;
   }
 `;
@@ -60,7 +60,7 @@ const StyledHeading = styled(StyledTitle)`
   width: 100%;
   padding: 1rem 0;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "100px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "99px")};
   ${transition}
   background-color: var(--main-bright);
   z-index: 1;
@@ -74,14 +74,27 @@ const Background = styled.div`
   z-index: 2;
 `;
 const AnimatedPanel = styled.div`
-  width: 92vw;
+  width: 100vw;
   margin: 0 0.5rem;
-  border-top: 1px solid var(--main-dark);
+  /* border-top: 1px solid var(--main-dark); */
   background-color: var(--main-bright);
+  display: flex;
+  justify-content: center;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "164px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "163px")};
   ${transition}
   z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 4vw;
+    width: 92vw;
+    height: 1px;
+    background-color: var(--main-dark);
+    z-index: 2;
+  }
 `;
 
 const StyledTextMessage = styled.article`
@@ -145,7 +158,7 @@ const StyledListContainer = styled.div`
     margin-left: 35%;
   }
   @media ${breakpoints.laptop} {
-    margin-left: 40%;
+    margin-left: 45%;
   }
 `;
 

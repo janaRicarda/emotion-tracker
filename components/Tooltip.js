@@ -12,7 +12,7 @@ const StyledTooltipQuestionmark = styled(Info)`
   border-radius: 50%;
   width: 2rem;
   position: fixed;
-  top: 100px;
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "100px")};
   right: 1.5rem;
   z-index: 2;
   transition: all 300ms ease;

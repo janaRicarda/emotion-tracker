@@ -102,7 +102,7 @@ export default function Layout({
         )) ||
         children}
       <Footer />
-      {toolTip && <Tooltip toolTip={toolTip} />}
+      {toolTip && <Tooltip isScrollDown={isScrollDown} toolTip={toolTip} />}
       <StyledToTopButton
         $background={
           isAppManual
