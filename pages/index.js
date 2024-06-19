@@ -110,7 +110,16 @@ export default function HomePage({
 }) {
   const router = useRouter();
 
-  const { pathname, asPath, query, locales, locale } = router;
+  const { pathname, asPath, query, locale, defaultLocale } = router;
+
+  console.log(router);
+  function setStartLanguage() {
+    router.push({ pathname, query }, asPath, { locale: defaultLocale });
+  }
+
+  useEffect(() => {
+    setStartLanguage();
+  }, []);
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
@@ -151,14 +160,14 @@ export default function HomePage({
       </Head>
       <StyledFlexColumnWrapper>
         <ToggleContainer>
-          de
+          en
           <SwitchSizer>
             <ToggleSwitch
               handleSwitch={handleChangeLanguage}
               useButtonColor={true}
             />
           </SwitchSizer>
-          en
+          de
         </ToggleContainer>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">

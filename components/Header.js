@@ -94,16 +94,9 @@ export default function Header({
   switchTheme,
   isScrollDown,
   handleDemoModeOff,
-  locale,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-
-  const { pathname, asPath, query, locales } = router;
-
-  function handleChangeLanguage(newLocale) {
-    router.push({ pathname, query }, asPath, { locale: newLocale });
-  }
 
   function handleToggleMenu() {
     setIsOpen(!isOpen);

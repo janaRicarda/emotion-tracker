@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import { useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "@/components/Theme";
 import { generateCompleteData } from "@/components/DataGenerator";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 import Layout from "@/components/Layout";
 import { appWithTranslation } from "next-i18next";
 import useSWR, { SWRConfig } from "swr";
@@ -167,13 +166,11 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
 
   async function handleAddEmotionEntry(data, id) {
     const timeStamp = Date.now();
-    const timeAndDate = getCurrentTimeAndDate(locale, timeStamp);
 
     const newEntry = {
       tensionLevel: Number(data.tensionLevel),
       id,
       timeStamp,
-      timeAndDate,
       isoDate: new Date(timeStamp).toISOString(),
     };
 
