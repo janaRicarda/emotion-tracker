@@ -40,5 +40,11 @@
   "pageDoesntExist": "Entschuldigung, diese Seite existiert nicht",
   "backToPreviousPage": "Vorherige Seite",
   "loginCredentials": "Mit Anmeldedaten einloggen",
-  "useAppDemo": "oder die App im Demo-Modus verwenden"
+  "useAppDemo": "oder die App im Demo-Modus verwenden",
+  "tensionOfEntry": "Anspannung:",
+  "emotionOfEntry": "Emotion:",
+  "intensityOfEntry": "Intensität:",
+  "pleasantnessOfEntry": "Annehmlichkeit:",
+  "triggerOfEntry": "Auslöser:",
+  "notesOfEntry": "Notizen:"
 }

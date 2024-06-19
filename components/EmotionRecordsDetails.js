@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const StyledDetailsSection = styled.section`
   display: grid;
@@ -26,7 +28,7 @@ const TableWrapper = styled.div`
   & > table {
     width: 80vw;
     table-layout: fixed;
-    padding-right: .3rem;
+    padding-right: 0.3rem;
   }
 
   & > * span {
@@ -98,13 +100,16 @@ export default function DetailsSection({ listItems, showDetails }) {
     notes,
   } = listItems;
 
+  const router = useRouter();
+  const { t: translate } = useTranslation(["common"]);
+
   return (
     <StyledDetailsSection $showDetails={showDetails}>
       <TableWrapper $showDetails={showDetails}>
         <table>
           {tensionLevel && (
             <tr>
-              <td>Tension:</td>
+              <td>{translate("tensionOfEntry")}</td>
               <td>
                 <ProgressBar
                   $showDetails={showDetails}
@@ -116,7 +121,7 @@ export default function DetailsSection({ listItems, showDetails }) {
           )}
           {emotion && (
             <tr>
-              <td>Emotion:</td>
+              <td>{translate("emotionOfEntry")}</td>
               <td>
                 {emotion}
                 {subemotion && `, ${subemotion}`}
@@ -125,7 +130,7 @@ export default function DetailsSection({ listItems, showDetails }) {
           )}
           {intensity && (
             <tr>
-              <td>Intensity:</td>
+              <td>{translate("intensityOfEntry")}</td>
               <td>
                 <ProgressBar $showDetails={showDetails} $progress={intensity} />
                 <span>{intensity} %</span>
@@ -134,7 +139,7 @@ export default function DetailsSection({ listItems, showDetails }) {
           )}
           {category && (
             <tr>
-              <td>Pleasantn.:</td>
+              <td>{translate("pleasantnessOfEntry")}</td>
               <td>
                 <ProgressBar $showDetails={showDetails} $progress={category} />
                 <span>{category}%</span>
@@ -145,7 +150,7 @@ export default function DetailsSection({ listItems, showDetails }) {
           {trigger && (
             <>
               <tr>
-                <b>Trigger:</b>
+                <b>{translate("triggerOfEntry")}</b>
               </tr>
               <tr>{trigger}</tr>
             </>
@@ -153,7 +158,7 @@ export default function DetailsSection({ listItems, showDetails }) {
           {notes && (
             <>
               <tr>
-                <b>Notes:</b>
+                <b>{translate("notesOfEntry")}</b>
               </tr>
               <tr>{notes}</tr>
             </>

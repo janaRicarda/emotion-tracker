@@ -40,5 +40,11 @@
   "pageDoesntExist": "Sorry, this page doesn't exist",
   "backToPreviousPage": "Previous Page",
   "loginCredentials": "Login with credentials",
-  "useAppDemo": "or use app in demo-mode"
+  "useAppDemo": "or use app in demo-mode",
+  "tensionOfEntry": "Tension:",
+  "emotionOfEntry": "Emotion:",
+  "intensityOfEntry": "Intensity:",
+  "pleasantnessOfEntry": "Pleasantn.:",
+  "triggerOfEntry": "Trigger:",
+  "notesOfEntry": "Notes:"
 }
