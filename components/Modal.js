@@ -1,6 +1,5 @@
 import { signIn } from "next-auth/react";
 import styled from "styled-components";
-import Logo from "../public/icons/logo.svg";
 
 const StyledOverlay = styled.section`
   width: 100vw;
@@ -14,10 +13,6 @@ const StyledOverlay = styled.section`
   gap: 2rem;
   z-index: 3;
   top: 0;
-`;
-const StyledLogo = styled(Logo)`
-  width: 10rem;
-  height: 10rem;
 `;
 
 const StyledArticle = styled.article`
