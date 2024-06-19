@@ -94,6 +94,7 @@ export default function Header({
   switchTheme,
   isScrollDown,
   handleDemoModeOff,
+  locale,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -117,11 +118,6 @@ export default function Header({
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
-        {locales.map((locale) => (
-          <button key={locale} onClick={() => handleChangeLanguage(locale)}>
-            {locale === "en" ? "English" : "Deutsch"}
-          </button>
-        ))}
         <Login disable={createPath} handleDemoModeOff={handleDemoModeOff} />
         <StyledIconWrapper $isScrollDown={isScrollDown}>
           {theme === lightTheme || theme === darkTheme ? (

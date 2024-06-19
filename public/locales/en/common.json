@@ -46,5 +46,33 @@
   "intensityOfEntry": "Intensity:",
   "pleasantnessOfEntry": "Pleasantn.:",
   "triggerOfEntry": "Trigger:",
-  "notesOfEntry": "Notes:"
+  "notesOfEntry": "Notes:",
+  "signedInAs": "Signed in as ",
+  "signOut": "Sign out",
+  "signIn": "Sign in",
+  "graphTension": "Tension",
+  "graphEmotion": "Emotion",
+  "graphIntensity": "Intensity",
+  "chartPresets": [
+    {
+      "tension": {
+        "title": "Tension Chart",
+        "xTitle": "time",
+        "yTitle": "tension",
+        "scatter": true
+      },
+      "emotionShares": {
+        "title": "Emotion Shares",
+        "xTitle": "emotion",
+        "yTitle": "percentage",
+        "scatter": false
+      },
+      "emotionIntensity": {
+        "title": "Average Intensities of Emotions",
+        "xTitle": "emotion",
+        "yTitle": "average intensity",
+        "scatter": false
+      }
+    }
+  ]
 }

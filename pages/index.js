@@ -13,6 +13,9 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
+import ToggleSwitch from "@/components/ToggleSwitch";
+import Icon from "@mdi/react";
+import { useRouter } from "next/router";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -83,12 +86,32 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 
+const ToggleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem;
+  margin: 0 0 0.8rem;
+  gap: 0.1rem;
+  background-color: var(--section-background);
+  border-radius: 6px;
+`;
+
+const SwitchSizer = styled.span`
+  transform: scale(0.6);
+`;
+
 export default function HomePage({
   onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
   useExampleData,
 }) {
+  const router = useRouter();
+
+  const { pathname, asPath, query, locales, locale } = router;
+
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
@@ -117,12 +140,26 @@ export default function HomePage({
     setIsFormSubmitted(!isFormSubmitted);
   }
 
+  function handleChangeLanguage() {
+    const newLocale = locale === "en" ? "de" : "en";
+    router.push({ pathname, query }, asPath, { locale: newLocale });
+  }
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
       <StyledFlexColumnWrapper>
+        <ToggleContainer>
+          de
+          <SwitchSizer>
+            <ToggleSwitch
+              handleSwitch={handleChangeLanguage}
+              useButtonColor={true}
+            />
+          </SwitchSizer>
+          en
+        </ToggleContainer>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
             {translate("introQuestion")}

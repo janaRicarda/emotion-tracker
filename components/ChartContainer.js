@@ -13,6 +13,8 @@ import styled from "styled-components";
 import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
 import { breakpoints } from "@/utils/breakpoints";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const EmotionChart = dynamic(() => import("../components/EmotionChart"), {
   ssr: false,
@@ -100,6 +102,9 @@ export default function ChartContainer({ shownEntries, theme, locale }) {
   //make chart responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  const router = useRouter();
+  const { t: translate } = useTranslation(["common"]);
+
   function updateWidth() {
     setWindowWidth(window.innerWidth);
   }
@@ -156,13 +161,13 @@ export default function ChartContainer({ shownEntries, theme, locale }) {
       </ToggleContainer>
       <StyledGraphButtonsWrapper>
         <StyledGraphButton type="button" onClick={handleTensionChart}>
-          Tension
+          {translate("graphTension")}
         </StyledGraphButton>
         <StyledGraphButton type="button" onClick={handleEmotionChart}>
-          Emotions
+          {translate("graphEmotion")}
         </StyledGraphButton>
         <StyledGraphButton type="button" onClick={handleIntensityChart}>
-          Intensity
+          {translate("graphIntensity")}
         </StyledGraphButton>
       </StyledGraphButtonsWrapper>
     </ChartSection>

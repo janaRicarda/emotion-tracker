@@ -2,6 +2,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { StyledButton } from "@/SharedStyledComponents";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const StyledParagraph = styled.p`
   font-size: 0.8rem;
@@ -14,10 +15,15 @@ const StyledParagraph = styled.p`
 export default function Login({ handleDemoModeOff, disable }) {
   const { data: session } = useSession();
   const router = useRouter();
+  const { t: translate } = useTranslation(["common"]);
+
   if (session) {
     return (
       <>
-        <StyledParagraph>Signed in as {session.user.name}</StyledParagraph>
+        <StyledParagraph>
+          {translate("signedInAs")}
+          {session.user.name}
+        </StyledParagraph>
         <StyledButton
           $login
           $disable={disable}
@@ -29,7 +35,7 @@ export default function Login({ handleDemoModeOff, disable }) {
             signOut();
           }}
         >
-          Sign out
+          {translate("signOut")}
         </StyledButton>
       </>
     );
@@ -46,7 +52,7 @@ export default function Login({ handleDemoModeOff, disable }) {
         handleDemoModeOff();
       }}
     >
-      Sign in
+      {translate("signIn")}
     </StyledButton>
   );
 }
