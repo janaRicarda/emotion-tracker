@@ -39,6 +39,8 @@ export default function App({
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
+  const [dashboardId, setDashboardId] = useState();
+  const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -293,6 +295,17 @@ export default function App({
   }
   function restoreFromBackup() {
     setEmotionEntries(backupEntries);
+  }
+
+  function handleTheme(theme) {
+    setTheme(theme);
+  }
+
+  function deliverGridEmotion(id) {
+    setDashboardId(id);
+  }
+  function deliverChartVisibility() {
+    setShowChartForDashboardLink(true);
   }
 
   return (
