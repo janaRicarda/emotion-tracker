@@ -1,18 +1,18 @@
-import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
-import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import ToggleSwitch from "@/components/ToggleSwitch";
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import Head from "next/head";
 import { useState, useCallback, useEffect } from "react";
 import HeartOutlineIcon from "../public/icons/heart-outline.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
-import EmotionRecordsList from "../components/EmotionRecordsList";
-import SmallFilterPanel from "@/components/SmallFilterPanel";
 import ChartContainer from "@/components/ChartContainer";
+import EmotionRecordsList from "../components/EmotionRecordsList";
+import Export from "@/components/Export";
+import FilterEmotionEntries from "@/components/FilterEmotionEntries";
+import SmallFilterPanel from "@/components/SmallFilterPanel";
+import ToggleSwitch from "@/components/ToggleSwitch";
 import Icon from "@mdi/react";
 import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
-import Head from "next/head";
-import Export from "@/components/Export";
 
 // used for all transitions
 const transition = css`
@@ -191,7 +191,6 @@ export default function EmotionRecords({
 
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
-
   const [chartRefForDownload, setChartRefForDownload] = useState(null);
 
   useEffect(() => {
@@ -355,7 +354,6 @@ export default function EmotionRecords({
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
-            locale={locale}
             dashboardId={dashboardId}
           />
         )}

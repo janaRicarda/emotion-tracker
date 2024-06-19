@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
-import Head from "next/head";
 import ChartContainerV2 from "@/components/ChartContainerV2";
 import {
   getAveragePerDay,
@@ -13,7 +12,9 @@ import {
 } from "@/utils/dataAndChartUtils";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import ArrowBack from "./../public/icons/arrow-left.svg";
+import { shortEmotionDescriptions } from "@/lib/db";
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -156,16 +157,15 @@ export default function HomePage({
   const gridFactor = 1.9 + windowWidth / 100;
   const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 6);
   const fontSize = Math.min(1.24, Math.max(0.8, windowWidth / 1000));
-  console.log("gridfactor: ", gridFactor);
-  console.log("FontSize: ", fontSize);
 
+  //for ProgressBar
   const showDetails = true;
 
   //dashboard logic
   const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
   const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug, id, _id, description } =
+  const { emotion, intensity, slug, id, _id } =
     getNewestEmotion(dashboardEntries);
 
   function handleGridEmotion(id) {
@@ -221,7 +221,7 @@ export default function HomePage({
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
               <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
               hours ago. <br></br>
-              <BoldText>Average: </BoldText>
+              <BoldText>Your average: </BoldText>
               <br></br>
               {averageEntriesPerDay} entries per day.
               <ArrowWrapper>
@@ -253,9 +253,12 @@ export default function HomePage({
         </GridElement>
         <GridElement>
           <DashboardLink href={`/emotions/${slug}`}>
-            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.33}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
               <BoldText>{emotion}</BoldText>
-              <br></br> {description}
+              <br></br> {shortEmotionDescriptions[emotion]}
               <ArrowWrapper>
                 {" "}
                 <StyledForwardArrow />

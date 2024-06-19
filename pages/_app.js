@@ -9,7 +9,6 @@ import Layout from "@/components/Layout";
 import useSWR, { SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
-import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const fetcher = async (url) => {
   const response = await fetch(url);

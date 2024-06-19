@@ -72,8 +72,7 @@ export default function ChartContainerV2({
   const chartWidth = autosize
     ? Math.max(330, Math.round(windowWidth / 1.7))
     : width;
-  console.log(chartWidth);
-  // const height = Math.round(width * Number(heightFactor));
+
   function handleChartType() {
     setChartState({
       ...chartState,
