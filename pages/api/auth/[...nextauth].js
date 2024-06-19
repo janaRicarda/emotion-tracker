@@ -27,6 +27,14 @@ export const authOptions = {
             name: "New feeling",
             email: "test@example.com",
           };
+        } else if (
+          credentials.username === "emotion" &&
+          credentials.password === "emotion"
+        ) {
+          return {
+            name: "emotion lover",
+            email: "emotion@example.com",
+          };
         } else {
           return null;
         }

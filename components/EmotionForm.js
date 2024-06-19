@@ -13,6 +13,7 @@ import {
   StyledSubmitButton,
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
@@ -98,11 +99,12 @@ export default function EmotionForm({
   onSubmit,
   id,
   correspondingEntry,
+  locale,
 }) {
   const router = useRouter();
 
   const {
-    timeAndDate,
+    timeStamp,
     emotion,
     tensionLevel,
     subemotion,
@@ -218,7 +220,8 @@ export default function EmotionForm({
           : `Record your Emotion-Entry`}
       </StyledTitle>
       <p aria-label="Date and time">
-        {editMode ? `Entry from:` : "Date: "} {timeAndDate}
+        {editMode ? `Entry from:` : "Date: "}{" "}
+        {getCurrentTimeAndDate(locale, timeStamp)}
       </p>
       <TensionLabelEdit htmlFor="tension-level">
         Choose a tension level between 0 and 100:

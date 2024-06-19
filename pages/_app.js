@@ -30,14 +30,17 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const router = useRouter();
+  // locale for testing, will be replaced w/ locale from translation branch soon
+  const locale = "en";
   const defaultTheme = lightTheme || darkTheme;
+
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
-
-  const locale = "de";
+  const [dashboardId, setDashboardId] = useState();
+  const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -51,31 +54,9 @@ export default function App({
     }
   );
 
-  // use-effect for mediaquery
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const userPrefersDark = mediaQuery.matches;
-
-    if (userPrefersDark) {
-      setTheme(darkTheme);
-    } else {
-      setTheme(lightTheme);
-    }
-
-    const handleChange = (event) => {
-      setTheme(event.matches ? darkTheme : lightTheme);
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
-
   const initialData = generateCompleteData(40);
 
-  // use-effect with empty dependency-array so generateExampleData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
+  // use-effect with empty dependency-array so generateCompleteData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
     const storageState = localStorage.getItem("emotionEntries");
 
@@ -147,10 +128,6 @@ export default function App({
 
   function toggleTheme() {
     theme === defaultTheme ? setTheme(darkTheme) : setTheme(lightTheme);
-  }
-
-  function switchTheme(customTheme) {
-    setTheme(customTheme);
   }
 
   function handleToolTip(toolTipData) {
@@ -320,6 +297,17 @@ export default function App({
     setEmotionEntries(backupEntries);
   }
 
+  function handleTheme(theme) {
+    setTheme(theme);
+  }
+
+  function deliverGridEmotion(id) {
+    setDashboardId(id);
+  }
+  function deliverChartVisibility() {
+    setShowChartForDashboardLink(true);
+  }
+
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -334,9 +322,9 @@ export default function App({
             isScrollDown={isScrollDown}
             scrollPosition={scrollPosition}
             toggleTheme={toggleTheme}
-            switchTheme={switchTheme}
             emotionEntriesAreLoading={emotionEntriesAreLoading}
             errorFetchingEmotionEntries={errorFetchingEmotionEntries}
+            handleTheme={handleTheme}
           >
             <Component
               isScrollDown={isScrollDown}
@@ -357,8 +345,12 @@ export default function App({
               demoMode={demoMode}
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
-              switchTheme={switchTheme}
+              handleTheme={handleTheme}
               locale={locale}
+              onHandleGridEmotion={deliverGridEmotion}
+              onHandleChartLink={deliverChartVisibility}
+              dashboardId={dashboardId}
+              showChartForDashboardLink={showChartForDashboardLink}
               {...pageProps}
             />
           </Layout>

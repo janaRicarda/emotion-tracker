@@ -7,7 +7,8 @@ import {
   chartPresets,
   calculateTensionChartData,
   countEmotions,
-} from "@/utils/chartUtils";
+} from "@/utils/dataAndChartUtils";
+
 import styled from "styled-components";
 import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect, useRef } from "react";
@@ -25,6 +26,7 @@ const ChartSection = styled.section`
   align-items: center;
   margin: 0.5rem 0 2rem;
   border-radius: 18px;
+  border: var(--circle-border);
   background-color: var(--section-background);
   width: 80vw;
   min-width: ${({ $width }) => `${$width}px`};
@@ -50,7 +52,6 @@ const ToggleContainer = styled.div`
   background-color: var(--section-background);
   border-radius: 6px;
 `;
-
 const SwitchSizer = styled.span`
   transform: scale(0.6);
 `;
@@ -141,6 +142,7 @@ export default function ChartContainer({
     <ChartSection $width={width + 20}>
       <EmotionChart
         handleChartRef={handleChartRef}
+        isExportable
         theme={theme}
         type={type}
         xValues={xValues}
