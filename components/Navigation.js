@@ -92,7 +92,7 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
             <StyledLink onClick={handleToggleMenu} href="/emotion-records">
               emotion records
             </StyledLink>
-            {session && <Login navigation={navigation} />}
+            {session && <Login navigation />}
           </StyledLinkWrapper>
         </StyledArticle>
       )}
