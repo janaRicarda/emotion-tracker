@@ -66,5 +66,10 @@
   "moreAbout": "Mehr über ",
   "moreCharts": "mehr Graphen ",
   "addEntry": "Neuen Eintrag hinzufügen",
-  "manual": "manual"
+  "manual": "manual",
+  "hi": "Hi ",
+  "thisIsYourProfilePage": "Dies ist deine Profil-Seite",
+  "accountName": "Konto-Name: ",
+  "makeYourselfAtHome": "Mach es dir gemütlich und schalte deine Lieblingsbeleuchtung ein",
+  "choosePreferredTheme": "Wähle dein Lieblingstheme"
 }

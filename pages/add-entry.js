@@ -12,6 +12,9 @@ import {
 
 import { breakpoints } from "@/utils/breakpoints";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
 
 const StyledTensionForm = styled(StyledForm)`
   margin: 1rem;
@@ -91,14 +94,16 @@ export default function HomePage({
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
+  const router = useRouter();
+  const { t: translate } = useTranslation(["emotions", "common"]);
 
   const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
 
   useEffect(() => {
     handleToolTip({
-      text: "On this page, you can indicate your level of tension on a range scale from 0 to 100. Afterward, simply press the Save-button to record your input.",
+      text: `${translate("toolTipText")}`,
     });
-  }, []);
+  }, [translate]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -120,10 +125,10 @@ export default function HomePage({
       <StyledFlexColumnWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
           <StyledTensionLabel htmlFor="tension-level">
-            On a scale from 0 to 100, how tense do you feel in this moment?
+            {translate("introQuestion")}{" "}
           </StyledTensionLabel>
           <StyledInput
-            aria-label="Adjust tension level between 0 and 100"
+            aria-label={translate("inputAriaLabel")}
             id="tension-level"
             name="tensionLevel"
             type="range"
@@ -140,13 +145,13 @@ export default function HomePage({
           {!isFormSubmitted && (
             <>
               <StyledTensionDisplay>{tension}</StyledTensionDisplay>
-              <SaveButton type="submit">Save</SaveButton>
+              <SaveButton type="submit">{translate("save")}</SaveButton>
             </>
           )}
 
           {isFormSubmitted && (
             <>
-              <StyledMessage>Your entry was successfully saved!</StyledMessage>
+              <StyledMessage>{translate("successMessage")}</StyledMessage>
               <StyledButtonWrapper>
                 <StyledBackButton
                   type="reset"
@@ -163,7 +168,7 @@ export default function HomePage({
                   }}
                   forwardedAs={`/create`}
                 >
-                  Add more details
+                  {translate("addMoreDetails")}
                 </StyledAddDetailsLink>
               </StyledButtonWrapper>
             </>
@@ -172,4 +177,11 @@ export default function HomePage({
       </StyledFlexColumnWrapper>
     </>
   );
+}
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["emotions", "common"])),
+    },
+  };
 }

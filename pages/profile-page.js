@@ -11,7 +11,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function ProfilePage({ theme, customTheme, handleToolTip }) {
   const { data: session, status } = useSession();
-
+  console.log(session);
   const router = useRouter();
 
   const { pathname, asPath, query, locale } = router;

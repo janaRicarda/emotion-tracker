@@ -4,6 +4,8 @@ import { useState } from "react";
 import Circle from "../public/icons/circle.svg";
 import Icon from "@mdi/react";
 import { mdiMagicStaff } from "@mdi/js";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const StyledProfileCircle = styled.article`
   width: 8rem;
@@ -91,6 +93,8 @@ export default function Profile({
   handleEditTheme,
   currentUser,
 }) {
+  const router = useRouter();
+  const { t: translate } = useTranslation(["common"]);
 
   const [showThemes, setShowThemes] = useState(false);
 
@@ -128,17 +132,20 @@ export default function Profile({
   return (
     <>
       <StyledTitleWrapper>
-        <StyledTitle>Hi {userName}!</StyledTitle>
+        <StyledTitle>
+          {translate("hi")}
+          {userName}!
+        </StyledTitle>
         <StyledProfileCircle> {userNameInitials} </StyledProfileCircle>
-        <StyledParagraph>this is your profile-page</StyledParagraph>
+        <StyledParagraph>{translate("thisIsYourProfilePage")}</StyledParagraph>
       </StyledTitleWrapper>
-      <StyledParagraph>Account-name: {userEmail}</StyledParagraph>
       <StyledParagraph>
-        Make yourself at home and turn on your favorite illumination
+        {translate("accountName")} {userEmail}
       </StyledParagraph>
+      <StyledParagraph>{translate("makeYourselfAtHome")} </StyledParagraph>
 
       <StyledColorSchemesButton onClick={handleShowThemes}>
-        Choose your preferred theme{" "}
+        {translate("choosePreferredTheme")}{" "}
         <Icon path={mdiMagicStaff} size={0.9} color="var(--main-dark)" />
       </StyledColorSchemesButton>
       {showThemes && (

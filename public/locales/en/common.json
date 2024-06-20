@@ -66,5 +66,10 @@
   "moreAbout": "more about ",
   "moreCharts": "more charts ",
   "addEntry": "Add new Entry",
-  "manual": "manual"
+  "manual": "manual",
+  "hi": "Hi ",
+  "thisIsYourProfilePage": "this is your profile-page",
+  "accountName": "account-name: ",
+  "makeYourselfAtHome": "Make yourself at home and turn on your favorite illumination",
+  "choosePreferredTheme": "Choose your preferred theme"
 }
