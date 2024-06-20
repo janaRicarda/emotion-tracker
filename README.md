@@ -1,19 +1,44 @@
-# New Next Project
+# Capstone Project: What A Feeling - Emotion Tracker
 
-### Local Development
+![Logo](public/images/blau%20orange%20aquarell%20blumen%20Logo%20(500%20x%20250%20px).png)
 
-To work locally, please install the dependencies using `npm i` first.
+short description
 
-Run `npm run dev` to start a development server and open the displayed URL in a browser.
+## Demo:
 
-Use `npm run test` to run the tests.
+You can find the hosted version on Vercel: [Demo Version of What a Feeling](https://what-a-feeling.vercel.app/)
 
-### Scripts
+**Important:** This App was developed mobile-first and was made responsive for a broad range of devices. 
 
-You can use the following commands:
+![App screens]()
 
-- `npm run dev` to start a development server
-- `npm run build` to build the project
-- `npm run start` to start a production server
-- `npm run test` to run the tests
-- `npm run lint` to run the linter
+## Tech Stack
+
+- React
+- Next.JS
+- React/Next Hooks
+- nextAuth
+- JavaScript
+- styled-components
+- mongoDB
+- Node.js
+- Vercel
+- Libraries:
+  - Plotly
+  - mongoose
+  - fuse.js
+  - plotly
+  - swr
+  - hamburger-react
+  - date-fns
+  - i18next
+  - react-day-picker 
+
+## Project Setup
+
+- Clone this repository
+- Install all dependencies with `$ npm install`
+- Run app in dev mode with `$ npm run dev`
+- Server: [http://localhost:3000/](http://localhost:3000/)
+- only usable in demo-mode without api keys
+
