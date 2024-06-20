@@ -217,7 +217,7 @@ export default function HomePage({
   const xValues = calculateTensionChartData(filteredEntries).xValues;
   const yValues = calculateTensionChartData(filteredEntries).yValues;
 
-  const { t: translate } = useTranslation(["common"]);
+  const { t: translate } = useTranslation(["common", "navigation"]);
 
   useEffect(() => {
     handleToolTip({
@@ -360,7 +360,7 @@ export default function HomePage({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(locale, ["common", "navigation"])),
     },
   };
 }
