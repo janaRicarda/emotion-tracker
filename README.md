@@ -2,7 +2,13 @@
 
 ![Logo](<public/images/blau%20orange%20aquarell%20blumen%20Logo%20(500%20x%20250%20px).png>)
 
-What A Feeling is an emotion tracker, an app which helps people to document, analyse and understand their feelings. It features ...
+What A Feeling is an emotion tracker - an app which helps people to track, analyse and understand their feelings.
+
+The idea behind the app is based on the concept of the seven basic emotions by Paul Ekman.
+
+It adresses people who are attending behaviour therapy but can also be generally used by everyone who wants to explore themselves.
+
+It features a guided emotion logging, pretty data visuals, analytics as lists and charts, options for downloading and last but not least a cozy homefeeling with a theme of your choice.
 
 ## Demo:
 
@@ -33,6 +39,13 @@ You can find the hosted version on Vercel: [Demo Version of What a Feeling](http
   - i18next
   - react-day-picker
   - react-export-table
+
+## The Team
+
+- [Sonja Lerchl](https://github.com/ladydarkja)
+- [Jana May](https://github.com/janaRicarda)
+- [Christof Röhl](https://github.com/Xristof23)
+- [Jan Schwarz](https://github.com/JanPSchwarz)
 
 ## Project Setup
 
