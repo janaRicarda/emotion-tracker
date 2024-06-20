@@ -114,7 +114,8 @@ const BoldText = styled.span`
 const StyledForwardArrow = styled(ArrowBack)`
   width: 1rem;
   transform: rotate(180deg);
-  fill: var(--main-dark);
+  fill: ${({ $darkArrow }) =>
+    $darkArrow ? "var(--text-on-bright)" : "var(--main-dark)"};
 `;
 
 const ArrowWrapper = styled.div`
@@ -216,7 +217,7 @@ export default function HomePage({
       </Head>
 
       <DashboardTitle>
-        Hallo {session ? session.user.name : "demo user"}
+        Hi {session ? session.user.name : "demo user"}
       </DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
@@ -281,7 +282,7 @@ export default function HomePage({
                 <br></br>Intensity:{" "}
                 <ProgressBar $showDetails={showDetails} $progress={intensity} />
                 <ArrowWrapper>
-                  <StyledForwardArrow />
+                  <StyledForwardArrow $darkArrow />
                   <BoldText>more details</BoldText>
                 </ArrowWrapper>
               </>
