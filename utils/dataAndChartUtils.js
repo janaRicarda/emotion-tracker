@@ -43,32 +43,25 @@ export function compareHightToLow(a, b) {
 }
 
 //dashboard
-export function getShortEmotionDescription(emotion) {}
-
 export function getNewestEmotion(entries) {
   const sevenEmotions = emotionData.map((element) => element.name);
   const newestEmotionEntry = entries.find(
     (entry) => sevenEmotions.includes(entry.emotion) === true
-  );
+  ) || {
+    emotion: "Joy",
+  };
   const { emotion } = newestEmotionEntry;
   const slug = emotionData
     .filter((element) => element.name === emotion)
     .map((element) => element.slug);
-  const emotionDescription = emotionData
-    .filter((element) => element.name === emotion)
-    .map((element) => element.description);
-  const shortDescription = emotionDescription[0].substring(0, 42) + " ...";
-
   const newestEmotionObject = {
     ...newestEmotionEntry,
     slug,
-    description: shortDescription,
   };
   return newestEmotionObject;
 }
 
 export function getTimeSinceLastEntry(entries) {
-  // const lastEntryTimeStamp = entries.toSorted(compareHightToLow)[0].timeStamp;
   const lastEntryTimeStamp = entries[0].timeStamp;
   const timeStampNow = Date.now();
   const minutesSinceLastEntry = Math.abs(

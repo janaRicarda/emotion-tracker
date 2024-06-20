@@ -175,9 +175,16 @@ export default function HomePage({
   const showDetails = true;
 
   //dashboard logic
-  const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
-  const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
-  const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
+  const dashboardEntries =
+    emotionEntries.length === 0
+      ? []
+      : emotionEntries.toSorted(compareHightToLow);
+  const averageEntriesPerDay =
+    emotionEntries.length === 0 ? 0 : getAveragePerDay(dashboardEntries);
+  const timeSinceLastEntry =
+    emotionEntries.length === 0
+      ? "You did not make any entries yet!"
+      : getTimeSinceLastEntry(dashboardEntries);
   const { emotion, intensity, slug, id, _id } =
     getNewestEmotion(dashboardEntries);
 
@@ -237,11 +244,17 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
-              hours ago. <br></br>
-              <BoldText>Your average: </BoldText>
-              <br></br>
-              {averageEntriesPerDay} entries per day.
+              <BoldText>Last entry: </BoldText> <br></br>{" "}
+              {emotionEntries.length === 0 ? (
+                <>You did not make any entries yet!</>
+              ) : (
+                <>
+                  {timeSinceLastEntry} hours ago. <br></br>
+                  <BoldText>Your average: </BoldText>
+                  <br></br>
+                  {averageEntriesPerDay} entries per day.
+                </>
+              )}
               <ArrowWrapper>
                 <StyledForwardArrow />
                 <BoldText>add new entry</BoldText>

@@ -54,7 +54,8 @@ export default function App({
     }
   );
 
-  const initialData = generateCompleteData(40);
+  // const initialData = generateCompleteData(40);
+  const initialData = [];
 
   // use-effect with empty dependency-array so generateCompleteData is only called when localStorageState of emotionEntries is empty AND there is a hard reload of the page
   useEffect(() => {
