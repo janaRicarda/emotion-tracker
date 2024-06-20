@@ -15,6 +15,7 @@ export default function EmotionEntry({
   emotionEntries,
   handleToolTip,
   useExampleData,
+  locale,
 }) {
   const { t: translate } = useTranslation(["emotions"]);
 
@@ -56,6 +57,7 @@ export default function EmotionEntry({
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
         id={id}
+        locale={locale}
       />
     </>
   );

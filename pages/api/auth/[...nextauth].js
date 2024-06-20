@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions = {
   providers: [
     GithubProvider({
-      clientID: process.env.GITHUB_ID,
+      clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
     CredentialsProvider({
@@ -26,6 +26,14 @@ export const authOptions = {
           return {
             name: "New feeling",
             email: "test@example.com",
+          };
+        } else if (
+          credentials.username === "emotion" &&
+          credentials.password === "emotion"
+        ) {
+          return {
+            name: "emotion lover",
+            email: "emotion@example.com",
           };
         } else {
           return null;

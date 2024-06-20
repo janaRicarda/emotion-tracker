@@ -13,6 +13,7 @@ import {
 } from "@/SharedStyledComponents";
 import { darkTheme } from "./Theme";
 import { useTranslation } from "next-i18next";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const StyledEmotionForm = styled(StyledForm)`
   border-radius: 10px;
@@ -98,6 +99,7 @@ export default function EmotionForm({
   onSubmit,
   id,
   correspondingEntry,
+  locale,
 }) {
   const router = useRouter();
 
@@ -106,7 +108,7 @@ export default function EmotionForm({
   const emotionData = translate("emotionData", { returnObjects: true });
 
   const {
-    timeAndDate,
+    timeStamp,
     emotion,
     tensionLevel,
     subemotion,
@@ -225,9 +227,10 @@ export default function EmotionForm({
           ? `${translate("recordYour")} ${emotionValue}`
           : `Record your Emotion-Entry`}
       </StyledTitle>
+
       <p aria-label={translate("dateTimeAriaLabel")}>
-        {editMode ? `${translate("entryFrom")}: ` : `${translate("date")}: `}
-        {timeAndDate}
+        {editMode ? `${translate("entryFrom")}: ` : `${translate("date")}:`}{" "}
+        {getCurrentTimeAndDate(locale, timeStamp)}
       </p>
       <TensionLabelEdit htmlFor="tension-level">
         {translate("chooseIntensity")}

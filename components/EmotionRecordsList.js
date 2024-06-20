@@ -109,6 +109,13 @@ const StyledMarkedHighlight = styled(HighlightIconMarked)`
   border-radius: 50%;
 `;
 
+const StyledDemoIndicator = styled.div`
+  font-weight: 100;
+  font-size: 0.65rem;
+  padding: 0 2rem 0;
+  color: var(--main-dark);
+`;
+
 export default function EmotionRecordsList({
   shownEntries,
   onDeleteEmotionEntry,
@@ -117,6 +124,7 @@ export default function EmotionRecordsList({
   useExampleData,
   buttonState,
   locale,
+  dashboardId,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -135,6 +143,11 @@ export default function EmotionRecordsList({
       [id]: !prevShow[id],
     }));
   }
+
+  //showing details of last emotion entry when linked from dashboard
+  useEffect(() => {
+    handleShowDetails(dashboardId);
+  }, [dashboardId]);
 
   function handleShowConfirmMessage(id) {
     setShowConfirmMessage((prevShow) => ({
@@ -178,7 +191,7 @@ export default function EmotionRecordsList({
             ({
               id,
               _id,
-              timeAndDate,
+              timeStamp,
               tensionLevel,
               isoDate,
               trigger,
@@ -188,7 +201,7 @@ export default function EmotionRecordsList({
               emotion,
               subemotion,
               isHighlighted,
-              timeStamp,
+              isGenerated,
             }) => {
               return (
                 <section key={useExampleData ? id : _id}>
@@ -210,7 +223,9 @@ export default function EmotionRecordsList({
                           }
                         />
                       )}
-
+                      {isGenerated && (
+                        <StyledDemoIndicator>fake entry</StyledDemoIndicator>
+                      )}
                       <StyledParagraph
                         onClick={() =>
                           handleShowDetails(useExampleData ? id : _id)

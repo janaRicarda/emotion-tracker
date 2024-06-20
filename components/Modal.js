@@ -54,14 +54,19 @@ export default function StartModal({
         <StyledParagraph>{translate("loginCredentials")}</StyledParagraph>
         <StyledLoginButton
           onClick={() => {
-            signIn();
+            signIn(undefined, { callbackUrl: "/" });
             handleDemoModeOff();
           }}
         >
           Login
         </StyledLoginButton>
+
         <StyledParagraph>{translate("useAppDemo")}</StyledParagraph>
-        <StyledLoginButton onClick={handleDemoMode}>
+        <StyledLoginButton
+          onClick={() => {
+            handleDemoMode();
+          }}
+        >
           demo-mode
         </StyledLoginButton>
       </StyledArticle>

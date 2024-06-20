@@ -53,6 +53,7 @@ html {
   --box-shadow-tooltip: ${({ theme }) => theme.boxShadowTooltip};
   --highlight-background: ${({ theme }) => theme.highlightBackground};
   --highlight-lines: ${({ theme }) => theme.highlightedLines};
+  --profile: ${({ theme }) => theme.profile};
 }
   body {
     margin: 0;

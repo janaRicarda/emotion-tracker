@@ -1,89 +1,148 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { uid } from "uid";
+import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import {
   StyledWrapper,
-  StyledButton,
   StyledStandardLink,
   StyledInput,
-  StyledForm,
   StyledFlexColumnWrapper,
 } from "@/SharedStyledComponents";
+import ToggleSwitch from "@/components/ToggleSwitch";
+import {
+  getAveragePerDay,
+  getTimeSinceLastEntry,
+  calculateTensionChartData,
+  getFilteredEntriesV2,
+  getNewestEmotion,
+  compareHightToLow,
+} from "@/utils/dataAndChartUtils";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import Head from "next/head";
+import ArrowBack from "./../public/icons/arrow-left.svg";
+import { shortEmotionDescriptions } from "@/lib/db";
+import DashboardChart from "@/components/DashboardChart";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { breakpoints } from "@/utils/breakpoints";
-import Head from "next/head";
-import ToggleSwitch from "@/components/ToggleSwitch";
-import Icon from "@mdi/react";
-import { useRouter } from "next/router";
 
-const StyledTensionForm = styled(StyledForm)`
-  margin: 1rem;
-  padding: 1rem;
-  align-items: center;
-  width: 80vw;
-  background: var(--section-background);
+const ProgressBar = styled.div`
+  width: 42%;
+  max-width: 200px;
+  height: 0.8rem;
+  border: 1px solid var(--contrast-text);
+  position: relative;
+  display: inline-block;
+  margin: 0 0.5rem 0 0;
   border-radius: 6px;
-  @media ${breakpoints.mobileLandscape} {
-    height: 60vh;
-    padding: 1rem;
-    margin-top: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    height: 60%;
+    width: ${({ $progress, $showDetails }) =>
+      $showDetails ? `${$progress}%` : "0"};
+    background: var(--main-bright);
+    border-radius: 6px;
+    transition: width 400ms;
+    transition-delay: ${({ $showDetails }) => ($showDetails ? "500ms" : "0ms")};
   }
-  @media ${breakpoints.tablet} {
-    width: 60vw;
-  }
-  @media ${breakpoints.laptop} {
-    width: 40vw;
-  }
 `;
 
-const StyledTensionLabel = styled.label`
-  padding: 1rem 1rem 2rem;
-  text-align: center;
+const DashboardTitle = styled(StyledTitle)`
+  margin-top: -1.5rem;
 `;
 
-const StyledSpan = styled.span`
-  padding: 0.6rem 0 0;
-  font-size: 1.2rem;
-`;
-
-const StyledTensionDisplay = styled.p`
-  font-size: 1.2rem;
-  margin: 0 0 1rem;
-`;
-
-const StyledMessage = styled.p`
-  align-self: center;
-  text-align: center;
-  font-weight: 600;
-  margin: 1rem auto;
-`;
-
-const StyledButtonWrapper = styled(StyledWrapper)`
+const DashboardSection = styled.section`
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  grid-template-rows: 3.8fr 3.8fr ${({ $gridFactor }) => `${$gridFactor}fr`};
+  color: var(--main-dark);
+  gap: ${({ $gap }) => `${$gap}rem`};
+  width: 90vw;
+  min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
+  height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
+  max-width: 1200px;
+  max-height: 1200px;
+  margin: 0;
+  align-items: center;
+  border-radius: 18px;
   justify-content: center;
 `;
-
-const SaveButton = styled(StyledButton)`
-  border: none;
+const GridElement = styled.div`
+  display: flex;
+  color: var(--main-dark);
+  flex-direction: column;
+  border-radius: 18px;
+  padding: 0.5rem;
+  min-height: 110px;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+  box-shadow: var(--box-shadow);
+  border: var(--circle-border);
+`;
+const ChartElement = styled.div`
+  grid-column: 1 / 3;
+  border-radius: 18px;
+  padding: 0;
+  min-height: 170px;
+  height: 100%;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+  box-shadow: var(--box-shadow);
+  border: var(--circle-border);
+`;
+const ElementText = styled.p`
+  color: var(--main-dark);
+  font-size: ${({ $fontSize }) => `${$fontSize}rem`};
+  line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
+  text-align: left;
+  padding: 0.5rem 0.42rem;
+  margin: 0.1rem;
+  border-radius: 12px;
 `;
 
-const StyledBackButton = styled.input`
-  width: 10rem;
-  text-decoration: none;
-  color: var(--contrast-text);
-  margin: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border-style: none;
-  text-align: center;
-  background-color: var(--button-background);
+const EmotionText = styled(ElementText)`
+  color: var(--text-on-bright);
+  padding: 0.42rem;
+  margin: -5px 0.5rem 0.5rem;
+  background: ${({ $color }) =>
+    $color ? $color : "var(--section-background)"};
+  width: 92%;
 `;
-const StyledAddDetailsLink = styled(StyledStandardLink)`
-  color: var(--contrast-text);
-  width: 10rem;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  background-color: var(--button-background);
+const BoldText = styled.span`
+  font-weight: 600;
+`;
+
+const StyledForwardArrow = styled(ArrowBack)`
+  width: 1rem;
+  transform: rotate(180deg);
+  fill: var(--main-dark);
+`;
+
+const ArrowWrapper = styled.div`
+  display: flex;
+  padding: 0.4rem 0;
+`;
+
+const ChartLinkWrapper = styled.section`
+  margin-top: -2.5rem;
+  position: relative;
+  left: 5%;
+  width: 280px;
+  display: flex;
+  z-index: 3;
+`;
+
+const DashboardLink = styled(StyledStandardLink)`
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  padding: 0;
 `;
 
 const ToggleContainer = styled.div`
@@ -103,22 +162,67 @@ const SwitchSizer = styled.span`
 `;
 
 export default function HomePage({
-  onAddEmotionEntry,
   handleToolTip,
   emotionEntries,
-  useExampleData,
+  theme,
+  locale,
+  onHandleGridEmotion,
+  onHandleChartLink,
+  demoMode,
+  handleChartRef,
 }) {
   const router = useRouter();
 
-  const { pathname, asPath, query, locale, defaultLocale } = router;
+  const { pathname, asPath, query, locale } = router;
 
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [id, setId] = useState();
-  const [tension, setTension] = useState(0);
 
-  const newestDbEntryID = emotionEntries?.length
-    ? emotionEntries[emotionEntries.length - 1]?._id
-    : null;
+  const { data: session } = useSession();
+
+  //make dashboard responsive
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  function updateWidth() {
+    setWindowWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  const dashboardWidth = Math.min(
+    1080,
+    Math.max(344, Math.round(windowWidth / 2))
+  );
+  const gridFactor = 1.9 + windowWidth / 100;
+  const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 6);
+  const fontSize = Math.min(1.24, Math.max(0.8, windowWidth / 1000));
+
+  //for ProgressBar
+  const showDetails = true;
+
+  //dashboard logic
+  const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
+  const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
+  const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
+  const { emotion, intensity, slug, id, _id } =
+    getNewestEmotion(dashboardEntries);
+
+  function handleGridEmotion(id) {
+    router.push("/emotion-records");
+    onHandleGridEmotion(id);
+  }
+
+  function handleChartLink() {
+    router.push("/emotion-records");
+    onHandleChartLink();
+  }
+
+  //chart logic
+  const today = new Date().toISOString();
+  const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
+  const xValues = calculateTensionChartData(filteredEntries).xValues;
+  const yValues = calculateTensionChartData(filteredEntries).yValues;
 
   const { t: translate } = useTranslation("common");
 
@@ -128,91 +232,119 @@ export default function HomePage({
     });
   }, [translate]);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    const newId = uid();
-
-    onAddEmotionEntry(data, newId);
-    setId(newId);
-    setIsFormSubmitted(!isFormSubmitted);
-  }
-
   function handleChangeLanguage() {
     const newLocale = locale === "en" ? "de" : "en";
     router.push({ pathname, query }, asPath, { locale: newLocale });
   }
+
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-      <StyledFlexColumnWrapper>
-        <ToggleContainer>
-          en
-          <SwitchSizer>
-            <ToggleSwitch
-              handleSwitch={handleChangeLanguage}
-              useButtonColor={true}
-            />
-          </SwitchSizer>
-          de
-        </ToggleContainer>
-        <StyledTensionForm onSubmit={handleSubmit}>
-          <StyledTensionLabel htmlFor="tension-level">
-            {translate("introQuestion")}
-          </StyledTensionLabel>
-          <StyledInput
-            aria-label={translate("inputAriaLabel")}
-            id="tension-level"
-            name="tensionLevel"
-            type="range"
-            value={tension}
-            $value={tension}
-            max={100}
-            onChange={(event) => setTension(event.target.value)}
+
+      <DashboardTitle>
+        Hallo {session ? session.user.name : "demo user"}
+      </DashboardTitle>
+      <DashboardSection
+        $dashboardWidth={dashboardWidth}
+        $dashboardHeight={dashboardHeight}
+        $gap={fontSize * 0.25}
+        $gridFactor={gridFactor}
+      >
+        <GridElement>
+          <DashboardLink href="/app-manual">
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+              Track and explore your feelings... how? <br></br>You can look at
+              the
+              <ArrowWrapper>
+                {" "}
+                <StyledForwardArrow />
+                <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+                  {" "}
+                  manual
+                </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </DashboardLink>
+        </GridElement>
+        <GridElement>
+          <DashboardLink href="/add-entry">
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+              <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
+              hours ago. <br></br>
+              <BoldText>Your average: </BoldText>
+              <br></br>
+              {averageEntriesPerDay} entries per day.
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>add new entry</BoldText>
+              </ArrowWrapper>
+            </ElementText>
+            <ElementText
+              $fontSize={fontSize}
+              $lineHeight={fontSize * 0.5}
+            ></ElementText>
+          </DashboardLink>
+        </GridElement>
+
+        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+            Last recorded emotion:
+          </ElementText>
+          <EmotionText
+            $fontSize={fontSize}
+            $lineHeight={fontSize * 1.3}
+            $color={`var(--${slug})`}
+          >
+            <BoldText>{emotion}</BoldText>
+            <br></br>Intensity:{" "}
+            <ProgressBar $showDetails={showDetails} $progress={intensity} />
+            {intensity} %
+          </EmotionText>
+        </GridElement>
+        <GridElement>
+          <DashboardLink href={`/emotions/${slug}`}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
+              <BoldText>{emotion}</BoldText>
+              <br></br> {shortEmotionDescriptions[emotion]}
+              <ArrowWrapper>
+                {" "}
+                <StyledForwardArrow />
+                <BoldText>more about {slug} </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </DashboardLink>
+        </GridElement>
+        <ChartElement>
+          <DashboardChart
+            theme={theme}
+            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
+            heightFactor={0.46}
+            shownEntries={emotionEntries}
+            xValues={xValues}
+            yValues={yValues}
+            autosize={false}
+            showSwitches={false}
+            locale={locale}
+            handleChartRef={handleChartRef}
           />
-          <StyledWrapper>
-            <StyledSpan>0</StyledSpan>
-            <StyledSpan>100</StyledSpan>
-          </StyledWrapper>
-
-          {!isFormSubmitted && (
-            <>
-              <StyledTensionDisplay>{tension}</StyledTensionDisplay>
-              <SaveButton type="submit">{translate("save")}</SaveButton>
-            </>
-          )}
-
-          {isFormSubmitted && (
-            <>
-              <StyledMessage>{translate("successMessage")}</StyledMessage>
-              <StyledButtonWrapper>
-                <StyledBackButton
-                  type="reset"
-                  value={translate("done")}
-                  onClick={() => {
-                    setIsFormSubmitted(!isFormSubmitted);
-                    setTension("0");
-                  }}
-                />
-
-                <StyledAddDetailsLink
-                  href={{
-                    pathname: "/create",
-                    query: { id: useExampleData ? id : newestDbEntryID },
-                  }}
-                  forwardedAs={`/create`}
-                >
-                  {translate("addMoreDetails")}
-                </StyledAddDetailsLink>
-              </StyledButtonWrapper>
-            </>
-          )}
-        </StyledTensionForm>
-      </StyledFlexColumnWrapper>
+          <ChartLinkWrapper onClick={handleChartLink}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>more charts </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </ChartLinkWrapper>
+        </ChartElement>
+      </DashboardSection>
     </>
   );
 }

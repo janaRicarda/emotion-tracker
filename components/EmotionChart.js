@@ -1,17 +1,19 @@
 import Plot from "react-plotly.js";
 import styled from "styled-components";
+import { useRef, useEffect } from "react";
 
 const StyledChartSection = styled.section`
   background-color: var(--section-background);
   align-self: center;
   color: var(--contrast-text);
   border-radius: 6px;
-  border: var(--circle-border);
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.5rem;
 `;
 
 export default function EmotionChart({
+  isExportable,
+  handleChartRef,
   xValues,
   yValues,
   title,
@@ -20,7 +22,15 @@ export default function EmotionChart({
   theme,
   type,
   width,
+  height,
+  autosize,
 }) {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    isExportable ? handleChartRef(chartRef) : null;
+  });
+
   return (
     <StyledChartSection>
       {xValues.length < 2 ? (
@@ -36,9 +46,12 @@ export default function EmotionChart({
               marker: { color: theme.buttonBackground },
             },
           ]}
-          config={{ displayModeBar: false, scrollZoom: true }}
+          config={{
+            displayModeBar: isExportable ? true : false,
+            scrollZoom: true,
+          }}
           layout={{
-            font: { color: theme.text },
+            font: { color: theme.text, size: 10 },
             paper_bgcolor: theme.sectionBackground,
             border_radius: 6,
             plot_bgcolor: theme.background,
@@ -46,7 +59,8 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: xTitle },
               font: {
-                size: 15,
+                family: "system-ui",
+                size: 10,
                 color: theme.text,
               },
               automargin: true,
@@ -55,20 +69,26 @@ export default function EmotionChart({
               gridcolor: theme.text,
               title: { text: yTitle },
               font: {
-                size: 15,
+                family: "system-ui",
+                size: 10,
                 color: theme.text,
               },
             },
             width: width,
+            height: height,
             title: {
               text: title,
               font: {
                 family: "system-ui",
+                size: 15,
               },
             },
-            autosize: true,
-            margin: { autoexpand: true, b: 40, l: 30, r: 30, t: 50 },
+            autosize: autosize,
+            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 30 },
           }}
+          ref={chartRef}
+          onInitialized={(graphDiv) => (chartRef.current = { el: graphDiv })}
+          onUpdate={(graphDiv) => (chartRef.current = { el: graphDiv })}
         />
       )}
     </StyledChartSection>

@@ -1,16 +1,18 @@
-import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import styled, { css } from "styled-components";
-import FilterEmotionEntries from "@/components/FilterEmotionEntries";
-import ToggleSwitch from "@/components/ToggleSwitch";
-import { useState, useCallback, useEffect, useRef } from "react";
+
+import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
+import Head from "next/head";
+import { useState, useCallback, useEffect } from "react";
 import CalendarIcon from "/public/icons/calendar.svg";
-import EmotionRecordsList from "../components/EmotionRecordsList";
-import SmallFilterPanel from "@/components/SmallFilterPanel";
 import ChartContainer from "@/components/ChartContainer";
+import EmotionRecordsList from "../components/EmotionRecordsList";
+import Export from "@/components/Export";
+import FilterEmotionEntries from "@/components/FilterEmotionEntries";
+import SmallFilterPanel from "@/components/SmallFilterPanel";
+import ToggleSwitch from "@/components/ToggleSwitch";
 import Icon from "@mdi/react";
 import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
-import Head from "next/head";
 import HighlightIcon from "../public/icons/highlight-icon.svg";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -159,6 +161,7 @@ const StyledWrapper = styled.div`
 
 const GraphToggleWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: 0.3rem;
 
   & > label {
@@ -175,6 +178,8 @@ export default function EmotionRecords({
   theme,
   locale,
   useExampleData,
+  dashboardId,
+  showChartForDashboardLink,
 }) {
   const { t: translate } = useTranslation(["emotion-records"]);
 
@@ -192,6 +197,7 @@ export default function EmotionRecords({
 
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
+  const [chartRefForDownload, setChartRefForDownload] = useState(null);
 
   useEffect(() => {
     handleToolTip({
@@ -255,14 +261,16 @@ export default function EmotionRecords({
     document.addEventListener("keydown", handleEscapeKey);
   });
 
-  function closeOnKey(event) {
-    if (event.code === "Enter") {
-      setShowFilter(false);
-    }
-  }
-
   function handleChart() {
     setChartIsShown(!chartIsShown);
+  }
+
+  useEffect(() => {
+    showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
+  }, [showChartForDashboardLink]);
+
+  function handleChartRef(ref) {
+    setChartRefForDownload(ref);
   }
 
   return (
@@ -274,7 +282,7 @@ export default function EmotionRecords({
       <StyledHeading $isScrollDown={isScrollDown}>
         {translate("emotionRecordsTitle")}
       </StyledHeading>
-      <GridWrapper onKeyDown={closeOnKey} $show={showFilter}>
+      <GridWrapper $show={showFilter}>
         <ControllOverflow>
           <FilterEmotionEntries
             emotionEntries={emotionEntries}
@@ -334,6 +342,13 @@ export default function EmotionRecords({
               {translate("results")} {shownEntries.length}
             </p>
             <GraphToggleWrapper>
+              <Export
+                chartRefForDownload={chartRefForDownload}
+                chartIsShown={chartIsShown}
+                exportData={shownEntries}
+                buttonState={buttonState}
+                selectedCustomDate={selectedTime}
+              />
               <Icon path={mdiFormatListBulleted} size={1} />
               <ToggleSwitch
                 handleSwitch={handleChart}
@@ -347,16 +362,19 @@ export default function EmotionRecords({
 
         {shownEntries.length !== 0 && !chartIsShown && (
           <EmotionRecordsList
+            locale={locale}
+            buttonState={buttonState}
             onDeleteEmotionEntry={onDeleteEmotionEntry}
             toggleHighlight={toggleHighlight}
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
-            locale={locale}
+            dashboardId={dashboardId}
           />
         )}
         {chartIsShown && (
           <ChartContainer
+            handleChartRef={handleChartRef}
             shownEntries={shownEntries}
             theme={theme}
             locale={locale}
