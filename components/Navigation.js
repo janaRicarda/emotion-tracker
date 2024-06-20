@@ -5,6 +5,7 @@ import { breakpoints } from "@/utils/breakpoints";
 import { useTranslation } from "next-i18next";
 import { useSession } from "next-auth/react";
 import Login from "./Login";
+import { useRouter } from "next/router";
 
 const slideIn = keyframes`
 0% {transform: translateX(-100%)}
@@ -69,6 +70,8 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
   const { data: session } = useSession();
   // delay of isOpen-state to give time for animation
   const [delayOpen, setDelayedOpen] = useState(false);
+  const router = useRouter();
+  const { t: translate } = useTranslation(["navigation", "common"]);
 
   useEffect(() => {
     setTimeout(() => {

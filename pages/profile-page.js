@@ -5,14 +5,22 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import Loader from "@/components/Loader";
 import ErrorMessage from "@/components/ErrorMessage";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function ProfilePage({ theme, customTheme, handleToolTip }) {
   const { data: session, status } = useSession();
 
+  const router = useRouter();
+
+  const { pathname, asPath, query, locale } = router;
+
+  const { t: translate } = useTranslation(["emotions", "common"]);
+
   useEffect(() => {
     handleToolTip(false);
   });
-
   const {
     data: currentUser,
     isLoading,
@@ -44,7 +52,7 @@ export default function ProfilePage({ theme, customTheme, handleToolTip }) {
     createUser();
   }, [session.user.email, session.user.name, error]);
 
-  if (isLoading) return <Loader itemText={"Is Loading"} />;
+  if (isLoading) return <Loader itemText={translate("isLoading")} />;
 
   if (error) return <ErrorMessage errorMessage={error.message} />;
 
@@ -84,7 +92,7 @@ export default function ProfilePage({ theme, customTheme, handleToolTip }) {
   const userEmail = session.user.email;
 
   if (status !== "authenticated") {
-    return <h2>Access denied! You have to be logged in, to see this page</h2>;
+    return <h2>{translate("accessDenied")}</h2>;
   }
   return (
     <>
@@ -102,4 +110,12 @@ export default function ProfilePage({ theme, customTheme, handleToolTip }) {
       />
     </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["emotions", "common"])),
+    },
+  };
 }

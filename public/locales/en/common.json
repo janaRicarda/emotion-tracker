@@ -53,26 +53,18 @@
   "graphTension": "Tension",
   "graphEmotion": "Emotion",
   "graphIntensity": "Intensity",
-  "chartPresets": [
-    {
-      "tension": {
-        "title": "Tension Chart",
-        "xTitle": "time",
-        "yTitle": "tension",
-        "scatter": true
-      },
-      "emotionShares": {
-        "title": "Emotion Shares",
-        "xTitle": "emotion",
-        "yTitle": "percentage",
-        "scatter": false
-      },
-      "emotionIntensity": {
-        "title": "Average Intensities of Emotions",
-        "xTitle": "emotion",
-        "yTitle": "average intensity",
-        "scatter": false
-      }
-    }
-  ]
+  "accessDenied": "Access denied! You have to be logged in, to see this page",
+  "hello": "Hello",
+  "trackFeelings": "Track and explore your feelings... how? ",
+  "youCanLookAtThe": "You can look at the",
+  "lastEntry": "Last entry: ",
+  "hoursAgo": "hours ago. ",
+  "yourAverage": "Your average: ",
+  "entriesPerDay": "entries per day.",
+  "lastRecordedEmotion": "Last recorded emotion:",
+  "intensity": "Intensity:",
+  "moreAbout": "more about ",
+  "moreCharts": "more charts ",
+  "addEntry": "Add new Entry",
+  "manual": "manual"
 }

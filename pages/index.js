@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
-import {
-  StyledWrapper,
-  StyledStandardLink,
-  StyledInput,
-  StyledFlexColumnWrapper,
-} from "@/SharedStyledComponents";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import {
   getAveragePerDay,
@@ -165,7 +159,6 @@ export default function HomePage({
   handleToolTip,
   emotionEntries,
   theme,
-  locale,
   onHandleGridEmotion,
   onHandleChartLink,
   demoMode,
@@ -224,7 +217,7 @@ export default function HomePage({
   const xValues = calculateTensionChartData(filteredEntries).xValues;
   const yValues = calculateTensionChartData(filteredEntries).yValues;
 
-  const { t: translate } = useTranslation("common");
+  const { t: translate } = useTranslation(["common"]);
 
   useEffect(() => {
     handleToolTip({
@@ -242,9 +235,18 @@ export default function HomePage({
       <Head>
         <title>Home</title>
       </Head>
-
+      <ToggleContainer>
+        en
+        <SwitchSizer>
+          <ToggleSwitch
+            handleSwitch={handleChangeLanguage}
+            useButtonColor={true}
+          />
+        </SwitchSizer>
+        de
+      </ToggleContainer>
       <DashboardTitle>
-        Hallo {session ? session.user.name : "demo user"}
+        {translate("hello")} {session ? session.user.name : "demo user"}
       </DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
@@ -255,14 +257,15 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/app-manual">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              Track and explore your feelings... how? <br></br>You can look at
-              the
+              {translate("trackFeelings")}
+              <br></br>
+              {translate("youCanLookAtThe")}
               <ArrowWrapper>
                 {" "}
                 <StyledForwardArrow />
                 <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
                   {" "}
-                  manual
+                  {translate("manual")}
                 </BoldText>
               </ArrowWrapper>
             </ElementText>
@@ -271,14 +274,15 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
-              hours ago. <br></br>
-              <BoldText>Your average: </BoldText>
+              <BoldText>{translate("lastEntry")}</BoldText> <br></br>{" "}
+              {timeSinceLastEntry} {translate("hoursAgo")}
               <br></br>
-              {averageEntriesPerDay} entries per day.
+              <BoldText>{translate("yourAverage")}</BoldText>
+              <br></br>
+              {averageEntriesPerDay} {translate("entriesPerDay")}
               <ArrowWrapper>
                 <StyledForwardArrow />
-                <BoldText>add new entry</BoldText>
+                <BoldText>{translate("addEntry")}</BoldText>
               </ArrowWrapper>
             </ElementText>
             <ElementText
@@ -290,7 +294,7 @@ export default function HomePage({
 
         <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
           <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-            Last recorded emotion:
+            {translate("lastRecordedEmotion")}
           </ElementText>
           <EmotionText
             $fontSize={fontSize}
@@ -298,7 +302,8 @@ export default function HomePage({
             $color={`var(--${slug})`}
           >
             <BoldText>{emotion}</BoldText>
-            <br></br>Intensity:{" "}
+            <br></br>
+            {translate("intensity")}{" "}
             <ProgressBar $showDetails={showDetails} $progress={intensity} />
             {intensity} %
           </EmotionText>
@@ -314,7 +319,10 @@ export default function HomePage({
               <ArrowWrapper>
                 {" "}
                 <StyledForwardArrow />
-                <BoldText>more about {slug} </BoldText>
+                <BoldText>
+                  {translate("moreAbout")}
+                  {slug}{" "}
+                </BoldText>
               </ArrowWrapper>
             </ElementText>
           </DashboardLink>
@@ -339,7 +347,7 @@ export default function HomePage({
             >
               <ArrowWrapper>
                 <StyledForwardArrow />
-                <BoldText>more charts </BoldText>
+                <BoldText>{translate("moreCharts")}</BoldText>
               </ArrowWrapper>
             </ElementText>
           </ChartLinkWrapper>
@@ -352,7 +360,7 @@ export default function HomePage({
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "navigation"])),
+      ...(await serverSideTranslations(locale, ["common"])),
     },
   };
 }

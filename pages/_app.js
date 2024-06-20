@@ -344,7 +344,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
               scrollPosition={scrollPosition}
               toggleTheme={toggleTheme}
               handleTheme={handleTheme}
-              locale={locale}
               onHandleGridEmotion={deliverGridEmotion}
               onHandleChartLink={deliverChartVisibility}
               dashboardId={dashboardId}
