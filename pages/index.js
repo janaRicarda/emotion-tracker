@@ -274,14 +274,19 @@ export default function HomePage({
             $color={`var(--${slug})`}
           >
             Last recorded emotion: <br></br>
-            <BoldText>{emotion}</BoldText>
-            <br></br>Intensity:{" "}
-            <ProgressBar $showDetails={showDetails} $progress={intensity} />
-            {/* {intensity} % */}
-            <ArrowWrapper>
-              <StyledForwardArrow />
-              <BoldText>more details</BoldText>
-            </ArrowWrapper>
+            {emotionEntries.length === 0 ? (
+              <>You did not record any emotions yet!</>
+            ) : (
+              <>
+                <BoldText>{emotion}</BoldText>
+                <br></br>Intensity:{" "}
+                <ProgressBar $showDetails={showDetails} $progress={intensity} />
+                <ArrowWrapper>
+                  <StyledForwardArrow />
+                  <BoldText>more details</BoldText>
+                </ArrowWrapper>
+              </>
+            )}
           </EmotionText>
         </GridElement>
         <GridElement>
