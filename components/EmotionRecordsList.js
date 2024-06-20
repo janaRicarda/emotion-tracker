@@ -4,7 +4,7 @@ import TrashIcon from "../public/icons/trash-icon.svg";
 import PencilIcon from "../public/icons/pencil.svg";
 import ConfirmMessage from "./ConfirmMessage";
 import { useRouter } from "next/router";
-import { StyledButton, StyledList } from "@/SharedStyledComponents";
+import { StyledList } from "@/SharedStyledComponents";
 import DetailsSection from "./EmotionRecordsDetails";
 import HighlightIcon from "../public/icons/highlight-icon.svg";
 import HighlightIconMarked from "../public/icons/highlight-icon-marked.svg";

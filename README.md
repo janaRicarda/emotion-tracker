@@ -1,14 +1,14 @@
 # Capstone Project: What A Feeling - Emotion Tracker
 
-![Logo](public/images/blau%20orange%20aquarell%20blumen%20Logo%20(500%20x%20250%20px).png)
+![Logo](<public/images/blau%20orange%20aquarell%20blumen%20Logo%20(500%20x%20250%20px).png>)
 
-short description
+What A Feeling is an emotion tracker, an app which helps people to document, analyse and understand their feelings. It features ...
 
 ## Demo:
 
 You can find the hosted version on Vercel: [Demo Version of What a Feeling](https://what-a-feeling.vercel.app/)
 
-**Important:** This App was developed mobile-first and was made responsive for a broad range of devices. 
+**Important:** This App was developed mobile-first and was made responsive for a broad range of devices.
 
 ![App screens]()
 
@@ -24,15 +24,15 @@ You can find the hosted version on Vercel: [Demo Version of What a Feeling](http
 - Node.js
 - Vercel
 - Libraries:
-  - Plotly
+  - plotly
   - mongoose
   - fuse.js
-  - plotly
   - swr
   - hamburger-react
   - date-fns
   - i18next
-  - react-day-picker 
+  - react-day-picker
+  - react-export-table
 
 ## Project Setup
 
@@ -41,4 +41,3 @@ You can find the hosted version on Vercel: [Demo Version of What a Feeling](http
 - Run app in dev mode with `$ npm run dev`
 - Server: [http://localhost:3000/](http://localhost:3000/)
 - only usable in demo-mode without api keys
-
