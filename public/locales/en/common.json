@@ -71,5 +71,14 @@
   "thisIsYourProfilePage": "this is your profile-page",
   "accountName": "account-name: ",
   "makeYourselfAtHome": "Make yourself at home and turn on your favorite illumination",
-  "choosePreferredTheme": "Choose your preferred theme"
+  "choosePreferredTheme": "Choose your preferred theme",
+  "navigationManual": "manual",
+  "navigationBasicEmotions": "7 basic emotions",
+  "navigationAddEntry": "add entry",
+  "navigationEmotionRecords": "emotion records",
+  "navigationColorSchemes": "color schemes",
+  "warmTheme": "warm",
+  "coldTheme": "cold",
+  "neutralTheme": "neutral",
+  "highContrastTheme": "high contrast"
 }
