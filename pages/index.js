@@ -20,7 +20,7 @@ const ProgressBar = styled.div`
   width: 42%;
   max-width: 200px;
   height: 0.8rem;
-  border: 1px solid var(--contrast-text);
+  border: 1px solid var(--text-on-bright);
   position: relative;
   display: inline-block;
   margin: 0 0.5rem 0 0;
@@ -29,11 +29,10 @@ const ProgressBar = styled.div`
   &::after {
     content: "";
     position: absolute;
-    top: 20%;
-    height: 60%;
+    height: 100%;
     width: ${({ $progress, $showDetails }) =>
       $showDetails ? `${$progress}%` : "0"};
-    background: var(--main-bright);
+    background: var(--text-on-bright);
     border-radius: 6px;
     transition: width 400ms;
     transition-delay: ${({ $showDetails }) => ($showDetails ? "500ms" : "0ms")};
@@ -72,7 +71,7 @@ const GridElement = styled.div`
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-small);
   border: var(--circle-border);
 `;
 const ChartElement = styled.div`
@@ -84,7 +83,7 @@ const ChartElement = styled.div`
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-small);
   border: var(--circle-border);
 `;
 const ElementText = styled.p`

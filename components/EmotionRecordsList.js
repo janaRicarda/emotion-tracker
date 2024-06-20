@@ -23,7 +23,7 @@ const StyledRecordsList = styled(StyledList)`
 
 const StyledRecordListItem = styled.li`
   background-color: var(--section-background);
-  //border: 1px solid var(--main-dark);
+  border: var(--list-border);
   border-radius: 6px;
 `;
 

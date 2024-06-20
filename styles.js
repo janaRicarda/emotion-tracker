@@ -47,8 +47,10 @@ html {
   --manual6: ${({ theme }) => theme.manual6};
   --manual7: ${({ theme }) => theme.manual7};
   --box-shadow: ${({ theme }) => theme.boxShadow};
+  --box-shadow-small: ${({ theme }) => theme.boxShadowSmall};
   --emotion-border: ${({ theme }) => theme.emotionBorder};
   --circle-border: ${({ theme }) => theme.circleBorder};
+  --list-border: ${({ theme }) => theme.listBorder};
   --box-shadow-filter: ${({ theme }) => theme.boxShadowFilter};
   --box-shadow-tooltip: ${({ theme }) => theme.boxShadowTooltip};
   --highlight-background: ${({ theme }) => theme.highlightBackground};

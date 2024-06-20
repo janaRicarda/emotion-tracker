@@ -72,7 +72,7 @@ const StyledFilterButton = styled(StyledButton)`
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
   fill: ${({ $active }) =>
     $active ? "var(--contrast-text)" : "var(--main-dark)"};
-  border: 1px solid var(--contrast-text);
+  border: 1px solid var(--section-background);
 `;
 
 const StyledButtonGroup = styled.div`

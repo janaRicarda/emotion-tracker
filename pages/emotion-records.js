@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import Head from "next/head";
 import { useState, useCallback, useEffect } from "react";
-import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HighlightIcon from "../public/icons/highlight-icon.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import ChartContainer from "@/components/ChartContainer";
 import EmotionRecordsList from "../components/EmotionRecordsList";
@@ -112,12 +112,9 @@ const StyledLink = styled(StyledStandardLink)`
   color: var(--contrast-text);
 `;
 
-const StyledHeartSymbol = styled(HeartOutlineIcon)`
-  width: 1.4rem;
-  display: inline;
-  position: relative;
-  fill: var(--main-dark);
-  top: 5px;
+const StyledHighlightIcon = styled(HighlightIcon)`
+  width: 2rem;
+  height: 2rem;
 `;
 
 const StyledCalendarIcon = styled(CalendarIcon)`
@@ -333,7 +330,7 @@ export default function EmotionRecords({
             buttonState.highlightedButton ? (
               <StyledTextMessage>
                 You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.
+                <StyledHighlightIcon /> on a Entry to highlight it.
               </StyledTextMessage>
             ) : buttonState.todayButton ? (
               <StyledTextMessage>
