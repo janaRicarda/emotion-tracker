@@ -43,6 +43,7 @@ const StyledDetails = styled.details`
   background: var(--section-background);
   border-radius: 30px;
   padding: 0.5rem;
+  scroll-margin-top: 110px;
   margin-bottom: 1rem;
   &[open] {
     border: 0;
@@ -145,10 +146,12 @@ export default function Manual() {
   const [detailsOpen, setDetailsOpen] = useState({});
 
   function handleManualScroll(id) {
-    const element = document.getElementById(id);
-    console.log(id);
-    console.log("handlemanualscroll");
-    element.scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      console.log(id);
+      console.log("handlemanualscroll");
+      element.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   }
 
   return (
@@ -170,18 +173,9 @@ export default function Manual() {
               [index]: index,
               show: prev[index] === index ? !prev.show : true,
             }));
-            console.log(detailsOpen.show);
-            const id = index;
-            handleManualScroll(id);
-            // detailsOpen.show === true
-            //   ? handleManualScroll(question.slice(-4))
-            //   : scrollTo({
-            //       top: 20,
-            //       behavior: "smooth",
-            //     });
+            handleManualScroll(index);
           }}
           key={question}
-          // id={question.slice(-4)}
           id={index}
           $itemColor={itemColor}
         >
