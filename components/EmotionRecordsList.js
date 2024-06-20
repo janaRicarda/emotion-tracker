@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import TrashIcon from "../public/icons/trash-icon.svg";
 import PencilIcon from "../public/icons/pencil.svg";
@@ -108,9 +108,12 @@ const StyledMarkedHighlight = styled(HighlightIconMarked)`
   border-radius: 50%;
 `;
 
-const StyledDemoIndicator = styled.div`
+const StyledDemoIndicator = styled.span`
   font-weight: 100;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
+  position: absolute;
+  left: -1.8rem;
+  top: 2%;
   padding: 0 2rem 0;
   color: var(--main-dark);
 `;
@@ -143,8 +146,18 @@ export default function EmotionRecordsList({
   }
 
   //showing details of last emotion entry when linked from dashboard
-  useEffect(() => {
+  function handleDashBoardPush() {
     handleShowDetails(dashboardId);
+    const element = document.getElementById(dashboardId);
+    const indexOfEntry = shownEntries.findIndex((element) =>
+      useExampleData ? element.id === dashboardId : element._id === dashboardId
+    );
+    indexOfEntry > 2
+      ? element.scrollIntoView({ behavior: "instant", block: "center" })
+      : null;
+  }
+  useEffect(() => {
+    handleDashBoardPush();
   }, [dashboardId]);
 
   function handleShowConfirmMessage(id) {
@@ -200,12 +213,19 @@ export default function EmotionRecordsList({
               isGenerated,
             }) => {
               return (
-                <section key={useExampleData ? id : _id}>
+                <section
+                  key={useExampleData ? id : _id}
+                  id={useExampleData ? id : _id}
+                >
                   <StyledRecordListItem>
                     <StyledItemInfo
                       $showDetails={showDetails[useExampleData ? id : _id]}
                       $width={(tensionLevel / 100) * 0.82 * 100}
                     >
+                      {" "}
+                      {isGenerated && (
+                        <StyledDemoIndicator>demo entry</StyledDemoIndicator>
+                      )}
                       {isHighlighted ? (
                         <StyledMarkedHighlight
                           onClick={() =>
@@ -219,9 +239,6 @@ export default function EmotionRecordsList({
                           }
                         />
                       )}
-                      {isGenerated && (
-                        <StyledDemoIndicator>fake entry</StyledDemoIndicator>
-                      )}
                       <StyledParagraph
                         onClick={() =>
                           handleShowDetails(useExampleData ? id : _id)
@@ -230,7 +247,7 @@ export default function EmotionRecordsList({
                         {getLabel(
                           isoDate,
                           getCurrentTimeAndDate(locale, timeStamp)
-                        )}
+                        )}{" "}
                       </StyledParagraph>
                       <StyledIconWrapper>
                         <StyledEditButton

@@ -175,7 +175,7 @@ function generateCompleteData(daysGoingBack) {
     daysTimestamp + currentHour * 3600000 + currentMinutes * 60000;
   const correctedEntry = {
     ...entryToChange,
-    timStamp: correctedTimeStamp,
+    timeStamp: correctedTimeStamp,
   };
 
   arrayOfLastDay.splice(arrayOfLastDay.length - 1, 1, correctedEntry);

@@ -92,7 +92,9 @@ export default function HomePage({
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
 
-  const newestDbEntryID = emotionEntries[emotionEntries.length - 1]._id;
+  const newestDbEntryID = emotionEntries?.length
+    ? emotionEntries[emotionEntries.length - 1]?._id
+    : null;
 
   useEffect(() => {
     handleToolTip({
