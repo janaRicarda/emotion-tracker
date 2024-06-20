@@ -21,11 +21,18 @@ export default function ProfileLink() {
   const username = session.user.name;
 
   function getInitials(string) {
-    const names = string.split(" ");
-    const firstName = names[0];
-    const lastName = names[names.length - 1];
-    let initials = firstName[0] + lastName[0];
-    return initials.toUpperCase();
+    const userName = string.split(" ");
+    if (userName.length > 1) {
+      const firstName = userName[0];
+      const lastName = userName[userName.length - 1];
+      const initials = firstName[0] + lastName[0];
+      return initials.toUpperCase();
+    }
+    if (userName.length < 2) {
+      const name = userName[0];
+      const initial = name[0];
+      return initial.toUpperCase();
+    }
   }
 
   const userNameInitials = getInitials(username);
