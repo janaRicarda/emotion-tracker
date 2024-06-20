@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import {
   getAveragePerDay,
@@ -78,7 +78,8 @@ const GridElement = styled.div`
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
-  padding: 0;
+  padding-top: 0;
+  position: relative;
   min-height: 170px;
   height: 100%;
   align-content: center;
@@ -87,7 +88,7 @@ const ChartElement = styled.div`
   box-shadow: var(--box-shadow);
   border: var(--circle-border);
 `;
-const ElementText = styled.p`
+const ElementText = styled.div`
   color: var(--main-dark);
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
@@ -95,15 +96,17 @@ const ElementText = styled.p`
   padding: 0.5rem 0.42rem;
   margin: 0.1rem;
   border-radius: 12px;
+  letter-spacing: -0.2px;
 `;
 
 const EmotionText = styled(ElementText)`
   color: var(--text-on-bright);
-  padding: 0.42rem;
-  margin: -5px 0.5rem 0.5rem;
+  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
+  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
-  width: 92%;
+  width: 98%;
+  height: 93%;
 `;
 const BoldText = styled.span`
   font-weight: 600;
@@ -121,12 +124,12 @@ const ArrowWrapper = styled.div`
 `;
 
 const ChartLinkWrapper = styled.section`
-  margin-top: -2.5rem;
-  position: relative;
-  left: 5%;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
   width: 280px;
   display: flex;
-  z-index: 3;
+  z-index: 1;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -165,8 +168,8 @@ export default function HomePage({
     Math.max(344, Math.round(windowWidth / 2))
   );
   const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 6);
-  const fontSize = Math.min(1.24, Math.max(0.8, windowWidth / 1000));
+  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
+  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
   const showDetails = true;
@@ -179,7 +182,7 @@ export default function HomePage({
     getNewestEmotion(dashboardEntries);
 
   function handleGridEmotion(id) {
-    router.push("/emotion-records");
+    router.push("/emotion-records/");
     onHandleGridEmotion(id);
   }
 
@@ -212,7 +215,7 @@ export default function HomePage({
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
-        $gap={fontSize * 0.25}
+        $gap={fontSize * 0.2}
         $gridFactor={gridFactor}
       >
         <GridElement>
@@ -252,18 +255,20 @@ export default function HomePage({
         </GridElement>
 
         <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
-          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-            Last recorded emotion:
-          </ElementText>
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
             $color={`var(--${slug})`}
           >
+            Last recorded emotion: <br></br>
             <BoldText>{emotion}</BoldText>
             <br></br>Intensity:{" "}
             <ProgressBar $showDetails={showDetails} $progress={intensity} />
-            {intensity} %
+            {/* {intensity} % */}
+            <ArrowWrapper>
+              <StyledForwardArrow />
+              <BoldText>more details</BoldText>
+            </ArrowWrapper>
           </EmotionText>
         </GridElement>
         <GridElement>

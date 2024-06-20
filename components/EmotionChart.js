@@ -43,11 +43,11 @@ export default function EmotionChart({
               y: yValues,
               type: type,
               mode: "lines+markers",
-              marker: { color: theme.buttonBackground },
+              marker: { color: theme.text },
             },
           ]}
           config={{
-            displayModeBar: isExportable ? true : false,
+            displayModeBar: isExportable ? "hover" : false,
             scrollZoom: true,
           }}
           layout={{
@@ -56,8 +56,8 @@ export default function EmotionChart({
             border_radius: 6,
             plot_bgcolor: theme.background,
             xaxis: {
-              gridcolor: theme.text,
-              title: { text: xTitle },
+              gridcolor: theme.buttonBackground,
+              title: { text: xTitle, standoff: 36 },
               font: {
                 family: "system-ui",
                 size: 10,
@@ -66,7 +66,7 @@ export default function EmotionChart({
               automargin: true,
             },
             yaxis: {
-              gridcolor: theme.text,
+              gridcolor: theme.buttonBackground,
               title: { text: yTitle },
               font: {
                 family: "system-ui",
@@ -84,7 +84,7 @@ export default function EmotionChart({
               },
             },
             autosize: autosize,
-            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 30 },
+            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 36 },
           }}
           ref={chartRef}
           onInitialized={(graphDiv) => (chartRef.current = { el: graphDiv })}

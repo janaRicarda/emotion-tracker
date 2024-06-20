@@ -20,6 +20,7 @@ const ChartSection = styled.section`
   align-items: center;
   position: relative;
   left: calc(50% - ${({ $centerOffset }) => `${$centerOffset}px`});
+  top: 0.5rem;
   margin: 0.5rem;
   border-radius: 18px;
   background-color: var(--section-background);

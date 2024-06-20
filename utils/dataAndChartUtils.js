@@ -68,10 +68,11 @@ export function getNewestEmotion(entries) {
 }
 
 export function getTimeSinceLastEntry(entries) {
-  const lastEntryTimeStamp = entries.toSorted(compareHightToLow)[0].timeStamp;
+  // const lastEntryTimeStamp = entries.toSorted(compareHightToLow)[0].timeStamp;
+  const lastEntryTimeStamp = entries[0].timeStamp;
   const timeStampNow = Date.now();
-  const minutesSinceLastEntry = Math.round(
-    (timeStampNow - lastEntryTimeStamp) / 60000
+  const minutesSinceLastEntry = Math.abs(
+    Math.round((timeStampNow - lastEntryTimeStamp) / 60000)
   );
   const hours = Math.floor(minutesSinceLastEntry / 60);
   const minutesPart = (minutesSinceLastEntry % 60).toString().padStart(2, "0");
