@@ -149,10 +149,10 @@ export default function EmotionRecordsList({
   function handleDashBoardPush() {
     handleShowDetails(dashboardId);
     const element = document.getElementById(dashboardId);
-    const indexOfEntry = shownEntries.findIndex((e) =>
-      useExampleData ? e.id === dashboardId : e._id === dashboardId
+    const indexOfEntry = shownEntries.findIndex((element) =>
+      useExampleData ? element.id === dashboardId : element._id === dashboardId
     );
-    indexOfEntry > 4
+    indexOfEntry > 2
       ? element.scrollIntoView({ behavior: "instant", block: "center" })
       : null;
   }

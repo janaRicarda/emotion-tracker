@@ -125,7 +125,7 @@ const StyledListItem = styled.li`
 export default function Manual() {
   const [itemColor, setItemColor] = useState("var(--manual1)");
 
-  function listenSrollEvent() {
+  function listenScrollEvent() {
     const colors = [
       "var(--manual1)",
       "var(--manual2)",
@@ -139,10 +139,17 @@ export default function Manual() {
     setItemColor(colors[index]);
   }
   useEffect(() => {
-    window.addEventListener("scroll", listenSrollEvent);
+    window.addEventListener("scroll", listenScrollEvent);
   });
 
   const [detailsOpen, setDetailsOpen] = useState({});
+
+  function handleManualScroll(id) {
+    const element = document.getElementById(id);
+    console.log(id);
+    console.log("handlemanualscroll");
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 
   return (
     <StyledSection>
@@ -163,8 +170,19 @@ export default function Manual() {
               [index]: index,
               show: prev[index] === index ? !prev.show : true,
             }));
+            console.log(detailsOpen.show);
+            const id = index;
+            handleManualScroll(id);
+            // detailsOpen.show === true
+            //   ? handleManualScroll(question.slice(-4))
+            //   : scrollTo({
+            //       top: 20,
+            //       behavior: "smooth",
+            //     });
           }}
           key={question}
+          // id={question.slice(-4)}
+          id={index}
           $itemColor={itemColor}
         >
           <StyledSummary>{question}</StyledSummary>
