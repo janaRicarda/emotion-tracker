@@ -1,6 +1,6 @@
 # Capstone Project: What A Feeling - Emotion Tracker
 
-![Logo](<public/images/blau%20orange%20aquarell%20blumen%20Logo%20(500%20x%20250%20px).png>)
+![Logo](public/images/logobanner.png)
 
 What A Feeling is an emotion tracker - an app which helps people to track, analyse and understand their feelings.
 
@@ -10,13 +10,13 @@ It adresses people who are attending behaviour therapy but can also be generally
 
 It features a guided emotion logging, pretty data visuals, analytics as lists and charts, options for downloading and last but not least a cozy homefeeling with a theme of your choice.
 
+![App screens](public/images/screenshots.png)
+
 ## Demo:
 
 You can find the hosted version on Vercel: [Demo Version of What a Feeling](https://what-a-feeling.vercel.app/)
 
 **Important:** This App was developed mobile-first and was made responsive for a broad range of devices.
-
-![App screens]()
 
 ## Tech Stack
 

@@ -117,7 +117,7 @@ export default function HomePage({
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Add entry</title>
       </Head>
       <StyledFlexColumnWrapper>
         <StyledTensionForm onSubmit={handleSubmit}>
