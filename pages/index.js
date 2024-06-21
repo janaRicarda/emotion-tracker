@@ -129,7 +129,7 @@ const ChartLinkWrapper = styled.section`
   left: 5%;
   width: 280px;
   display: flex;
-  z-index: 3;
+  z-index: 1;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -147,8 +147,11 @@ const ToggleContainer = styled.div`
   padding: 0.4rem;
   margin: 0 0 0.8rem;
   gap: 0.1rem;
-  background-color: var(--section-background);
+  background-color: var(--main-bright);
   border-radius: 6px;
+  position: fixed;
+  top: 70px;
+  z-index: 2;
 `;
 
 const SwitchSizer = styled.span`
