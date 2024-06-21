@@ -104,6 +104,7 @@ const EmotionLink = styled(StyledStandardLink)`
   left: 1rem;
   bottom: 3.5rem;
   font-weight: 500;
+  font-size: 0.8rem;
   width: 5rem;
   height: auto;
   text-align: center;
