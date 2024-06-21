@@ -126,7 +126,7 @@ export default function EmotionRecordsList({
   useExampleData,
   buttonState,
   locale,
-  dashboardId,
+  dashboardState,
 }) {
   const [showDetails, setShowDetails] = useState({});
 
@@ -146,9 +146,11 @@ export default function EmotionRecordsList({
   }
 
   //showing details of last emotion entry when linked from dashboard
-  function handleDashBoardPush() {
-    handleShowDetails(dashboardId);
-    const element = document.getElementById(dashboardId);
+  const { dashboardId, showLastEmotionEntry } = dashboardState;
+
+  function handleDashBoardPush(idToProcess, boolean) {
+    handleShowDetails(idToProcess);
+    const element = document.getElementById(idToProcess);
     const indexOfEntry = shownEntries.findIndex((element) =>
       useExampleData ? element.id === dashboardId : element._id === dashboardId
     );
@@ -157,7 +159,7 @@ export default function EmotionRecordsList({
       : null;
   }
   useEffect(() => {
-    handleDashBoardPush();
+    handleDashBoardPush(dashboardId);
   }, [dashboardId]);
 
   function handleShowConfirmMessage(id) {

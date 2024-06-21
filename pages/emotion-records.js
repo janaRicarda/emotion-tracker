@@ -14,6 +14,7 @@ import Icon from "@mdi/react";
 import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/router";
 
 // used for all transitions
 const transition = css`
@@ -184,8 +185,7 @@ export default function EmotionRecords({
   theme,
   locale,
   useExampleData,
-  dashboardId,
-  showChartForDashboardLink,
+  dashboardState,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState();
@@ -203,6 +203,20 @@ export default function EmotionRecords({
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
   const [chartRefForDownload, setChartRefForDownload] = useState(null);
+
+  const router = useRouter();
+  useEffect(() => {
+    // Function to call when user starts navigating to another page
+    const handleRouteChange = (url) => {
+      console.log(`Navigating to ${url}`);
+    };
+    // Listening to route change events
+    router.events.on("routeChangeStart", handleRouteChange);
+    // Removing the event listener when the component unmounts
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router.events]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -275,6 +289,7 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
+  const { showChartForDashboardLink } = dashboardState;
 
   useEffect(() => {
     showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
@@ -377,7 +392,7 @@ export default function EmotionRecords({
             shownEntries={shownEntries}
             filteredEntries={filteredEntries}
             useExampleData={useExampleData}
-            dashboardId={dashboardId}
+            dashboardState={dashboardState}
           />
         )}
         {chartIsShown && (

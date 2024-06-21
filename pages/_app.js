@@ -39,8 +39,13 @@ export default function App({
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
-  const [dashboardId, setDashboardId] = useState();
-  const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
+  const [dashboardState, setDashboardState] = useState({
+    dashboardId: null,
+    showLastEmotionEntry: false,
+    showChartForDashboardLink: false,
+  });
+  // const [dashboardId, setDashboardId] = useState();
+  // const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -301,11 +306,15 @@ export default function App({
     setTheme(theme);
   }
 
-  function deliverGridEmotion(id) {
-    setDashboardId(id);
+  function handleDashboard(id) {
+    setDashboardState({
+      ...dashboardState,
+      dashboardId: id,
+      showLastEmotionEntry: true,
+    });
   }
   function deliverChartVisibility() {
-    setShowChartForDashboardLink(true);
+    setDashboardState({ ...dashboardState, showChartForDashboardLink: true });
   }
 
   return (
@@ -347,10 +356,10 @@ export default function App({
               toggleTheme={toggleTheme}
               handleTheme={handleTheme}
               locale={locale}
-              onHandleGridEmotion={deliverGridEmotion}
+              onHandleGridEmotion={handleDashboard}
               onHandleChartLink={deliverChartVisibility}
-              dashboardId={dashboardId}
-              showChartForDashboardLink={showChartForDashboardLink}
+              dashboardState={dashboardState}
+              // showChartForDashboardLink={showChartForDashboardLink}
               {...pageProps}
             />
           </Layout>
