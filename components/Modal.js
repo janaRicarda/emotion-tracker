@@ -5,6 +5,7 @@ const StyledOverlay = styled.section`
   width: 100vw;
   height: 100vh;
   display: ${({ $display }) => ($display ? "none" : "flex")};
+  flex-direction: column;
   background: var(--button-background);
   position: fixed;
   justify-content: center;
@@ -32,7 +33,7 @@ const StyledLoginButton = styled.button`
   border-radius: 6px;
   height: auto;
   background: var(--button-background);
-  color: var(--main-dark);
+  color: var(--contrast-text);
 `;
 
 const StyledParagraph = styled.p`

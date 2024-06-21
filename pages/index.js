@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import {
   getAveragePerDay,
@@ -20,7 +20,7 @@ const ProgressBar = styled.div`
   width: 42%;
   max-width: 200px;
   height: 0.8rem;
-  border: 1px solid var(--contrast-text);
+  border: 1px solid var(--text-on-bright);
   position: relative;
   display: inline-block;
   margin: 0 0.5rem 0 0;
@@ -29,11 +29,10 @@ const ProgressBar = styled.div`
   &::after {
     content: "";
     position: absolute;
-    top: 20%;
-    height: 60%;
+    height: 100%;
     width: ${({ $progress, $showDetails }) =>
       $showDetails ? `${$progress}%` : "0"};
-    background: var(--main-bright);
+    background: var(--text-on-bright);
     border-radius: 6px;
     transition: width 400ms;
     transition-delay: ${({ $showDetails }) => ($showDetails ? "500ms" : "0ms")};
@@ -72,22 +71,23 @@ const GridElement = styled.div`
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-small);
   border: var(--circle-border);
 `;
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
-  padding: 0;
+  padding-top: 0;
+  position: relative;
   min-height: 170px;
   height: 100%;
   align-content: center;
   align-items: center;
   background-color: var(--section-background);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-small);
   border: var(--circle-border);
 `;
-const ElementText = styled.p`
+const ElementText = styled.div`
   color: var(--main-dark);
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
@@ -95,15 +95,17 @@ const ElementText = styled.p`
   padding: 0.5rem 0.42rem;
   margin: 0.1rem;
   border-radius: 12px;
+  letter-spacing: -0.2px;
 `;
 
 const EmotionText = styled(ElementText)`
   color: var(--text-on-bright);
-  padding: 0.42rem;
-  margin: -5px 0.5rem 0.5rem;
+  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
+  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
-  width: 92%;
+  width: 98%;
+  height: 93%;
 `;
 const BoldText = styled.span`
   font-weight: 600;
@@ -112,7 +114,8 @@ const BoldText = styled.span`
 const StyledForwardArrow = styled(ArrowBack)`
   width: 1rem;
   transform: rotate(180deg);
-  fill: var(--main-dark);
+  fill: ${({ $darkArrow }) =>
+    $darkArrow ? "var(--text-on-bright)" : "var(--main-dark)"};
 `;
 
 const ArrowWrapper = styled.div`
@@ -121,12 +124,12 @@ const ArrowWrapper = styled.div`
 `;
 
 const ChartLinkWrapper = styled.section`
-  margin-top: -2.5rem;
-  position: relative;
-  left: 5%;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
   width: 280px;
   display: flex;
-  z-index: 3;
+  z-index: 1;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -165,21 +168,28 @@ export default function HomePage({
     Math.max(344, Math.round(windowWidth / 2))
   );
   const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 6);
-  const fontSize = Math.min(1.24, Math.max(0.8, windowWidth / 1000));
+  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
+  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
   const showDetails = true;
 
   //dashboard logic
-  const dashboardEntries = emotionEntries.toSorted(compareHightToLow);
-  const averageEntriesPerDay = getAveragePerDay(dashboardEntries);
-  const timeSinceLastEntry = getTimeSinceLastEntry(dashboardEntries);
+  const dashboardEntries =
+    emotionEntries.length === 0
+      ? []
+      : emotionEntries.toSorted(compareHightToLow);
+  const averageEntriesPerDay =
+    emotionEntries.length === 0 ? 0 : getAveragePerDay(dashboardEntries);
+  const timeSinceLastEntry =
+    emotionEntries.length === 0
+      ? "You did not make any entries yet!"
+      : getTimeSinceLastEntry(dashboardEntries);
   const { emotion, intensity, slug, id, _id } =
     getNewestEmotion(dashboardEntries);
 
   function handleGridEmotion(id) {
-    router.push("/emotion-records");
+    router.push("/emotion-records/");
     onHandleGridEmotion(id);
   }
 
@@ -207,12 +217,12 @@ export default function HomePage({
       </Head>
 
       <DashboardTitle>
-        Hallo {session ? session.user.name : "demo user"}
+        Hi {session ? session.user.name : "demo user"}
       </DashboardTitle>
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
-        $gap={fontSize * 0.25}
+        $gap={fontSize * 0.2}
         $gridFactor={gridFactor}
       >
         <GridElement>
@@ -234,11 +244,17 @@ export default function HomePage({
         <GridElement>
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              <BoldText>Last entry: </BoldText> <br></br> {timeSinceLastEntry}{" "}
-              hours ago. <br></br>
-              <BoldText>Your average: </BoldText>
-              <br></br>
-              {averageEntriesPerDay} entries per day.
+              <BoldText>Last entry: </BoldText> <br></br>{" "}
+              {emotionEntries.length === 0 ? (
+                <>You did not make any entries yet!</>
+              ) : (
+                <>
+                  {timeSinceLastEntry} hours ago. <br></br>
+                  <BoldText>Your average: </BoldText>
+                  <br></br>
+                  {averageEntriesPerDay} entries per day.
+                </>
+              )}
               <ArrowWrapper>
                 <StyledForwardArrow />
                 <BoldText>add new entry</BoldText>
@@ -252,18 +268,25 @@ export default function HomePage({
         </GridElement>
 
         <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
-          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-            Last recorded emotion:
-          </ElementText>
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
             $color={`var(--${slug})`}
           >
-            <BoldText>{emotion}</BoldText>
-            <br></br>Intensity:{" "}
-            <ProgressBar $showDetails={showDetails} $progress={intensity} />
-            {intensity} %
+            Last recorded emotion: <br></br>
+            {emotionEntries.length === 0 ? (
+              <>You did not record any emotions yet!</>
+            ) : (
+              <>
+                <BoldText>{emotion}</BoldText>
+                <br></br>Intensity:{" "}
+                <ProgressBar $showDetails={showDetails} $progress={intensity} />
+                <ArrowWrapper>
+                  <StyledForwardArrow $darkArrow />
+                  <BoldText>more details</BoldText>
+                </ArrowWrapper>
+              </>
+            )}
           </EmotionText>
         </GridElement>
         <GridElement>

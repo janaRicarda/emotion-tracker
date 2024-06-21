@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { StyledTitle, StyledStandardLink } from "@/SharedStyledComponents";
 import Head from "next/head";
 import { useState, useCallback, useEffect } from "react";
-import HeartOutlineIcon from "../public/icons/heart-outline.svg";
+import HighlightIcon from "../public/icons/highlight-icon.svg";
 import CalendarIcon from "/public/icons/calendar.svg";
 import ChartContainer from "@/components/ChartContainer";
 import EmotionRecordsList from "../components/EmotionRecordsList";
@@ -13,6 +13,7 @@ import ToggleSwitch from "@/components/ToggleSwitch";
 import Icon from "@mdi/react";
 import { mdiChartLine, mdiFormatListBulleted } from "@mdi/js";
 import { breakpoints } from "@/utils/breakpoints";
+import Loader from "@/components/Loader";
 
 // used for all transitions
 const transition = css`
@@ -39,7 +40,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    top: 270px;
+    top: 16rem;
     left: 3rem;
     width: 25%;
   }
@@ -47,7 +48,7 @@ const GridWrapper = styled.section`
     display: block;
     box-shadow: none;
     padding: 1rem;
-    left: 5rem;
+    left: 11%;
     width: 30%;
   }
 `;
@@ -60,7 +61,7 @@ const StyledHeading = styled(StyledTitle)`
   width: 100%;
   padding: 1rem 0;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "100px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "65px" : "99px")};
   ${transition}
   background-color: var(--main-bright);
   z-index: 1;
@@ -74,18 +75,29 @@ const Background = styled.div`
   z-index: 2;
 `;
 const AnimatedPanel = styled.div`
-  width: 92vw;
+  width: 100vw;
   margin: 0 0.5rem;
-  border-top: 1px solid var(--main-dark);
   background-color: var(--main-bright);
+  display: flex;
+  justify-content: center;
   position: fixed;
-  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "164px")};
+  top: ${({ $isScrollDown }) => ($isScrollDown ? "121px" : "163px")};
   ${transition}
   z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 4vw;
+    width: 92vw;
+    height: 1px;
+    background-color: var(--main-dark);
+    z-index: 2;
+  }
 `;
 
 const StyledTextMessage = styled.article`
-  /* margin-top: 8rem; */
   text-align: center;
   line-height: 3;
   display: flex;
@@ -100,12 +112,9 @@ const StyledLink = styled(StyledStandardLink)`
   color: var(--contrast-text);
 `;
 
-const StyledHeartSymbol = styled(HeartOutlineIcon)`
-  width: 1.4rem;
-  display: inline;
-  position: relative;
-  fill: var(--main-dark);
-  top: 5px;
+const StyledHighlightIcon = styled(HighlightIcon)`
+  width: 2rem;
+  height: 2rem;
 `;
 
 const StyledCalendarIcon = styled(CalendarIcon)`
@@ -178,6 +187,7 @@ export default function EmotionRecords({
   dashboardId,
   showChartForDashboardLink,
 }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState();
   const [filteredEntries, setFilteredEntries] = useState(emotionEntries);
   const [shownEntries, setShownEntries] = useState(emotionEntries);
@@ -193,6 +203,12 @@ export default function EmotionRecords({
   const [showFilter, setShowFilter] = useState(false);
   const [chartIsShown, setChartIsShown] = useState(false);
   const [chartRefForDownload, setChartRefForDownload] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  });
 
   useEffect(() => {
     handleToolTip({
@@ -268,6 +284,8 @@ export default function EmotionRecords({
     setChartRefForDownload(ref);
   }
 
+  if (isLoading) return <Loader itemText={"Records loading..."} />;
+
   return (
     <>
       <Head>
@@ -312,7 +330,7 @@ export default function EmotionRecords({
             buttonState.highlightedButton ? (
               <StyledTextMessage>
                 You haven&apos;t highlighted any Entries yet. Click the{" "}
-                <StyledHeartSymbol /> on a Entry to highlight it.
+                <StyledHighlightIcon /> on a Entry to highlight it.
               </StyledTextMessage>
             ) : buttonState.todayButton ? (
               <StyledTextMessage>

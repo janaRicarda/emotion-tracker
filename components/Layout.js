@@ -147,7 +147,7 @@ export default function Layout({
         )) ||
         children}
       <Footer handleDemoModeOff={handleDemoModeOff} />
-      {toolTip && <Tooltip toolTip={toolTip} />}
+      {toolTip && <Tooltip toolTip={toolTip} isScrollDown={isScrollDown} />}
       <StyledToTopButton
         $background={
           isAppManual
