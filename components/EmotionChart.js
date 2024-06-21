@@ -1,6 +1,8 @@
 import Plot from "react-plotly.js";
 import styled from "styled-components";
 import { useRef, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 const StyledChartSection = styled.section`
   background-color: var(--section-background);
@@ -25,6 +27,9 @@ export default function EmotionChart({
   height,
   autosize,
 }) {
+  const router = useRouter();
+  const { t: translate } = useTranslation(["common"]);
+
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export default function EmotionChart({
   return (
     <StyledChartSection>
       {xValues.length < 2 ? (
-        <p>Sorry, there is not enough data to draw the chart!</p>
+        <p>{translate("notEnoughData")}</p>
       ) : (
         <Plot
           data={[

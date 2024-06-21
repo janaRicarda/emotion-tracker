@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 const EmotionChart = dynamic(() => import("./EmotionChart"), {
   ssr: false,
-  loading: () => <Loader itemText="... loading chart" />,
+  loading: () => <Loader itemText="...loading" />,
 });
 
 const ChartSection = styled.section`

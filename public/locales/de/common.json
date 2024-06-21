@@ -56,7 +56,7 @@
   "accessDenied": "Zugang verweigert! Du musst angemeldet sein, um diese Seite zu sehen",
   "hello": "Hallo",
   "trackFeelings": "Protokolliere und erkunde deine Gefühle...wie? ",
-  "youCanLookAtThe": "Du kannst nachlesen im ",
+  "youCanLookAtThe": "Du kannst alles nachlesen im ",
   "lastEntry": "Letzter Eintrag: ",
   "hoursAgo": "Stunden her. ",
   "yourAverage": "Dein Durchschnitt: ",
@@ -80,5 +80,7 @@
   "warmTheme": "Warm",
   "coldTheme": "Kalt",
   "neutralTheme": "Neutral",
-  "highContrastTheme": "Hoher Kontrast"
+  "highContrastTheme": "Hoher Kontrast",
+  "notEnoughData": "Entschuldige, nicht genügend Daten vorhanden um einen Graphen zu zeichnen!",
+  "loadingChart": "...Graph wird geladen"
 }

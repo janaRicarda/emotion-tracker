@@ -80,5 +80,7 @@
   "warmTheme": "warm",
   "coldTheme": "cold",
   "neutralTheme": "neutral",
-  "highContrastTheme": "high contrast"
+  "highContrastTheme": "high contrast",
+  "notEnoughData": "Sorry, there is not enough data to draw the chart!",
+  "loadingChart": "... loading chart"
 }
