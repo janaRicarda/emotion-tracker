@@ -146,9 +146,9 @@ export default function EmotionRecordsList({
   }
 
   //showing details of last emotion entry when linked from dashboard
-  const { dashboardId, showLastEmotionEntry } = dashboardState;
+  const { dashboardId } = dashboardState;
 
-  function handleDashBoardPush(idToProcess, boolean) {
+  function handleDashBoardPush(idToProcess) {
     handleShowDetails(idToProcess);
     const element = document.getElementById(idToProcess);
     const indexOfEntry = shownEntries.findIndex((element) =>

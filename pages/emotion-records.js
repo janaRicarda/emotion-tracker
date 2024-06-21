@@ -186,6 +186,7 @@ export default function EmotionRecords({
   locale,
   useExampleData,
   dashboardState,
+  onHandleDashboardReset,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState();
@@ -205,18 +206,6 @@ export default function EmotionRecords({
   const [chartRefForDownload, setChartRefForDownload] = useState(null);
 
   const router = useRouter();
-  useEffect(() => {
-    // Function to call when user starts navigating to another page
-    const handleRouteChange = (url) => {
-      console.log(`Navigating to ${url}`);
-    };
-    // Listening to route change events
-    router.events.on("routeChangeStart", handleRouteChange);
-    // Removing the event listener when the component unmounts
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [router.events]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -294,6 +283,19 @@ export default function EmotionRecords({
   useEffect(() => {
     showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
   }, [showChartForDashboardLink]);
+
+  useEffect(() => {
+    // Function to call when user starts navigating to another page
+    function handleRouteChange() {
+      onHandleDashboardReset();
+    }
+    // Listening to route change events
+    router.events.on("routeChangeStart", handleRouteChange);
+    // Removing the event listener when the component unmounts
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router.events]);
 
   function handleChartRef(ref) {
     setChartRefForDownload(ref);

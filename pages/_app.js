@@ -32,20 +32,18 @@ export default function App({
   const router = useRouter();
   // locale for testing, will be replaced w/ locale from translation branch soon
   const locale = "en";
-  const defaultTheme = lightTheme || darkTheme;
 
+  const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
-  const [dashboardState, setDashboardState] = useState({
+  const initialDashboardState = {
     dashboardId: null,
-    showLastEmotionEntry: false,
     showChartForDashboardLink: false,
-  });
-  // const [dashboardId, setDashboardId] = useState();
-  // const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
+  };
+  const [dashboardState, setDashboardState] = useState(initialDashboardState);
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -310,11 +308,15 @@ export default function App({
     setDashboardState({
       ...dashboardState,
       dashboardId: id,
-      showLastEmotionEntry: true,
     });
   }
+
   function deliverChartVisibility() {
     setDashboardState({ ...dashboardState, showChartForDashboardLink: true });
+  }
+
+  function handleDashboardReset() {
+    setDashboardState(initialDashboardState);
   }
 
   return (
@@ -359,7 +361,7 @@ export default function App({
               onHandleGridEmotion={handleDashboard}
               onHandleChartLink={deliverChartVisibility}
               dashboardState={dashboardState}
-              // showChartForDashboardLink={showChartForDashboardLink}
+              onHandleDashboardReset={handleDashboardReset}
               {...pageProps}
             />
           </Layout>
