@@ -57,7 +57,7 @@ export default function EmotionChart({
             plot_bgcolor: theme.background,
             xaxis: {
               gridcolor: theme.buttonBackground,
-              title: { text: xTitle, standoff: 36 },
+              title: { text: xTitle, standoff: 20 },
               font: {
                 family: "system-ui",
                 size: 10,
@@ -84,7 +84,7 @@ export default function EmotionChart({
               },
             },
             autosize: autosize,
-            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 36 },
+            margin: { autoexpand: true, b: 10, l: 35, r: 30, t: 24 },
           }}
           ref={chartRef}
           onInitialized={(graphDiv) => (chartRef.current = { el: graphDiv })}

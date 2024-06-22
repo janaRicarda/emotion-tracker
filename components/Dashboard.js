@@ -15,6 +15,73 @@ import { shortEmotionDescriptions } from "@/lib/db";
 import DashboardChart from "@/components/DashboardChart";
 import DashboardWheel from "./DashboardWheel";
 
+const DashboardSection = styled.section`
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  grid-template-rows: 4fr 7fr ${({ $gridFactor }) => `${$gridFactor}fr`};
+  color: var(--main-dark);
+  gap: ${({ $gap }) => `${$gap}rem`};
+  width: 90vw;
+  min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
+  height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
+  max-width: 1200px;
+  max-height: 1200px;
+  margin: 0;
+  align-items: center;
+  border-radius: 18px;
+  justify-content: center;
+`;
+
+const GridElement = styled.div`
+  display: flex;
+  color: var(--main-dark);
+  flex-direction: column;
+  border-radius: 18px;
+  padding: 0.5rem;
+  min-height: 120px;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+  box-shadow: var(--box-shadow-small);
+  border: var(--circle-border);
+`;
+
+const LeftShape = styled.div`
+  /* border: 1px solid var(--main-dark); */
+  /* width: 170px;
+  height: 120px; */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    85% 5%,
+    75% 8%,
+    68% 15%,
+    55% 30%,
+    52% 40%,
+    50% 50%,
+    52% 60%,
+    55% 70%,
+    68% 80%,
+    80% 90%,
+    100% 100%,
+    0 100%
+  );
+  border-radius: 18px;
+  padding: 0.5rem;
+  min-height: 110px;
+  height: 100%;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+  background-color: var(--section-background);
+  box-shadow: var(--box-shadow-small);
+  /* border: var(--circle-border); */
+  color: var(--main-dark);
+  /* z-index: 2; */
+`;
+
 const ProgressBar = styled.div`
   width: 42%;
   max-width: 200px;
@@ -38,47 +105,12 @@ const ProgressBar = styled.div`
   }
 `;
 
-const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.5rem;
-`;
-
-const DashboardSection = styled.section`
-  display: grid;
-  grid-template-columns: 6fr 6fr;
-  grid-template-rows: 3.8fr 3.8fr ${({ $gridFactor }) => `${$gridFactor}fr`};
-  color: var(--main-dark);
-  gap: ${({ $gap }) => `${$gap}rem`};
-  width: 90vw;
-  min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
-  height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
-  max-width: 1200px;
-  max-height: 1200px;
-  margin: 0;
-  align-items: center;
-  border-radius: 18px;
-  justify-content: center;
-`;
-const GridElement = styled.div`
-  display: flex;
-  color: var(--main-dark);
-  flex-direction: column;
-  border-radius: 18px;
-  padding: 0.5rem;
-  min-height: 110px;
-  height: 100%;
-  width: 100%;
-  align-content: center;
-  align-items: center;
-  background-color: var(--section-background);
-  box-shadow: var(--box-shadow-small);
-  border: var(--circle-border);
-`;
 const ChartElement = styled.div`
   grid-column: 1 / 3;
   border-radius: 18px;
   padding-top: 0;
   position: relative;
-  min-height: 170px;
+  min-height: 190px;
   height: 100%;
   align-content: center;
   align-items: center;
@@ -164,8 +196,8 @@ export default function Dashboard({
     1080,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
+  const gridFactor = 1.2 + windowWidth / 100;
+  const dashboardHeight = Math.round(dashboardWidth * 1.32 + gridFactor * 6);
   const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
@@ -203,13 +235,14 @@ export default function Dashboard({
   return (
     <>
       {" "}
-      <DashboardWheel wheelwidth={dashboardWidth * 0.3} />
+      {/* <DashboardWheel wheelwidth={dashboardWidth * 0.3} /> */}
       <DashboardSection
         $dashboardWidth={dashboardWidth}
         $dashboardHeight={dashboardHeight}
         $gap={fontSize * 0.2}
         $gridFactor={gridFactor}
       >
+        {/* 1 */}
         <GridElement>
           <DashboardLink href="/app-manual">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
@@ -226,6 +259,7 @@ export default function Dashboard({
             </ElementText>
           </DashboardLink>
         </GridElement>
+        {/* 2 */}
         <GridElement>
           <DashboardLink href="/add-entry">
             <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
@@ -251,8 +285,33 @@ export default function Dashboard({
             ></ElementText>
           </DashboardLink>
         </GridElement>
-
-        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+        {/* 3 */}
+        <LeftShape>
+          <EmotionText
+            $fontSize={fontSize}
+            $lineHeight={fontSize * 1.3}
+            $color={`var(--${slug})`}
+          >
+            Last recorded emotion: <br></br>
+            {emotionEntries.length === 0 ? (
+              <>You did not record any emotions yet!</>
+            ) : (
+              <>
+                <BoldText>{emotion}</BoldText>
+                <br></br>
+                <br></br>
+                <br></br>Intensity:{" "}
+                <ProgressBar $showDetails={showDetails} $progress={intensity} />
+                <ArrowWrapper>
+                  <StyledForwardArrow $darkArrow />
+                  <BoldText>more details</BoldText>
+                </ArrowWrapper>
+              </>
+            )}
+          </EmotionText>
+        </LeftShape>
+        {/* <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+          <LeftShape />
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
@@ -273,7 +332,7 @@ export default function Dashboard({
               </>
             )}
           </EmotionText>
-        </GridElement>
+        </GridElement> */}
 
         <GridElement>
           <DashboardLink href={`/emotions/${slug}`}>
@@ -292,10 +351,10 @@ export default function Dashboard({
           </DashboardLink>
         </GridElement>
         <ChartElement>
-          <DashboardChart
+          {/* <DashboardChart
             theme={theme}
-            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
-            heightFactor={0.46}
+            width={Math.max(250, Math.round(36 + windowWidth / 1.6))}
+            heightFactor={0.4}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
@@ -303,7 +362,7 @@ export default function Dashboard({
             showSwitches={false}
             locale={locale}
             handleChartRef={handleChartRef}
-          />
+          /> */}
           <ChartLinkWrapper onClick={handleChartLink}>
             <ElementText
               $fontSize={fontSize * 0.98}

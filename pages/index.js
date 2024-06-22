@@ -6,7 +6,9 @@ import Head from "next/head";
 import Dashboard from "@/components/Dashboard";
 
 const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.5rem;
+  position: absolute;
+  top: 95px;
+  z-index: 1;
 `;
 
 export default function HomePage({

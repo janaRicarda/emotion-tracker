@@ -2,22 +2,21 @@ import { emotionData } from "@/lib/db";
 import styled from "styled-components";
 import { StyledStandardLink } from "@/SharedStyledComponents";
 import { useState } from "react";
-import { breakpoints } from "@/utils/breakpoints";
 
 const StyledCircle = styled.article`
-  width: 200px;
-  height: 200px;
+  width: 156px;
+  height: 156px;
   /* max-height: 150px; */
   position: absolute;
-  top: 17%;
-  left: calc(50% - 100px);
+  top: 260px;
+  left: calc(50% - 80px);
   border-radius: 50%;
   border: var(--circle-border);
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: var(--box-shadow);
-  z-index: 2;
+  z-index: 0;
 `;
 
 const StyledEmotionList = styled.ul.attrs(({ $rotation }) => ({
