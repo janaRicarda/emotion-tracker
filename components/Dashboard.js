@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import ArrowBack from "./../public/icons/arrow-left.svg";
 import { shortEmotionDescriptions } from "@/lib/db";
 import DashboardChart from "@/components/DashboardChart";
+import DashboardWheel from "./DashboardWheel";
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -200,116 +201,122 @@ export default function Dashboard({
   const xValues = calculateTensionChartData(filteredEntries).xValues;
   const yValues = calculateTensionChartData(filteredEntries).yValues;
   return (
-    <DashboardSection
-      $dashboardWidth={dashboardWidth}
-      $dashboardHeight={dashboardHeight}
-      $gap={fontSize * 0.2}
-      $gridFactor={gridFactor}
-    >
-      <GridElement>
-        <DashboardLink href="/app-manual">
-          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-            Track and explore your feelings... how? <br></br>You can look at the
-            <ArrowWrapper>
-              {" "}
-              <StyledForwardArrow />
-              <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+    <>
+      {" "}
+      <DashboardWheel wheelwidth={dashboardWidth * 0.3} />
+      <DashboardSection
+        $dashboardWidth={dashboardWidth}
+        $dashboardHeight={dashboardHeight}
+        $gap={fontSize * 0.2}
+        $gridFactor={gridFactor}
+      >
+        <GridElement>
+          <DashboardLink href="/app-manual">
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+              Track and explore your feelings... how? <br></br>You can look at
+              the
+              <ArrowWrapper>
                 {" "}
-                manual
-              </BoldText>
-            </ArrowWrapper>
-          </ElementText>
-        </DashboardLink>
-      </GridElement>
-      <GridElement>
-        <DashboardLink href="/add-entry">
-          <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-            <BoldText>Last entry: </BoldText> <br></br>{" "}
+                <StyledForwardArrow />
+                <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+                  {" "}
+                  manual
+                </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </DashboardLink>
+        </GridElement>
+        <GridElement>
+          <DashboardLink href="/add-entry">
+            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
+              <BoldText>Last entry: </BoldText> <br></br>{" "}
+              {emotionEntries.length === 0 ? (
+                <>You did not make any entries yet!</>
+              ) : (
+                <>
+                  {timeSinceLastEntry} hours ago. <br></br>
+                  <BoldText>Your average: </BoldText>
+                  <br></br>
+                  {averageEntriesPerDay} entries per day.
+                </>
+              )}
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>add new entry</BoldText>
+              </ArrowWrapper>
+            </ElementText>
+            <ElementText
+              $fontSize={fontSize}
+              $lineHeight={fontSize * 0.5}
+            ></ElementText>
+          </DashboardLink>
+        </GridElement>
+
+        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+          <EmotionText
+            $fontSize={fontSize}
+            $lineHeight={fontSize * 1.3}
+            $color={`var(--${slug})`}
+          >
+            Last recorded emotion: <br></br>
             {emotionEntries.length === 0 ? (
-              <>You did not make any entries yet!</>
+              <>You did not record any emotions yet!</>
             ) : (
               <>
-                {timeSinceLastEntry} hours ago. <br></br>
-                <BoldText>Your average: </BoldText>
-                <br></br>
-                {averageEntriesPerDay} entries per day.
+                <BoldText>{emotion}</BoldText>
+                <br></br>Intensity:{" "}
+                <ProgressBar $showDetails={showDetails} $progress={intensity} />
+                <ArrowWrapper>
+                  <StyledForwardArrow $darkArrow />
+                  <BoldText>more details</BoldText>
+                </ArrowWrapper>
               </>
             )}
-            <ArrowWrapper>
-              <StyledForwardArrow />
-              <BoldText>add new entry</BoldText>
-            </ArrowWrapper>
-          </ElementText>
-          <ElementText
-            $fontSize={fontSize}
-            $lineHeight={fontSize * 0.5}
-          ></ElementText>
-        </DashboardLink>
-      </GridElement>
+          </EmotionText>
+        </GridElement>
 
-      <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
-        <EmotionText
-          $fontSize={fontSize}
-          $lineHeight={fontSize * 1.3}
-          $color={`var(--${slug})`}
-        >
-          Last recorded emotion: <br></br>
-          {emotionEntries.length === 0 ? (
-            <>You did not record any emotions yet!</>
-          ) : (
-            <>
+        <GridElement>
+          <DashboardLink href={`/emotions/${slug}`}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
               <BoldText>{emotion}</BoldText>
-              <br></br>Intensity:{" "}
-              <ProgressBar $showDetails={showDetails} $progress={intensity} />
+              <br></br> {shortEmotionDescriptions[emotion]}
               <ArrowWrapper>
-                <StyledForwardArrow $darkArrow />
-                <BoldText>more details</BoldText>
+                {" "}
+                <StyledForwardArrow />
+                <BoldText>more about {slug} </BoldText>
               </ArrowWrapper>
-            </>
-          )}
-        </EmotionText>
-      </GridElement>
-      <GridElement>
-        <DashboardLink href={`/emotions/${slug}`}>
-          <ElementText
-            $fontSize={fontSize * 0.98}
-            $lineHeight={fontSize * 1.33}
-          >
-            <BoldText>{emotion}</BoldText>
-            <br></br> {shortEmotionDescriptions[emotion]}
-            <ArrowWrapper>
-              {" "}
-              <StyledForwardArrow />
-              <BoldText>more about {slug} </BoldText>
-            </ArrowWrapper>
-          </ElementText>
-        </DashboardLink>
-      </GridElement>
-      <ChartElement>
-        <DashboardChart
-          theme={theme}
-          width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
-          heightFactor={0.46}
-          shownEntries={emotionEntries}
-          xValues={xValues}
-          yValues={yValues}
-          autosize={false}
-          showSwitches={false}
-          locale={locale}
-          handleChartRef={handleChartRef}
-        />
-        <ChartLinkWrapper onClick={handleChartLink}>
-          <ElementText
-            $fontSize={fontSize * 0.98}
-            $lineHeight={fontSize * 1.33}
-          >
-            <ArrowWrapper>
-              <StyledForwardArrow />
-              <BoldText>more charts </BoldText>
-            </ArrowWrapper>
-          </ElementText>
-        </ChartLinkWrapper>
-      </ChartElement>
-    </DashboardSection>
+            </ElementText>
+          </DashboardLink>
+        </GridElement>
+        <ChartElement>
+          <DashboardChart
+            theme={theme}
+            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
+            heightFactor={0.46}
+            shownEntries={emotionEntries}
+            xValues={xValues}
+            yValues={yValues}
+            autosize={false}
+            showSwitches={false}
+            locale={locale}
+            handleChartRef={handleChartRef}
+          />
+          <ChartLinkWrapper onClick={handleChartLink}>
+            <ElementText
+              $fontSize={fontSize * 0.98}
+              $lineHeight={fontSize * 1.33}
+            >
+              <ArrowWrapper>
+                <StyledForwardArrow />
+                <BoldText>more charts </BoldText>
+              </ArrowWrapper>
+            </ElementText>
+          </ChartLinkWrapper>
+        </ChartElement>
+      </DashboardSection>
+    </>
   );
 }
