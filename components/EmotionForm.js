@@ -94,7 +94,7 @@ const ToggleSwitch = styled(Circle)`
 
 export default function EmotionForm({
   theme,
-  slug,
+  emotion,
   editMode,
   onSubmit,
   id,
@@ -105,7 +105,6 @@ export default function EmotionForm({
 
   const {
     timeStamp,
-    emotion,
     tensionLevel,
     subemotion,
     intensity,
@@ -114,24 +113,24 @@ export default function EmotionForm({
     notes,
   } = correspondingEntry;
 
+  // in order to preset inputField values (e.g. line: 258) correctly, the emotionValue (line: 128) needs to be upperCase
+  const emotionUpperCase = emotion.charAt(0).toUpperCase() + emotion.slice(1);
+
   const [formValues, setFormValues] = useState(() => {
-    const inCaseOfNoEmotion = {
-      color: "lightgray",
-      subemotions: [],
-    };
-    const { color, subemotions } = emotion
-      ? emotionData.find((emotionObject) => emotionObject.name === emotion)
-      : inCaseOfNoEmotion;
+    const { subemotions } = emotion
+      ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
+      : { subemotions: [] };
+      
     return {
       tensionValue: tensionLevel,
-      emotionValue: emotion,
+      emotionValue: emotionUpperCase,
       selectedSubemotionValue: subemotion,
       intensityValue: intensity ? intensity : "0",
       categoryValue: category ? category : "50",
       triggerValue: trigger,
       notesValue: notes,
       subemotionOptions: subemotions,
-      colorValue: color,
+      colorValue: emotion ? `var(--${emotion})` : "lightgray",
     };
   });
 
@@ -400,7 +399,9 @@ export default function EmotionForm({
       ></StyledTextarea>
       <StyledSubmitButton
         type="submit"
-        $submit={theme === darkTheme ? `var(--${slug})` : `var(--text-on-dark)`}
+        $submit={
+          theme === darkTheme ? `var(--${emotion})` : `var(--text-on-dark)`
+        }
         $submitBackground={
           theme === darkTheme ? `black` : `var(--text-on-bright)`
         }

@@ -175,7 +175,6 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
         >
           {emotionData.map(({ slug, name }) => (
             <StyledListItem
-              onClick={createMode && (() => handleAddDetails(name, id))}
               $color={`var(--${slug})`}
               key={slug}
             >
@@ -184,7 +183,10 @@ export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
                 slug={slug}
                 href={
                   createMode
-                    ? { pathname: `/create/${slug}`, query: { id } }
+                    ? {
+                        pathname: `/create/${slug}`,
+                        query: { id },
+                      }
                     : `/emotions/${slug}`
                 }
               >
