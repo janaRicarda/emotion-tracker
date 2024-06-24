@@ -115,17 +115,13 @@ const EmotionLink = styled(StyledStandardLink)`
   }
 `;
 
-export default function EmotionList({ createMode, id, onAddEmotionDetails }) {
+export default function EmotionList({ createMode, id }) {
   const [rotation, setRotation] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
   if (!emotionData) {
     return <h1>Sorry, an error has occured. Please try again later!</h1>;
-  }
-  function handleAddDetails(data, id) {
-    const emotion = { emotion: data };
-    onAddEmotionDetails(emotion, id);
   }
 
   function handleScroll(event) {
