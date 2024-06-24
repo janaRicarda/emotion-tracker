@@ -358,7 +358,7 @@ export default function App({
               toggleTheme={toggleTheme}
               handleTheme={handleTheme}
               locale={locale}
-              onHandleGridEmotion={handleDashboard}
+              onHandleDashboardEmotion={handleDashboard}
               onHandleChartLink={deliverChartVisibility}
               dashboardState={dashboardState}
               onHandleDashboardReset={handleDashboardReset}

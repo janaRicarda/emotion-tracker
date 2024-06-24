@@ -126,7 +126,7 @@ const ArrowWrapper = styled.div`
 const ChartLinkWrapper = styled.section`
   position: absolute;
   left: 1rem;
-  bottom: 1rem;
+  bottom: 0;
   width: 280px;
   display: flex;
   z-index: 1;
@@ -144,7 +144,7 @@ export default function HomePage({
   emotionEntries,
   theme,
   locale,
-  onHandleGridEmotion,
+  onHandleDashboardEmotion,
   onHandleChartLink,
   demoMode,
   handleChartRef,
@@ -188,9 +188,9 @@ export default function HomePage({
   const { emotion, intensity, slug, id, _id } =
     getNewestEmotion(dashboardEntries);
 
-  function handleGridEmotion(id) {
+  function handleDashboardEmotion(id) {
     router.push("/emotion-records/");
-    onHandleGridEmotion(id);
+    onHandleDashboardEmotion(id);
   }
 
   function handleChartLink() {
@@ -267,7 +267,9 @@ export default function HomePage({
           </DashboardLink>
         </GridElement>
 
-        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+        <GridElement
+          onClick={() => handleDashboardEmotion(demoMode ? id : _id)}
+        >
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
