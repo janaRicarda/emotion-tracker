@@ -47,7 +47,7 @@ export default function EmotionEntry({
         <title>Record your emotion</title>
       </Head>
       <EmotionForm
-        slug={slug}
+        emotion={slug}
         theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}

@@ -258,7 +258,13 @@ export default function EmotionRecordsList({
                             editFromDevControls
                               ? router.push(`edit/${id}`)
                               : router.push(
-                                  `./edit/${useExampleData ? id : _id}`
+                                  {
+                                    pathname: `./edit/${
+                                      useExampleData ? id : _id
+                                    }`,
+                                    query: { emotion: emotion },
+                                  },
+                                  `edit/${useExampleData ? id : _id}`
                                 )
                           }
                         />
