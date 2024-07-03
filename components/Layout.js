@@ -69,7 +69,8 @@ export default function Layout({
     session && `/api/user/${session.user.email}`
   );
 
-  if (session && currentUser) handleTheme(themes[currentUser.lastPreferredTheme]);
+  if (session && currentUser)
+    handleTheme(themes[currentUser.lastPreferredTheme]);
 
   // use-effect for setting theme to system preferences if no user logged in
   useEffect(() => {
@@ -125,17 +126,20 @@ export default function Layout({
   const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
   const isEdit = router.pathname === "/edit[id]" ? true : false;
 
+  const isLandingPage = router.pathname === "/";
+
   return (
     <>
-      {!session && (
+      {/* {!session && (
         <StartModal
           demoMode={demoMode}
           handleDemoMode={handleDemoMode}
           handleDemoModeOff={handleDemoModeOff}
         />
-      )}
+      )} */}
       {demoMode && <DemoLayout handleDemoModeOff={handleDemoModeOff} />}
       <Header
+        isLandingPage={isLandingPage}
         isScrollDown={isScrollDown}
         theme={theme}
         toggleTheme={toggleTheme}
@@ -146,7 +150,10 @@ export default function Layout({
           <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
         )) ||
         children}
-      <Footer handleDemoModeOff={handleDemoModeOff} />
+      <Footer
+        isLandingPage={isLandingPage}
+        handleDemoModeOff={handleDemoModeOff}
+      />
       {toolTip && <Tooltip toolTip={toolTip} isScrollDown={isScrollDown} />}
       <StyledToTopButton
         $background={

@@ -43,7 +43,7 @@ const StyledMenu = styled.div`
 
 const StyledHeader = styled.header`
   width: 100%;
-  display: flex;
+  display: ${({ $isLandingPage }) => ($isLandingPage ? "none" : "flex")};
   height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "100px")};
   ${transition}
   transition-property: height;
@@ -59,6 +59,7 @@ const StyledHeader = styled.header`
 
 const PlaceholderHeader = styled.div`
   width: 100vw;
+  display: ${({ $isLandingPage }) => ($isLandingPage ? "none" : "block")};
   height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
   ${transition}
 `;
@@ -94,6 +95,7 @@ export default function Header({
   theme,
   toggleTheme,
   isScrollDown,
+  isLandingPage,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -156,7 +158,11 @@ export default function Header({
 
   return (
     <>
-      <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
+      <StyledHeader
+        $isLandingPage={isLandingPage}
+        $isScrollDown={isScrollDown}
+        $isOpen={isOpen}
+      >
         <StyledLogoLink href="/">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
@@ -191,7 +197,7 @@ export default function Header({
         </StyledIconWrapper>
         <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
       </StyledHeader>
-      <PlaceholderHeader />
+      <PlaceholderHeader $isLandingPage={isLandingPage} />
     </>
   );
 }
