@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Signin() {
   const [providers, setProviders] = useState();
+  
   useEffect(() => {
     async function prov() {
       const providers = await getProviders();

@@ -43,8 +43,8 @@ export const authOptions = {
           clientSecret: process.env.GITHUB_SECRET,
         }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
       authorization: {
         params: {
           prompt: "consent",
@@ -62,10 +62,10 @@ export const authOptions = {
       return true;
     },
   },
-  pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
-  },
+  // pages: {
+  //   signIn: "/auth/signin",
+  //   signOut: "/auth/signout",
+  // },
 };
 
 export default NextAuth(authOptions);

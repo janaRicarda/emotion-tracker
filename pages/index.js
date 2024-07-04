@@ -3,14 +3,28 @@ import styled from "styled-components";
 import { signIn, getProviders } from "next-auth/react";
 import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Icon from "@mdi/react";
 import { mdiGithub, mdiGoogle } from "@mdi/js";
+import { useSession } from "next-auth/react";
+import { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+0% { opacity: 0;}
+100% {opacity: 1;}
+`;
+
+const buttonFadeIn = keyframes`
+0% { opacity: 0;}
+100% {opacity: 1;}
+`;
 
 const StyledBigLogo = styled(BigLogo)`
   max-width: 15rem;
   max-height: 15rem;
-  opacity: ${({ $startAnimation }) => ($startAnimation ? "1" : "0")};
-  transition: opacity 2000ms;
+  animation-name: ${fadeIn};
+  animation-duration: 2s;
+  animation-timing-function: linear;
 `;
 
 const Wrapper = styled.div`
@@ -40,93 +54,43 @@ const StartButton = styled(StyledButton)`
   padding: 0.6rem;
   border: none;
   border-radius: 3px;
-  transform: scale(${({ $startAnimation }) => ($startAnimation ? "1" : "0")});
-  transition: transform 1000ms 1000ms;
+  opacity: 0;
+  animation: ${buttonFadeIn} 1s linear 1s;
+  animation-fill-mode: forwards;
 `;
 
-const StyledArticle = styled.article`
-  display: flex;
-  width: 90vw;
-  height: 60vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: var(--section-background);
-  border-radius: 1rem;
-`;
-
-const StyledLoginButton = styled.button`
-  border-style: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  height: auto;
-  background: var(--button-background);
-  color: var(--contrast-text);
-`;
-
-const StyledParagraph = styled.p`
-  width: auto;
-  height: auto;
-`;
-
-export default function LandingPage({ handleDemoMode, handleDemoModeOff }) {
+export default function LandingPage() {
   const [showLogIn, setShowLogIn] = useState(false);
-  const [providers, setProviders] = useState();
-  const [startAnimation, setStartAnimation] = useState(false);
 
-  setTimeout(() => {
-    setStartAnimation(true);
-  }, 100);
+  const [providers, setProviders] = useState();
+
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  if (session) {
+    router.push("/home");
+  }
 
   useEffect(() => {
-    async function prov() {
+    async function findProviders() {
       const providers = await getProviders();
       setProviders(providers);
     }
-    !providers && prov();
+    !providers && findProviders();
   });
-
-  console.log(providers);
 
   return (
     <>
       <Wrapper>
-        <StyledBigLogo $startAnimation={startAnimation} />
-        {/* <StyledArticle>
-        <StyledParagraph>Login with credentials</StyledParagraph>
-        <StyledLoginButton
-          onClick={() => {
-            signIn(undefined, { callbackUrl: "/" });
-            handleDemoModeOff();
-          }}
-        >
-          Login
-        </StyledLoginButton>
-        <StyledParagraph>or use app in demo-mode</StyledParagraph>
-        <StyledLoginButton
-          onClick={() => {
-            handleDemoMode();
-          }}
-        >
-          demo-mode
-        </StyledLoginButton>
-      </StyledArticle> */}
+        <StyledBigLogo />
         {!showLogIn ? (
           <>
             <StartButton
-              $startAnimation={startAnimation}
               onClick={() => {
                 setShowLogIn(true);
               }}
             >
               Get Started!
-            </StartButton>
-            <StartButton
-              $startAnimation={startAnimation}
-              onClick={() => signIn()}
-            >
-              Sign in Page!
             </StartButton>
           </>
         ) : (
@@ -144,13 +108,6 @@ export default function LandingPage({ handleDemoMode, handleDemoModeOff }) {
                 Google
               </LoginBox>
             )}
-            {/* {Object.values(providers).map((provider) => {
-            return (
-              <div key={provider.name}>
-                <button>Sign in with {provider.name}</button>
-              </div>
-            );
-          })} */}
           </>
         )}
       </Wrapper>
