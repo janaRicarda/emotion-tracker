@@ -82,7 +82,7 @@ export default function DashboardChart({
   }
 
   return (
-    <ChartSection $width={width + 20} $centerOffset={chartWidth / 2 + 10}>
+    <ChartSection $width={width + 20} $centerOffset={chartWidth / 2 + 15}>
       <StyledFlexColumnWrapper>
         <EmotionChart
           theme={theme}

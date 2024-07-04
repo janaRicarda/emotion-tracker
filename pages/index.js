@@ -154,9 +154,11 @@ export default function HomePage({
 
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   function updateWidth() {
     setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
   }
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
@@ -164,11 +166,14 @@ export default function HomePage({
   }, []);
 
   const dashboardWidth = Math.min(
-    1000,
+    1100,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const gridFactor = 2.8 + windowWidth / 170;
-  const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 5);
+  const gridFactor = 3.1 + windowWidth / 164;
+  console.log(gridFactor);
+  const dashboardHeight = Math.min(windowHeight - 200, 900);
+  console.log(windowHeight);
+  console.log(dashboardHeight);
   const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
@@ -311,7 +316,7 @@ export default function HomePage({
           <DashboardChart
             theme={theme}
             width={Math.max(290, Math.round(36 + windowWidth / 1.8))}
-            heightFactor={0.42}
+            heightFactor={0.44}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
