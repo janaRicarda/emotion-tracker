@@ -307,9 +307,6 @@ export default function App({
   function deliverChartVisibility() {
     setShowChartForDashboardLink(true);
   }
-  const isLandingPage = router.pathname === "/";
-
-  console.log(isLandingPage);
 
   return (
     <SessionProvider session={demoMode ? null : session}>
