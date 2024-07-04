@@ -164,11 +164,11 @@ export default function HomePage({
   }, []);
 
   const dashboardWidth = Math.min(
-    1080,
+    1000,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
+  const gridFactor = 2.8 + windowWidth / 170;
+  const dashboardHeight = Math.round(dashboardWidth * 1.3 + gridFactor * 5);
   const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
@@ -310,8 +310,8 @@ export default function HomePage({
         <ChartElement>
           <DashboardChart
             theme={theme}
-            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
-            heightFactor={0.46}
+            width={Math.max(290, Math.round(36 + windowWidth / 1.8))}
+            heightFactor={0.42}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
