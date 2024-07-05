@@ -14,9 +14,19 @@ const fadeIn = keyframes`
 100% {opacity: 1;}
 `;
 
-const buttonFadeIn = keyframes`
+ const buttonFadeIn = keyframes`
 0% { opacity: 0;}
 100% {opacity: 1;}
+`; 
+
+/* const buttonFadeIn = keyframes`
+0% { width: 15rem; height: 15rem;}
+100% {width: 8rem; height: 8rem;}
+`; */
+const circleAnimation = keyframes`
+0% {top: 0;}
+50% {bottom: 0;}
+100% {bottom: 15%;}
 `;
 
 const StyledBigLogo = styled(BigLogo)`
@@ -26,6 +36,12 @@ const StyledBigLogo = styled(BigLogo)`
   animation-duration: 2s;
   animation-timing-function: linear;
 `;
+
+const StyledParagraph = styled.p`
+ animation-name: ${fadeIn};
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  `;
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,6 +73,28 @@ const StartButton = styled(StyledButton)`
   opacity: 0;
   animation: ${buttonFadeIn} 1s linear 1s;
   animation-fill-mode: forwards;
+`; 
+
+/* const StartButton = styled(StyledButton)`
+  width: 8rem;
+  height: 8rem;
+  padding: 0.6rem;
+  background: var(--profile);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-on-bright);
+  font-weight: 700;
+  //opacity: 0;
+  animation: ${buttonFadeIn} 1s linear 1s;
+  //animation-fill-mode: forwards;
+`; */
+const StyledCircle = styled.div`
+width: 8rem;
+height: 8rem;
+border-radius: 50%;
+background: var(--profile);
+position: absolute;
+animation: ${circleAnimation} 2s linear forwards;
 `;
 
 export default function LandingPage() {
@@ -81,8 +119,10 @@ export default function LandingPage() {
 
   return (
     <>
+    <StyledCircle />
       <Wrapper>
         <StyledBigLogo />
+        <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
         {!showLogIn ? (
           <>
             <StartButton
