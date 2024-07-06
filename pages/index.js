@@ -7,11 +7,16 @@ import { useRouter } from "next/router";
 import Icon from "@mdi/react";
 import { mdiGithub, mdiGoogle } from "@mdi/js";
 import { useSession } from "next-auth/react";
-import { keyframes } from "styled-components";
+import { keyframes, css } from "styled-components";
 
 const fadeIn = keyframes`
 0% { opacity: 0;}
 100% {opacity: 1;}
+`;
+
+const buttonExplode = keyframes`
+0% {opacity: 1; width: 8rem; height: 8rem; color: transparent;}
+100% {opacity: 0; width: 100%; height: 100%; color: transparent;}
 `;
 
  const buttonFadeIn = keyframes`
@@ -24,39 +29,56 @@ const fadeIn = keyframes`
 100% {width: 8rem; height: 8rem;}
 `; */
 const circleAnimation = keyframes`
-0% {top: 0;}
-50% {bottom: 0;}
-100% {bottom: 15%;}
+0% { transform: translateY(-20vh); background: var(--joy); }
+14% {background: var(--surprise);}
+28% {background: var(--fear);}
+42% {background: var(--sadness);}
+56% {background: var(--contempt);}
+70% {background: var(--disgust);}
+84% {background: var(--anger);  transform: translateY(40vh);}
+100% {background: var(--anger); transform: translateY(1.1vh); }
 `;
 
 const StyledBigLogo = styled(BigLogo)`
-  max-width: 15rem;
-  max-height: 15rem;
+  max-width: 16rem;
+  max-height: 16rem;
+  opacity: 0;
   animation-name: ${fadeIn};
   animation-duration: 2s;
+  animation-delay: 900ms;
   animation-timing-function: linear;
+  animation-fill-mode: forwards;
 `;
 
 const StyledParagraph = styled.p`
+opacity: 0;
+margin-top: 2rem;
  animation-name: ${fadeIn};
-  animation-duration: 2s;
+  animation-duration: 1s;
+  animation-delay: 4s;
   animation-timing-function: linear;
+  animation-fill-mode: forwards;
   `;
 
 const Wrapper = styled.div`
+width: 100vw;
+height: 100vh;
+padding-top: 4rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+
 `;
 
 const LoginBox = styled.div`
   display: flex;
   padding: 0.5rem;
   margin: 1rem auto;
-  background-color: white;
-  color: black;
-  width: 100%;
+  background-color: var(--main-dark);
+  color: var(--main-bright);
+  //width: 100%;
+  width: 80vw;
   align-items: center;
   justify-content: center;
 
@@ -64,46 +86,60 @@ const LoginBox = styled.div`
     margin-right: 0.6rem;
   }
 `;
-
+/* 
 const StartButton = styled(StyledButton)`
   width: auto;
   padding: 0.6rem;
   border: none;
   border-radius: 3px;
+ 
   opacity: 0;
-  animation: ${buttonFadeIn} 1s linear 1s;
+  animation: ${buttonFadeIn} 1s linear 3000ms;
   animation-fill-mode: forwards;
-`; 
+`;  */
 
-/* const StartButton = styled(StyledButton)`
-  width: 8rem;
-  height: 8rem;
-  padding: 0.6rem;
+ const StartButton = styled(StyledButton)`
+  width: 9rem;
+  height: 9rem;
+  position: ${({$position}) => $position};
+  top: ${({$top}) => $top};
   background: var(--profile);
   border: none;
   border-radius: 50%;
   color: var(--text-on-bright);
-  font-weight: 700;
-  //opacity: 0;
-  animation: ${buttonFadeIn} 1s linear 1s;
-  //animation-fill-mode: forwards;
-`; */
+  font-weight: 500;
+  opacity: 0;
+  animation-name: ${({$explode}) => $explode ? css`${buttonExplode}` : css`${buttonFadeIn}`};
+  animation-duration: ${({$explode}) => ($explode ? "1s" : "500ms")};
+  animation-timing-function: linear;
+  animation-delay: ${({$explode}) => ($explode ? "none" : "3500ms")};
+  animation-fill-mode: forwards;
+`; 
 const StyledCircle = styled.div`
 width: 8rem;
 height: 8rem;
 border-radius: 50%;
-background: var(--profile);
 position: absolute;
-animation: ${circleAnimation} 2s linear forwards;
+
+animation: ${circleAnimation} 3s linear;
+`;
+
+const StyledDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 1rem;
 `;
 
 export default function LandingPage() {
   const [showLogIn, setShowLogIn] = useState(false);
-
+const [explode, setExplode] = useState(false);
   const [providers, setProviders] = useState();
 
   const { data: session } = useSession();
   const router = useRouter();
+  
+
 
   if (session) {
     router.push("/home");
@@ -117,40 +153,80 @@ export default function LandingPage() {
     !providers && findProviders();
   });
 
+  
+
   return (
     <>
     <StyledCircle />
       <Wrapper>
-        <StyledBigLogo />
-        <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
-        {!showLogIn ? (
-          <>
-            <StartButton
+      <StyledBigLogo $showLogIn={showLogIn}/>
+     
+      <StartButton $explode={explode} $position={showLogIn && "absolute"} $top={showLogIn && "40vh"}
               onClick={() => {
-                setShowLogIn(true);
+                setShowLogIn(true);  
+                setExplode(true);
               }}
             >
               Get Started!
-            </StartButton>
-          </>
-        ) : (
-          <>
-            <h3>Login</h3>
-            {providers.github && (
-              <LoginBox onClick={() => signIn("github")}>
-                <Icon path={mdiGithub} size={1} />
-                GitHub
-              </LoginBox>
-            )}
-            {providers.google && (
-              <LoginBox onClick={() => signIn("google")}>
-                <Icon path={mdiGoogle} size={1} />
-                Google
-              </LoginBox>
-            )}
-          </>
-        )}
+            </StartButton> 
+       
+        
+            <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
+            
+          
+      {showLogIn && (
+        <StyledDiv>
+ <h3 >Login</h3>
+ {providers.github && (
+   <LoginBox onClick={() => signIn("github")}>
+     <Icon path={mdiGithub} size={1} />
+     GitHub
+   </LoginBox>
+ )}
+ {providers.google && (
+   <LoginBox onClick={() => signIn("google")}>
+     <Icon path={mdiGoogle} size={1} />
+     Google
+   </LoginBox>
+ )}
+</StyledDiv>
+      )}
+           
+        
       </Wrapper>
     </>
   );
 }
+
+// {<Wrapper>
+// <StyledBigLogo />
+//   <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
+//   {!showLogIn ? (
+//     <>
+//       <StartButton $explode={explode}
+//         onClick={() => {
+//           /* setShowLogIn(true);  */
+//           setExplode(true);
+//         }}
+//       >
+//         Get Started!
+//       </StartButton> 
+//     </>
+//   ) : (
+//     <>
+//       <h3>Login</h3>
+//       {providers.github && (
+//         <LoginBox onClick={() => signIn("github")}>
+//           <Icon path={mdiGithub} size={1} />
+//           GitHub
+//         </LoginBox>
+//       )}
+//       {providers.google && (
+//         <LoginBox onClick={() => signIn("google")}>
+//           <Icon path={mdiGoogle} size={1} />
+//           Google
+//         </LoginBox>
+//       )}
+//     </>
+//   )}
+// </Wrapper>}
