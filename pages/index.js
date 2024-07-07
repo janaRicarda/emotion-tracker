@@ -14,7 +14,7 @@ const fadeIn = keyframes`
 100% {opacity: 1;}
 `;
 
-const buttonExplode = keyframes`
+const buttonDisappears = keyframes`
 0% {opacity: 1; color: transparent; position: relative;}
 100% {opacity: 0; color: transparent; position: absolute;}
 `; 
@@ -24,10 +24,6 @@ const buttonExplode = keyframes`
 100% {opacity: 1;}
 `; 
 
-/* const buttonFadeIn = keyframes`
-0% { width: 15rem; height: 15rem;}
-100% {width: 8rem; height: 8rem;}
-`; */
 const circleAnimation = keyframes`
 0% { transform: translateY(-40vh); background: var(--joy); }
 14% {background: var(--surprise);}
@@ -36,32 +32,42 @@ const circleAnimation = keyframes`
 56% {background: var(--contempt);}
 70% {background: var(--disgust);}
 84% {background: var(--anger);  transform: translateY(40vh);}
-100% {background: var(--anger); transform: translateY(1.1vh); }
+100% {background: var(--anger); transform: translateY(10vh); }
 `;
 
-const smallCircleAnimation = keyframes`
+const joyAnimation = keyframes`
 0% {transform: translateY(0); opacity: 1;}
 100% {transform: translateY(-40vh); opacity: 0;}
 `;
 
 const sadnessAnimation = keyframes`
 0% {transform: translateX(0); opacity: 1;}
-100% {transform: translateX(40vh); opacity: 0; }
+100% {transform: translateX(25vh); opacity: 0; }
 `;
 
 const contemptAnimation = keyframes`
 0% {transform: translateX(0); opacity: 1;}
-100% {transform: translateX(-40vh); opacity: 0; }
+100% {transform: translateX(-25vh); opacity: 0; }
 `;
 
 const surpriseAnimation = keyframes`
 0% {transform: translate(0); opacity: 1;}
-100% {transform: translate(40vh 20vh); opacity: 0; }
+100% {transform: translate(20vh, -35vh); opacity: 0; }
 `;
 
 const angerAnimation = keyframes`
 0% {transform: translateY(0); opacity: 1;}
-100% {transform: translate(-30% -40vh); opacity: 0; }
+100% {transform: translate(-20vh, -35vh); opacity: 0; }
+`;
+
+const fearAnimation = keyframes`
+0% {transform: translateY(0); opacity: 1;}
+100% {transform: translate(30vh, -20vh); opacity: 0; }
+`;
+
+const disgustAnimation = keyframes`
+0% {transform: translateY(0); opacity: 1;}
+100% {transform: translate(-30vh, -20vh); opacity: 0; }
 `;
 
 const StyledBigLogo = styled(BigLogo)`
@@ -70,17 +76,17 @@ const StyledBigLogo = styled(BigLogo)`
   opacity: 0;
   animation-name: ${fadeIn};
   animation-duration: 2s;
-  animation-delay: 900ms;
+  animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 `;
 
 const StyledParagraph = styled.p`
 opacity: 0;
-margin-top: 2rem;
+margin-top: ${({$showLogIn}) => ($showLogIn ? "none" : "2rem")};
  animation-name: ${fadeIn};
   animation-duration: 1s;
-  animation-delay: 4s;
+  animation-delay: 3500ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
   `;
@@ -124,18 +130,18 @@ const StartButton = styled(StyledButton)`
 `;  */
 
  const StartButton = styled(StyledButton)`
-  width: 9rem;
-  height: 9rem;
-background: var(--profile);
+  width: 8rem;
+  height: 8rem;
+  background: var(--profile);
   border: none;
   border-radius: 50%;
   color: var(--text-on-bright);
   font-weight: 500;
   opacity: 0;
-  animation-name: ${({$explode}) => $explode ? css`${buttonExplode}` : css`${buttonFadeIn}`};
-  animation-duration: ${({$explode}) => ($explode ? "100ms" : "500ms")};
+  animation-name: ${({$showLogIn}) => $showLogIn ? css`${buttonDisappears}` : css`${buttonFadeIn}`};
+  animation-duration: ${({$showLogIn}) => ($showLogIn ? "100ms" : "500ms")};
   animation-timing-function: linear;
-  animation-delay: ${({$explode}) => ($explode ? "none" : "3500ms")};
+  animation-delay: ${({$showLogIn}) => ($showLogIn ? "none" : "3s")};
   animation-fill-mode: forwards; 
 
 `; 
@@ -144,8 +150,7 @@ width: 8rem;
 height: 8rem;
 border-radius: 50%;
 position: absolute;
-
-animation: ${circleAnimation} 3s linear;
+animation: ${circleAnimation} 3s ease-in-out;
 `;
 
 const StyledDiv = styled.div`
@@ -157,53 +162,56 @@ margin-top: 1rem;
 
 const StyledSmallCircle = styled.div`
 opacity: 0;
-width: 2rem;
-height: 2rem;
+width: 4rem;
+height: 4rem;
 border-radius: 50%;
 position: absolute;
 top: 50%;
 left: calc(50% - 1rem);
 right: calc(50% - 1rem);
+animation-duration: 400ms;
+animation-timimg-function: linear;
+animation-fill-mode: forwards;
 `;
 
 const StyledJoy = styled(StyledSmallCircle)`
 background: var(--joy);
-animation: ${smallCircleAnimation} 500ms linear forwards;
+animation-name: ${joyAnimation};
 `;
 
 const StyledSurprise = styled(StyledSmallCircle)`
 background: var(--surprise);
-animation: ${surpriseAnimation} 500ms linear 1000ms forwards;
+animation-name: ${surpriseAnimation};
 `;
 
 const StyledFear = styled(StyledSmallCircle)`
 background: var(--fear);
-animation: ${smallCircleAnimation} 500ms linear 200ms forwards;
+animation-name: ${fearAnimation};
 `;
 
 const StyledSadness = styled(StyledSmallCircle)`
 background: var(--sadness);
-animation: ${sadnessAnimation} 500ms linear forwards;
+animation-name: ${sadnessAnimation};
 `;
 
 const StyledContempt = styled(StyledSmallCircle)`
 background: var(--contempt);
-animation: ${contemptAnimation} 500ms linear forwards;
+animation-name: ${contemptAnimation};
 `;
 
 const StyledDisgust = styled(StyledSmallCircle)`
 background: var(--disgust);
-animation: ${smallCircleAnimation} 500ms linear 800ms forwards;
+animation-name: ${disgustAnimation};
 `;
 
 const StyledAnger = styled(StyledSmallCircle)`
 background: var(--anger);
-animation: ${angerAnimation} 500ms linear 1000ms forwards;
+animation-name: ${angerAnimation};
 `;
 
 export default function LandingPage() {
   const [showLogIn, setShowLogIn] = useState(false);
-const [explode, setExplode] = useState(false);
+
   const [providers, setProviders] = useState();
 
   const { data: session } = useSession();
@@ -242,15 +250,14 @@ const [explode, setExplode] = useState(false);
       <Wrapper>
       <StyledBigLogo $showLogIn={showLogIn}/>
      
-      <StartButton $explode={explode} $position={showLogIn && "absolute"} $top={showLogIn && "40vh"}
+      <StartButton $showLogIn={showLogIn} $position={showLogIn && "absolute"} $top={showLogIn && "40vh"}
               onClick={() => {
                 setShowLogIn(true);  
-                setExplode(true);
               }}
             >
               Get Started!
             </StartButton> 
-        <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
+        <StyledParagraph $showLogIn={showLogIn}>Your tool for tracking your emotions</StyledParagraph>
           
           
       {showLogIn && (
