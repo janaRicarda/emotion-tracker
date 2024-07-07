@@ -8,6 +8,8 @@ import Icon from "@mdi/react";
 import { mdiGithub, mdiGoogle } from "@mdi/js";
 import { useSession } from "next-auth/react";
 import { keyframes, css } from "styled-components";
+import CircleAnimation from "@/components/CircleAnimation";
+import { breakpoints } from "@/utils/breakpoints";
 
 const fadeIn = keyframes`
 0% { opacity: 0;}
@@ -24,52 +26,6 @@ const buttonDisappears = keyframes`
 100% {opacity: 1;}
 `; 
 
-const circleAnimation = keyframes`
-0% { transform: translateY(-40vh); background: var(--joy); }
-14% {background: var(--surprise);}
-28% {background: var(--fear);}
-42% {background: var(--sadness);}
-56% {background: var(--contempt);}
-70% {background: var(--disgust);}
-84% {background: var(--anger);  transform: translateY(40vh);}
-100% {background: var(--anger); transform: translateY(10vh); }
-`;
-
-const joyAnimation = keyframes`
-0% {transform: translateY(0); opacity: 1;}
-100% {transform: translateY(-40vh); opacity: 0;}
-`;
-
-const sadnessAnimation = keyframes`
-0% {transform: translateX(0); opacity: 1;}
-100% {transform: translateX(25vh); opacity: 0; }
-`;
-
-const contemptAnimation = keyframes`
-0% {transform: translateX(0); opacity: 1;}
-100% {transform: translateX(-25vh); opacity: 0; }
-`;
-
-const surpriseAnimation = keyframes`
-0% {transform: translate(0); opacity: 1;}
-100% {transform: translate(20vh, -35vh); opacity: 0; }
-`;
-
-const angerAnimation = keyframes`
-0% {transform: translateY(0); opacity: 1;}
-100% {transform: translate(-20vh, -35vh); opacity: 0; }
-`;
-
-const fearAnimation = keyframes`
-0% {transform: translateY(0); opacity: 1;}
-100% {transform: translate(30vh, -20vh); opacity: 0; }
-`;
-
-const disgustAnimation = keyframes`
-0% {transform: translateY(0); opacity: 1;}
-100% {transform: translate(-30vh, -20vh); opacity: 0; }
-`;
-
 const StyledBigLogo = styled(BigLogo)`
   max-width: 16rem;
   max-height: 16rem;
@@ -79,6 +35,11 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+   @media ${breakpoints.mobileLandscape} {
+    max-width: 14rem;
+    max-height: 14rem;
+  z-index: 9;
+  }
 `;
 
 const StyledParagraph = styled.p`
@@ -94,12 +55,15 @@ margin-top: ${({$showLogIn}) => ($showLogIn ? "none" : "2rem")};
 const Wrapper = styled.div`
 width: 100vw;
 height: 100vh;
-padding-top: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
+  gap: ${({$showLogIn}) => ($showLogIn ? "2rem" : "0")};
+ @media ${breakpoints.mobileLandscape} {
+    padding-top: 0;
+    padding-bottom: 4rem;
+  }
 `;
 
 const LoginBox = styled.div`
@@ -143,70 +107,17 @@ const StartButton = styled(StyledButton)`
   animation-timing-function: linear;
   animation-delay: ${({$showLogIn}) => ($showLogIn ? "none" : "3s")};
   animation-fill-mode: forwards; 
-
+  @media ${breakpoints.mobileLandscape} {
+    width: 6rem;
+    height: 6rem;
+  }
 `; 
-const StyledCircle = styled.div`
-width: 8rem;
-height: 8rem;
-border-radius: 50%;
-position: absolute;
-animation: ${circleAnimation} 3s ease-in-out;
-`;
 
 const StyledDiv = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
 margin-top: 1rem;
-`;
-
-const StyledSmallCircle = styled.div`
-opacity: 0;
-width: 4rem;
-height: 4rem;
-border-radius: 50%;
-position: absolute;
-top: 50%;
-left: calc(50% - 1rem);
-right: calc(50% - 1rem);
-animation-duration: 400ms;
-animation-timimg-function: linear;
-animation-fill-mode: forwards;
-`;
-
-const StyledJoy = styled(StyledSmallCircle)`
-background: var(--joy);
-animation-name: ${joyAnimation};
-`;
-
-const StyledSurprise = styled(StyledSmallCircle)`
-background: var(--surprise);
-animation-name: ${surpriseAnimation};
-`;
-
-const StyledFear = styled(StyledSmallCircle)`
-background: var(--fear);
-animation-name: ${fearAnimation};
-`;
-
-const StyledSadness = styled(StyledSmallCircle)`
-background: var(--sadness);
-animation-name: ${sadnessAnimation};
-`;
-
-const StyledContempt = styled(StyledSmallCircle)`
-background: var(--contempt);
-animation-name: ${contemptAnimation};
-`;
-
-const StyledDisgust = styled(StyledSmallCircle)`
-background: var(--disgust);
-animation-name: ${disgustAnimation};
-`;
-
-const StyledAnger = styled(StyledSmallCircle)`
-background: var(--anger);
-animation-name: ${angerAnimation};
 `;
 
 export default function LandingPage() {
@@ -235,19 +146,8 @@ export default function LandingPage() {
 
   return (
     <>
-    {showLogIn ? (
-      <div>
-      <StyledJoy/> 
-      <StyledSurprise/>
-      <StyledFear />
-      <StyledSadness />
-      <StyledContempt />
-      <StyledDisgust />
-      <StyledAnger />
-      </div>) :  (<StyledCircle />
-    )}
-    
-      <Wrapper>
+    <CircleAnimation showLogIn={showLogIn}/>
+      <Wrapper $showLogIn={showLogIn}>
       <StyledBigLogo $showLogIn={showLogIn}/>
      
       <StartButton $showLogIn={showLogIn} $position={showLogIn && "absolute"} $top={showLogIn && "40vh"}
@@ -277,9 +177,7 @@ export default function LandingPage() {
  )}
 </StyledDiv>
       )}
-           
-        
-      </Wrapper>
+     </Wrapper>
     </>
   );
 }
