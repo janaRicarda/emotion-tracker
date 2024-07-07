@@ -15,9 +15,9 @@ const fadeIn = keyframes`
 `;
 
 const buttonExplode = keyframes`
-0% {opacity: 1; width: 8rem; height: 8rem; color: transparent;}
-100% {opacity: 0; width: 100%; height: 100%; color: transparent;}
-`;
+0% {opacity: 1; color: transparent; position: relative;}
+100% {opacity: 0; color: transparent; position: absolute;}
+`; 
 
  const buttonFadeIn = keyframes`
 0% { opacity: 0;}
@@ -29,7 +29,7 @@ const buttonExplode = keyframes`
 100% {width: 8rem; height: 8rem;}
 `; */
 const circleAnimation = keyframes`
-0% { transform: translateY(-20vh); background: var(--joy); }
+0% { transform: translateY(-40vh); background: var(--joy); }
 14% {background: var(--surprise);}
 28% {background: var(--fear);}
 42% {background: var(--sadness);}
@@ -37,6 +37,31 @@ const circleAnimation = keyframes`
 70% {background: var(--disgust);}
 84% {background: var(--anger);  transform: translateY(40vh);}
 100% {background: var(--anger); transform: translateY(1.1vh); }
+`;
+
+const smallCircleAnimation = keyframes`
+0% {transform: translateY(0); opacity: 1;}
+100% {transform: translateY(-40vh); opacity: 0;}
+`;
+
+const sadnessAnimation = keyframes`
+0% {transform: translateX(0); opacity: 1;}
+100% {transform: translateX(40vh); opacity: 0; }
+`;
+
+const contemptAnimation = keyframes`
+0% {transform: translateX(0); opacity: 1;}
+100% {transform: translateX(-40vh); opacity: 0; }
+`;
+
+const surpriseAnimation = keyframes`
+0% {transform: translate(0); opacity: 1;}
+100% {transform: translate(40vh 20vh); opacity: 0; }
+`;
+
+const angerAnimation = keyframes`
+0% {transform: translateY(0); opacity: 1;}
+100% {transform: translate(-30% -40vh); opacity: 0; }
 `;
 
 const StyledBigLogo = styled(BigLogo)`
@@ -101,19 +126,18 @@ const StartButton = styled(StyledButton)`
  const StartButton = styled(StyledButton)`
   width: 9rem;
   height: 9rem;
-  position: ${({$position}) => $position};
-  top: ${({$top}) => $top};
-  background: var(--profile);
+background: var(--profile);
   border: none;
   border-radius: 50%;
   color: var(--text-on-bright);
   font-weight: 500;
   opacity: 0;
   animation-name: ${({$explode}) => $explode ? css`${buttonExplode}` : css`${buttonFadeIn}`};
-  animation-duration: ${({$explode}) => ($explode ? "1s" : "500ms")};
+  animation-duration: ${({$explode}) => ($explode ? "100ms" : "500ms")};
   animation-timing-function: linear;
   animation-delay: ${({$explode}) => ($explode ? "none" : "3500ms")};
-  animation-fill-mode: forwards;
+  animation-fill-mode: forwards; 
+
 `; 
 const StyledCircle = styled.div`
 width: 8rem;
@@ -129,6 +153,52 @@ display: flex;
 flex-direction: column;
 align-items: center;
 margin-top: 1rem;
+`;
+
+const StyledSmallCircle = styled.div`
+opacity: 0;
+width: 2rem;
+height: 2rem;
+border-radius: 50%;
+position: absolute;
+top: 50%;
+left: calc(50% - 1rem);
+right: calc(50% - 1rem);
+`;
+
+const StyledJoy = styled(StyledSmallCircle)`
+background: var(--joy);
+animation: ${smallCircleAnimation} 500ms linear forwards;
+`;
+
+const StyledSurprise = styled(StyledSmallCircle)`
+background: var(--surprise);
+animation: ${surpriseAnimation} 500ms linear 1000ms forwards;
+`;
+
+const StyledFear = styled(StyledSmallCircle)`
+background: var(--fear);
+animation: ${smallCircleAnimation} 500ms linear 200ms forwards;
+`;
+
+const StyledSadness = styled(StyledSmallCircle)`
+background: var(--sadness);
+animation: ${sadnessAnimation} 500ms linear forwards;
+`;
+
+const StyledContempt = styled(StyledSmallCircle)`
+background: var(--contempt);
+animation: ${contemptAnimation} 500ms linear forwards;
+`;
+
+const StyledDisgust = styled(StyledSmallCircle)`
+background: var(--disgust);
+animation: ${smallCircleAnimation} 500ms linear 800ms forwards;
+`;
+
+const StyledAnger = styled(StyledSmallCircle)`
+background: var(--anger);
+animation: ${angerAnimation} 500ms linear 1000ms forwards;
 `;
 
 export default function LandingPage() {
@@ -157,7 +227,18 @@ const [explode, setExplode] = useState(false);
 
   return (
     <>
-    <StyledCircle />
+    {showLogIn ? (
+      <div>
+      <StyledJoy/> 
+      <StyledSurprise/>
+      <StyledFear />
+      <StyledSadness />
+      <StyledContempt />
+      <StyledDisgust />
+      <StyledAnger />
+      </div>) :  (<StyledCircle />
+    )}
+    
       <Wrapper>
       <StyledBigLogo $showLogIn={showLogIn}/>
      
@@ -169,10 +250,8 @@ const [explode, setExplode] = useState(false);
             >
               Get Started!
             </StartButton> 
-       
-        
-            <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
-            
+        <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
+          
           
       {showLogIn && (
         <StyledDiv>
