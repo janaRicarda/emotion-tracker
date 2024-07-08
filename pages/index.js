@@ -35,11 +35,15 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-   @media ${breakpoints.mobileLandscape} {
-    max-width: 14rem;
-    max-height: 14rem;
-  z-index: 9;
-  }
+    @media ${breakpoints.mobileLandscape} {
+    width: 8rem;
+    height: 8rem;
+  }  
+     @media ${breakpoints.tablet} {
+    width: 16rem;
+    height: 16rem;
+    border: 1px solid blue;
+  }  
 `;
 
 const StyledParagraph = styled.p`
@@ -53,50 +57,50 @@ margin-top: ${({$showLogIn}) => ($showLogIn ? "none" : "2rem")};
   `;
 
 const Wrapper = styled.div`
-width: 100vw;
-height: 100vh;
+background: var(--section-background);
+  width: 100vw;
+  height: 100vh;
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: ${({$showLogIn}) => ($showLogIn ? "2rem" : "0")};
- @media ${breakpoints.mobileLandscape} {
+
+  @media ${breakpoints.mobileLandscape} {
     padding-top: 0;
-    padding-bottom: 4rem;
-  }
+    padding-bottom: 1rem;
+    gap: 0;
+  }  
+    @media ${breakpoints.tablet} {
+  padding-bottom: 0;
+    padding-top: 3rem;
+    gap: ${({$showLogIn}) => ($showLogIn ? "2rem" : "0")};
+  }  
 `;
 
 const LoginBox = styled.div`
   display: flex;
-  padding: 0.5rem;
-  margin: 1rem auto;
-  background-color: var(--main-dark);
-  color: var(--main-bright);
-  //width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem auto;
+  background: var(--section-background);
+  color: var(--main-dark);
   width: 80vw;
+  border-radius: 0.25rem;
   align-items: center;
   justify-content: center;
-
   & > svg {
     margin-right: 0.6rem;
-  }
 `;
-/* 
-const StartButton = styled(StyledButton)`
-  width: auto;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 3px;
- 
-  opacity: 0;
-  animation: ${buttonFadeIn} 1s linear 3000ms;
-  animation-fill-mode: forwards;
-`;  */
+
+const StyledH3 = styled.h3`
+margin-bottom: 1rem;
+`;
 
  const StartButton = styled(StyledButton)`
   width: 8rem;
   height: 8rem;
-  background: var(--profile);
+  background: var(--landing-page);
   border: none;
   border-radius: 50%;
   color: var(--text-on-bright);
@@ -111,13 +115,24 @@ const StartButton = styled(StyledButton)`
     width: 6rem;
     height: 6rem;
   }
+    @media ${breakpoints.tablet} {
+    width: 8rem;
+    height: 8rem;
+  }
 `; 
 
 const StyledDiv = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+
 margin-top: 1rem;
+padding: 1rem;
+border-radius: 0.5rem;
+background: var(--landing-page);
+color: var(--text-on-bright);
+}
+   
 `;
 
 export default function LandingPage() {
@@ -162,7 +177,7 @@ export default function LandingPage() {
           
       {showLogIn && (
         <StyledDiv>
- <h3 >Login</h3>
+ <StyledH3>Login</StyledH3>
  {providers.github && (
    <LoginBox onClick={() => signIn("github")}>
      <Icon path={mdiGithub} size={1} />
@@ -182,35 +197,3 @@ export default function LandingPage() {
   );
 }
 
-// {<Wrapper>
-// <StyledBigLogo />
-//   <StyledParagraph>Your tool for tracking your emotions</StyledParagraph>
-//   {!showLogIn ? (
-//     <>
-//       <StartButton $explode={explode}
-//         onClick={() => {
-//           /* setShowLogIn(true);  */
-//           setExplode(true);
-//         }}
-//       >
-//         Get Started!
-//       </StartButton> 
-//     </>
-//   ) : (
-//     <>
-//       <h3>Login</h3>
-//       {providers.github && (
-//         <LoginBox onClick={() => signIn("github")}>
-//           <Icon path={mdiGithub} size={1} />
-//           GitHub
-//         </LoginBox>
-//       )}
-//       {providers.google && (
-//         <LoginBox onClick={() => signIn("google")}>
-//           <Icon path={mdiGoogle} size={1} />
-//           Google
-//         </LoginBox>
-//       )}
-//     </>
-//   )}
-// </Wrapper>}

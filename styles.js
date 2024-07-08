@@ -56,6 +56,7 @@ html {
   --highlight-background: ${({ theme }) => theme.highlightBackground};
   --highlight-lines: ${({ theme }) => theme.highlightedLines};
   --profile: ${({ theme }) => theme.profile};
+  --landing-page: ${({ theme }) => theme.landingPage};
 }
   body {
     margin: 0;

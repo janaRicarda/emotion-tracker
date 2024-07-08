@@ -38,9 +38,9 @@ export const lightTheme = {
   boxShadowTooltip: "-10px -10px 20px grey, 20px 20px 20px grey",
   highlightBackground: "var(--button-background)",
   highlightedLines: "var(--contrast-text)",
-  //profile: "linear-gradient(#e8e87d,  #c5a3f5)",
   profile:
     "conic-gradient(#e8e87d, #baf0a8, #7de8cd, #75c7f0, #c5a3f5, #f075db, #f08a75, #e8e87d)",
+    landingPage: "conic-gradient(#FBFFC7, #E2FFC7, #C7FFE7, #C7F3FF, #D2C8FF, #FBC8FF, #FFC8C8, #FBFFC7)",
 };
 
 export const darkTheme = {
@@ -85,7 +85,9 @@ export const darkTheme = {
   highlightedLines: "var(--contrast-text)",
   profile:
     "conic-gradient(#e8bb7d, #d8f0a8, #a8f0ba, #7ddfe8, #a8b4f0, #e4a8f0, #e87da1, #e8bb7d)",
+    landingPage: "conic-gradient(#FBFFC7, #E2FFC7, #C7FFE7, #C7F3FF, #D2C8FF, #FBC8FF, #FFC8C8, #FBFFC7)",
 };
+
 
 export const warmTheme = {
   background: "#fdfcd7",
@@ -128,6 +130,7 @@ export const warmTheme = {
   highlightBackground: "#762e72",
   highlightedLines: "#fdfcd7",
   profile: "linear-gradient(to bottom left, #fbe050, #fbbd50, #f673a4)",
+  landingPage: "conic-gradient(#FBFFC7, #E2FFC7, #C7FFE7, #C7F3FF, #D2C8FF, #FBC8FF, #FFC8C8, #FBFFC7)",
 };
 
 export const coldTheme = {
@@ -137,7 +140,6 @@ export const coldTheme = {
   textOnBright: "#511AA1",
   textOnDark: "#D3F6F8",
   buttonBackground: "#2BE3EC",
-  //buttonBackground: "#5fbdff",
   sectionBackground: "#B4F2F7",
   sectionBackgroundContrast: "#b4f2f7",
   contrastBright: "#D3F6F8",
@@ -172,6 +174,7 @@ export const coldTheme = {
   highlightBackground: "#0F1555",
   highlightedLines: "#D3F6F8",
   profile: "linear-gradient(to bottom left,#50cfe2, #9996fa)",
+  landingPage: "conic-gradient(#FBFFC7, #E2FFC7, #C7FFE7, #C7F3FF, #D2C8FF, #FBC8FF, #FFC8C8, #FBFFC7)",
 };
 
 export const neutralTheme = {
@@ -212,6 +215,7 @@ export const neutralTheme = {
   highlightBackground: "black",
   highlightedLines: "white",
   profile: "linear-gradient(lightgrey, white)",
+  landingPage: "linear-gradient(lightgrey, white)",
 };
 
 export const highContrastTheme = {
@@ -253,4 +257,5 @@ export const highContrastTheme = {
   highlightBackground: "yellow",
   highlightedLines: "black",
   profile: "yellow",
+  landingPage: "yellow",
 };
