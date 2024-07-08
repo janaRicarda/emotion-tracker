@@ -73,7 +73,7 @@ const StyledSmallCircle = styled.div`
   top: 50%;
   left: calc(50% - 1rem);
   right: calc(50% - 1rem);
-  animation-duration: 1s;
+  animation-duration: 400ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 `;

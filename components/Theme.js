@@ -41,6 +41,7 @@ export const lightTheme = {
   //profile: "linear-gradient(#e8e87d,  #c5a3f5)",
   profile:
     "conic-gradient(#e8e87d, #baf0a8, #7de8cd, #75c7f0, #c5a3f5, #f075db, #f08a75, #e8e87d)",
+    landingPageBackground: "#fefefe",
 };
 
 export const darkTheme = {
@@ -85,6 +86,7 @@ export const darkTheme = {
   highlightedLines: "var(--contrast-text)",
   profile:
     "conic-gradient(#e8bb7d, #d8f0a8, #a8f0ba, #7ddfe8, #a8b4f0, #e4a8f0, #e87da1, #e8bb7d)",
+    landingPageBackground: "#322e44",
 };
 
 export const warmTheme = {

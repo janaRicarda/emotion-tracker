@@ -27,7 +27,7 @@ const buttonDisappears = keyframes`
 `;
 
 const Wrapper = styled.div`
-  background: var(--section-background);
+  background: var(--landing-page-background);
   width: 100vw;
   height: 100vh;
   padding-top: 3rem;
@@ -110,6 +110,7 @@ const StartButton = styled(StyledButton)`
 const StyledLogInWrapper = styled.div`
   display: grid;
   justify-content: center;
+  align-items: center;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
   width: 80vw;
@@ -143,12 +144,14 @@ const LoginBox = styled.button`
   display: flex;
   padding: 0.8rem;
   margin: 0.5rem auto;
-  background: var(--section-background);
+  background: var(--landing-page-background);
   color: var(--main-dark);
+  border-style: none;
   width: 80vw;
   border-radius: 0.25rem;
   align-items: center;
   justify-content: center;
+  
   & > svg {
     margin-right: 0.6rem;
   }
@@ -188,11 +191,11 @@ const StyledCredentialForm = styled.form`
 `;
 
 const StyledParagraph = styled.p`
-  opacity: 0;
+  opacity: ${({ $showLogIn }) => ($showLogIn ? "1" : "0")};
   margin-top: ${({ $showLogIn }) => ($showLogIn ? "none" : "2rem")};
   animation-name: ${fadeIn};
   animation-duration: 1s;
-  animation-delay: 3500ms;
+  animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 `;
@@ -280,7 +283,11 @@ export default function LandingPage({ handleDemoMode }) {
             </StyledParagraph>
           </>
         ) : (
-          <StyledLogInWrapper $show={showLogIn.animation}>
+          <>
+          <StyledParagraph $showLogIn={showLogIn.show}>
+              Your tool for tracking your emotions
+            </StyledParagraph>
+          <StyledLogInWrapper $show={showLogIn.show}>
             <StyledLoginButtonWrapper>
               <h3>Login</h3>
               {providers?.github && (
@@ -366,6 +373,7 @@ export default function LandingPage({ handleDemoMode }) {
               </LoginBox>
             </StyledLoginButtonWrapper>
           </StyledLogInWrapper>
+          </>
         )}
       </Wrapper>
     </>
