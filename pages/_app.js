@@ -106,17 +106,16 @@ export default function App({
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  // function for StartModal
-
   function handleDemoMode() {
     setDemoMode(true);
     setUseExampleDate(true);
-    router.push("/");
+    router.push("/home");
   }
 
   function handleDemoModeOff() {
     setDemoMode(false);
     setUseExampleDate(false);
+    router.push("/");
   }
 
   const {
@@ -308,6 +307,9 @@ export default function App({
     setShowChartForDashboardLink(true);
   }
 
+  // console.log(process.env.VERCEL_ENV === "preview");
+  // console.log(process.env.NODE_ENV);
+
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>
@@ -351,6 +353,7 @@ export default function App({
               onHandleChartLink={deliverChartVisibility}
               dashboardId={dashboardId}
               showChartForDashboardLink={showChartForDashboardLink}
+              handleDemoMode={handleDemoMode}
               {...pageProps}
             />
           </Layout>

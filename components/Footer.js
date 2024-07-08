@@ -12,13 +12,13 @@ const StyledFooter = styled.footer`
   background-color: var(--main-bright);
   border-top: 1px solid var(--main-dark);
   color: var(--main-dark);
-  display: ${({ $isLandingPage }) => ($isLandingPage ? "none" : "flex")};
+  display: flex;
   justify-content: space-between;
 `;
 
-export default function Footer({ handleDemoModeOff, demoMode, isLandingPage }) {
+export default function Footer({ handleDemoModeOff, demoMode }) {
   return (
-    <StyledFooter $isLandingPage={isLandingPage} $demoMode={demoMode}>
+    <StyledFooter $demoMode={demoMode}>
       <p>© {new Date().getFullYear()} What a feeling</p>
       <Login handleDemoModeOff={handleDemoModeOff} />
     </StyledFooter>

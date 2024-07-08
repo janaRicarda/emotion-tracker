@@ -11,9 +11,7 @@ import Icon from "@mdi/react";
 import { mdiMagicStaff } from "@mdi/js";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-
 import { breakpoints } from "@/utils/breakpoints";
-import { useRouter } from "next/router";
 import ProfileLink from "./ProfileLink";
 
 // used for all transition in this component
@@ -43,7 +41,7 @@ const StyledMenu = styled.div`
 
 const StyledHeader = styled.header`
   width: 100%;
-  display: ${({ $isLandingPage }) => ($isLandingPage ? "none" : "flex")};
+  display: flex;
   height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "100px")};
   ${transition}
   transition-property: height;
@@ -59,7 +57,6 @@ const StyledHeader = styled.header`
 
 const PlaceholderHeader = styled.div`
   width: 100vw;
-  display: ${({ $isLandingPage }) => ($isLandingPage ? "none" : "block")};
   height: ${({ $isScrollDown }) => ($isScrollDown ? "70px" : "130px")};
   ${transition}
 `;
@@ -91,14 +88,8 @@ const StyledLogo = styled(Logo)`
   ${transition}
 `;
 
-export default function Header({
-  theme,
-  toggleTheme,
-  isScrollDown,
-  isLandingPage,
-}) {
+export default function Header({ theme, toggleTheme, isScrollDown }) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const { data: session } = useSession();
 
   function handleToggleMenu() {
@@ -158,12 +149,8 @@ export default function Header({
 
   return (
     <>
-      <StyledHeader
-        $isLandingPage={isLandingPage}
-        $isScrollDown={isScrollDown}
-        $isOpen={isOpen}
-      >
-        <StyledLogoLink href="/">
+      <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
+        <StyledLogoLink href="/home">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
         <StyledIconWrapper $isScrollDown={isScrollDown}>
@@ -197,7 +184,7 @@ export default function Header({
         </StyledIconWrapper>
         <Navigation isOpen={isOpen} handleToggleMenu={handleToggleMenu} />
       </StyledHeader>
-      <PlaceholderHeader $isLandingPage={isLandingPage} />
+      <PlaceholderHeader />
     </>
   );
 }

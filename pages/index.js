@@ -5,7 +5,7 @@ import { StyledButton } from "@/SharedStyledComponents";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Icon from "@mdi/react";
-import { mdiGithub, mdiGoogle } from "@mdi/js";
+import { mdiGithub, mdiGoogle, mdiFlaskOutline, mdiAccount } from "@mdi/js";
 import { useSession } from "next-auth/react";
 import { keyframes } from "styled-components";
 
@@ -19,34 +19,23 @@ const buttonFadeIn = keyframes`
 100% {opacity: 1;}
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  width: 75vw;
+  max-width: 500px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledBigLogo = styled(BigLogo)`
   max-width: 15rem;
   max-height: 15rem;
   animation-name: ${fadeIn};
   animation-duration: 2s;
   animation-timing-function: linear;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LoginBox = styled.div`
-  display: flex;
-  padding: 0.5rem;
-  margin: 1rem auto;
-  background-color: white;
-  color: black;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-
-  & > svg {
-    margin-right: 0.6rem;
-  }
+  position: relative;
+  top: 0;
 `;
 
 const StartButton = styled(StyledButton)`
@@ -59,8 +48,85 @@ const StartButton = styled(StyledButton)`
   animation-fill-mode: forwards;
 `;
 
-export default function LandingPage() {
-  const [showLogIn, setShowLogIn] = useState(false);
+const StyledLogInWrapper = styled.div`
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  transition: grid-template-rows 1s;
+  width: 100%;
+  margin: 2rem;
+
+  && > div {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  && > div > h3 {
+    text-align: center;
+  }
+`;
+
+const LoginBox = styled.button`
+  display: flex;
+  padding: 0.5rem;
+  border: none;
+  background-color: white;
+  color: black;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  & > svg {
+    position: absolute;
+    left: calc(50% - 5rem);
+    margin-right: 0.6rem;
+  }
+`;
+
+const Accordeon = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledCredentialForm = styled.form`
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  transition: grid-template-rows 1s;
+  width: 100%;
+
+  && > div {
+    display: flex;
+    padding: ${({ $show }) => ($show ? ".4rem" : "0")};
+    transition: padding ease-in-out;
+    transition-delay: ${({ $show }) => ($show ? "50ms" : "500ms")};
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+  }
+
+  && > * input {
+    margin: 0 0 0.7rem 0;
+  }
+
+  && > * button {
+    margin-top: 1rem;
+  }
+`;
+
+export default function LandingPage({ handleDemoMode }) {
+  const [showLogIn, setShowLogIn] = useState({ show: false, animation: false });
+  const [showCredentialsForm, setShowCredentialsForm] = useState({
+    show: false,
+    animation: false,
+  });
+
+  const [userCredentials, setUserCredentials] = useState();
+  const [errorCredentialLogIn, setErrorCredentialLogIn] = useState();
 
   const [providers, setProviders] = useState();
 
@@ -79,38 +145,143 @@ export default function LandingPage() {
     !providers && findProviders();
   });
 
+  async function handleCredentialLogin(event) {
+    event.preventDefault();
+    const response = await signIn("credentials", {
+      ...userCredentials,
+      callbackUrl: "/home",
+      redirect: false,
+    });
+
+    if (!response.ok) {
+      setErrorCredentialLogIn(response);
+    }
+
+    if (response.ok) {
+      setErrorCredentialLogIn();
+    }
+  }
+
+  // "hook" for handling conditional rendering to DOM and start animation of same element shortly after
+  function handleShowComponentAndAnimation(state, setFunction) {
+    if (!state.show) {
+      setFunction({ ...state, show: !state.show });
+      setTimeout(() => {
+        setFunction({
+          animation: !state.animation,
+          show: !state.show,
+        });
+      }, 1);
+    }
+    if (state.show) {
+      setFunction({ ...state, animation: !state.animation });
+      setTimeout(() => {
+        setFunction({ animation: !state.animation, show: !state.show });
+      }, 800);
+    }
+  }
+
   return (
-    <>
-      <Wrapper>
-        <StyledBigLogo />
-        {!showLogIn ? (
-          <>
-            <StartButton
-              onClick={() => {
-                setShowLogIn(true);
-              }}
-            >
-              Get Started!
-            </StartButton>
-          </>
-        ) : (
-          <>
+    <Wrapper>
+      <StyledBigLogo />
+      {!showLogIn.show ? (
+        <>
+          <StartButton
+            onClick={() => {
+              handleShowComponentAndAnimation(showLogIn, setShowLogIn);
+            }}
+          >
+            Get Started!
+          </StartButton>
+        </>
+      ) : (
+        <StyledLogInWrapper $show={showLogIn.animation}>
+          <div>
             <h3>Login</h3>
-            {providers.github && (
-              <LoginBox onClick={() => signIn("github")}>
+            {providers?.github && (
+              <LoginBox
+                onClick={() => signIn("github", { callbackUrl: "/home" })}
+              >
                 <Icon path={mdiGithub} size={1} />
                 GitHub
               </LoginBox>
             )}
-            {providers.google && (
-              <LoginBox onClick={() => signIn("google")}>
+            {providers?.google && (
+              <LoginBox
+                onClick={() => signIn("google", { callbackUrl: "/home" })}
+              >
                 <Icon path={mdiGoogle} size={1} />
                 Google
               </LoginBox>
             )}
-          </>
-        )}
-      </Wrapper>
-    </>
+            {providers?.credentials && (
+              <Accordeon>
+                <LoginBox
+                  onClick={() =>
+                    handleShowComponentAndAnimation(
+                      showCredentialsForm,
+                      setShowCredentialsForm
+                    )
+                  }
+                >
+                  <Icon path={mdiAccount} size={1} /> Credentials
+                </LoginBox>
+                {showCredentialsForm.show && (
+                  <StyledCredentialForm
+                    $show={showCredentialsForm.animation}
+                    onSubmit={handleCredentialLogin}
+                  >
+                    <div>
+                      <label htmlFor="username">Username</label>
+                      <input
+                        type="text"
+                        id="username"
+                        placeholder="username"
+                        onChange={(event) => {
+                          setUserCredentials({
+                            username: event.target.value,
+                          });
+                        }}
+                        required
+                      />
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        placeholder="password"
+                        onChange={(event) => {
+                          setUserCredentials({
+                            ...userCredentials,
+                            password: event.target.value,
+                          });
+                        }}
+                        required
+                      />
+                      {errorCredentialLogIn && (
+                        <>
+                          <b>
+                            Sorry, something&apos;s wrong. Please, try again.
+                          </b>
+                          <p>Error-Code: {errorCredentialLogIn.status}</p>
+                          <p>Message: {errorCredentialLogIn.error}</p>
+                        </>
+                      )}
+                      <button type="submit">Submit</button>
+                    </div>
+                  </StyledCredentialForm>
+                )}
+              </Accordeon>
+            )}
+            <LoginBox
+              onClick={() => {
+                handleDemoMode();
+              }}
+            >
+              <Icon path={mdiFlaskOutline} size={1} /> Demo-Mode
+            </LoginBox>
+          </div>
+        </StyledLogInWrapper>
+      )}
+    </Wrapper>
   );
 }

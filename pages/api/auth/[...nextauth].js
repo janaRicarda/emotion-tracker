@@ -5,43 +5,44 @@ import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
   providers: [
-    process.env.VERCEL_ENV === "preview"
-      ? CredentialsProvider({
-          name: "credentials",
-          credentials: {
-            username: {
-              label: "Username",
-              type: "text",
-              placeholder: "username",
-            },
-            password: { label: "Password", type: "password" },
-          },
-          async authorize(credentials) {
-            if (
-              credentials.username === "feeling" &&
-              credentials.password === "feeling"
-            ) {
-              return {
-                name: "New feeling",
-                email: "test@example.com",
-              };
-            } else if (
-              credentials.username === "emotion" &&
-              credentials.password === "emotion"
-            ) {
-              return {
-                name: "emotion lover",
-                email: "emotion@example.com",
-              };
-            } else {
-              return null;
-            }
-          },
-        })
-      : GithubProvider({
-          clientId: process.env.GITHUB_ID,
-          clientSecret: process.env.GITHUB_SECRET,
-        }),
+    // process.env.VERCEL_ENV === "preview"?
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "username",
+        },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (
+          credentials.username === "feeling" &&
+          credentials.password === "feeling"
+        ) {
+          return {
+            name: "New feeling",
+            email: "test@example.com",
+          };
+        } else if (
+          credentials.username === "emotion" &&
+          credentials.password === "emotion"
+        ) {
+          return {
+            name: "emotion lover",
+            email: "emotion@example.com",
+          };
+        } else {
+          return null;
+        }
+      },
+    }),
+    // :
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
@@ -62,10 +63,6 @@ export const authOptions = {
       return true;
     },
   },
-  // pages: {
-  //   signIn: "/auth/signin",
-  //   signOut: "/auth/signout",
-  // },
 };
 
 export default NextAuth(authOptions);
