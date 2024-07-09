@@ -318,9 +318,6 @@ export default function App({
     setDashboardState(initialDashboardState);
   }
 
-  // console.log(process.env.VERCEL_ENV === "preview");
-  // console.log(process.env.NODE_ENV);
-
   return (
     <SessionProvider session={demoMode ? null : session}>
       <ThemeProvider theme={theme}>

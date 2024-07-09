@@ -29,16 +29,17 @@ const buttonDisappears = keyframes`
 const Wrapper = styled.div`
   background: var(--landing-page-background);
   width: 100vw;
+
   min-height: 100vh;
-  padding-top: 2rem;
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "25%")};
+  transition: padding-top 1s 400ms;
   align-items: center;
 
   @media ${breakpoints.mobileLandscape} {
-    padding-top: 0;
     padding-bottom: 1rem;
     gap: 0;
   }
@@ -58,14 +59,14 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  @media ${breakpoints.mobileLandscape} {
+  /* @media (orientation: landscape) {
     width: 8rem;
     height: 8rem;
   }
   @media ${breakpoints.tablet} {
     width: 16rem;
     height: 16rem;
-  }
+  } */
 `;
 
 const StartButton = styled(StyledButton)`
@@ -113,7 +114,6 @@ const StyledLogInWrapper = styled.div`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
   transition-delay: 300ms;
-
 `;
 
 const StyledLoginButtonWrapper = styled.div`
@@ -122,6 +122,7 @@ const StyledLoginButtonWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   width: 80vw;
+  max-width: 800px;
   margin: 1rem;
 
   border-radius: 0.5rem;
@@ -138,9 +139,8 @@ const StyledLoginButtonWrapper = styled.div`
   color: var(--text-on-bright);
 
   && > h3 {
-    margin-top: .7rem;
+    margin-top: 0.7rem;
   }
-    
 `;
 
 const LoginBox = styled.button`
@@ -158,18 +158,18 @@ const LoginBox = styled.button`
   & > svg {
     margin-right: 0.6rem;
   }
- &:last-child {
+  &:last-child {
     margin-bottom: 1.5rem;
-    }
-   
+  }
 `;
 
 const Accordion = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
   width: 100%;
   ${LoginBox} {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -177,9 +177,10 @@ const StyledCredentialForm = styled.form`
   display: grid;
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
-  width: 100%;
+  width: 80%;
 
   && > div {
+    /* width: 80%; */
     display: flex;
     justify-content: center;
     flex-direction: column;
