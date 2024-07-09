@@ -145,10 +145,16 @@ export default function EmotionRecordsList({
     }));
   }
 
-  //showing details of last emotion entry when linked from dashboard
-  const { dashboardId } = dashboardState;
-
+  //showing details of last emotion entry when linked from dashboard and set filter accordingly
+  const { dashboardId, dashboardDate, showChartForDashboardLink } =
+    dashboardState;
   function handleDashBoardPush(idToProcess) {
+    // const testEntries = shownEntries.filter(
+    //   (entry) => entry.isoDate.slice(0, 11) === dashboardDate.slice(0, 11)
+    // );
+    // console.log(testEntries);
+    // alternative set entries on emotion-records via prop state handling
+    // pushDashboardFilter(testEntries);
     handleShowDetails(idToProcess);
     const element = document.getElementById(idToProcess);
     const indexOfEntry = shownEntries.findIndex((element) =>
@@ -158,6 +164,16 @@ export default function EmotionRecordsList({
       ? element.scrollIntoView({ behavior: "instant", block: "center" })
       : null;
   }
+
+  useEffect(() => {
+    showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
+  }, [showChartForDashboardLink]);
+
+  // '  useEffect(() => {
+
+  //     setShownEntries(...testEntries);
+  //   }, [dashboardId]);'
+
   useEffect(() => {
     handleDashBoardPush(dashboardId);
   }, [dashboardId]);

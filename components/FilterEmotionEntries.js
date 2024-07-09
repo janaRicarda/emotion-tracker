@@ -144,6 +144,7 @@ export default function FilterEmotionEntries({
   DisplayDate,
   changeSelectedTime,
   selectedTime,
+  dashboardTimeStamp,
 }) {
   const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
@@ -198,7 +199,9 @@ export default function FilterEmotionEntries({
     }
 
     const { daysAgo, singleComparison } = buttonState;
-    //
+
+    //add stuff for dashboard
+    console.log("filterEE dashboardTS:", dashboardTimeStamp);
 
     changeFilterEntries(() => {
       if (
@@ -226,17 +229,36 @@ export default function FilterEmotionEntries({
       if (buttonState.datePicker) {
         if (!selectedTime) {
           return [];
-        } else {
+        }
+        // else if (dashboardTimeStamp > 0) {
+        //   const correctedStartDate = new Date(dashboardTimeStamp);
+        //   correctedStartDate.setHours(0, 0);
+        //   const selectedStartDate = correctedStartDate.getTime();
+        //   console.log("StartDB", selectedStartDate);
+        //   console.log("StartDBformatted", new Date(selectedStartDate));
+        //   const selectedEndDate = undefined;
+        //   const secondDateNotSelected = true;
+        //   const customFilteredEntries = getFilteredEntries(
+        //     secondDateNotSelected,
+        //     selectedStartDate,
+        //     selectedEndDate
+        //   );
+        //   console.log("DBway: ", customFilteredEntries);
+
+        //   return customFilteredEntries;
+        // }
+        else {
           const selectedStartDate = new Date(
             selectedTime.from.toDateString()
           ).getTime();
-
+          console.log("Start", selectedStartDate);
+          console.log("Startformatted", new Date(selectedStartDate));
           const selectedEndDate =
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
 
           const secondDateNotSelected = !selectedEndDate;
-
+          console.log("End", selectedEndDate);
           const customFilteredEntries = getFilteredEntries(
             secondDateNotSelected,
             selectedStartDate,
@@ -249,7 +271,13 @@ export default function FilterEmotionEntries({
         return emotionEntries;
       }
     });
-  }, [buttonState, emotionEntries, selectedTime, changeFilterEntries]);
+  }, [
+    buttonState,
+    emotionEntries,
+    selectedTime,
+    changeFilterEntries,
+    dashboardTimeStamp,
+  ]);
 
   // searches filteredEntries and sets shownEntries accordingly in emotion-records.js to be rendered
   useEffect(() => {

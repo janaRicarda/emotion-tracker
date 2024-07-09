@@ -15,6 +15,7 @@ import Head from "next/head";
 import ArrowBack from "./../public/icons/arrow-left.svg";
 import { shortEmotionDescriptions } from "@/lib/db";
 import DashboardChart from "@/components/DashboardChart";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -186,16 +187,20 @@ export default function HomePage({
       : emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay =
     emotionEntries.length === 0 ? 0 : getAveragePerDay(dashboardEntries);
+
   const timeSinceLastEntry =
     emotionEntries.length === 0
       ? "You did not make any entries yet!"
       : getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug, id, _id } =
-    getNewestEmotion(dashboardEntries);
 
-  function handleDashboardEmotion(id) {
+  const { emotion, intensity, slug, id, _id, timeStamp, isoDate } =
+    getNewestEmotion(dashboardEntries);
+  const emoDate = getCurrentTimeAndDate(locale, timeStamp);
+
+  function handleDashboardEmotion(id, isoDate, timeStamp) {
     router.push("/emotion-records/");
-    onHandleDashboardEmotion(id);
+    onHandleDashboardEmotion(id, isoDate, timeStamp);
+    console.log(timeStamp);
   }
 
   function handleChartLink() {
@@ -273,14 +278,16 @@ export default function HomePage({
         </GridElement>
 
         <GridElement
-          onClick={() => handleDashboardEmotion(demoMode ? id : _id)}
+          onClick={() =>
+            handleDashboardEmotion(demoMode ? id : _id, isoDate, timeStamp)
+          }
         >
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
             $color={`var(--${slug})`}
           >
-            Last recorded emotion: <br></br>
+            Last recorded emotion from {emoDate}: <br></br>
             {emotionEntries.length === 0 ? (
               <>You did not record any emotions yet!</>
             ) : (

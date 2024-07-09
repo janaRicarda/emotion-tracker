@@ -21,6 +21,12 @@ const transition = css`
   transition: all 300ms ease;
 `;
 
+// const StyledCalendarIcon = styled(CalendarIcon)`
+//   width: 1.5rem;
+//   display: inline;
+//   vertical-align: bottom;
+// `;
+
 const GridWrapper = styled.section`
   box-shadow: ${({ $show }) => ($show ? "var(--box-shadow-filter)" : null)};
   position: fixed;
@@ -237,6 +243,7 @@ export default function EmotionRecords({
 
   function handleSetSelectedTime(time) {
     setSelectedTime(time);
+    console.log(selectedTime);
   }
 
   function handleSearch(input) {
@@ -278,12 +285,53 @@ export default function EmotionRecords({
   function handleChart() {
     setChartIsShown(!chartIsShown);
   }
-  const { showChartForDashboardLink } = dashboardState;
+
+  //showing emotion chosen on dashboard
+  const {
+    dashboardId,
+    dashboardDate,
+    dashboardTimeStamp,
+    showChartForDashboardLink,
+  } = dashboardState;
+
+  function setDashBoardTimeForFilter() {
+    const correctedStartDate = new Date(dashboardTimeStamp);
+    correctedStartDate.setHours(0, 0);
+    const selectedStartDate = correctedStartDate.getTime();
+    const newSelectedTime = {
+      from: new Date(selectedStartDate),
+      to: undefined,
+    };
+    setSelectedTime(newSelectedTime);
+  }
+
+  console.log(selectedTime);
+
+  useEffect(() => {
+    dashboardTimeStamp && setDashBoardTimeForFilter();
+    dashboardTimeStamp &&
+      setButtonState({
+        datePicker: true,
+        label: `Custom`,
+        icon: <StyledCalendarIcon />,
+        setShow: true,
+      });
+  }, []);
+
+  // const testEntries = shownEntries.filter(
+  //   (entry) => entry.isoDate.slice(0, 11) === dashboardDate.slice(0, 11)
+  // );
+  // console.log(testEntries);
+
+  // useEffect(() => {
+  //   setFilteredEntries(testEntries);
+  // }, [dashboardId]);
 
   useEffect(() => {
     showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
   }, [showChartForDashboardLink]);
 
+  //reset data for standard use of records
   useEffect(() => {
     // Function to call when user starts navigating to another page
     function handleRouteChange() {
@@ -326,6 +374,7 @@ export default function EmotionRecords({
             changeFilterEntries={handleSetFilterEntries}
             changeSelectedTime={handleSetSelectedTime}
             DisplayDate={DisplayDate}
+            dashboardTimeStamp={dashboardTimeStamp}
           />
         </ControllOverflow>
       </GridWrapper>

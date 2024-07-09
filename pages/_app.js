@@ -42,6 +42,7 @@ export default function App({
   const initialDashboardState = {
     dashboardId: null,
     showChartForDashboardLink: false,
+    dashboardTimeStamp: null,
   };
   const [dashboardState, setDashboardState] = useState(initialDashboardState);
 
@@ -304,11 +305,14 @@ export default function App({
     setTheme(theme);
   }
 
-  function handleDashboard(id) {
+  function handleDashboard(id, isoDate, timeStamp) {
     setDashboardState({
       ...dashboardState,
       dashboardId: id,
+      dashboardDate: isoDate,
+      dashboardTimeStamp: timeStamp,
     });
+    // console.log("dashboard to app.js: ", dashboardState);
   }
 
   function deliverChartVisibility() {
