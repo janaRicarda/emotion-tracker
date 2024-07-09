@@ -75,7 +75,6 @@ const StyledSmallCircle = styled.div`
   right: calc(50% - 1rem);
   animation-duration: 300ms;
   animation-timing-function: linear;
-  /* animation-fill-mode: forwards; */
 `;
 
 const StyledJoy = styled(StyledSmallCircle)`

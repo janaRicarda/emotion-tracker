@@ -29,7 +29,7 @@ const buttonDisappears = keyframes`
 const Wrapper = styled.div`
   background: var(--landing-page-background);
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 3rem;
   display: flex;
   flex-direction: column;
@@ -134,6 +134,10 @@ const StyledLoginButtonWrapper = styled.div`
     #fbffc7
   );
   color: var(--text-on-bright);
+
+  && > h3 {
+    margin-top: .7rem;
+  }
 `;
 
 const LoginBox = styled.button`
@@ -153,7 +157,7 @@ const LoginBox = styled.button`
   }
 `;
 
-const Accordeon = styled.div`
+const Accordion = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -167,23 +171,24 @@ const StyledCredentialForm = styled.form`
 
   && > div {
     display: flex;
-    padding: ${({ $show }) => ($show ? ".4rem" : "0")};
-    transition: padding ease-in-out;
-    transition-delay: ${({ $show }) => ($show ? "50ms" : "500ms")};
+    justify-content: center;
     flex-direction: column;
-    width: 100%;
+    margin: 0 2rem;
     overflow: hidden;
-    background-color: white;
     color: black;
     overflow: hidden;
   }
 
   && > * input {
     margin: 0 0 0.7rem 0;
+    border-radius: 3px;
+    border: none;
   }
 
   && > * button {
-    margin-top: 1rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 3px;
   }
 `;
 
@@ -304,7 +309,7 @@ export default function LandingPage({ handleDemoMode }) {
                   </LoginBox>
                 )}
                 {providers?.credentials && (
-                  <Accordeon>
+                  <Accordion>
                     <LoginBox
                       onClick={() =>
                         handleShowComponentAndAnimation(
@@ -360,7 +365,7 @@ export default function LandingPage({ handleDemoMode }) {
                         </div>
                       </StyledCredentialForm>
                     )}
-                  </Accordeon>
+                  </Accordion>
                 )}
                 <LoginBox
                   onClick={() => {
