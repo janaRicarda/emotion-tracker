@@ -305,8 +305,6 @@ export default function EmotionRecords({
     setSelectedTime(newSelectedTime);
   }
 
-  console.log(selectedTime);
-
   useEffect(() => {
     dashboardTimeStamp && setDashBoardTimeForFilter();
     dashboardTimeStamp &&
@@ -317,15 +315,6 @@ export default function EmotionRecords({
         setShow: true,
       });
   }, []);
-
-  // const testEntries = shownEntries.filter(
-  //   (entry) => entry.isoDate.slice(0, 11) === dashboardDate.slice(0, 11)
-  // );
-  // console.log(testEntries);
-
-  // useEffect(() => {
-  //   setFilteredEntries(testEntries);
-  // }, [dashboardId]);
 
   useEffect(() => {
     showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;

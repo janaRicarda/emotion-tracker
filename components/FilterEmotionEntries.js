@@ -200,9 +200,6 @@ export default function FilterEmotionEntries({
 
     const { daysAgo, singleComparison } = buttonState;
 
-    //add stuff for dashboard
-    console.log("filterEE dashboardTS:", dashboardTimeStamp);
-
     changeFilterEntries(() => {
       if (
         buttonState.todayButton ||
@@ -229,25 +226,7 @@ export default function FilterEmotionEntries({
       if (buttonState.datePicker) {
         if (!selectedTime) {
           return [];
-        }
-        // else if (dashboardTimeStamp > 0) {
-        //   const correctedStartDate = new Date(dashboardTimeStamp);
-        //   correctedStartDate.setHours(0, 0);
-        //   const selectedStartDate = correctedStartDate.getTime();
-        //   console.log("StartDB", selectedStartDate);
-        //   console.log("StartDBformatted", new Date(selectedStartDate));
-        //   const selectedEndDate = undefined;
-        //   const secondDateNotSelected = true;
-        //   const customFilteredEntries = getFilteredEntries(
-        //     secondDateNotSelected,
-        //     selectedStartDate,
-        //     selectedEndDate
-        //   );
-        //   console.log("DBway: ", customFilteredEntries);
-
-        //   return customFilteredEntries;
-        // }
-        else {
+        } else {
           const selectedStartDate = new Date(
             selectedTime.from.toDateString()
           ).getTime();
