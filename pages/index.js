@@ -9,7 +9,7 @@ import { mdiGithub, mdiGoogle, mdiFlaskOutline, mdiAccount } from "@mdi/js";
 import { useSession } from "next-auth/react";
 import { keyframes, css } from "styled-components";
 import CircleAnimation from "@/components/CircleAnimation";
-import ForcePortrait from "@/components/ForcePortrait";
+
 
 const fadeIn = keyframes`
 0% { opacity: 0;}
@@ -38,16 +38,16 @@ const Wrapper = styled.div`
   padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "25%")};
   transition: padding-top 1s 400ms;
   align-items: center;
-/*  @media (orientation: landscape) {
+ @media (max-height: 500px) and (orientation: landscape) {
 flex-direction: row;
 padding-top: 0;
 justify-content: center;
 }
-@media (min-width: 700px) {
+@media (min-width: 700px) and (orientation: portrait) {
 flex-direction: column;
 padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "5%")};
 justify-content: flex-start;
-}   */
+}   
 
 `;
 
@@ -127,12 +127,12 @@ const StyledLoginButtonWrapper = styled.div`
   && > h3 {
     margin-top: 0.7rem;
   }
-     /* @media (min-width: 500px) and (min-height: 200px) {
+      @media (max-height: 500px) and (orientation: landscape) {
 width: 40vw;
 }
-@media (min-width: 700px) {
+@media (min-width: 700px) and (orientation: portrait) {
 width: 80vw;
-}  */
+}
 `;
 
 const LoginBox = styled.button`
@@ -203,12 +203,12 @@ const StyledParagraph = styled.p`
   animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  /*   @media (min-width: 500px) and (min-height: 200px) {
+     @media (max-height: 500px) and (orientation: landscape) {
 display: ${({ $showLogIn }) => ($showLogIn ? "none" : "block")};
 text-align: center;
 }
-@media (min-width: 700px) {
-display: block; */
+@media (min-width: 700px) and (orientation: portrait) {
+display: block; 
 `;
 
 export default function LandingPage({ handleDemoMode }) {
@@ -279,7 +279,7 @@ export default function LandingPage({ handleDemoMode }) {
 
   return (
    <>
-   <ForcePortrait>
+   
       <CircleAnimation showLogIn={showLogIn.show} />
       
       <Wrapper $showLogIn={showLogIn.show}>
@@ -392,7 +392,7 @@ export default function LandingPage({ handleDemoMode }) {
           </>
         )}
       </Wrapper>
-    </ForcePortrait>
+   
     </>
   );
 }
