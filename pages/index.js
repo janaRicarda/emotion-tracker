@@ -30,7 +30,8 @@ const Wrapper = styled.div`
   background: var(--landing-page-background);
   width: 100vw;
   min-height: 100vh;
-  padding-top: 3rem;
+  padding-top: 2rem;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -112,6 +113,7 @@ const StyledLogInWrapper = styled.div`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
   transition-delay: 300ms;
+
 `;
 
 const StyledLoginButtonWrapper = styled.div`
@@ -138,6 +140,7 @@ const StyledLoginButtonWrapper = styled.div`
   && > h3 {
     margin-top: .7rem;
   }
+    
 `;
 
 const LoginBox = styled.button`
@@ -155,12 +158,19 @@ const LoginBox = styled.button`
   & > svg {
     margin-right: 0.6rem;
   }
+ &:last-child {
+    margin-bottom: 1.5rem;
+    }
+   
 `;
 
 const Accordion = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  ${LoginBox} {
+  margin-bottom: 0.5rem;
+  }
 `;
 
 const StyledCredentialForm = styled.form`
@@ -269,7 +279,7 @@ export default function LandingPage({ handleDemoMode }) {
   return (
     <>
       <CircleAnimation showLogIn={showLogIn.show} />
-      <Wrapper>
+      <Wrapper $showLogIn={showLogIn.show}>
         <StyledBigLogo />
         {!showLogIn.show ? (
           <>
