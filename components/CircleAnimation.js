@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { keyframes } from "styled-components";
-import { breakpoints } from "@/utils/breakpoints";
+
 
 const circleAnimation = keyframes`
 0% { transform: translateY(-40vh); background: var(--joy); }
@@ -54,14 +54,7 @@ const StyledCircle = styled.div`
   border-radius: 50%;
   position: absolute;
   animation: ${circleAnimation} 3s ease-in-out;
-  @media ${breakpoints.mobileLandscape} {
-    width: 6rem;
-    height: 6rem;
-  }
-  @media ${breakpoints.tablet} {
-    width: 8rem;
-    height: 8rem;
-  }
+ 
 `;
 
 const StyledSmallCircle = styled.div`

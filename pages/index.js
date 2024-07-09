@@ -8,8 +8,8 @@ import Icon from "@mdi/react";
 import { mdiGithub, mdiGoogle, mdiFlaskOutline, mdiAccount } from "@mdi/js";
 import { useSession } from "next-auth/react";
 import { keyframes, css } from "styled-components";
-import { breakpoints } from "@/utils/breakpoints";
 import CircleAnimation from "@/components/CircleAnimation";
+import ForcePortrait from "@/components/ForcePortrait";
 
 const fadeIn = keyframes`
 0% { opacity: 0;}
@@ -38,16 +38,17 @@ const Wrapper = styled.div`
   padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "25%")};
   transition: padding-top 1s 400ms;
   align-items: center;
+/*  @media (orientation: landscape) {
+flex-direction: row;
+padding-top: 0;
+justify-content: center;
+}
+@media (min-width: 700px) {
+flex-direction: column;
+padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "5%")};
+justify-content: flex-start;
+}   */
 
-  @media ${breakpoints.mobileLandscape} {
-    padding-bottom: 1rem;
-    gap: 0;
-  }
-  @media ${breakpoints.tablet} {
-    padding-bottom: 0;
-    padding-top: 3rem;
-    gap: ${({ $showLogIn }) => ($showLogIn ? "2rem" : "0")};
-  }
 `;
 
 const StyledBigLogo = styled(BigLogo)`
@@ -59,14 +60,7 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  /* @media (orientation: landscape) {
-    width: 8rem;
-    height: 8rem;
-  }
-  @media ${breakpoints.tablet} {
-    width: 16rem;
-    height: 16rem;
-  } */
+
 `;
 
 const StartButton = styled(StyledButton)`
@@ -99,14 +93,6 @@ const StartButton = styled(StyledButton)`
   animation-timing-function: linear;
   animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3s")};
   animation-fill-mode: forwards;
-  @media ${breakpoints.mobileLandscape} {
-    width: 6rem;
-    height: 6rem;
-  }
-  @media ${breakpoints.tablet} {
-    width: 8rem;
-    height: 8rem;
-  }
 `;
 
 const StyledLogInWrapper = styled.div`
@@ -114,6 +100,7 @@ const StyledLogInWrapper = styled.div`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
   transition-delay: 300ms;
+   
 `;
 
 const StyledLoginButtonWrapper = styled.div`
@@ -124,8 +111,7 @@ const StyledLoginButtonWrapper = styled.div`
   width: 80vw;
   max-width: 800px;
   margin: 1rem;
-
-  border-radius: 0.5rem;
+ border-radius: 0.5rem;
   background: conic-gradient(
     #fbffc7,
     #e2ffc7,
@@ -141,6 +127,12 @@ const StyledLoginButtonWrapper = styled.div`
   && > h3 {
     margin-top: 0.7rem;
   }
+     /* @media (min-width: 500px) and (min-height: 200px) {
+width: 40vw;
+}
+@media (min-width: 700px) {
+width: 80vw;
+}  */
 `;
 
 const LoginBox = styled.button`
@@ -211,6 +203,12 @@ const StyledParagraph = styled.p`
   animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+  /*   @media (min-width: 500px) and (min-height: 200px) {
+display: ${({ $showLogIn }) => ($showLogIn ? "none" : "block")};
+text-align: center;
+}
+@media (min-width: 700px) {
+display: block; */
 `;
 
 export default function LandingPage({ handleDemoMode }) {
@@ -231,6 +229,8 @@ export default function LandingPage({ handleDemoMode }) {
   if (session) {
     router.push("/home");
   }
+
+
 
   useEffect(() => {
     async function findProviders() {
@@ -278,8 +278,10 @@ export default function LandingPage({ handleDemoMode }) {
   }
 
   return (
-    <>
+   <>
+   <ForcePortrait>
       <CircleAnimation showLogIn={showLogIn.show} />
+      
       <Wrapper $showLogIn={showLogIn.show}>
         <StyledBigLogo />
         {!showLogIn.show ? (
@@ -390,6 +392,7 @@ export default function LandingPage({ handleDemoMode }) {
           </>
         )}
       </Wrapper>
+    </ForcePortrait>
     </>
   );
 }
