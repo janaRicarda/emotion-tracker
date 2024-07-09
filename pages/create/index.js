@@ -8,7 +8,6 @@ import {
 import Head from "next/head";
 
 export default function CreateIndexPage({
-  onAddEmotionDetails,
   handleToolTip,
 }) {
   const router = useRouter();
@@ -30,7 +29,6 @@ export default function CreateIndexPage({
         <EmotionList
           createMode
           id={id}
-          onAddEmotionDetails={onAddEmotionDetails}
         />
       </StyledEmotionListWrapper>
     </>

@@ -163,7 +163,6 @@ export default function HomePage({
                     pathname: "/create",
                     query: { id: useExampleData ? id : newestDbEntryID },
                   }}
-                  forwardedAs={`/create`}
                 >
                   Add more details
                 </StyledAddDetailsLink>

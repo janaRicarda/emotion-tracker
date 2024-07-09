@@ -148,8 +148,6 @@ export default function Manual() {
   function handleManualScroll(id) {
     setTimeout(() => {
       const element = document.getElementById(id);
-      console.log(id);
-      console.log("handlemanualscroll");
       element.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }

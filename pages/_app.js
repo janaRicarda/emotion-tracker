@@ -32,15 +32,18 @@ export default function App({
   const router = useRouter();
   // locale for testing, will be replaced w/ locale from translation branch soon
   const locale = "en";
-  const defaultTheme = lightTheme || darkTheme;
 
+  const defaultTheme = lightTheme || darkTheme;
   const [theme, setTheme] = useState(defaultTheme);
   const [toolTip, setToolTip] = useState();
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrollDown, setIsScrollDown] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
-  const [dashboardId, setDashboardId] = useState();
-  const [showChartForDashboardLink, setShowChartForDashboardLink] = useState();
+  const initialDashboardState = {
+    dashboardId: null,
+    showChartForDashboardLink: false,
+  };
+  const [dashboardState, setDashboardState] = useState(initialDashboardState);
 
   const [useExampleData, setUseExampleDate] = useSessionStorage(
     "useExampleData",
@@ -300,11 +303,19 @@ export default function App({
     setTheme(theme);
   }
 
-  function deliverGridEmotion(id) {
-    setDashboardId(id);
+  function handleDashboard(id) {
+    setDashboardState({
+      ...dashboardState,
+      dashboardId: id,
+    });
   }
+
   function deliverChartVisibility() {
-    setShowChartForDashboardLink(true);
+    setDashboardState({ ...dashboardState, showChartForDashboardLink: true });
+  }
+
+  function handleDashboardReset() {
+    setDashboardState(initialDashboardState);
   }
 
   // console.log(process.env.VERCEL_ENV === "preview");
@@ -349,11 +360,11 @@ export default function App({
               toggleTheme={toggleTheme}
               handleTheme={handleTheme}
               locale={locale}
-              onHandleGridEmotion={deliverGridEmotion}
+              onHandleDashboardEmotion={handleDashboard}
               onHandleChartLink={deliverChartVisibility}
-              dashboardId={dashboardId}
-              showChartForDashboardLink={showChartForDashboardLink}
               handleDemoMode={handleDemoMode}
+              dashboardState={dashboardState}
+              onHandleDashboardReset={handleDashboardReset}
               {...pageProps}
             />
           </Layout>
