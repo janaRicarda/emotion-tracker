@@ -11,9 +11,7 @@ import Icon from "@mdi/react";
 import { mdiMagicStaff } from "@mdi/js";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-
 import { breakpoints } from "@/utils/breakpoints";
-import { useRouter } from "next/router";
 import ProfileLink from "./ProfileLink";
 
 // used for all transition in this component
@@ -90,13 +88,8 @@ const StyledLogo = styled(Logo)`
   ${transition}
 `;
 
-export default function Header({
-  theme,
-  toggleTheme,
-  isScrollDown,
-}) {
+export default function Header({ theme, toggleTheme, isScrollDown }) {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const { data: session } = useSession();
 
   function handleToggleMenu() {
@@ -157,7 +150,7 @@ export default function Header({
   return (
     <>
       <StyledHeader $isScrollDown={isScrollDown} $isOpen={isOpen}>
-        <StyledLogoLink href="/">
+        <StyledLogoLink href="/home">
           <StyledLogo $isScrollDown={isScrollDown} />
         </StyledLogoLink>
         <StyledIconWrapper $isScrollDown={isScrollDown}>

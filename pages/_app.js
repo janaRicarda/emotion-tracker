@@ -109,17 +109,16 @@ export default function App({
     return () => window.removeEventListener("scroll", handleScroll);
   });
 
-  // function for StartModal
-
   function handleDemoMode() {
     setDemoMode(true);
     setUseExampleDate(true);
-    router.push("/");
+    router.push("/home");
   }
 
   function handleDemoModeOff() {
     setDemoMode(false);
     setUseExampleDate(false);
+    router.push("/");
   }
 
   const {
@@ -360,6 +359,7 @@ export default function App({
               locale={locale}
               onHandleDashboardEmotion={handleDashboard}
               onHandleChartLink={deliverChartVisibility}
+              handleDemoMode={handleDemoMode}
               dashboardState={dashboardState}
               onHandleDashboardReset={handleDashboardReset}
               {...pageProps}

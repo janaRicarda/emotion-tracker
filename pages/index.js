@@ -1,338 +1,376 @@
+import BigLogo from "@/public/icons/bigLogo.svg";
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
-import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
-import {
-  getAveragePerDay,
-  getTimeSinceLastEntry,
-  calculateTensionChartData,
-  getFilteredEntriesV2,
-  getNewestEmotion,
-  compareHightToLow,
-} from "@/utils/dataAndChartUtils";
+import { signIn, getProviders } from "next-auth/react";
+import { StyledButton } from "@/SharedStyledComponents";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Icon from "@mdi/react";
+import { mdiGithub, mdiGoogle, mdiFlaskOutline, mdiAccount } from "@mdi/js";
 import { useSession } from "next-auth/react";
-import Head from "next/head";
-import ArrowBack from "./../public/icons/arrow-left.svg";
-import { shortEmotionDescriptions } from "@/lib/db";
-import DashboardChart from "@/components/DashboardChart";
+import { keyframes } from "styled-components";
+import CircleAnimation from "@/components/CircleAnimation";
 
-const ProgressBar = styled.div`
-  width: 42%;
-  max-width: 200px;
-  height: 0.8rem;
-  border: 1px solid var(--text-on-bright);
-  position: relative;
-  display: inline-block;
-  margin: 0 0.5rem 0 0;
-  border-radius: 6px;
+const fadeIn = keyframes`
+0% { opacity: 0;}
+100% {opacity: 1;}
+`;
 
-  &::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: ${({ $progress, $showDetails }) =>
-      $showDetails ? `${$progress}%` : "0"};
-    background: var(--text-on-bright);
-    border-radius: 6px;
-    transition: width 400ms;
-    transition-delay: ${({ $showDetails }) => ($showDetails ? "500ms" : "0ms")};
+const buttonFadeIn = keyframes`
+0% { opacity: 0;}
+100% {opacity: 1;}
+`;
+
+const Wrapper = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--landing-page-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  && > div {
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
   }
 `;
 
-const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.5rem;
+const StyledBigLogo = styled(BigLogo)`
+  max-width: 16rem;
+  max-height: 16rem;
+  opacity: 0;
+  animation-name: ${fadeIn};
+  animation-duration: 2s;
+  animation-delay: 1200ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  @media (min-width: 700px) {
+    width: 16rem;
+    height: 16rem;
+  }
+  @media (max-width: 700px) and (orientation: landscape) {
+    width: 10rem;
+    height: 10rem;
+  }
 `;
 
-const DashboardSection = styled.section`
-  display: grid;
-  grid-template-columns: 6fr 6fr;
-  grid-template-rows: 3.8fr 3.8fr ${({ $gridFactor }) => `${$gridFactor}fr`};
-  color: var(--main-dark);
-  gap: ${({ $gap }) => `${$gap}rem`};
-  width: 90vw;
-  min-width: ${({ $dashboardWidth }) => `${$dashboardWidth}px`};
-  height: ${({ $dashboardHeight }) => `${$dashboardHeight}px`};
-  max-width: 1200px;
-  max-height: 1200px;
-  margin: 0;
-  align-items: center;
-  border-radius: 18px;
-  justify-content: center;
-`;
-const GridElement = styled.div`
-  display: flex;
-  color: var(--main-dark);
-  flex-direction: column;
-  border-radius: 18px;
-  padding: 0.5rem;
-  min-height: 110px;
-  height: 100%;
-  width: 100%;
-  align-content: center;
-  align-items: center;
-  background-color: var(--section-background);
-  box-shadow: var(--box-shadow-small);
-  border: var(--circle-border);
-`;
-const ChartElement = styled.div`
-  grid-column: 1 / 3;
-  border-radius: 18px;
-  padding-top: 0;
-  position: relative;
-  min-height: 170px;
-  height: 100%;
-  align-content: center;
-  align-items: center;
-  background-color: var(--section-background);
-  box-shadow: var(--box-shadow-small);
-  border: var(--circle-border);
-`;
-const ElementText = styled.div`
-  color: var(--main-dark);
-  font-size: ${({ $fontSize }) => `${$fontSize}rem`};
-  line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
-  text-align: left;
-  padding: 0.5rem 0.42rem;
-  margin: 0.1rem;
-  border-radius: 12px;
-  letter-spacing: -0.2px;
-`;
-
-const EmotionText = styled(ElementText)`
+const StartButton = styled(StyledButton)`
+  width: 8rem;
+  height: 8rem;
+  background: conic-gradient(
+    #fbffc7,
+    #e2ffc7,
+    #c7ffe7,
+    #c7f3ff,
+    #d2c8ff,
+    #fbc8ff,
+    #ffc8c8,
+    #fbffc7
+  );
+  border: none;
+  border-radius: 50%;
   color: var(--text-on-bright);
-  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
-  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
-  background: ${({ $color }) =>
-    $color ? $color : "var(--section-background)"};
-  width: 98%;
-  height: 93%;
-`;
-const BoldText = styled.span`
-  font-weight: 600;
+  font-weight: 500;
+  opacity: 0;
+  animation: ${buttonFadeIn} 100ms 3s linear;
+  animation-fill-mode: forwards;
+  @media (max-height: 600px) and (orientation: landscape) {
+    width: 6rem;
+    height: 6rem;
+  }
+  @media (min-width: 700px) and (orientation: portrait) {
+    width: 8rem;
+    height: 8rem;
+  }
+  @media (min-width: 900px) and (min-height: 500px) {
+    width: 8rem;
+    height: 8rem;
+  }
 `;
 
-const StyledForwardArrow = styled(ArrowBack)`
-  width: 1rem;
-  transform: rotate(180deg);
-  fill: ${({ $darkArrow }) =>
-    $darkArrow ? "var(--text-on-bright)" : "var(--main-dark)"};
+const StyledLogInWrapper = styled.div`
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  transition: grid-template-rows 1s;
+  transition-delay: 300ms;
 `;
 
-const ArrowWrapper = styled.div`
+const StyledLoginButtonWrapper = styled.div`
   display: flex;
-  padding: 0.4rem 0;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  width: 80vw;
+  max-width: 400px;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  background: conic-gradient(
+    #fbffc7,
+    #e2ffc7,
+    #c7ffe7,
+    #c7f3ff,
+    #d2c8ff,
+    #fbc8ff,
+    #ffc8c8,
+    #fbffc7
+  );
+  color: var(--text-on-bright);
+
+  && > h3 {
+    margin-top: 0.7rem;
+  }
 `;
 
-const ChartLinkWrapper = styled.section`
-  position: absolute;
-  left: 1rem;
-  bottom: 0;
-  width: 280px;
+const LoginBox = styled.button`
   display: flex;
-  z-index: 1;
+  padding: 0.8rem;
+  margin: 0.5rem auto;
+  background: var(--landing-page-background);
+  color: var(--main-dark);
+  border-style: none;
+  width: 80%;
+  border-radius: 0.25rem;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    margin-right: 0.6rem;
+  }
+  &:last-child {
+    margin-bottom: 1.5rem;
+  }
 `;
 
-const DashboardLink = styled(StyledStandardLink)`
+const Accordion = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  align-self: center;
-  padding: 0;
+  ${LoginBox} {
+    margin-bottom: 0.5rem;
+  }
 `;
 
-export default function HomePage({
-  handleToolTip,
-  emotionEntries,
-  theme,
-  locale,
-  onHandleDashboardEmotion,
-  onHandleChartLink,
-  demoMode,
-  handleChartRef,
-}) {
+const StyledCredentialForm = styled.form`
+  display: grid;
+  grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
+  transition: grid-template-rows 1s;
+  width: 80%;
+
+  && > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 2rem;
+    overflow: hidden;
+    color: black;
+    overflow: hidden;
+  }
+
+  && > * input {
+    margin: 0 0 0.7rem 0;
+    border-radius: 3px;
+    border: none;
+  }
+
+  && > * button {
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 3px;
+  }
+`;
+
+const StyledParagraph = styled.p`
+  opacity: ${({ $showLogIn }) => ($showLogIn ? "1" : "0")};
+  margin-top: ${({ $showLogIn }) => ($showLogIn ? "none" : "2rem")};
+  animation-name: ${fadeIn};
+  animation-duration: 1s;
+  animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+`;
+
+export default function LandingPage({ handleDemoMode }) {
+  const [showLogIn, setShowLogIn] = useState({ show: false, animation: false });
+  const [showCredentialsForm, setShowCredentialsForm] = useState({
+    show: false,
+    animation: false,
+  });
+
+  const [userCredentials, setUserCredentials] = useState();
+  const [errorCredentialLogIn, setErrorCredentialLogIn] = useState();
+
+  const [providers, setProviders] = useState();
+
   const { data: session } = useSession();
   const router = useRouter();
 
-  //make dashboard responsive
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  function updateWidth() {
-    setWindowWidth(window.innerWidth);
+  if (session) {
+    router.push("/home");
   }
-  useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
-
-  const dashboardWidth = Math.min(
-    1080,
-    Math.max(344, Math.round(windowWidth / 2))
-  );
-  const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
-  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
-
-  //for ProgressBar
-  const showDetails = true;
-
-  //dashboard logic
-  const dashboardEntries =
-    emotionEntries.length === 0
-      ? []
-      : emotionEntries.toSorted(compareHightToLow);
-  const averageEntriesPerDay =
-    emotionEntries.length === 0 ? 0 : getAveragePerDay(dashboardEntries);
-  const timeSinceLastEntry =
-    emotionEntries.length === 0
-      ? "You did not make any entries yet!"
-      : getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug, id, _id } =
-    getNewestEmotion(dashboardEntries);
-
-  function handleDashboardEmotion(id) {
-    router.push("/emotion-records/");
-    onHandleDashboardEmotion(id);
-  }
-
-  function handleChartLink() {
-    router.push("/emotion-records");
-    onHandleChartLink();
-  }
-
-  //chart logic
-  const today = new Date().toISOString();
-  const filteredEntries = getFilteredEntriesV2(today, emotionEntries);
-  const xValues = calculateTensionChartData(filteredEntries).xValues;
-  const yValues = calculateTensionChartData(filteredEntries).yValues;
 
   useEffect(() => {
-    handleToolTip({
-      text: "This is your dashboard. You can use it to get an overview about what the app can do for you and what you did with it recently.",
+    async function findProviders() {
+      const providers = await getProviders();
+      setProviders(providers);
+    }
+    !providers && findProviders();
+  });
+
+  async function handleCredentialLogin(event) {
+    event.preventDefault();
+    const response = await signIn("credentials", {
+      ...userCredentials,
+      callbackUrl: "/home",
+      redirect: false,
     });
-  }, []);
+
+    if (!response.ok) {
+      setErrorCredentialLogIn(response);
+    }
+
+    if (response.ok) {
+      setErrorCredentialLogIn();
+    }
+  }
+
+  // "hook" for handling conditional rendering to DOM and start animation of same element shortly after
+  function handleShowComponentAndAnimation(state, setFunction) {
+    if (!state.show) {
+      setFunction({ ...state, show: !state.show });
+      setTimeout(() => {
+        setFunction({
+          animation: !state.animation,
+          show: !state.show,
+        });
+      }, 1);
+    }
+
+    if (state.show) {
+      setFunction({ ...state, animation: !state.animation });
+      setTimeout(() => {
+        setFunction({ animation: !state.animation, show: !state.show });
+      }, 800);
+    }
+  }
 
   return (
     <>
-      <Head>
-        <title>Home</title>
-      </Head>
-
-      <DashboardTitle>
-        Hi {session ? session.user.name : "demo user"}
-      </DashboardTitle>
-      <DashboardSection
-        $dashboardWidth={dashboardWidth}
-        $dashboardHeight={dashboardHeight}
-        $gap={fontSize * 0.2}
-        $gridFactor={gridFactor}
-      >
-        <GridElement>
-          <DashboardLink href="/app-manual">
-            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              Track and explore your feelings... how? <br></br>You can look at
-              the
-              <ArrowWrapper>
-                {" "}
-                <StyledForwardArrow />
-                <BoldText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-                  {" "}
-                  manual
-                </BoldText>
-              </ArrowWrapper>
-            </ElementText>
-          </DashboardLink>
-        </GridElement>
-        <GridElement>
-          <DashboardLink href="/add-entry">
-            <ElementText $fontSize={fontSize} $lineHeight={fontSize * 1.3}>
-              <BoldText>Last entry: </BoldText> <br></br>{" "}
-              {emotionEntries.length === 0 ? (
-                <>You did not make any entries yet!</>
-              ) : (
-                <>
-                  {timeSinceLastEntry} hours ago. <br></br>
-                  <BoldText>Your average: </BoldText>
-                  <br></br>
-                  {averageEntriesPerDay} entries per day.
-                </>
-              )}
-              <ArrowWrapper>
-                <StyledForwardArrow />
-                <BoldText>add new entry</BoldText>
-              </ArrowWrapper>
-            </ElementText>
-            <ElementText
-              $fontSize={fontSize}
-              $lineHeight={fontSize * 0.5}
-            ></ElementText>
-          </DashboardLink>
-        </GridElement>
-
-        <GridElement
-          onClick={() => handleDashboardEmotion(demoMode ? id : _id)}
-        >
-          <EmotionText
-            $fontSize={fontSize}
-            $lineHeight={fontSize * 1.3}
-            $color={`var(--${slug})`}
-          >
-            Last recorded emotion: <br></br>
-            {emotionEntries.length === 0 ? (
-              <>You did not record any emotions yet!</>
-            ) : (
-              <>
-                <BoldText>{emotion}</BoldText>
-                <br></br>Intensity:{" "}
-                <ProgressBar $showDetails={showDetails} $progress={intensity} />
-                <ArrowWrapper>
-                  <StyledForwardArrow $darkArrow />
-                  <BoldText>more details</BoldText>
-                </ArrowWrapper>
-              </>
-            )}
-          </EmotionText>
-        </GridElement>
-        <GridElement>
-          <DashboardLink href={`/emotions/${slug}`}>
-            <ElementText
-              $fontSize={fontSize * 0.98}
-              $lineHeight={fontSize * 1.33}
-            >
-              <BoldText>{emotion}</BoldText>
-              <br></br> {shortEmotionDescriptions[emotion]}
-              <ArrowWrapper>
-                {" "}
-                <StyledForwardArrow />
-                <BoldText>more about {slug} </BoldText>
-              </ArrowWrapper>
-            </ElementText>
-          </DashboardLink>
-        </GridElement>
-        <ChartElement>
-          <DashboardChart
-            theme={theme}
-            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
-            heightFactor={0.46}
-            shownEntries={emotionEntries}
-            xValues={xValues}
-            yValues={yValues}
-            autosize={false}
-            showSwitches={false}
-            locale={locale}
-            handleChartRef={handleChartRef}
-          />
-          <ChartLinkWrapper onClick={handleChartLink}>
-            <ElementText
-              $fontSize={fontSize * 0.98}
-              $lineHeight={fontSize * 1.33}
-            >
-              <ArrowWrapper>
-                <StyledForwardArrow />
-                <BoldText>more charts </BoldText>
-              </ArrowWrapper>
-            </ElementText>
-          </ChartLinkWrapper>
-        </ChartElement>
-      </DashboardSection>
+      <CircleAnimation showLogIn={showLogIn.show} />
+      <Wrapper $showLogIn={showLogIn.show}>
+        <div>
+          <StyledBigLogo />
+          {!showLogIn.show ? (
+            <>
+              <StartButton
+                onClick={() => {
+                  handleShowComponentAndAnimation(showLogIn, setShowLogIn);
+                }}
+              >
+                Get Started!
+              </StartButton>
+              <StyledParagraph $showLogIn={showLogIn.show}>
+                Your tool for tracking your emotions
+              </StyledParagraph>
+            </>
+          ) : (
+            <>
+              <StyledParagraph $showLogIn={showLogIn.show}>
+                Your tool for tracking your emotions
+              </StyledParagraph>
+              <StyledLogInWrapper $show={showLogIn.animation}>
+                <StyledLoginButtonWrapper>
+                  <h3>Login</h3>
+                  {providers?.github && (
+                    <LoginBox
+                      onClick={() => signIn("github", { callbackUrl: "/home" })}
+                    >
+                      <Icon path={mdiGithub} size={1} />
+                      GitHub
+                    </LoginBox>
+                  )}
+                  {providers?.google && (
+                    <LoginBox
+                      onClick={() => signIn("google", { callbackUrl: "/home" })}
+                    >
+                      <Icon path={mdiGoogle} size={1} />
+                      Google
+                    </LoginBox>
+                  )}
+                  {providers?.credentials && (
+                    <Accordion>
+                      <LoginBox
+                        onClick={() =>
+                          handleShowComponentAndAnimation(
+                            showCredentialsForm,
+                            setShowCredentialsForm
+                          )
+                        }
+                      >
+                        <Icon path={mdiAccount} size={1} /> Credentials
+                      </LoginBox>
+                      {showCredentialsForm.show && (
+                        <StyledCredentialForm
+                          $show={showCredentialsForm.animation}
+                          onSubmit={handleCredentialLogin}
+                        >
+                          <div>
+                            <label htmlFor="username">Username</label>
+                            <input
+                              type="text"
+                              id="username"
+                              placeholder="username"
+                              onChange={(event) => {
+                                setUserCredentials({
+                                  username: event.target.value,
+                                });
+                              }}
+                              required
+                            />
+                            <label htmlFor="password">Password</label>
+                            <input
+                              type="password"
+                              id="password"
+                              placeholder="password"
+                              onChange={(event) => {
+                                setUserCredentials({
+                                  ...userCredentials,
+                                  password: event.target.value,
+                                });
+                              }}
+                              required
+                            />
+                            {errorCredentialLogIn && (
+                              <>
+                                <b>
+                                  Sorry, something&apos;s wrong. Please, try
+                                  again.
+                                </b>
+                                <p>Error-Code: {errorCredentialLogIn.status}</p>
+                                <p>Message: {errorCredentialLogIn.error}</p>
+                              </>
+                            )}
+                            <button type="submit">Submit</button>
+                          </div>
+                        </StyledCredentialForm>
+                      )}
+                    </Accordion>
+                  )}
+                  <LoginBox
+                    onClick={() => {
+                      handleDemoMode();
+                    }}
+                  >
+                    <Icon path={mdiFlaskOutline} size={1} /> Demo-Mode
+                  </LoginBox>
+                </StyledLoginButtonWrapper>
+              </StyledLogInWrapper>
+            </>
+          )}
+        </div>
+      </Wrapper>
     </>
   );
 }
