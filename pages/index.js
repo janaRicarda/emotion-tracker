@@ -175,7 +175,7 @@ export default function HomePage({
   const dashboardHeight = Math.min(windowHeight - 200, 900);
   console.log(windowHeight);
   console.log(dashboardHeight);
-  const fontSize = Math.min(1.15, Math.max(0.8, windowWidth / 1000));
+  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
 
   //for ProgressBar
   const showDetails = true;
