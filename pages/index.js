@@ -7,9 +7,8 @@ import { useRouter } from "next/router";
 import Icon from "@mdi/react";
 import { mdiGithub, mdiGoogle, mdiFlaskOutline, mdiAccount } from "@mdi/js";
 import { useSession } from "next-auth/react";
-import { keyframes, css } from "styled-components";
+import { keyframes } from "styled-components";
 import CircleAnimation from "@/components/CircleAnimation";
-
 
 const fadeIn = keyframes`
 0% { opacity: 0;}
@@ -21,14 +20,10 @@ const buttonFadeIn = keyframes`
 100% {opacity: 1;}
 `;
 
-
-
 const Wrapper = styled.div`
-  background: var(--landing-page-background);
   width: 100vw;
-
   min-height: 100vh;
-
+  background: var(--landing-page-background);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,14 +46,14 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
- @media (min-width: 700px) {
-width: 16rem;
-height: 16rem;
-}
-@media (max-width: 700px) and (orientation: landscape)  {
-width: 10rem;
-height: 10rem;
-}   
+  @media (min-width: 700px) {
+    width: 16rem;
+    height: 16rem;
+  }
+  @media (max-width: 700px) and (orientation: landscape) {
+    width: 10rem;
+    height: 10rem;
+  }
 `;
 
 const StartButton = styled(StyledButton)`
@@ -79,7 +74,7 @@ const StartButton = styled(StyledButton)`
   color: var(--text-on-bright);
   font-weight: 500;
   opacity: 0;
-animation: ${buttonFadeIn} 100ms 3s linear;
+  animation: ${buttonFadeIn} 100ms 3s linear;
   animation-fill-mode: forwards;
   @media (max-height: 600px) and (orientation: landscape) {
     width: 6rem;
@@ -100,7 +95,6 @@ const StyledLogInWrapper = styled.div`
   grid-template-rows: ${({ $show }) => ($show ? "1fr" : "0fr")};
   transition: grid-template-rows 1s;
   transition-delay: 300ms;
-   
 `;
 
 const StyledLoginButtonWrapper = styled.div`
@@ -111,7 +105,7 @@ const StyledLoginButtonWrapper = styled.div`
   width: 80vw;
   max-width: 400px;
   margin: 1rem;
- border-radius: 0.5rem;
+  border-radius: 0.5rem;
   background: conic-gradient(
     #fbffc7,
     #e2ffc7,
@@ -166,7 +160,6 @@ const StyledCredentialForm = styled.form`
   width: 80%;
 
   && > div {
-    /* width: 80%; */
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -197,7 +190,6 @@ const StyledParagraph = styled.p`
   animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-
 `;
 
 export default function LandingPage({ handleDemoMode }) {
@@ -218,8 +210,6 @@ export default function LandingPage({ handleDemoMode }) {
   if (session) {
     router.push("/home");
   }
-
-
 
   useEffect(() => {
     async function findProviders() {
@@ -267,123 +257,120 @@ export default function LandingPage({ handleDemoMode }) {
   }
 
   return (
-   <>
-   
+    <>
       <CircleAnimation showLogIn={showLogIn.show} />
-      
       <Wrapper $showLogIn={showLogIn.show}>
         <div>
-        <StyledBigLogo />
-        {!showLogIn.show ? (
-          <>
-            <StartButton
-              onClick={() => {
-                handleShowComponentAndAnimation(showLogIn, setShowLogIn);
-              }}
-            >
-              Get Started!
-            </StartButton>
-            <StyledParagraph $showLogIn={showLogIn.show}>
-              Your tool for tracking your emotions
-            </StyledParagraph>
-          </>
-        ) : (
-          <>
-            <StyledParagraph $showLogIn={showLogIn.show}>
-              Your tool for tracking your emotions
-            </StyledParagraph>
-            <StyledLogInWrapper $show={showLogIn.animation}>
-              <StyledLoginButtonWrapper>
-                <h3>Login</h3>
-                {providers?.github && (
-                  <LoginBox
-                    onClick={() => signIn("github", { callbackUrl: "/home" })}
-                  >
-                    <Icon path={mdiGithub} size={1} />
-                    GitHub
-                  </LoginBox>
-                )}
-                {providers?.google && (
-                  <LoginBox
-                    onClick={() => signIn("google", { callbackUrl: "/home" })}
-                  >
-                    <Icon path={mdiGoogle} size={1} />
-                    Google
-                  </LoginBox>
-                )}
-                {providers?.credentials && (
-                  <Accordion>
+          <StyledBigLogo />
+          {!showLogIn.show ? (
+            <>
+              <StartButton
+                onClick={() => {
+                  handleShowComponentAndAnimation(showLogIn, setShowLogIn);
+                }}
+              >
+                Get Started!
+              </StartButton>
+              <StyledParagraph $showLogIn={showLogIn.show}>
+                Your tool for tracking your emotions
+              </StyledParagraph>
+            </>
+          ) : (
+            <>
+              <StyledParagraph $showLogIn={showLogIn.show}>
+                Your tool for tracking your emotions
+              </StyledParagraph>
+              <StyledLogInWrapper $show={showLogIn.animation}>
+                <StyledLoginButtonWrapper>
+                  <h3>Login</h3>
+                  {providers?.github && (
                     <LoginBox
-                      onClick={() =>
-                        handleShowComponentAndAnimation(
-                          showCredentialsForm,
-                          setShowCredentialsForm
-                        )
-                      }
+                      onClick={() => signIn("github", { callbackUrl: "/home" })}
                     >
-                      <Icon path={mdiAccount} size={1} /> Credentials
+                      <Icon path={mdiGithub} size={1} />
+                      GitHub
                     </LoginBox>
-                    {showCredentialsForm.show && (
-                      <StyledCredentialForm
-                        $show={showCredentialsForm.animation}
-                        onSubmit={handleCredentialLogin}
+                  )}
+                  {providers?.google && (
+                    <LoginBox
+                      onClick={() => signIn("google", { callbackUrl: "/home" })}
+                    >
+                      <Icon path={mdiGoogle} size={1} />
+                      Google
+                    </LoginBox>
+                  )}
+                  {providers?.credentials && (
+                    <Accordion>
+                      <LoginBox
+                        onClick={() =>
+                          handleShowComponentAndAnimation(
+                            showCredentialsForm,
+                            setShowCredentialsForm
+                          )
+                        }
                       >
-                        <div>
-                          <label htmlFor="username">Username</label>
-                          <input
-                            type="text"
-                            id="username"
-                            placeholder="username"
-                            onChange={(event) => {
-                              setUserCredentials({
-                                username: event.target.value,
-                              });
-                            }}
-                            required
-                          />
-                          <label htmlFor="password">Password</label>
-                          <input
-                            type="password"
-                            id="password"
-                            placeholder="password"
-                            onChange={(event) => {
-                              setUserCredentials({
-                                ...userCredentials,
-                                password: event.target.value,
-                              });
-                            }}
-                            required
-                          />
-                          {errorCredentialLogIn && (
-                            <>
-                              <b>
-                                Sorry, something&apos;s wrong. Please, try
-                                again.
-                              </b>
-                              <p>Error-Code: {errorCredentialLogIn.status}</p>
-                              <p>Message: {errorCredentialLogIn.error}</p>
-                            </>
-                          )}
-                          <button type="submit">Submit</button>
-                        </div>
-                      </StyledCredentialForm>
-                    )}
-                  </Accordion>
-                )}
-                <LoginBox
-                  onClick={() => {
-                    handleDemoMode();
-                  }}
-                >
-                  <Icon path={mdiFlaskOutline} size={1} /> Demo-Mode
-                </LoginBox>
-              </StyledLoginButtonWrapper>
-            </StyledLogInWrapper>
-          </>
-        )}
+                        <Icon path={mdiAccount} size={1} /> Credentials
+                      </LoginBox>
+                      {showCredentialsForm.show && (
+                        <StyledCredentialForm
+                          $show={showCredentialsForm.animation}
+                          onSubmit={handleCredentialLogin}
+                        >
+                          <div>
+                            <label htmlFor="username">Username</label>
+                            <input
+                              type="text"
+                              id="username"
+                              placeholder="username"
+                              onChange={(event) => {
+                                setUserCredentials({
+                                  username: event.target.value,
+                                });
+                              }}
+                              required
+                            />
+                            <label htmlFor="password">Password</label>
+                            <input
+                              type="password"
+                              id="password"
+                              placeholder="password"
+                              onChange={(event) => {
+                                setUserCredentials({
+                                  ...userCredentials,
+                                  password: event.target.value,
+                                });
+                              }}
+                              required
+                            />
+                            {errorCredentialLogIn && (
+                              <>
+                                <b>
+                                  Sorry, something&apos;s wrong. Please, try
+                                  again.
+                                </b>
+                                <p>Error-Code: {errorCredentialLogIn.status}</p>
+                                <p>Message: {errorCredentialLogIn.error}</p>
+                              </>
+                            )}
+                            <button type="submit">Submit</button>
+                          </div>
+                        </StyledCredentialForm>
+                      )}
+                    </Accordion>
+                  )}
+                  <LoginBox
+                    onClick={() => {
+                      handleDemoMode();
+                    }}
+                  >
+                    <Icon path={mdiFlaskOutline} size={1} /> Demo-Mode
+                  </LoginBox>
+                </StyledLoginButtonWrapper>
+              </StyledLogInWrapper>
+            </>
+          )}
         </div>
       </Wrapper>
-   
     </>
   );
 }
