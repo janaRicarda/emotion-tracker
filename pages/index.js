@@ -21,10 +21,7 @@ const buttonFadeIn = keyframes`
 100% {opacity: 1;}
 `;
 
-const buttonDisappears = keyframes`
-0% {opacity: 1; color: transparent; position: relative;}
-100% {opacity: 0; color: transparent; position: absolute;}
-`;
+
 
 const Wrapper = styled.div`
   background: var(--landing-page-background);
@@ -34,21 +31,15 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "25%")};
-  transition: padding-top 1s 400ms;
+  justify-content: center;
   align-items: center;
- @media (max-height: 500px) and (orientation: landscape) {
-flex-direction: row;
-padding-top: 0;
-justify-content: center;
-}
-@media (min-width: 700px) and (orientation: portrait) {
-flex-direction: column;
-padding-top: ${({ $showLogIn }) => ($showLogIn ? "1rem" : "5%")};
-justify-content: flex-start;
-}   
-
+  && > div {
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
 
 const StyledBigLogo = styled(BigLogo)`
@@ -60,7 +51,14 @@ const StyledBigLogo = styled(BigLogo)`
   animation-delay: 1200ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-
+ @media (min-width: 700px) {
+width: 16rem;
+height: 16rem;
+}
+@media (max-width: 700px) and (orientation: landscape)  {
+width: 10rem;
+height: 10rem;
+}   
 `;
 
 const StartButton = styled(StyledButton)`
@@ -81,18 +79,20 @@ const StartButton = styled(StyledButton)`
   color: var(--text-on-bright);
   font-weight: 500;
   opacity: 0;
-  animation-name: ${({ $showLogIn }) =>
-    $showLogIn
-      ? css`
-          ${buttonDisappears}
-        `
-      : css`
-          ${buttonFadeIn}
-        `};
-  animation-duration: ${({ $showLogIn }) => ($showLogIn ? "100ms" : "500ms")};
-  animation-timing-function: linear;
-  animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3s")};
+animation: ${buttonFadeIn} 100ms 3s linear;
   animation-fill-mode: forwards;
+  @media (max-height: 600px) and (orientation: landscape) {
+    width: 6rem;
+    height: 6rem;
+  }
+  @media (min-width: 700px) and (orientation: portrait) {
+    width: 8rem;
+    height: 8rem;
+  }
+  @media (min-width: 900px) and (min-height: 500px) {
+    width: 8rem;
+    height: 8rem;
+  }
 `;
 
 const StyledLogInWrapper = styled.div`
@@ -109,7 +109,7 @@ const StyledLoginButtonWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   width: 80vw;
-  max-width: 800px;
+  max-width: 400px;
   margin: 1rem;
  border-radius: 0.5rem;
   background: conic-gradient(
@@ -127,12 +127,6 @@ const StyledLoginButtonWrapper = styled.div`
   && > h3 {
     margin-top: 0.7rem;
   }
-      @media (max-height: 500px) and (orientation: landscape) {
-width: 40vw;
-}
-@media (min-width: 700px) and (orientation: portrait) {
-width: 80vw;
-}
 `;
 
 const LoginBox = styled.button`
@@ -203,12 +197,7 @@ const StyledParagraph = styled.p`
   animation-delay: ${({ $showLogIn }) => ($showLogIn ? "none" : "3500ms")};
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-     @media (max-height: 500px) and (orientation: landscape) {
-display: ${({ $showLogIn }) => ($showLogIn ? "none" : "block")};
-text-align: center;
-}
-@media (min-width: 700px) and (orientation: portrait) {
-display: block; 
+
 `;
 
 export default function LandingPage({ handleDemoMode }) {
@@ -283,6 +272,7 @@ export default function LandingPage({ handleDemoMode }) {
       <CircleAnimation showLogIn={showLogIn.show} />
       
       <Wrapper $showLogIn={showLogIn.show}>
+        <div>
         <StyledBigLogo />
         {!showLogIn.show ? (
           <>
@@ -391,6 +381,7 @@ export default function LandingPage({ handleDemoMode }) {
             </StyledLogInWrapper>
           </>
         )}
+        </div>
       </Wrapper>
    
     </>

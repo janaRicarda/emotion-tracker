@@ -54,7 +54,18 @@ const StyledCircle = styled.div`
   border-radius: 50%;
   position: absolute;
   animation: ${circleAnimation} 3s ease-in-out;
- 
+ @media (max-height: 600px) and (orientation: landscape) {
+    width: 6rem;
+    height: 6rem;
+  }
+  @media (min-width: 700px) and (orientation: portrait) {
+    width: 8rem;
+    height: 8rem;
+  }
+  @media (min-width: 900px) and (min-height: 500px) {
+    width: 8rem;
+    height: 8rem;
+  }
 `;
 
 const StyledSmallCircle = styled.div`
