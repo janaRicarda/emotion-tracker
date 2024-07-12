@@ -80,7 +80,7 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
       {delayOpen && (
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
-            <StyledLink onClick={handleToggleMenu} href="/">
+            <StyledLink onClick={handleToggleMenu} href="/home">
               home
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">

@@ -9,7 +9,6 @@ import ErrorMessage from "./ErrorMessage";
 import Tooltip from "./Tooltip";
 import { useSession } from "next-auth/react";
 import DemoLayout from "./DemoLayout";
-import StartModal from "./Modal";
 import useSWR from "swr";
 import {
   lightTheme,
@@ -47,7 +46,6 @@ export default function Layout({
   scrollPosition,
   isScrollDown,
   demoMode,
-  handleDemoMode,
   handleDemoModeOff,
   emotionEntriesAreLoading,
   errorFetchingEmotionEntries,
@@ -63,13 +61,16 @@ export default function Layout({
     highContrastTheme,
   };
 
+  const router = useRouter();
+
   const { data: session } = useSession();
 
   const { data: currentUser, isLoading: userDataIsLoading } = useSWR(
     session && `/api/user/${session.user.email}`
   );
 
-  if (session && currentUser) handleTheme(themes[currentUser.lastPreferredTheme]);
+  if (session && currentUser)
+    handleTheme(themes[currentUser.lastPreferredTheme]);
 
   // use-effect for setting theme to system preferences if no user logged in
   useEffect(() => {
@@ -95,6 +96,11 @@ export default function Layout({
     }
   }, []);
 
+  // app-protection
+  useEffect(() => {
+    if (!demoMode && !session && router.pathname !== "/") router.push("/");
+  });
+
   // scrollToTop-button changes color only on "/app-manual" route to be same as the manual-list-items
   const [color, setColor] = useState("var(--joy)");
 
@@ -116,38 +122,36 @@ export default function Layout({
     window.addEventListener("scroll", listenScrollEvent(scrollPosition));
   });
 
-  const router = useRouter();
-
   const { slug } = router.query;
 
   const isAppManual = router.pathname === "/app-manual";
   const isEmotionDetail = router.pathname === "/emotions/[slug]" ? true : false;
   const isEmotionForm = router.pathname === "/create/[slug]" ? true : false;
   const isEdit = router.pathname === "/edit[id]" ? true : false;
+  const isLandingPage = router.pathname === "/";
 
   return (
     <>
-      {!session && (
-        <StartModal
-          demoMode={demoMode}
-          handleDemoMode={handleDemoMode}
-          handleDemoModeOff={handleDemoModeOff}
+      {demoMode && !isLandingPage && (
+        <DemoLayout handleDemoModeOff={handleDemoModeOff} />
+      )}
+      {!isLandingPage && (
+        <Header
+          isScrollDown={isScrollDown}
+          theme={theme}
+          toggleTheme={toggleTheme}
         />
       )}
-      {demoMode && <DemoLayout handleDemoModeOff={handleDemoModeOff} />}
-      <Header
-        isScrollDown={isScrollDown}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
       {emotionEntriesAreLoading ||
         (userDataIsLoading && <Loader itemText={"App is loading..."} />) ||
         (errorFetchingEmotionEntries && (
           <ErrorMessage errorMessage={errorFetchingEmotionEntries.message} />
         )) ||
         children}
-      <Footer handleDemoModeOff={handleDemoModeOff} />
-      {toolTip && <Tooltip toolTip={toolTip} isScrollDown={isScrollDown} />}
+      {!isLandingPage && <Footer handleDemoModeOff={handleDemoModeOff} />}
+      {toolTip && !isLandingPage && (
+        <Tooltip toolTip={toolTip} isScrollDown={isScrollDown} />
+      )}
       <StyledToTopButton
         $background={
           isAppManual
