@@ -28,12 +28,12 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content="#444444be" />
+          <meta name="apple-mobile-web-app-title" content="What a Feeling" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta
             name="apple-mobile-web-app-status-bar-style"
             content="default"
           />
-          <meta name="apple-mobile-web-app-title" content="What a Feeling" />
           <link rel="manifest" href="/manifest.json" />
           <link
             rel="apple-touch-icon"
