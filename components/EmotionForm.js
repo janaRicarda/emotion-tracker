@@ -22,6 +22,8 @@ const StyledEmotionForm = styled(StyledForm)`
   background: ${({ $color }) => $color};
   color: ${({ $text }) => $text};
   gap: 1rem;
+  width: 80vw;
+  max-width: 600px;
 `;
 
 const TensionLabelEdit = styled.label`
@@ -92,6 +94,10 @@ const ToggleSwitch = styled(Circle)`
   bottom: calc(50% - 0.85rem);
 `;
 
+const StyledSubmitForm = styled(StyledSubmitButton)`
+  max-width: 100%;
+`;
+
 export default function EmotionForm({
   theme,
   emotion,
@@ -120,7 +126,7 @@ export default function EmotionForm({
     const { subemotions } = emotion
       ? emotionData.find((emotionObject) => emotionObject.slug === emotion)
       : { subemotions: [] };
-      
+
     return {
       tensionValue: tensionLevel,
       emotionValue: emotionUpperCase,
@@ -397,7 +403,7 @@ export default function EmotionForm({
         name="notes"
         defaultValue={notesValue}
       ></StyledTextarea>
-      <StyledSubmitButton
+      <StyledSubmitForm
         type="submit"
         $submit={
           theme === darkTheme ? `var(--${emotion})` : `var(--text-on-dark)`
@@ -407,7 +413,7 @@ export default function EmotionForm({
         }
       >
         Submit
-      </StyledSubmitButton>
+      </StyledSubmitForm>
       {showConfirmMessage && (
         <ConfirmMessage
           toggleMessage={() => setShowConfirmMessage(false)}
