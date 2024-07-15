@@ -82,19 +82,10 @@ const StyledAddDetailsLink = styled(StyledStandardLink)`
   background-color: var(--button-background);
 `;
 
-export default function HomePage({
-  onAddEmotionEntry,
-  handleToolTip,
-  emotionEntries,
-  useExampleData,
-}) {
+export default function HomePage({ onAddEmotionEntry, handleToolTip }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [id, setId] = useState();
   const [tension, setTension] = useState(0);
-
-  const newestDbEntryID = emotionEntries?.length
-    ? emotionEntries[emotionEntries.length - 1]?._id
-    : null;
 
   useEffect(() => {
     handleToolTip({
@@ -161,7 +152,6 @@ export default function HomePage({
                 <StyledAddDetailsLink
                   href={{
                     pathname: "/create",
-                    query: { id: useExampleData ? id : newestDbEntryID },
                   }}
                 >
                   Add more details

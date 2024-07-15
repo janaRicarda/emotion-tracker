@@ -7,11 +7,7 @@ import {
 } from "@/SharedStyledComponents";
 import Head from "next/head";
 
-export default function CreateIndexPage({
-  handleToolTip,
-}) {
-  const router = useRouter();
-  const id = router.query.id;
+export default function CreateIndexPage({ handleToolTip }) {
 
   useEffect(() => {
     handleToolTip({
@@ -26,10 +22,7 @@ export default function CreateIndexPage({
       </Head>
       <StyledFixedTitle>Choose one of the emotions</StyledFixedTitle>
       <StyledEmotionListWrapper>
-        <EmotionList
-          createMode
-          id={id}
-        />
+        <EmotionList createMode />
       </StyledEmotionListWrapper>
     </>
   );
