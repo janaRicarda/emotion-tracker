@@ -144,7 +144,6 @@ const StyledDateSpan = styled.span`
 `;
 
 const StyledListContainer = styled.div`
-  width: 80vw;
   margin-top: 7rem;
   display: flex;
   flex-direction: column;

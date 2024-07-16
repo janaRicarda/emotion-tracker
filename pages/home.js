@@ -144,7 +144,7 @@ export default function HomePage({
   emotionEntries,
   theme,
   locale,
-  onHandleGridEmotion,
+  onHandleDashboardEmotion,
   onHandleChartLink,
   demoMode,
   handleChartRef,
@@ -190,7 +190,7 @@ export default function HomePage({
 
   function handleGridEmotion(id) {
     router.push("/emotion-records/");
-    onHandleGridEmotion(id);
+    onHandleDashboardEmotion(id);
   }
 
   function handleChartLink() {
