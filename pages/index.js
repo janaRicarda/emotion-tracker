@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyledStandardLink, StyledTitle } from "@/SharedStyledComponents";
 import {
   getAveragePerDay,
@@ -41,7 +41,7 @@ const ProgressBar = styled.div`
 `;
 
 const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.5rem;
+  margin-top: -1.8rem;
 `;
 
 const DashboardSection = styled.section`
@@ -93,7 +93,7 @@ const ElementText = styled.div`
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
-  padding: 0.5rem 0.42rem;
+  padding: 0.45rem 0.45rem;
   margin: 0.1rem;
   border-radius: 12px;
   letter-spacing: -0.2px;
@@ -102,11 +102,12 @@ const ElementText = styled.div`
 const EmotionText = styled(ElementText)`
   color: var(--text-on-bright);
   padding: 0.6rem 0.8rem 0.6rem 0.6rem;
-  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
+  margin: 0.1rem 0.6rem 0.1rem 0.1rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
   width: 98%;
-  height: 93%;
+  height: 92%;
+  cursor: pointer;
 `;
 const BoldText = styled.span`
   font-weight: 600;
@@ -131,6 +132,7 @@ const ChartLinkWrapper = styled.section`
   width: 280px;
   display: flex;
   z-index: 1;
+  cursor: pointer;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -138,6 +140,7 @@ const DashboardLink = styled(StyledStandardLink)`
   height: 100%;
   align-self: center;
   padding: 0;
+  cursor: pointer;
 `;
 
 export default function HomePage({
@@ -175,7 +178,7 @@ export default function HomePage({
   const dashboardHeight = Math.min(windowHeight - 200, 900);
   console.log(windowHeight);
   console.log(dashboardHeight);
-  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
+  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1400));
 
   //for ProgressBar
   const showDetails = true;
@@ -323,7 +326,7 @@ export default function HomePage({
           <DashboardChart
             theme={theme}
             width={Math.max(290, Math.round(36 + windowWidth / 1.8))}
-            heightFactor={0.44}
+            heightFactor={0.42}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
