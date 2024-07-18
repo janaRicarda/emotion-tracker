@@ -34,7 +34,7 @@ const StyledArticle = styled.article`
             ${slideOut}
           `}
     300ms;
-  @media ${breakpoints.laptop} {
+  @media (min-width: 1150px) {
     justify-content: flex-start;
     height: 100px;
     background-color: var(--section-background-contrast);
@@ -45,7 +45,7 @@ const StyledLinkWrapper = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media ${breakpoints.laptop} {
+  @media (min-width: 1150px) {
     padding-top: 1rem;
     flex-direction: row;
   }
@@ -80,7 +80,7 @@ export default function Navigation({ handleToggleMenu, isOpen }) {
       {delayOpen && (
         <StyledArticle $isOpen={isOpen}>
           <StyledLinkWrapper>
-            <StyledLink onClick={handleToggleMenu} href="/">
+            <StyledLink onClick={handleToggleMenu} href="/home">
               home
             </StyledLink>
             <StyledLink onClick={handleToggleMenu} href="/app-manual">

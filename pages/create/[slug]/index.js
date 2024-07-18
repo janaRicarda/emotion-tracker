@@ -21,13 +21,21 @@ export default function EmotionEntry({
   }, []);
 
   const router = useRouter();
-  const { id, slug } = router.query;
+  const { slug } = router.query;
+
+  const newestDbEntryID = emotionEntries?.length
+    ? emotionEntries[emotionEntries.length - 1]?._id
+    : null;
+
+  const newestEntryInDemoMode = emotionEntries?.length
+    ? emotionEntries[emotionEntries.length - 1]?.id
+    : null;
 
   const {
     data: correspondingDbEmotionEntry,
     isLoading,
     error,
-  } = useSWR(!useExampleData && `/api/emotionEntries/${id}`);
+  } = useSWR(!useExampleData && `/api/emotionEntries/${newestDbEntryID}`);
 
   if (isLoading) return <Loader itemText={"Is Loading"} />;
 
@@ -38,7 +46,7 @@ export default function EmotionEntry({
   }
 
   const correspondingEntry = useExampleData
-    ? emotionEntries.find((entry) => entry.id === id)
+    ? emotionEntries.find((entry) => entry.id === newestEntryInDemoMode)
     : correspondingDbEmotionEntry;
 
   return (
@@ -51,7 +59,7 @@ export default function EmotionEntry({
         theme={theme}
         onSubmit={onAddEmotionDetails}
         correspondingEntry={correspondingEntry}
-        id={id}
+        id={useExampleData ? newestEntryInDemoMode : newestDbEntryID}
         locale={locale}
       />
     </>

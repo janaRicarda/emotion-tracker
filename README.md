@@ -16,7 +16,7 @@ It features a guided emotion logging, pretty data visuals, analytics as lists an
 
 You can find the hosted version on Vercel: [Demo Version of What a Feeling](https://what-a-feeling.vercel.app/)
 
-**Important:** This App was developed mobile-first and was made responsive for a broad range of devices.
+**Important:** This App was developed mobile-first and was made responsive for a broad range of devices. You can also install it using the PWA feature.
 
 ## Tech Stack
 
@@ -29,6 +29,7 @@ You can find the hosted version on Vercel: [Demo Version of What a Feeling](http
 - mongoDB
 - Node.js
 - Vercel
+- Progressive Web App
 - Libraries:
   - plotly
   - mongoose

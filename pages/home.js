@@ -192,7 +192,6 @@ export default function HomePage({
       : emotionEntries.toSorted(compareHightToLow);
   const averageEntriesPerDay =
     emotionEntries.length === 0 ? 0 : getAveragePerDay(dashboardEntries);
-
   const timeSinceLastEntry =
     emotionEntries.length === 0
       ? "You did not make any entries yet!"

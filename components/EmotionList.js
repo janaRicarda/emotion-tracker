@@ -115,7 +115,7 @@ const EmotionLink = styled(StyledStandardLink)`
   }
 `;
 
-export default function EmotionList({ createMode, id }) {
+export default function EmotionList({ createMode }) {
   const [rotation, setRotation] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -181,7 +181,6 @@ export default function EmotionList({ createMode, id }) {
                   createMode
                     ? {
                         pathname: `/create/${slug}`,
-                        query: { id },
                       }
                     : `/emotions/${slug}`
                 }
