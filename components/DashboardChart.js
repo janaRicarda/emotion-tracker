@@ -20,7 +20,7 @@ const ChartSection = styled.section`
   align-items: center;
   position: relative;
   left: calc(50% - ${({ $centerOffset }) => `${$centerOffset}px`});
-  top: 0.5rem;
+  top: 0.2rem;
   margin: 0.5rem;
   border-radius: 18px;
   background-color: var(--section-background);
@@ -82,7 +82,7 @@ export default function DashboardChart({
   }
 
   return (
-    <ChartSection $width={width + 20} $centerOffset={chartWidth / 2 + 15}>
+    <ChartSection $width={width + 20} $centerOffset={chartWidth / 2 + 19}>
       <StyledFlexColumnWrapper>
         <EmotionChart
           theme={theme}

@@ -41,7 +41,7 @@ const ProgressBar = styled.div`
 `;
 
 const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.8rem;
+  margin: -2.5rem 0 1rem;
 `;
 
 const DashboardSection = styled.section`
@@ -160,25 +160,27 @@ export default function HomePage({
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  function updateWidth() {
+  function updateWindowSize() {
     setWindowWidth(window.innerWidth);
     setWindowHeight(window.innerHeight);
   }
   useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    window.addEventListener("resize", updateWindowSize);
+    return () => window.removeEventListener("resize", updateWindowSize);
   }, []);
 
   const dashboardWidth = Math.min(
     1100,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const gridFactor = 3.1 + windowWidth / 172;
-  console.log(gridFactor);
+  const gridFactor = 3.1 + windowWidth / 200;
+  // console.log(gridFactor);
   const dashboardHeight = Math.min(windowHeight - 200, 900);
-  console.log(windowHeight);
-  console.log(dashboardHeight);
-  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1400));
+  console.log("windowHeight", windowHeight);
+  console.log("windowWindth", windowWidth);
+  console.log("dashboardWindth", dashboardWidth);
+  // console.log("dashboardHeight", dashboardHeight);
+  const fontSize = Math.min(1.18, Math.max(0.8, windowWidth / 1840));
 
   //for ProgressBar
   const showDetails = true;
@@ -325,7 +327,8 @@ export default function HomePage({
         <ChartElement>
           <DashboardChart
             theme={theme}
-            width={Math.max(290, Math.round(36 + windowWidth / 1.8))}
+            // width={dashboardWidth * 0.97}
+            width={dashboardWidth - 30}
             heightFactor={0.42}
             shownEntries={emotionEntries}
             xValues={xValues}
