@@ -230,14 +230,11 @@ export default function FilterEmotionEntries({
           const selectedStartDate = new Date(
             selectedTime.from.toDateString()
           ).getTime();
-          console.log("Start", selectedStartDate);
-          console.log("Startformatted", new Date(selectedStartDate));
           const selectedEndDate =
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
 
           const secondDateNotSelected = !selectedEndDate;
-          console.log("End", selectedEndDate);
           const customFilteredEntries = getFilteredEntries(
             secondDateNotSelected,
             selectedStartDate,
