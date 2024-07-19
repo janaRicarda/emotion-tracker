@@ -145,9 +145,9 @@ export default function EmotionRecordsList({
     }));
   }
 
-  //showing details of last emotion entry when linked from dashboard
-  const { dashboardId } = dashboardState;
-
+  //showing details of last emotion entry when linked from dashboard and set filter accordingly
+  const { dashboardId, dashboardDate, showChartForDashboardLink } =
+    dashboardState;
   function handleDashBoardPush(idToProcess) {
     handleShowDetails(idToProcess);
     const element = document.getElementById(idToProcess);
@@ -158,6 +158,11 @@ export default function EmotionRecordsList({
       ? element.scrollIntoView({ behavior: "instant", block: "center" })
       : null;
   }
+
+  useEffect(() => {
+    showChartForDashboardLink === true ? setChartIsShown(!chartIsShown) : null;
+  }, [showChartForDashboardLink]);
+
   useEffect(() => {
     handleDashBoardPush(dashboardId);
   }, [dashboardId]);

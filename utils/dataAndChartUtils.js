@@ -67,9 +67,27 @@ export function getTimeSinceLastEntry(entries) {
   const minutesSinceLastEntry = Math.abs(
     Math.round((timeStampNow - lastEntryTimeStamp) / 60000)
   );
-  const hours = Math.floor(minutesSinceLastEntry / 60);
+
+  const days =
+    minutesSinceLastEntry < 1440 ? 0 : Math.floor(minutesSinceLastEntry / 1440);
+  const hours =
+    minutesSinceLastEntry >= 1440
+      ? Math.floor((minutesSinceLastEntry % 1440) / 60)
+      : Math.floor(minutesSinceLastEntry / 60);
   const minutesPart = (minutesSinceLastEntry % 60).toString().padStart(2, "0");
-  const timeSinceLastEntry = `${hours.toString()}:${minutesPart}`;
+
+  // für später
+  function isLeapYear(year) {
+    const boolean = new Date(year, 1, 29).getMonth() === 1 ? true : false;
+    return boolean;
+  }
+  const years = days < 366 ? 0 : Math.floor(days / 365.25);
+
+  const timeSinceLastEntry =
+    days === 0
+      ? `${hours}:${minutesPart}`
+      : `${days} days, ${hours}:${minutesPart}`;
+
   return timeSinceLastEntry;
 }
 

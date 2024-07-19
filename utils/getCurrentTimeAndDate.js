@@ -9,6 +9,12 @@ export default function getCurrentTimeAndDate(locale, date, format) {
           hour: "numeric",
           hour12: false,
         }
+      : format === "dashboard"
+      ? {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+        }
       : {
           weekday: "long",
           year: "numeric",

@@ -80,11 +80,11 @@ export default function EmotionChart({
               text: title,
               font: {
                 family: "system-ui",
-                size: 15,
+                size: 13,
               },
             },
             autosize: autosize,
-            margin: { autoexpand: true, b: 30, l: 35, r: 30, t: 36 },
+            margin: { autoexpand: true, b: 20, l: 35, r: 30, t: 32 },
           }}
           ref={chartRef}
           onInitialized={(graphDiv) => (chartRef.current = { el: graphDiv })}

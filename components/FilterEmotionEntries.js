@@ -144,6 +144,7 @@ export default function FilterEmotionEntries({
   DisplayDate,
   changeSelectedTime,
   selectedTime,
+  dashboardTimeStamp,
 }) {
   const [showSearchBar, SetShowSearchBar] = useState(true);
   const [showDayPicker, setShowDayPicker] = useState(false);
@@ -198,7 +199,6 @@ export default function FilterEmotionEntries({
     }
 
     const { daysAgo, singleComparison } = buttonState;
-    //
 
     changeFilterEntries(() => {
       if (
@@ -230,13 +230,11 @@ export default function FilterEmotionEntries({
           const selectedStartDate = new Date(
             selectedTime.from.toDateString()
           ).getTime();
-
           const selectedEndDate =
             selectedTime.to &&
             new Date(selectedTime.to.toDateString()).getTime();
 
           const secondDateNotSelected = !selectedEndDate;
-
           const customFilteredEntries = getFilteredEntries(
             secondDateNotSelected,
             selectedStartDate,
@@ -249,7 +247,13 @@ export default function FilterEmotionEntries({
         return emotionEntries;
       }
     });
-  }, [buttonState, emotionEntries, selectedTime, changeFilterEntries]);
+  }, [
+    buttonState,
+    emotionEntries,
+    selectedTime,
+    changeFilterEntries,
+    dashboardTimeStamp,
+  ]);
 
   // searches filteredEntries and sets shownEntries accordingly in emotion-records.js to be rendered
   useEffect(() => {

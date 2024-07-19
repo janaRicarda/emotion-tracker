@@ -15,6 +15,7 @@ import Head from "next/head";
 import ArrowBack from "./../public/icons/arrow-left.svg";
 import { shortEmotionDescriptions } from "@/lib/db";
 import DashboardChart from "@/components/DashboardChart";
+import getCurrentTimeAndDate from "@/utils/getCurrentTimeAndDate";
 
 const ProgressBar = styled.div`
   width: 42%;
@@ -40,7 +41,7 @@ const ProgressBar = styled.div`
 `;
 
 const DashboardTitle = styled(StyledTitle)`
-  margin-top: -1.5rem;
+  margin: -2.5rem 0 1rem;
 `;
 
 const DashboardSection = styled.section`
@@ -92,7 +93,7 @@ const ElementText = styled.div`
   font-size: ${({ $fontSize }) => `${$fontSize}rem`};
   line-height: ${({ $lineHeight }) => `${$lineHeight}rem`};
   text-align: left;
-  padding: 0.5rem 0.42rem;
+  padding: 0.45rem 0.45rem;
   margin: 0.1rem;
   border-radius: 12px;
   letter-spacing: -0.2px;
@@ -101,11 +102,12 @@ const ElementText = styled.div`
 const EmotionText = styled(ElementText)`
   color: var(--text-on-bright);
   padding: 0.6rem 0.8rem 0.6rem 0.6rem;
-  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
+  margin: 0.1rem 0.6rem 0.1rem 0.1rem;
   background: ${({ $color }) =>
     $color ? $color : "var(--section-background)"};
   width: 98%;
-  height: 93%;
+  height: 92%;
+  cursor: pointer;
 `;
 const BoldText = styled.span`
   font-weight: 600;
@@ -126,10 +128,11 @@ const ArrowWrapper = styled.div`
 const ChartLinkWrapper = styled.section`
   position: absolute;
   left: 1rem;
-  bottom: 1rem;
+  bottom: 0;
   width: 280px;
   display: flex;
   z-index: 1;
+  cursor: pointer;
 `;
 
 const DashboardLink = styled(StyledStandardLink)`
@@ -137,6 +140,7 @@ const DashboardLink = styled(StyledStandardLink)`
   height: 100%;
   align-self: center;
   padding: 0;
+  cursor: pointer;
 `;
 
 export default function HomePage({
@@ -154,22 +158,24 @@ export default function HomePage({
 
   //make dashboard responsive
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  function updateWidth() {
+  function updateWindowSize() {
     setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
   }
   useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    window.addEventListener("resize", updateWindowSize);
+    return () => window.removeEventListener("resize", updateWindowSize);
   }, []);
 
   const dashboardWidth = Math.min(
-    1080,
+    1100,
     Math.max(344, Math.round(windowWidth / 2))
   );
-  const gridFactor = 1.9 + windowWidth / 100;
-  const dashboardHeight = Math.round(dashboardWidth * 1.27 + gridFactor * 6);
-  const fontSize = Math.min(1.2, Math.max(0.8, windowWidth / 1000));
+  const gridFactor = 3.1 + windowWidth / 200;
+  const dashboardHeight = Math.min(windowHeight - 200, 900);
+  const fontSize = Math.min(1.18, Math.max(0.8, windowWidth / 1840));
 
   //for ProgressBar
   const showDetails = true;
@@ -185,12 +191,14 @@ export default function HomePage({
     emotionEntries.length === 0
       ? "You did not make any entries yet!"
       : getTimeSinceLastEntry(dashboardEntries);
-  const { emotion, intensity, slug, id, _id } =
-    getNewestEmotion(dashboardEntries);
 
-  function handleGridEmotion(id) {
+  const { emotion, intensity, slug, id, _id, timeStamp, isoDate } =
+    getNewestEmotion(dashboardEntries);
+  const emoDate = getCurrentTimeAndDate(locale, timeStamp, "dashboard");
+
+  function handleDashboardEmotion(id, isoDate, timeStamp) {
     router.push("/emotion-records/");
-    onHandleDashboardEmotion(id);
+    onHandleDashboardEmotion(id, isoDate, timeStamp);
   }
 
   function handleChartLink() {
@@ -267,13 +275,17 @@ export default function HomePage({
           </DashboardLink>
         </GridElement>
 
-        <GridElement onClick={() => handleGridEmotion(demoMode ? id : _id)}>
+        <GridElement
+          onClick={() =>
+            handleDashboardEmotion(demoMode ? id : _id, isoDate, timeStamp)
+          }
+        >
           <EmotionText
             $fontSize={fontSize}
             $lineHeight={fontSize * 1.3}
             $color={`var(--${slug})`}
           >
-            Last recorded emotion: <br></br>
+            Last recorded emotion from {emoDate}: <br></br>
             {emotionEntries.length === 0 ? (
               <>You did not record any emotions yet!</>
             ) : (
@@ -308,8 +320,9 @@ export default function HomePage({
         <ChartElement>
           <DashboardChart
             theme={theme}
-            width={Math.max(290, Math.round(36 + windowWidth / 1.6))}
-            heightFactor={0.46}
+            // width={dashboardWidth * 0.97}
+            width={dashboardWidth - 30}
+            heightFactor={0.42}
             shownEntries={emotionEntries}
             xValues={xValues}
             yValues={yValues}
