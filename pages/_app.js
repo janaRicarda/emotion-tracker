@@ -311,7 +311,6 @@ export default function App({
       dashboardDate: isoDate,
       dashboardTimeStamp: timeStamp,
     });
-    // console.log("dashboard to app.js: ", dashboardState);
   }
 
   function deliverChartVisibility() {

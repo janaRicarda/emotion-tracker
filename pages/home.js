@@ -174,12 +174,7 @@ export default function HomePage({
     Math.max(344, Math.round(windowWidth / 2))
   );
   const gridFactor = 3.1 + windowWidth / 200;
-  // console.log(gridFactor);
   const dashboardHeight = Math.min(windowHeight - 200, 900);
-  console.log("windowHeight", windowHeight);
-  console.log("windowWindth", windowWidth);
-  console.log("dashboardWindth", dashboardWidth);
-  // console.log("dashboardHeight", dashboardHeight);
   const fontSize = Math.min(1.18, Math.max(0.8, windowWidth / 1840));
 
   //for ProgressBar
@@ -199,12 +194,11 @@ export default function HomePage({
 
   const { emotion, intensity, slug, id, _id, timeStamp, isoDate } =
     getNewestEmotion(dashboardEntries);
-  const emoDate = getCurrentTimeAndDate(locale, timeStamp);
+  const emoDate = getCurrentTimeAndDate(locale, timeStamp, "dashboard");
 
   function handleDashboardEmotion(id, isoDate, timeStamp) {
     router.push("/emotion-records/");
     onHandleDashboardEmotion(id, isoDate, timeStamp);
-    console.log(timeStamp);
   }
 
   function handleChartLink() {

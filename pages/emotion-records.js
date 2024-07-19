@@ -242,7 +242,6 @@ export default function EmotionRecords({
 
   function handleSetSelectedTime(time) {
     setSelectedTime(time);
-    console.log(selectedTime);
   }
 
   function handleSearch(input) {
